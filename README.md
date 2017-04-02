@@ -1,6 +1,6 @@
 # BlueTapeCrew
 
-[![N|Solid](https://bluetapecrew.com/content/logo.png)](https://nodesource.com/products/nsolid)
+[![N|Solid](https://bluetapecrew.com/content/logo.png)](https://bluetapecrew.com)
 
 BlueTapeCrew is a client website I built from scratch in ASP.NET.
 
