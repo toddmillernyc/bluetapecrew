@@ -74,7 +74,7 @@ $ Add-Migration "[DESCRIPTION]"
 ```
 Update Database
 ```sh
-$ Updated Database
+$ Update-Database
 ```
 
 ### SQL Server Stored Procedures and Views
