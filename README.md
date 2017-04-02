@@ -62,8 +62,7 @@ Add connection strings to web.config:
   <add name="UserEntities"
     connectionString="Server=[SERVER];Database=[DATABASE];User ID=[USER];Password=[PASS];Trusted_Connection=False;Encrypt=True;Connection Timeout=30;" providerName="System.Data.SqlClient" />
   <add name="BtcEntities" 
-    connectionString="data source=[SERVER];initial catalog=[DATABASE];persist security info=True;user id=[USER];password=               [PASS];MultipleActiveResultSets=True;App=EntityFramework" 
-    providerName="System.Data.SqlClient" />
+    connectionString="data source=[SERVER];initial catalog=[DATABASE];persist security info=True;user id=[USER];password=               [PASS];MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
 
