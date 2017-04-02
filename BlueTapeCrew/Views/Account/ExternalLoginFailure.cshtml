@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Login Failure";
+}
+@section HeadCss
+{
+    
+}
+<div class="main">
+    <div class="container">
+        <hgroup>
+            <h2>@ViewBag.Title.</h2>
+            <h3 class="text-danger">Unsuccessful login with service.</h3>
+        </hgroup>
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bluetape/js")
+    <script>
+        jQuery(document).ready(function () {
+            Layout.init();
+            Layout.initTwitter();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+            Layout.initUniform();
+        });
+    </script>
+}

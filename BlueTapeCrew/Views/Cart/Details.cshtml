@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BlueTapeCrew.Models.CartView>
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+@section HeadCss
+{
+    
+}
+<div class="main">
+    <div class="container">
+        <div class="row margin-bottom-40">
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-12 col-sm-12">
+                <h1>Shopping Cart</h1>
+                <div class="goods-page">
+                    <div class="goods-data clearfix">
+                        @if (Model.Any())
+                        {
+                            <div class="table-wrapper-responsive">
+                                <table summary="Shopping cart">
+                                    <tr>
+                                        <th class="goods-page-image">Image</th>
+                                        <th class="goods-page-description">Description</th>
+                                        <th class="goods-page-ref-no">Ref No</th>
+                                        <th class="goods-page-quantity">Quantity</th>
+                                        <th class="goods-page-price">Unit price</th>
+                                        <th class="goods-page-total" colspan="2">Total</th>
+                                    </tr>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="goods-page-image">
+                                                <a href="javascript:;"><img src="images/@item.LinkName" alt="@item.ProductName"></a>
+                                            </td>
+                                            <td class="goods-page-description">
+                                                <h3>
+                                                    <a href="javascript:;">@item.ProductName</a>
+                                                </h3>
+                                                <p>@item.StyleText</p>
+                                            </td>
+                                            <td>
+                                                <h2 class="text text-info">@item.StyleId</h2>
+                                            </td>
+                                            <td>
+                                                <h2 class="text-center text text-info">@item.Quantity</h2>
+                                            </td>
+                                            <td class="goods-page-price">
+                                                <strong><span>$</span>@string.Format("{0:n2}", item.Price)</strong>
+                                            </td>
+                                            <td class="goods-page-total">
+                                                <strong><span>$</span>@string.Format("{0:n2}", item.SubTotal)</strong>
+                                            </td>
+                                            <td class="del-goods-col">
+                                                <button type="button" style="border: none;" class="del-goods" onclick="removeFromCart(@item.Id);">&nbsp;</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                            <div class="shopping-total">
+                                <ul>
+                                    <li>
+                                        <em>Sub total</em>
+                                        <strong class="price"><span>$</span>@ViewBag.SubTotal</strong>
+                                    </li>
+                                    <li>
+                                        <em>Shipping cost</em>
+                                        <strong class="price"><span>$</span>@ViewBag.Shipping</strong>
+                                    </li>
+                                    <li class="shopping-total-price">
+                                        <em>Total</em>
+                                        <strong class="price"><span>$</span>@ViewBag.Total</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <h2>Your cart is empty</h2>
+                        }
+                    </div>
+                    <a class="btn btn-info" href="~/">Continue shopping <i class="fa fa-shopping-cart"></i></a>
+                    @if (Model.Any())
+                    {
+                        <a class="btn btn-info pull-right" href="~/checkout">Checkout <i class="fa fa-check"></i></a>
+                    }
+                </div>
+            </div>
+            <!-- END CONTENT -->
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bluetape/js")
+    <script>
+        jQuery(document).ready(function() {
+            Layout.init();
+            Layout.initTwitter();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+            Layout.initUniform();
+        });
+    </script>
+}

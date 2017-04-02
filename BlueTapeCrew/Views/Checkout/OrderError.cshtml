@@ -1,0 +1,30 @@
+﻿@model BlueTapeCrew.ViewModels.CartViewModel
+@{
+    ViewBag.Title = "OrderError";
+}
+@section HeadCss
+{
+    
+}
+<div class="main">
+    <div class="container">
+        <h2>@ViewBag.Message</h2>
+        <p><a href="mailto:info@bluetapecrew.com">info@bluetapecrew.com</a>
+        </p>
+    </div>
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bluetape/js")
+    <script>
+        jQuery(document).ready(function () {
+            Layout.init();
+            Layout.initTwitter();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+            Layout.initUniform();
+        });
+    </script>
+}
+

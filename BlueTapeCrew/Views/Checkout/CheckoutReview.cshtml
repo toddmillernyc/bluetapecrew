@@ -1,0 +1,74 @@
+﻿@model BlueTapeCrew.ViewModels.CheckoutViewModel
+@section HeadCss
+{
+    
+}
+<div class="main">
+    <div class="container">
+        <h1>Order Review</h1>
+        <h1>Products</h1>
+        <table class="table table-bordered table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Style</th>
+                <th>Quantity</th>
+                <th>SubTotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model.Cart.Items.Any())
+            {
+                foreach (var item in Model.Cart.Items)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.StyleText</td>
+                        <td>@string.Format("{0:n2}", item.Quantity)</td>
+                        <td>$ @string.Format("{0:n2}", item.SubTotal)</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+        <div class="row margin-bottom-40">
+            <div class="col-md-12">
+                <h1>Shipping Address</h1>
+                @Model.FirstName @Model.LastName<br/>
+                @Model.Phone<br/>
+                @Model.Email<br/>
+                <br/>
+                @Model.Address<br/>
+                @Model.City, @Model.State @Model.Zip
+                <hr/>
+                <h1>Order Total</h1>
+                Subtotal: $ @Model.Cart.SubTotal<br/>
+                Shipping: $ @Model.Cart.Shipping<br/>
+                Total: <b>$ @Model.Cart.Total</b>
+                <hr/>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" value="@ViewBag.Token" name="token"/>
+                    <input type="hidden" value="@ViewBag.PayerId" name="PayerID"/>
+                    <input type="hidden" name="finalPaymentAmount" value="@Model.Cart.Total"/>
+                    <button type="submit" class="btn btn-info">Confirm Order</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bluetape/js")
+    <script>
+        jQuery(document).ready(function () {
+            Layout.init();
+            Layout.initTwitter();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+            Layout.initUniform();
+        });
+    </script>
+}

@@ -1,0 +1,18 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <li>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        }
+    </li>
+    if (User.IsInRole("Admin"))
+    {
+        <li><a class="text text-danger bg-danger" href="~/admin">Site Administration</a></li>
+    }
+}
+else
+{
+    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}
