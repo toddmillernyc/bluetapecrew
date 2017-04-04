@@ -1,0 +1,64 @@
+﻿@model BlueTapeCrew.Models.Order
+@{
+    ViewBag.Title = "Order Confirmed!";
+}
+@section HeadCss
+{
+    
+}
+<div class="main">
+    <div class="container">
+        @ViewBag.Response
+        <h1>Order Confirmed !</h1>
+        <h1>Items</h1>
+        <table class="table table-bordered table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>SubTotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.Description</td>
+                    <td>@string.Format("{0:n2}", item.Quantity)</td>
+                    <td>$ @string.Format("{0:n2}", item.SubTotal)</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <div class="row margin-bottom-40">
+            <div class="col-md-12">
+                <h1>Shipping Address</h1>
+                @Model.FirstName @Model.LastName<br/>
+                @Model.Phone<br/>
+                @Model.Email<br/>
+                <br/>
+                @Model.Address<br/>
+                @Model.City, @Model.State @Model.Zip
+                <hr/>
+                <h1>Order Total</h1>
+                Subtotal: $ @string.Format("{0:n2}", Model.SubTotal)<br/>
+                Shipping: $ @string.Format("{0:n2}", Model.Shipping)<br/>
+                Total: <b>$ @string.Format("{0:n2}", Model.Total)</b>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bluetape/js")
+    <script>
+        jQuery(document).ready(function () {
+            Layout.init();
+            Layout.initTwitter();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+            Layout.initUniform();
+        });
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿@model BlueTapeCrew.ViewModels.HomeViewModel
+@section OpenGraph{
+    <meta property="og:title" content="@Model.SiteTitle">
+    <meta property="og:description" content="@Model.Description">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://bluetapecrew.com/content/logo.png">
+    <meta property="og:url" content="https://bluetapecrew.com">
+}
+@section HeadCss
+{
+    @Styles.Render("~/bluetape/homecss")
+}
+<div class="main">
+    <div class="container">
+        @foreach (var category in Model.Catalog)
+        {
+            <div class="row margin-bottom-40" id="allProducts">
+                <div class="col-md-12 sale-product">
+                    <h2>@category.CategoryName</h2>
+                    <div class="owl-carousel owl-carousel-home">
+                        @foreach (var item in category.Products)
+                        {
+                            <div>
+                                <div class="product-item">
+                                    <div class="pi-img-wrapper">
+                                        <img class="lazyOwl img-responsive" data-src="@item.ImgSource" src="@item.ImgSource" alt="@item.Name">
+                                        <div>
+                                            <a href="~/images/@(item.LinkName).jpg" class="btn btn-default fancybox-button"><i style="color: white" class="fa fa-expand"></i></a>
+                                        </div>
+                                    </div>
+                                    <h3>
+                                        <a href="~/products/@item.LinkName">@item.LinkName</a>
+                                    </h3>
+                                    <div class="pi-price">$@item.Price</div>
+                                    <a href="products/@item.LinkName" class="btn btn-default add2cart">Details</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bluetape/homejs")
+    <script>
+        Layout.initTouchspin();
+        $(".owl-carousel-home").owlCarousel({
+            pagination: false,
+            navigation: true,
+            items: 5,
+            lazyLoad: true,
+            addClassActive: true,
+            itemsCustom: [
+                [0, 1],
+                [320, 1],
+                [480, 2],
+                [660, 2],
+                [700, 3],
+                [768, 3],
+                [992, 4],
+                [1024, 4],
+                [1200, 5],
+                [1400, 5],
+                [1600, 5]
+            ]
+        });
+
+    </script>
+}
+

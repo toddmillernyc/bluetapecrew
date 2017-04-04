@@ -1,0 +1,124 @@
+﻿@{ Layout = null;}
+@model List<BlueTapeCrew.Areas.Admin.Models.AdminCategoryViewModel>
+<style>
+    textarea {
+        resize: none;
+    }
+</style>
+<p>
+    @Html.ActionLink("Create New Product", "Create","AdminProducts",null,new{ @class = "btn btn-xs btn-info"}) | 
+    @Html.ActionLink("Edit Categories", "Index","AdminCategories",null,new{ @class = "btn btn-xs btn-info"}) | 
+    @Html.ActionLink("Manage Site Users", "Index", "AspNetUsers", null, new { @class = "btn btn-xs btn-info" })
+</p>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#tab_settings" data-toggle="tab">Site Settings</a></li>
+    @foreach (var item in Model)
+    {
+        <li><a href="#tab_@(item.Name.Replace(" ","_").ToLower())" data-toggle="tab">@item.Name</a></li>
+    }
+</ul>
+<div class="tab-content" ng-app="myApp" ng-controller="SettingsController">
+    <div class="tab-pane active" id="tab_settings">
+        <input type="hidden" value="{{settings.Id}}"/>
+        <dl class="dl-horizontal">
+            <dt>Site Title</dt>
+            <dd><input class="form-control" type="text" ng-model="settings.SiteTitle"/></dd>
+            <dt>Site Description</dt>
+            <dd><textarea rows="10" class="form-control" ng-model="settings.Description"></textarea></dd>
+            <dt>Site Keywords</dt>
+            <dd><textarea class="form-control" ng-model="settings.Keywords"></textarea></dd>
+            <dt>About Us</dt>
+            <dd><textarea class="form-control" ng-model="settings.AboutUs"></textarea></dd>
+            <dt>Twitter Widget Id</dt>
+            <dd><input class="form-control" type="text" ng-model="settings.TwitterWidgetId"/></dd>
+
+        </dl>
+        <h3>Footer</h3>
+        <h5></h5>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Step 1</h5>
+                <dl class="dl-horizontal">
+                    <dt>Icon</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step1Icon" /></dd>
+                    <dt>Title</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step1Title" /></dd>
+                    <dt>Text</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step1Text" /></dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <h5>Step 2</h5>
+                <dl class="dl-horizontal">
+                    <dt>Icon</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step2Icon" /></dd>
+                    <dt>Title</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step2Title" /></dd>
+                    <dt>Text</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step2Text" /></dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <h5>Step 3</h5>
+                <dl class="dl-horizontal">
+                    <dt>Icon</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step3Icon" /></dd>
+                    <dt>Title</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step3Title" /></dd>
+                    <dt>Text</dt>
+                    <dd><input type="text" class="form-control" ng-model="settings.Step3Text" /></dd>
+                </dl>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" ng-click="saveSettings(settings)">Save</button>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="tab-pane" id="tab_@(item.Name.Replace(" ","_").ToLower())">
+            <table class="table">
+                <tr>
+                    <th>
+                        Main Image
+                    </th>
+                    <th>
+                        Product
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                @foreach (var itm in item.Products)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/images/productthumb/@itm.ImageId"/>
+                        </td>
+                        <td>
+                            <a href="~/Admin/AdminProducts/Edit/@itm.Id" class="bold label label-info">@itm.Name</a>
+                        </td>
+                        <td>
+                            <p class="text text-danger">@itm.Description</p>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <hr/>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        angular.module('myApp', ['ngResource']).controller('SettingsController', function($scope, $resource) {
+            var settingsApi = $resource('../../api/SiteSettings');
+            settingsApi.get(function(data) {
+                $scope.settings = data;
+            });
+            $scope.saveSettings = function(settings) {
+                settingsApi.save(settings, function() {
+                    alert("settings saved");
+                });
+            };
+        });
+    </script>
+}

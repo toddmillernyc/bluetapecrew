@@ -1,0 +1,45 @@
+﻿@model BlueTapeCrew.ViewModels.CartViewModel
+<div class="top-cart-info">
+    <a href="javascript:void(0);" class="top-cart-info-cunt">@Model.Count items</a>
+    <a href="javascript:void(0);" class="top-cart-info-value">$@Html.DisplayFor(x=>x.Total)</a>
+</div>
+<i class="fa fa-shopping-cart"></i>
+<div class="top-cart-content-wrapper">
+    <div class="top-cart-content">
+        <ul class="scroller" style="height: 250px;">
+            @if (Model.Items != null)
+            {
+                foreach (var item in Model.Items)
+                {
+                    <li>
+                        <a href="@Url.Action(item.LinkName, "Products")" class="productLink">
+                            @if (item.ImageData != null)
+                            {
+                                <img src="data:image/bmp;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ProductName @item.StyleText">
+                            }                 
+                        </a>
+                        <span class="cart-content-count">x @item.Quantity</span>
+                        <strong>@Html.ActionLink(item.ProductName, "Details", "Products", new { @name = item.LinkName }, null)</strong>
+                        <em>$ @Html.DisplayFor(modelItem => item.SubTotal)</em>
+                        <button type="button" class="del-goods" onclick="removeItem(@item.Id)">&nbsp;</button>
+                        <br />
+                        @Html.DisplayFor(modelItem => item.StyleText)
+                    </li>
+                }
+            }
+        </ul>
+        <div class="text-right">
+            @if (Model.Items != null)
+            {
+                <a href="~/cart" class="btn btn-default">View Cart</a>
+                <a href="~/checkout" class="btn btn-info">Checkout</a>
+            }
+            else
+            {
+                <p>Your cart is empty.  Add some stuff.</p>
+            }
+        </div>
+    </div>
+</div>
+
+

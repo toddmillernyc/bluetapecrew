@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8" />
+    <title>Btc Admin</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Themes/uniformjs/default/css/uniform.default.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-switch/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Scripts/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/summernote/summernote.css">
+    <link href="~/Content/admin/tasks.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/admin/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="~/Content/admin/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/admin/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/admin/darkblue.css" rel="stylesheet" type="text/css" id="style_color" />
+    @RenderSection("Styles",false)
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content page-style-square page-full-width">
+    <div class="page-header navbar navbar-fixed-top">
+        <div class="page-header-inner">
+            <div class="page-logo">
+                <a href="~/">
+                    <img src="~/Content/logo.png" alt="BlueTapeCrew" class="logo-default" />
+                </a>
+                <div class="menu-toggler sidebar-toggler hide">
+                </div>
+            </div>
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+            </a>
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="page-container">
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar navbar-collapse collapse">
+                <ul class="page-sidebar-menu page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                    <li class="sidebar-toggler-wrapper">
+                        <div class="sidebar-toggler">
+                        </div>
+                    </li>
+                    <li class="sidebar-search-wrapper">
+                        <form class="sidebar-search " action="extra_search.html" method="POST">
+                            <a href="javascript:;" class="remove">
+                                <i class="icon-close"></i>
+                            </a>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
+                                </span>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="start active open">
+                        <a href="javascript:;">
+                            <i class="icon-home"></i>
+                            <span class="title">Dashboard</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="active">
+                                <a href="index.html">
+                                    <i class="icon-bar-chart"></i>
+                                    Default Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index_2.html">
+                                    <i class="icon-bulb"></i>
+                                    New Dashboard #1
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index_3.html">
+                                    <i class="icon-graph"></i>
+                                    New Dashboard #2
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                        </ul>
+            </div>
+        </div>
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-2.2.4.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-ui-1.8.11.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/Scripts/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.blockUI.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.cookie.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/summernote/summernote.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/admin/metronic.js" type="text/javascript"></script>
+    <script src="~/Scripts/admin/layout.js" type="text/javascript"></script>
+    <script src="~/Scripts/admin/quick-sidebar.js" type="text/javascript"></script>
+    <script src="~/Scripts/admin/index.js" type="text/javascript"></script>
+    <script src="~/Scripts/admin/tasks.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Metronic.init();
+            Layout.init();
+            QuickSidebar.init();
+            Index.init();
+            Index.initDashboardDaterange();
+            Index.initJQVMAP();
+            Index.initCalendar();
+            Index.initCharts();
+            Index.initChat();
+            Index.initMiniCharts();
+            Tasks.initDashboardWidget();
+            @RenderSection("DocumentReady",false)
+        });
+    </script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    @RenderSection("Scripts",false)
+</body>
+</html>
