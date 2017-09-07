@@ -1,6 +1,6 @@
 # BlueTapeCrew
 
-https://btcrew.azurewebsites.net/
+https://bluetapecrew.com
 
 BlueTapeCrew is a client website I built from scratch in ASP.NET.
 
