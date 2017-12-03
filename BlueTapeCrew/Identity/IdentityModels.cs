@@ -17,7 +17,7 @@ namespace BlueTapeCrew.Identity
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("UserEntities", throwIfV1Schema: false)
+            : base("BtcEntities", throwIfV1Schema: false)
         {
         }
 

@@ -2,6 +2,16 @@ using System;
 using BlueTapeCrew.Interfaces;
 using Unity;
 using BlueTapeCrew.Services;
+using Microsoft.AspNet.Identity;
+using BlueTapeCrew.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
+using System.Net;
+using BlueTapeCrew.Controllers;
+using Microsoft.Owin.Security;
+using Unity.Injection;
+using Unity.Lifetime;
+using System.Web;
 
 namespace BlueTapeCrew
 {
@@ -43,7 +53,17 @@ namespace BlueTapeCrew
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
-            
+
+            container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
+            container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
+            container.RegisterType<AccountController>(new InjectionConstructor());
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            container.RegisterType<IAuthenticationManager>(
+                new InjectionFactory(
+                    o => System.Web.HttpContext.Current.GetOwinContext().Authentication
+                )
+            );
             container.RegisterType<ICartService, CartService>();
             container.RegisterType<ICheckoutService, CheckoutService>();
             container.RegisterType<ICookieService, CookieService>();
