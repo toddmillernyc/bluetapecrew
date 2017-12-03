@@ -3,7 +3,6 @@ using System.Data.Entity;
 using BlueTapeCrew.Identity;
 using BlueTapeCrew.Models;
 using KatanaContrib.Security.Instagram;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
@@ -27,7 +26,7 @@ namespace BlueTapeCrew
             // Configure the sign in cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                AuthenticationType = "ApplicationCookie",
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
@@ -37,46 +36,50 @@ namespace BlueTapeCrew
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+            });
+            app.UseExternalSignInCookie("ExternalCookie");
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
-            app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
+            app.UseTwoFactorSignInCookie("TwoFactorCookie", TimeSpan.FromMinutes(5));
 
             // Enables the application to remember the second login verification factor such as phone or email.
             // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
             // This is similar to the RememberMe option when you log in.
-            app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+            app.UseTwoFactorRememberBrowserCookie("TwoFactorRememberBrowserCookie");
 
             using (var db = new BtcEntities())
             {
                 var settings = db.SiteSettings.FirstOrDefaultAsync().Result;
 
-                app.UseMicrosoftAccountAuthentication(
+                if (!string.IsNullOrEmpty(settings.MicrosoftClientId))
+                    app.UseMicrosoftAccountAuthentication(
                     clientId: settings.MicrosoftClientId,
                     clientSecret: settings.MicrosoftClientSecret);
 
-                app.UseTwitterAuthentication(
+                if (!string.IsNullOrEmpty(settings.TwitterClientId))
+                    app.UseTwitterAuthentication(
                    consumerKey: settings.TwitterClientId,
                    consumerSecret: settings.TwitterClientSecret);
 
-                app.UseFacebookAuthentication(
-                   appId: settings.FacebookClientId,
+                if (!string.IsNullOrEmpty(settings.FacebookClientId))
+                    app.UseFacebookAuthentication(
+                    appId: settings.FacebookClientId,
                    appSecret: settings.FacebookClientSecret);
 
-                app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-                {
-                    ClientId = settings.GoogleClientId,
-                    ClientSecret = settings.GoogleClientSecret
-                });
+                if (!string.IsNullOrEmpty(settings.GoogleClientId))
+                    app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+                    {
+                        ClientId = settings.GoogleClientId,
+                        ClientSecret = settings.GoogleClientSecret
+                    });
 
-                app.UseInstagramAuthentication(new InstagramAuthenticationOptions()
-                {
-                    ClientId = settings.InstagramClientId,
-                    ClientSecret = settings.InstagramClientSecret
-                });
+                if (!string.IsNullOrEmpty(settings.InstagramClientId))
+                    app.UseInstagramAuthentication(new InstagramAuthenticationOptions()
+                    {
+                        ClientId = settings.InstagramClientId,
+                        ClientSecret = settings.InstagramClientSecret
+                    });
             }
-
         }
     }
 }

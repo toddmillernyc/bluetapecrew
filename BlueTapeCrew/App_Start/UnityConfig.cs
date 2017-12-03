@@ -1,50 +1,61 @@
 using System;
-using System.Data.Entity;
-using BlueTapeCrew.Controllers;
-using BlueTapeCrew.Identity;
 using BlueTapeCrew.Interfaces;
+using Unity;
 using BlueTapeCrew.Services;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Practices.Unity;
 
 namespace BlueTapeCrew
 {
-    public class UnityConfig
+    /// <summary>
+    /// Specifies the Unity configuration for the main container.
+    /// </summary>
+    public static class UnityConfig
     {
-        private static readonly Lazy<IUnityContainer> Container = new Lazy<IUnityContainer>(() =>
-        {
-            var container = new UnityContainer();
-            RegisterTypes(container);
-            return container;
-        });
+        #region Unity Container
+        private static Lazy<IUnityContainer> container =
+          new Lazy<IUnityContainer>(() =>
+          {
+              var container = new UnityContainer();
+              RegisterTypes(container);
+              return container;
+          });
 
-        public static IUnityContainer GetConfiguredContainer()
-        {
-            return Container.Value;
-        }
+        /// <summary>
+        /// Configured Unity Container.
+        /// </summary>
+        public static IUnityContainer Container => container.Value;
+        #endregion
 
+        /// <summary>
+        /// Registers the type mappings with the Unity container.
+        /// </summary>
+        /// <param name="container">The unity container to configure.</param>
+        /// <remarks>
+        /// There is no need to register concrete types such as controllers or
+        /// API controllers (unless you want to change the defaults), as Unity
+        /// allows resolving a concrete type even if it was not previously
+        /// registered.
+        /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            //types for default identity config
-            container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
-            container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
-            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
-            container.RegisterType<AccountController>(new InjectionConstructor());
-            container.RegisterType<ManageController>(new InjectionConstructor());
+            // NOTE: To load from web.config uncomment the line below.
+            // Make sure to add a Unity.Configuration to the using statements.
+            // container.LoadConfiguration();
 
-            //project specific types
+            // TODO: Register your type's mappings here.
+            // container.RegisterType<IProductRepository, ProductRepository>();
+            
             container.RegisterType<ICartService, CartService>();
-            container.RegisterType<IImageService, ImageService>();
-            container.RegisterType<IViewModelService, ViewModelService>();
-            container.RegisterType<IProductService, ProductService>();
             container.RegisterType<ICheckoutService, CheckoutService>();
-            container.RegisterType<IUserService, UserService>();
-            container.RegisterType<IEmailSubscriptionService,EmailSubscriptionService>();
-            container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<ICookieService, CookieService>();
-            container.RegisterType<ISiteSettingsService, SiteSettingsService>();
+            container.RegisterType<IEmailSubscriptionService, EmailSubscriptionService>();
+            container.RegisterType<IImageService, ImageService>();
+            container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IPaypalService, PaypalService>();
+            container.RegisterType<IProductService, ProductService>();
+            container.RegisterType<ISiteSettingsService, SiteSettingsService>();
+            container.RegisterType<IUserService, UserService>();
+            container.RegisterType<IViewModelService, ViewModelService>();
+            
         }
     }
 }
