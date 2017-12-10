@@ -5,8 +5,8 @@
     }
 </style>
 <p>
-    @Html.ActionLink("Create New Product", "Create","AdminProducts",null,new{ @class = "btn btn-xs btn-info"}) | 
-    @Html.ActionLink("Edit Categories", "Index","AdminCategories",null,new{ @class = "btn btn-xs btn-info"}) | 
+    @Html.ActionLink("Create New Product", "Create", "AdminProducts", null, new { @class = "btn btn-xs btn-info" }) |
+    @Html.ActionLink("Edit Categories", "Index", "AdminCategories", null, new { @class = "btn btn-xs btn-info" }) |
     @Html.ActionLink("Manage Site Users", "Index", "AspNetUsers", null, new { @class = "btn btn-xs btn-info" })
 </p>
 <ul class="nav nav-tabs">
@@ -18,54 +18,149 @@
 </ul>
 <div class="tab-content" ng-app="myApp" ng-controller="SettingsController">
     <div class="tab-pane active" id="tab_settings">
-        <input type="hidden" value="{{settings.Id}}"/>
-        <dl class="dl-horizontal">
-            <dt>Site Title</dt>
-            <dd><input class="form-control" type="text" ng-model="settings.SiteTitle"/></dd>
-            <dt>Site Description</dt>
-            <dd><textarea rows="10" class="form-control" ng-model="settings.Description"></textarea></dd>
-            <dt>Site Keywords</dt>
-            <dd><textarea class="form-control" ng-model="settings.Keywords"></textarea></dd>
-            <dt>About Us</dt>
-            <dd><textarea class="form-control" ng-model="settings.AboutUs"></textarea></dd>
-            <dt>Twitter Widget Id</dt>
-            <dd><input class="form-control" type="text" ng-model="settings.TwitterWidgetId"/></dd>
-
-        </dl>
-        <h3>Footer</h3>
-        <h5></h5>
+        <input type="hidden" value="{{settings.Id}}" />
         <div class="row">
-            <div class="col-md-4">
-                <h5>Step 1</h5>
+            <div class="col-md-6">
+                <h2>Site</h2>
                 <dl class="dl-horizontal">
-                    <dt>Icon</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step1Icon" /></dd>
                     <dt>Title</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step1Title" /></dd>
-                    <dt>Text</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step1Text" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.SiteTitle" /></dd>
+                    <dt>Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.SiteUrl" /></dd>
+                    <dt>Logo Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.SiteLogoUrl" /></dd>
                 </dl>
             </div>
-            <div class="col-md-4">
-                <h5>Step 2</h5>
+            <div class="col-md-6">
+                <h2>Contact</h2>
                 <dl class="dl-horizontal">
-                    <dt>Icon</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step2Icon" /></dd>
-                    <dt>Title</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step2Title" /></dd>
-                    <dt>Text</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step2Text" /></dd>
+                    <dt>Email</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.ContactEmailAddress" /></dd>
+                    <dt>Phone</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.ContactPhoneNumber" /></dd>
+                </dl>
+                <h2>Shipping</h2>
+                <dl class="dl-horizontal">
+                    <dt>Free Shipping Threshold</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.FreeShippingThreshold" /></dd>
+                    <dt>Flat Shipping Rage</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.FlatShippingRate" /></dd>
                 </dl>
             </div>
-            <div class="col-md-4">
-                <h5>Step 3</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Content</h2>
                 <dl class="dl-horizontal">
-                    <dt>Icon</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step3Icon" /></dd>
-                    <dt>Title</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step3Title" /></dd>
-                    <dt>Text</dt>
-                    <dd><input type="text" class="form-control" ng-model="settings.Step3Text" /></dd>
+                    <dt>About Us</dt>
+                    <dd><textarea class="form-control" ng-model="settings.AboutUs"></textarea></dd>
+                    <dt>Description</dt>
+                    <dd><textarea rows="10" class="form-control" ng-model="settings.Description"></textarea></dd>
+                    <dt>Keywords</dt>
+                    <dd><textarea class="form-control" ng-model="settings.Keywords"></textarea></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>PayPal Live</h2>
+                <dl class="dl-horizontal">
+                    <dt>Api User Name</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalApiUsername" /></dd>
+                    <dt>Api Password</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalApiPassword" /></dd>
+                    <dt>Api Signature</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalApiSignature" /></dd>
+                    <dt>Endpoint Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalEndpointUrl" /></dd>
+                    <dt>Return Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalReturnUrl" /></dd>
+                    <dt>Cancel Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalCancelUrl" /></dd>
+                </dl>
+
+                <h2>PayPal SandBox</h2>
+                <dl class="dl-horizontal">
+                    <dt>Sandbox User Name</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalSandboxAccount" /></dd>
+                    <dt>Sandbox ClientId</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalSandBoxClientId" /></dd>
+                    <dt>Sanbox Secret</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.PaypalSandBoxSecret" /></dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <h2>External Services</h2>
+
+                <h3>FaceBook</h3>
+                <dl class="dl-horizontal">
+                    <dt>Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.FaceBookUrl" /></dd>
+                    <dt>App Id</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.FacebookAppId" /></dd>
+                    <dt>Client Id</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.FacebookClientId" /></dd>
+                    <dt>Client Secret</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.FacebookClientSecret" /></dd>
+                </dl>
+
+                <h3>Google</h3>
+                <dl class="dl-horizontal">
+                    <dt>Client Id</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.GoogleClientId" /></dd>
+                    <dt>Client Secret </dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.GoogleClientSecret" /></dd>
+                </dl>
+
+                <h3>Instagram</h3>
+                <dl class="dl-horizontal">
+                    <dt>Client Id</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.InstagramClientId" /></dd>
+                    <dt>Client Secret</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.InstagramClientSecret" /></dd>
+                </dl>
+
+                <h3>LinkedIn</h3>
+                <dl class="dl-horizontal">
+                    <dt>LinkedInUrl</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.LinkedInUrl" /></dd>
+                </dl>
+
+                <h3>Mail Chimp</h3>
+                <dl class="dl-horizontal">
+                    <dt>Api Key</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.MailChimpApiKey" /></dd>
+                    <dt>List Id</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.MailChimpListId" /></dd>
+                </dl>
+
+                <h3>Microsoft</h3>
+                <dl class="dl-horizontal">
+                    <dt>MicrosoftClientId</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.MicrosoftClientId" /></dd>
+                    <dt>MicrosoftClientSecret</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.MicrosoftClientSecret" /></dd>
+                </dl>
+
+                <h3>Twitter</h3>
+                <dl class="dl-horizontal">
+                    <dt>TwitterUrl</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.TwitterUrl" /></dd>
+                    <dt>TwitterClientId</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.TwitterClientId" /></dd>
+                    <dt>TwitterClientSecret</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.TwitterClientSecret" /></dd>
+                    <dt>Twitter Widget Id</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.TwitterWidgetId" /></dd>
+                </dl>
+
+                <dl class="dl-horizontal">
+                    <dt>CopyrightText</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.CopyrightText" /></dd>
+                    <dt>CopyrightUrl</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.CopyrightUrl" /></dd>
+                    <dt>CopyrightLinktext</dt>
+                    <dd><input class="form-control" type="text" ng-model="settings.CopyrightLinktext" /></dd>
                 </dl>
             </div>
         </div>
@@ -90,7 +185,7 @@
                 {
                     <tr>
                         <td>
-                            <img src="~/images/productthumb/@itm.ImageId"/>
+                            <img src="~/images/productthumb/@itm.ImageId" />
                         </td>
                         <td>
                             <a href="~/Admin/AdminProducts/Edit/@itm.Id" class="bold label label-info">@itm.Name</a>
@@ -101,20 +196,20 @@
                     </tr>
                 }
             </table>
-            <hr/>
+            <hr />
         </div>
     }
 </div>
 
 @section Scripts {
     <script>
-        angular.module('myApp', ['ngResource']).controller('SettingsController', function($scope, $resource) {
+        angular.module('myApp', ['ngResource']).controller('SettingsController', function ($scope, $resource) {
             var settingsApi = $resource('../../api/SiteSettings');
-            settingsApi.get(function(data) {
+            settingsApi.get(function (data) {
                 $scope.settings = data;
             });
-            $scope.saveSettings = function(settings) {
-                settingsApi.save(settings, function() {
+            $scope.saveSettings = function (settings) {
+                settingsApi.save(settings, function () {
                     alert("settings saved");
                 });
             };

@@ -48,13 +48,6 @@ namespace BlueTapeCrew.Models
         [StringLength(50)]
         public string MailChimpListId { get; set; }
 
-        [StringLength(100)]
-        public string PaypalApiUsername { get; set; }
-
-        [StringLength(100)]
-        public string PaypalApiPassword { get; set; }
-        [StringLength(100)]
-        public string PaypalApiSignature { get; set; }
         public decimal FreeShippingThreshold { get; set; }
         public decimal FlatShippingRate { get; set; }
         public string ContactPhoneNumber { get; set; }
@@ -73,8 +66,21 @@ namespace BlueTapeCrew.Models
         public string TwitterClientSecret { get; set; }
         public string InstagramClientId { get; set; }
         public string InstagramClientSecret { get; set; }
+
+        // PayPal
+        [StringLength(100)]
+        public string PaypalApiUsername { get; set; }
+        [StringLength(100)]
+        public string PaypalApiPassword { get; set; }
+        [StringLength(100)]
+        public string PaypalApiSignature { get; set; }
         public string PaypalEndpointUrl { get; set; }
         public string PaypalReturnUrl { get; set; }
         public string PaypalCancelUrl { get; set; }
+
+        // Paypal Sandbox
+        public string PaypalSandboxAccount { get; set; }
+        public string PaypalSandBoxClientId { get; set; }
+        public string PaypalSandBoxSecret { get; set; }
     }
 }

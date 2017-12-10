@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Http;
 using BlueTapeCrew.Models;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
@@ -16,17 +18,17 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public void Post([FromBody]SiteSetting settings)
+        public async Task Post([FromBody]SiteSetting settings)
         {
             using (var db = new BtcEntities())
             {
-                var model = db.SiteSettings.FirstOrDefault();
-                model.SiteTitle = settings.SiteTitle;
-                model.Description = settings.Description;
-                model.Keywords = settings.Keywords;
-                model.AboutUs = settings.AboutUs;
-                model.TwitterWidgetId = settings.TwitterWidgetId;
-                db.SaveChanges();
+                var model = await db.SiteSettings.FirstOrDefaultAsync();
+
+                db.SiteSettings.Add(settings);
+                await db.SaveChangesAsync();
+
+                db.SiteSettings.Remove(model);
+                await db.SaveChangesAsync();
             }
         }
     }
