@@ -1,5 +1,6 @@
 ﻿using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Services;
 
@@ -7,14 +8,13 @@ namespace BlueTapeCrew.Tests.Integration
 {
     public class IntegrationTestBase
     {
-        public const string PaypalApi = "https://api.sandbox.paypal.com/v1/";
-        public string PaypalTokenEndpoint = $"{PaypalApi}oauth2/token";
+        protected const string PaypalApi = "https://api.sandbox.paypal.com/v1/";
 
-        public IAccessTokenRepository AccessTokenRepository;
-        public ISettingsRepository SettingsRepository;
-        public IWebService WebService;
+        protected IAccessTokenRepository AccessTokenRepository;
+        protected ISettingsRepository SettingsRepository;
+        protected IWebService WebService;
 
-        public SiteSetting Settings;
+        protected SiteSetting Settings;
 
         public IntegrationTestBase()
         {
@@ -23,6 +23,13 @@ namespace BlueTapeCrew.Tests.Integration
             WebService = new WebService();
 
             Settings = SettingsRepository.Get().Result;
+        }
+
+        protected PaypalApiClient GetPaypalApiClient()
+        {
+            var client = new PaypalApiClient(WebService, AccessTokenRepository);
+            client.Configure(PaypalApi, Settings.PaypalSandBoxClientId, Settings.PaypalSandBoxSecret);
+            return client;
         }
     }
 }
