@@ -1,8 +1,8 @@
-﻿using BlueTapeCrew.Services;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using BlueTapeCrew.Services;
 using Xunit;
 
-namespace BlueTapeCrew.Tests
+namespace BlueTapeCrew.Tests.Integration
 {
     public class PaypalTests : IntegrationTestBase
     {
