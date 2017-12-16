@@ -71,9 +71,9 @@ namespace BlueTapeCrew.Models
         [StringLength(100)]
         public string PaypalApiUsername { get; set; }
         [StringLength(100)]
-        public string PaypalApiPassword { get; set; }
+        public string PaypalClientSecret { get; set; }
         [StringLength(100)]
-        public string PaypalApiSignature { get; set; }
+        public string PaypalClientId { get; set; }
         public string PaypalEndpointUrl { get; set; }
         public string PaypalReturnUrl { get; set; }
         public string PaypalCancelUrl { get; set; }

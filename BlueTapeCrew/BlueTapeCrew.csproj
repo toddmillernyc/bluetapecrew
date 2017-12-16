@@ -368,6 +368,16 @@
     <Compile Include="Areas\Admin\Models\AdminCategoryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditProductViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Interfaces\IPaypalApiClient.cs" />
+    <Compile Include="Interfaces\ISettingsRepository.cs" />
+    <Compile Include="Interfaces\IWebService.cs" />
+    <Compile Include="Models\AccessToken.cs" />
+    <Compile Include="Models\TokenType.cs" />
+    <Compile Include="Interfaces\IAccessTokenRepository.cs" />
+    <Compile Include="Repositories\AccessTokenRepository.cs" />
+    <Compile Include="Repositories\SettingsRepository.cs" />
+    <Compile Include="Services\PaypalApiClient.cs" />
+    <Compile Include="Services\WebService.cs" />
     <Compile Include="Utils\NVPAPICaller.cs" />
     <Compile Include="Interfaces\ICheckoutService.cs" />
     <Compile Include="Interfaces\ICartService.cs" />

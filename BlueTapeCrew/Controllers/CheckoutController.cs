@@ -59,7 +59,7 @@ namespace BlueTapeCrew.Controllers
             var cart = await _cartService.GetCartViewModel(Session.SessionID);
             if (cart == null) return RedirectToAction("EmptyCart");
             var user = await _userService.GetUserByName(User.Identity.Name);
-            var model = _checkoutService.GetCheckoutViewModel(Session.SessionID,user,cart);
+            var model = new CheckoutViewModel(user, cart);
             return View(model);
         }
 

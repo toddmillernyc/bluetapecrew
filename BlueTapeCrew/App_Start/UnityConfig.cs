@@ -6,64 +6,52 @@ using Microsoft.AspNet.Identity;
 using BlueTapeCrew.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
-using System.Net;
 using BlueTapeCrew.Controllers;
 using Microsoft.Owin.Security;
 using Unity.Injection;
 using Unity.Lifetime;
 using System.Web;
+using BlueTapeCrew.Repositories;
 
 namespace BlueTapeCrew
 {
-    /// <summary>
-    /// Specifies the Unity configuration for the main container.
-    /// </summary>
     public static class UnityConfig
     {
-        #region Unity Container
-        private static Lazy<IUnityContainer> container =
-          new Lazy<IUnityContainer>(() =>
-          {
-              var container = new UnityContainer();
-              RegisterTypes(container);
-              return container;
-          });
+        private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
+        {
+            var container = new UnityContainer();
+            RegisterTypes(container);
+            return container;
+        });
 
-        /// <summary>
-        /// Configured Unity Container.
-        /// </summary>
         public static IUnityContainer Container => container.Value;
-        #endregion
 
-        /// <summary>
-        /// Registers the type mappings with the Unity container.
-        /// </summary>
-        /// <param name="container">The unity container to configure.</param>
-        /// <remarks>
-        /// There is no need to register concrete types such as controllers or
-        /// API controllers (unless you want to change the defaults), as Unity
-        /// allows resolving a concrete type even if it was not previously
-        /// registered.
-        /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            // NOTE: To load from web.config uncomment the line below.
-            // Make sure to add a Unity.Configuration to the using statements.
-            // container.LoadConfiguration();
+            RegisterIdentityTypes(container);
+            RegisterRepositoryTypes(container);
+            RegisterServiceTypes(container);
+        }
 
-            // TODO: Register your type's mappings here.
-            // container.RegisterType<IProductRepository, ProductRepository>();
-
+        private static void RegisterIdentityTypes(IUnityContainer container)
+        {
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
             container.RegisterType<IAuthenticationManager>(
-                new InjectionFactory(
-                    o => System.Web.HttpContext.Current.GetOwinContext().Authentication
-                )
-            );
+                new InjectionFactory(o => HttpContext.Current.GetOwinContext().Authentication));
+        }
+
+        private static void RegisterRepositoryTypes(IUnityContainer container)
+        {
+            container.RegisterType<IAccessTokenRepository, AccessTokenRepository>();
+            container.RegisterType<ISettingsRepository, SettingsRepository>();
+        }
+
+        private static void RegisterServiceTypes(IUnityContainer container)
+        {
             container.RegisterType<ICartService, CartService>();
             container.RegisterType<ICheckoutService, CheckoutService>();
             container.RegisterType<ICookieService, CookieService>();
@@ -75,7 +63,7 @@ namespace BlueTapeCrew
             container.RegisterType<ISiteSettingsService, SiteSettingsService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IViewModelService, ViewModelService>();
-            
+            container.RegisterType<IWebService, WebService>();
         }
     }
 }

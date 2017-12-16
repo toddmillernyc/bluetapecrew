@@ -1,9 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BlueTapeCrew.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlueTapeCrew.ViewModels
 {
     public class CheckoutViewModel
     {
+        public CheckoutViewModel() { }
+
+        public CheckoutViewModel(AspNetUser user, CartViewModel cart)
+        {
+            Cart = cart;
+            if(user != null)
+            {
+                Address = user.Address;
+                City = user.City;
+                Email = user.Email;
+                FirstName = user.FirstName;
+                LastName = user.LastName;
+                Phone = user.PhoneNumber;
+                State = user.State;
+                Zip = user.PostalCode;
+            }
+        }
+
         [Required(ErrorMessage = "eMail is required")]
         public string Email { get; set; }
         [Required(ErrorMessage = "First Name is required")]

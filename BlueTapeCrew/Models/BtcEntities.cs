@@ -35,6 +35,7 @@ namespace BlueTapeCrew.Models
         public virtual DbSet<Style> Styles { get; set; }
         public virtual DbSet<CartView> CartViews { get; set; }
         public virtual DbSet<StyleView> StyleViews { get; set; }
+        public virtual DbSet<AccessToken> AccessTokens { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

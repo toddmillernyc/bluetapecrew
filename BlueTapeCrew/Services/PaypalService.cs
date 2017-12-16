@@ -148,8 +148,8 @@ namespace BlueTapeCrew.Services
             var codec = new NvpCodec
             {
                 ["USER"] = settings.PaypalApiUsername,
-                [PWD] = settings.PaypalApiPassword,
-                [SIGNATURE] = settings.PaypalApiSignature,
+                //[PWD] = settings.PaypalApiPassword,
+                //[SIGNATURE] = settings.PaypalApiSignature,
                 ["SUBJECT"] = SUBJECT,
                 ["VERSION"] = "123.0"
             };
