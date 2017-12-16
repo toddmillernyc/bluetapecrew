@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Utils;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNet.Identity;

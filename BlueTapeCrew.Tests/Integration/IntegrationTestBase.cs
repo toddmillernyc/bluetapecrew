@@ -7,8 +7,9 @@ namespace BlueTapeCrew.Tests.Integration
 {
     public class IntegrationTestBase
     {
-        public const string PaypalSandboxUrl = "https://api.sandbox.paypal.com/v1/oauth2/token";
- 
+        public const string PaypalApi = "https://api.sandbox.paypal.com/v1/";
+        public string PaypalTokenEndpoint = $"{PaypalApi}oauth2/token";
+
         public IAccessTokenRepository AccessTokenRepository;
         public ISettingsRepository SettingsRepository;
         public IWebService WebService;

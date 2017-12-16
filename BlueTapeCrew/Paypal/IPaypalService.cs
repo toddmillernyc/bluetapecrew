@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BlueTapeCrew.Utils;
 
-namespace BlueTapeCrew.Interfaces
+namespace BlueTapeCrew.Paypal
 {
     public interface IPaypalService
     {

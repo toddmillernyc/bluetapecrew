@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Unity.Injection;
 using Unity.Lifetime;
 using System.Web;
+using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
 
 namespace BlueTapeCrew

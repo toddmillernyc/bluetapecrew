@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Services;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace BlueTapeCrew.Tests.Integration
         {
             //arrange
             var sut = new PaypalApiClient(WebService, AccessTokenRepository);
-            sut.Configure(PaypalSandboxUrl, Settings.PaypalSandBoxClientId, Settings.PaypalSandBoxSecret);
+            sut.Configure(PaypalTokenEndpoint, Settings.PaypalSandBoxClientId, Settings.PaypalSandBoxSecret);
 
             //act
             var actual = await sut.GetAccessToken();
