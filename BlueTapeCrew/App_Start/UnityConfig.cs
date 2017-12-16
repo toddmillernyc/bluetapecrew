@@ -31,6 +31,8 @@ namespace BlueTapeCrew
             RegisterIdentityTypes(container);
             RegisterRepositoryTypes(container);
             RegisterServiceTypes(container);
+
+            container.RegisterType<IPaypalApiClient, PaypalApiClient>();
         }
 
         private static void RegisterIdentityTypes(IUnityContainer container)

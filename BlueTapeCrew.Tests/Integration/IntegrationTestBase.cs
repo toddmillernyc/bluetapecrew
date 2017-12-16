@@ -1,9 +1,9 @@
-﻿using BlueTapeCrew.Models;
-using BlueTapeCrew.Interfaces;
-using BlueTapeCrew.Services;
+﻿using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Models;
 using BlueTapeCrew.Repositories;
+using BlueTapeCrew.Services;
 
-namespace BlueTapeCrew.Tests
+namespace BlueTapeCrew.Tests.Integration
 {
     public class IntegrationTestBase
     {

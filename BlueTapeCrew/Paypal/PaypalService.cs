@@ -8,7 +8,7 @@ using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Utils;
 
-namespace BlueTapeCrew.Services
+namespace BlueTapeCrew.Paypal
 {
     public class PaypalService : IPaypalService
     {
