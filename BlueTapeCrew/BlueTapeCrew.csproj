@@ -368,6 +368,7 @@
     <Compile Include="Areas\Admin\Models\AdminCategoryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditProductViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Paypal\Extensions\DecimalExtensions.cs" />
     <Compile Include="Paypal\IPaypalApiClient.cs" />
     <Compile Include="Interfaces\ISettingsRepository.cs" />
     <Compile Include="Interfaces\IWebService.cs" />

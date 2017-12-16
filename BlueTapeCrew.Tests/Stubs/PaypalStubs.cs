@@ -13,20 +13,7 @@ namespace BlueTapeCrew.Tests.Stubs
                 {
                     new Transaction
                     {
-                        Amount = new Amount
-                        {
-                            Total = "30.11",
-                            Currency = "USD",
-                            Details = new Details
-                            {
-                                Subtotal = "30.00",
-                                Tax = "0.07",
-                                Shipping = "0.03",
-                                HandlingFee = "1.00",
-                                ShippingDiscount = "-1.00",
-                                Insurance = "0.01"
-                            }
-                        },
+                        Amount = new Amount(new Details(30.00m, 0.07m, 0.03m, 1.00m, -1.00m, 0.01m)),
                         Description = "The payment transaction description.",
                         Custom = "EBAY_EMS_90048630024435",
                         InvoiceNumber = "48787589673",

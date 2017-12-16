@@ -3,14 +3,12 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Paypal.Models;
 using BlueTapeCrew.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ServiceStack.Text;
 
 namespace BlueTapeCrew.Paypal
 {

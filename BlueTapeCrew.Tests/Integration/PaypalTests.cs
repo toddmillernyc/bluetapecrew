@@ -3,7 +3,7 @@ using BlueTapeCrew.Tests.Stubs;
 using Xunit;
 
 namespace BlueTapeCrew.Tests.Integration
-{
+{ 
     public class PaypalTests : IntegrationTestBase
     {
         [Fact]
@@ -24,10 +24,11 @@ namespace BlueTapeCrew.Tests.Integration
         {
             //arrange
             var sut = GetPaypalApiClient();
+            var paymentStub = PaypalStubs.TestPayment;
 
             //act
             var accessToken = await sut.GetAccessToken();
-            var request = sut.CreateOrderRequest(accessToken.Token, PaypalApi, PaypalStubs.TestPayment);
+            var request = sut.CreateOrderRequest(accessToken.Token, PaypalApi, paymentStub);
             var actual = await sut.SendOrderRequest(request);
 
             //assert
