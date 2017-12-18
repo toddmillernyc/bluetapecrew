@@ -1,5 +1,4 @@
 ﻿using System;
-using BlueTapeCrew.Paypal.Models;
 using Xunit;
 
 namespace BlueTapeCrew.Tests.Unit
@@ -15,7 +14,6 @@ namespace BlueTapeCrew.Tests.Unit
             //act
             try
             {
-                var sut = new Details(0m, 0m, 0m, 0m, shippingDiscount);
 
             //assert
                 Assert.True(false);

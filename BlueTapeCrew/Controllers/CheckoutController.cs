@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Mvc;
 using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
-using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Utils;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -19,26 +18,20 @@ namespace BlueTapeCrew.Controllers
     public class CheckoutController : Controller
     {
         private readonly ICartService _cartService;
-        private readonly ICheckoutService _checkoutService;
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
-        private readonly IPaypalService _paypalService;
 
         private ApplicationUserManager _userManager;
 
         public CheckoutController(
-            ICheckoutService checkoutService,
             IUserService userService,
             ICartService cartService,
             IOrderService orderService,
-            IPaypalService paypalService,
             ApplicationUserManager userManager)
         {
             _cartService = cartService;
-            _checkoutService = checkoutService;
             _userService = userService;
             _orderService = orderService;
-            _paypalService = paypalService;
             _userManager = userManager;
         }
 
@@ -88,16 +81,16 @@ namespace BlueTapeCrew.Controllers
 
                 if (amt != null)
                 {
-                    var ret = _paypalService.ShortcutExpressCheckout(itemamt, shipping, amt, ref token, ref retMsg, Session.SessionID);
-                    if (ret)
-                    {
-                        Session["token"] = token;
-                        Response.Redirect(retMsg);
-                    }
-                    else
-                    {
-                        return Content("CheckoutError?" + retMsg);
-                    }
+                    //var ret = _paypalService.ShortcutExpressCheckout(itemamt, shipping, amt, ref token, ref retMsg, Session.SessionID);
+                    //if (ret)
+                    //{
+                    //    Session["token"] = token;
+                    //    Response.Redirect(retMsg);
+                    //}
+                    //else
+                    //{
+                    //    return Content("CheckoutError?" + retMsg);
+                    //}
                 }
                 else
                 {
@@ -157,8 +150,8 @@ namespace BlueTapeCrew.Controllers
         {
             var decoder = new NvpCodec();
             var retMsg = "";
-            var ret = _paypalService.DoCheckoutPayment(finalPaymentAmount, token, payerId, ref decoder, ref retMsg);
-            if (!ret) return Content(retMsg);
+            //var ret = _paypalService.DoCheckoutPayment(finalPaymentAmount, token, payerId, ref decoder, ref retMsg);
+            //if (!ret) return Content(retMsg);
 
             // Retrieve PayPal confirmation value.
             var paymentConfirmation = decoder["PAYMENTINFO_0_TRANSACTIONID"];

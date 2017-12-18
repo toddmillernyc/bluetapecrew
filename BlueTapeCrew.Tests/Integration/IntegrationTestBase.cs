@@ -1,6 +1,5 @@
 ﻿using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
-using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Services;
 
@@ -25,11 +24,6 @@ namespace BlueTapeCrew.Tests.Integration
             Settings = SettingsRepository.Get().Result;
         }
 
-        protected PaypalApiClient GetPaypalApiClient()
-        {
-            var client = new PaypalApiClient(WebService, AccessTokenRepository);
-            client.Configure(PaypalApi, Settings.PaypalSandBoxClientId, Settings.PaypalSandBoxSecret);
-            return client;
-        }
+
     }
 }

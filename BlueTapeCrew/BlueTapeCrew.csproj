@@ -368,36 +368,19 @@
     <Compile Include="Areas\Admin\Models\AdminCategoryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditProductViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Paypal\Extensions\DecimalExtensions.cs" />
-    <Compile Include="Paypal\IPaypalApiClient.cs" />
     <Compile Include="Interfaces\ISettingsRepository.cs" />
     <Compile Include="Interfaces\IWebService.cs" />
     <Compile Include="Models\AccessToken.cs" />
     <Compile Include="Models\TokenType.cs" />
     <Compile Include="Interfaces\IAccessTokenRepository.cs" />
-    <Compile Include="Paypal\Models\Amount.cs" />
-    <Compile Include="Paypal\Models\Details.cs" />
-    <Compile Include="Paypal\Models\Item.cs" />
-    <Compile Include="Paypal\Models\ItemList.cs" />
-    <Compile Include="Paypal\Models\Link.cs" />
-    <Compile Include="Paypal\Models\Payer.cs" />
-    <Compile Include="Paypal\Models\Payment.cs" />
-    <Compile Include="Paypal\Models\PaymentOptions.cs" />
-    <Compile Include="Paypal\Models\PaymentResponse.cs" />
-    <Compile Include="Paypal\Models\RedirectUrls.cs" />
-    <Compile Include="Paypal\Models\ShippingAddress.cs" />
-    <Compile Include="Paypal\Models\Transaction.cs" />
     <Compile Include="Repositories\AccessTokenRepository.cs" />
     <Compile Include="Repositories\SettingsRepository.cs" />
-    <Compile Include="Paypal\PaypalApiClient.cs" />
     <Compile Include="Services\WebService.cs" />
     <Compile Include="Utils\NVPAPICaller.cs" />
-    <Compile Include="Interfaces\ICheckoutService.cs" />
     <Compile Include="Interfaces\ICartService.cs" />
     <Compile Include="Interfaces\ICookieService.cs" />
     <Compile Include="Interfaces\IEmailSubscriptionService.cs" />
     <Compile Include="Interfaces\IImageService.cs" />
-    <Compile Include="Paypal\IPaypalService.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
     <Compile Include="Interfaces\ISiteSettingsService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
@@ -432,12 +415,10 @@
     <Compile Include="Models\Style.cs" />
     <Compile Include="Models\StyleView.cs" />
     <Compile Include="Services\CartService.cs" />
-    <Compile Include="Services\CheckoutService.cs" />
     <Compile Include="Services\CookieService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Interfaces\IOrderService.cs" />
     <Compile Include="Services\OrderService.cs" />
-    <Compile Include="Paypal\PaypalService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\EmailSubscriptionService.cs" />
     <Compile Include="Services\SiteSettingsService.cs" />
@@ -1659,7 +1640,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Paypal\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

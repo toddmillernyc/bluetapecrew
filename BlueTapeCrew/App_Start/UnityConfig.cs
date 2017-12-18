@@ -11,7 +11,6 @@ using Microsoft.Owin.Security;
 using Unity.Injection;
 using Unity.Lifetime;
 using System.Web;
-using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
 
 namespace BlueTapeCrew
@@ -33,7 +32,6 @@ namespace BlueTapeCrew
             RegisterRepositoryTypes(container);
             RegisterServiceTypes(container);
 
-            container.RegisterType<IPaypalApiClient, PaypalApiClient>();
         }
 
         private static void RegisterIdentityTypes(IUnityContainer container)
@@ -56,12 +54,10 @@ namespace BlueTapeCrew
         private static void RegisterServiceTypes(IUnityContainer container)
         {
             container.RegisterType<ICartService, CartService>();
-            container.RegisterType<ICheckoutService, CheckoutService>();
             container.RegisterType<ICookieService, CookieService>();
             container.RegisterType<IEmailSubscriptionService, EmailSubscriptionService>();
             container.RegisterType<IImageService, ImageService>();
             container.RegisterType<IOrderService, OrderService>();
-            container.RegisterType<IPaypalService, PaypalService>();
             container.RegisterType<IProductService, ProductService>();
             container.RegisterType<ISiteSettingsService, SiteSettingsService>();
             container.RegisterType<IUserService, UserService>();
