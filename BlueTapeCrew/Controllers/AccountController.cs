@@ -83,6 +83,10 @@ namespace BlueTapeCrew.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (!Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

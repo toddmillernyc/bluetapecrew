@@ -61,6 +61,7 @@ namespace BlueTapeCrew.Controllers
             if (cart == null) return RedirectToAction("EmptyCart");
             var user = await _userService.GetUserByName(User.Identity.Name);
             var model = new CheckoutViewModel(user, cart);
+            ViewBag.ReturnUrl = HttpContext.Request.Url?.ToString();
             return View(model);
         }
 
