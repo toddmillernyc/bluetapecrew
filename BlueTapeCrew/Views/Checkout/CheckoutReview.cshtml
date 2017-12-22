@@ -34,26 +34,27 @@
         <div class="row margin-bottom-40">
             <div class="col-md-12">
                 <h1>Shipping Address</h1>
-                @Model.FirstName @Model.LastName<br/>
-                @Model.Phone<br/>
-                @Model.Email<br/>
-                <br/>
-                @Model.Address<br/>
+                @Model.FirstName @Model.LastName<br />
+                @Model.Phone<br />
+                @Model.Email<br />
+                <br />
+                @Model.Address<br />
                 @Model.City, @Model.State @Model.Zip
-                <hr/>
+                <hr />
                 <h1>Order Total</h1>
-                Subtotal: $ @Model.Cart.SubTotal<br/>
-                Shipping: $ @Model.Cart.Shipping<br/>
+                Subtotal: $ @Model.Cart.SubTotal<br />
+                Shipping: $ @Model.Cart.Shipping<br />
                 Total: <b>$ @Model.Cart.Total</b>
-                <hr/>
+                <hr />
                 @using (Html.BeginForm("Complete", "Checkout", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" value="@ViewBag.Token" name="token"/>
-                    <input type="hidden" value="@ViewBag.PayerId" name="PayerID"/>
-                    <input type="hidden" name="finalPaymentAmount" value="@Model.Cart.Total"/>
-                    <button type="submit" class="btn btn-info">Confirm Order</button>
-                }
+    {
+            @Html.AntiForgeryToken()
+            <input type="hidden" value="@ViewBag.Token" name="token" />
+            <input type="hidden" value="@ViewBag.PayerId" name="payerId" />
+            <input type="hidden" value="@ViewBag.PaymentId" name="paymentId" />
+            <input type="hidden" name="finalPaymentAmount" value="@Model.Cart.Total" />
+            <button type="submit" class="btn btn-info">Confirm Order</button>
+}
             </div>
         </div>
     </div>

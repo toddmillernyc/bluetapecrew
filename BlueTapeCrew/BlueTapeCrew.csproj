@@ -378,6 +378,7 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\TokenType.cs" />
     <Compile Include="Interfaces\IAccessTokenRepository.cs" />
+    <Compile Include="Paypal\CompletePaymentRequest.cs" />
     <Compile Include="Paypal\IPaypalService.cs" />
     <Compile Include="Paypal\PaymentRequest.cs" />
     <Compile Include="Paypal\PaypalExtensions.cs" />

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using PayPal.Api;
 
@@ -13,7 +12,7 @@ namespace BlueTapeCrew.Paypal
             return ConfigManager.Instance.GetProperties();
         }
 
-        private static string GetAccessToken(string clientId, string clientSecret)
+        public string GetAccessToken(string clientId, string clientSecret)
         {
             var accessToken = new OAuthTokenCredential(clientId, clientSecret, GetConfig()).GetAccessToken();
             return accessToken;
@@ -69,6 +68,15 @@ namespace BlueTapeCrew.Paypal
             var createdPayment = payment.Create(apiContext);
             var redirectUrl = createdPayment.GetApprovalUrl();
             return redirectUrl;
+        }
+
+        public Payment CompletePayment(CompletePaymentRequest paymentRequest)
+        {
+            var apiContext = new APIContext(paymentRequest.Token);
+            var paymentExecution = new PaymentExecution { payer_id = paymentRequest.PayerId };
+            var payment = new Payment { id = paymentRequest.PaymentId };
+            var executedPayment = payment.Execute(apiContext, paymentExecution);
+            return executedPayment;
         }
 
         public void Run(PaymentRequest paymentRequest)

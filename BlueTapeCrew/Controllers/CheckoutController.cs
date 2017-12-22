@@ -19,6 +19,10 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class CheckoutController : Controller
     {
+        private bool IsSandbox = false;
+        private string PaypalClientId = "";
+        private string PaypalClientSecret = "";
+
         private readonly ICartService _cartService;
         private readonly IInvoiceService _invoiceService;
         private readonly IOrderService _orderService;
@@ -43,6 +47,10 @@ namespace BlueTapeCrew.Controllers
             _paypalService = paypalService;
             _siteSettingsService = siteSettingsService;
             _userManager = userManager;
+
+#if DEBUG
+            IsSandbox = true;
+#endif
         }
 
         public ApplicationUserManager UserManager
@@ -94,16 +102,13 @@ namespace BlueTapeCrew.Controllers
                 
                 //todo: impliment token store and get token if not expired
                 var accessToken = string.Empty;
-                var isSandbox = false;
-#if DEBUG
-                isSandbox = true;       
-#endif
+
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 var invoice = await _invoiceService.Create(Session.SessionID);
 
                 try
                 {
-                    var paymentRequest = new PaymentRequest(HttpContext.Request.Url, settings, cart.Items, invoice.Id, accessToken, isSandbox);
+                    var paymentRequest = new PaymentRequest(HttpContext.Request.Url, settings, cart.Items, invoice.Id, accessToken, IsSandbox);
                     var redirectUrl = _paypalService.PaywithPaypal(paymentRequest);
                     if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl);
                 }
@@ -130,6 +135,7 @@ namespace BlueTapeCrew.Controllers
 
             ViewBag.Token = token;
             ViewBag.PayerId = payerId;
+            ViewBag.PaymentId = paymentId;
             var model = new CheckoutViewModel();
             if (Request.IsAuthenticated)
             {
@@ -161,16 +167,34 @@ namespace BlueTapeCrew.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Complete(string finalPaymentAmount, string token, string payerId)
+        public async Task<ActionResult> Complete(CompletePaymentRequest completePaymentRequest)
         {
-            var decoder = new NvpCodec();
-            var retMsg = "";
-            //var ret = _paypalService.DoCheckoutPayment(finalPaymentAmount, token, payerId, ref decoder, ref retMsg);
-            //if (!ret) return Content(retMsg);
+            try
+            {
+                var clientId = "";
+                var clientSecret = "";
+                var settings = await _siteSettingsService.GetSettings();
 
-            // Retrieve PayPal confirmation value.
-            var paymentConfirmation = decoder["PAYMENTINFO_0_TRANSACTIONID"];
-            ViewBag.PaymentConfirmation = paymentConfirmation;
+                if (IsSandbox)
+                {
+                    clientId = settings.PaypalSandBoxClientId;
+                    clientSecret = settings.PaypalSandBoxSecret;
+                }
+                else
+                {
+                    clientId = settings.PaypalClientId;
+                    clientSecret = settings.PaypalClientSecret;
+                }
+                completePaymentRequest.Token = _paypalService.GetAccessToken(clientId, clientSecret);
+                var completedPayment = _paypalService.CompletePayment(completePaymentRequest);
+                ViewBag.PaymentConfirmation = completedPayment.id;
+            }
+            catch (PaymentsException ex)
+            {
+                return Content(ex.Response);
+            }
+
+
 
             var cartView = await _cartService.Get(Session.SessionID);
             var subtotal = cartView.Sum(x => x.SubTotal);
@@ -313,7 +337,7 @@ namespace BlueTapeCrew.Controllers
                 html += "<p>Check your order status at <a href='https://bluetapecrew.com/account'>bluetapecrew.com/account</a> or email <a href='mailto:info@bluetapecrew.com'>info@bluetapecrew.com</a></p>";
 
                 myMessage.Body = html;
-                await UserManager.SmsService.SendAsync(myMessage);
+                //await UserManager.SmsService.SendAsync(myMessage);
 
                 return View(order);
             }
