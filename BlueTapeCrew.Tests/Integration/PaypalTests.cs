@@ -11,11 +11,10 @@ namespace BlueTapeCrew.Tests.Integration
         public void GetApiContext_GivenAPaymentRequestWithValidApiCredentials_ReturnsAnApiContextWithAValidRequestId()
         {
             //arrange
-            var sut = GetPaypalService();
-            var paymentRequest = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, Settings, CartViewStubs.Get(), 123, "");
+            var paymentRequest = new PaymentRequest(ProductionCheckoutUri, Settings, CartViewStubs.Get(), 123, "");
 
             //act
-            var apiContext = sut.GetApiContext(paymentRequest);
+            var apiContext = PaypalService.GetApiContext(paymentRequest);
 
             //assert
             Assert.Equal(36, apiContext.RequestId.Length);
@@ -25,9 +24,8 @@ namespace BlueTapeCrew.Tests.Integration
         public void PaymentCreate_GivenAValidPaymentAndApiContext_ReturnsAValidCreatedPayment()
         {
             //arrange
-            var sut = GetPaypalService();
-            var uri = new Uri("https://bluetapecrew.come/checkout");
-            var paymentRequest = new PaymentRequest(uri, Settings, CartViewStubs.Get(), 123, "");
+            var sut = PaypalService;
+            var paymentRequest = new PaymentRequest(ProductionCheckoutUri, Settings, CartViewStubs.Get(), 123, "");
 
             //act
             var apiContext = sut.GetApiContext(paymentRequest);

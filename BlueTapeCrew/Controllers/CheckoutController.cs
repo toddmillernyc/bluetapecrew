@@ -123,7 +123,7 @@ namespace BlueTapeCrew.Controllers
         }
 
         
-        public async Task<ActionResult> PaypalPaymentReview(string token, string payerId)
+        public async Task<ActionResult> CheckoutReview(string token, string payerId)
         {
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(payerId))
                 return RedirectToAction("Index", "Checkout");
