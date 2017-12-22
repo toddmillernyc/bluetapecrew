@@ -122,8 +122,8 @@ namespace BlueTapeCrew.Controllers
             return View();
         }
 
-        
-        public async Task<ActionResult> CheckoutReview(string token, string payerId)
+        [Route("checkoutreview")]
+        public async Task<ActionResult> CheckoutReview(string paymentId, string token, string payerId)
         {
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(payerId))
                 return RedirectToAction("Index", "Checkout");
@@ -161,7 +161,7 @@ namespace BlueTapeCrew.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CheckoutReview(string finalPaymentAmount, string token, string payerId)
+        public async Task<ActionResult> Complete(string finalPaymentAmount, string token, string payerId)
         {
             var decoder = new NvpCodec();
             var retMsg = "";

@@ -46,7 +46,7 @@
                 Shipping: $ @Model.Cart.Shipping<br/>
                 Total: <b>$ @Model.Cart.Total</b>
                 <hr/>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("Complete", "Checkout", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     <input type="hidden" value="@ViewBag.Token" name="token"/>
