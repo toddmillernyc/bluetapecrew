@@ -1,5 +1,6 @@
 ﻿using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Services;
 
@@ -12,18 +13,27 @@ namespace BlueTapeCrew.Tests.Integration
         protected IAccessTokenRepository AccessTokenRepository;
         protected ISettingsRepository SettingsRepository;
         protected IWebService WebService;
+        protected IInvoiceRepository InvoiceRepository;
 
         protected SiteSetting Settings;
 
         public IntegrationTestBase()
         {
             AccessTokenRepository = new AccessTokenRepository();
+            InvoiceRepository = new InvoiceRepository();
             SettingsRepository = new SettingsRepository();
             WebService = new WebService();
-
             Settings = SettingsRepository.Get().Result;
         }
 
+        protected PaypalService GetPaypalService()
+        {
+            return new PaypalService();
+        }
 
+        protected InvoiceService GetInvoiceService()
+        {
+            return new InvoiceService(InvoiceRepository);
+        }
     }
 }

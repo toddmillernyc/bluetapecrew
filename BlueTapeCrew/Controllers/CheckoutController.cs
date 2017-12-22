@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Utils;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using PayPal;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -18,20 +22,28 @@ namespace BlueTapeCrew.Controllers
     public class CheckoutController : Controller
     {
         private readonly ICartService _cartService;
-        private readonly IUserService _userService;
+        private readonly IInvoiceService _invoiceService;
         private readonly IOrderService _orderService;
-
+        private readonly IPaypalService _paypalService;
+        private readonly ISiteSettingsService _siteSettingsService;
+        private readonly IUserService _userService;
         private ApplicationUserManager _userManager;
 
         public CheckoutController(
             IUserService userService,
             ICartService cartService,
             IOrderService orderService,
+            IPaypalService paypalService,
+            ISiteSettingsService siteSettingsService,
+            IInvoiceService invoiceService,
             ApplicationUserManager userManager)
         {
             _cartService = cartService;
             _userService = userService;
             _orderService = orderService;
+            _invoiceService = invoiceService;
+            _paypalService = paypalService;
+            _siteSettingsService = siteSettingsService;
             _userManager = userManager;
         }
 
@@ -79,23 +91,50 @@ namespace BlueTapeCrew.Controllers
                 var retMsg = "";
                 var token = "";
 
-                if (amt != null)
+                var settings = await _siteSettingsService.GetSettings();
+                var cart = await _cartService.GetCartViewModel(Session.SessionID);
+                
+                //todo: impliment token store and get token if not expired
+                var accessToken = string.Empty;
+                var isSandbox = false;
+#if DEBUG
+                isSandbox = true;       
+#endif
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                var invoice = await _invoiceService.Create(Session.SessionID);
+
+                try
                 {
-                    //var ret = _paypalService.ShortcutExpressCheckout(itemamt, shipping, amt, ref token, ref retMsg, Session.SessionID);
-                    //if (ret)
-                    //{
-                    //    Session["token"] = token;
-                    //    Response.Redirect(retMsg);
-                    //}
-                    //else
-                    //{
-                    //    return Content("CheckoutError?" + retMsg);
-                    //}
+                    var paymentRequest = new PaymentRequest(settings, cart.Items, invoice.Id, accessToken, isSandbox);
+                    var apiContext = _paypalService.GetApiContext(paymentRequest);
+                    var payment = _paypalService.GetPayment(paymentRequest);
+                    var createdPayment = payment.Create(apiContext);
+                    var redirectUrl = createdPayment.GetApprovalUrl();
+                    if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl);
                 }
-                else
+                catch (PaymentsException ex)
                 {
-                    return Content("CheckoutError?ErrorCode=AmtMissing");
+                    return Content(ex.Response);
                 }
+
+                //var paymentRequest = new PaymentRequest();
+                //if (amt != null)
+                //{
+                //    var ret = _paypalService.ShortcutExpressCheckout(itemamt, shipping, amt, ref token, ref retMsg, Session.SessionID);
+                //    if (ret)
+                //    {
+                //        Session["token"] = token;
+                //        Response.Redirect(retMsg);
+                //    }
+                //    else
+                //    {
+                //        return Content("CheckoutError?" + retMsg);
+                //    }
+                //}
+                //else
+                //{
+                //    return Content("CheckoutError?ErrorCode=AmtMissing");
+                //}
                 return Content("something went wrong");
             }
             ViewBag.Errors = true;

@@ -21,6 +21,7 @@ namespace BlueTapeCrew.Models
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<GuestUser> GuestUsers { get; set; }
         public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<MailSetting> MailSettings { get; set; }
         public virtual DbSet<OpenGraphTag> OpenGraphTags { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }

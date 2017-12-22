@@ -49,6 +49,7 @@ namespace BlueTapeCrew
         private static void RegisterRepositoryTypes(IUnityContainer container)
         {
             container.RegisterType<IAccessTokenRepository, AccessTokenRepository>();
+            container.RegisterType<IInvoiceRepository, InvoiceRepository>();
             container.RegisterType<ISettingsRepository, SettingsRepository>();
         }
 
@@ -58,6 +59,7 @@ namespace BlueTapeCrew
             container.RegisterType<ICookieService, CookieService>();
             container.RegisterType<IEmailSubscriptionService, EmailSubscriptionService>();
             container.RegisterType<IImageService, ImageService>();
+            container.RegisterType<IInvoiceService, InvoiceService>();
             container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IPaypalService, PaypalService>();
             container.RegisterType<IProductService, ProductService>();

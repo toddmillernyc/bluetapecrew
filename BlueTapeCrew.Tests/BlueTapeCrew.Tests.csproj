@@ -51,6 +51,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -123,10 +126,15 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Integration\CheckoutControllerTests.cs" />
+    <Compile Include="Integration\InvoiceServiceTests.cs" />
     <Compile Include="Integration\PaypalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Integration\IntegrationTestBase.cs" />
+    <Compile Include="Stubs\CartViewStubs.cs" />
     <Compile Include="Stubs\PaypalStubs.cs" />
+    <Compile Include="Unit\PaymentRequestTests.cs" />
+    <Compile Include="Unit\PaypalExtensionTests.cs" />
     <Compile Include="Unit\PaypalTests.cs" />
   </ItemGroup>
   <ItemGroup>
