@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -105,7 +103,7 @@ namespace BlueTapeCrew.Controllers
 
                 try
                 {
-                    var paymentRequest = new PaymentRequest(settings, cart.Items, invoice.Id, accessToken, isSandbox);
+                    var paymentRequest = new PaymentRequest(HttpContext.Request.Url, settings, cart.Items, invoice.Id, accessToken, isSandbox);
                     var redirectUrl = _paypalService.PaywithPaypal(paymentRequest);
                     if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl);
                 }
@@ -124,7 +122,8 @@ namespace BlueTapeCrew.Controllers
             return View();
         }
 
-        public async Task<ActionResult> CheckoutReview(string token, string payerId)
+        
+        public async Task<ActionResult> PaypalPaymentReview(string token, string payerId)
         {
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(payerId))
                 return RedirectToAction("Index", "Checkout");
@@ -241,7 +240,6 @@ namespace BlueTapeCrew.Controllers
         {
             return View();
         }
-
 
         public async  Task<ActionResult> OrderConfirmation(int id)
         {

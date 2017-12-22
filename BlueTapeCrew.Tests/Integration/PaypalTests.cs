@@ -1,4 +1,5 @@
-﻿using BlueTapeCrew.Paypal;
+﻿using System;
+using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Tests.Stubs;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace BlueTapeCrew.Tests.Integration
         {
             //arrange
             var sut = GetPaypalService();
-            var paymentRequest = new PaymentRequest(Settings, CartViewStubs.Get(), 123, "");
+            var paymentRequest = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, Settings, CartViewStubs.Get(), 123, "");
 
             //act
             var apiContext = sut.GetApiContext(paymentRequest);
@@ -25,7 +26,8 @@ namespace BlueTapeCrew.Tests.Integration
         {
             //arrange
             var sut = GetPaypalService();
-            var paymentRequest = new PaymentRequest(Settings, CartViewStubs.Get(), 123, "");
+            var uri = new Uri("https://bluetapecrew.come/checkout");
+            var paymentRequest = new PaymentRequest(uri, Settings, CartViewStubs.Get(), 123, "");
 
             //act
             var apiContext = sut.GetApiContext(paymentRequest);
@@ -35,24 +37,5 @@ namespace BlueTapeCrew.Tests.Integration
             //assert
             Assert.Equal("created", createdPayment.state);
         }
-
-
-        //[Fact]
-        //public async Task SubmitPayment_GivenAValidPaymentObjectAndToken_CreatesAPament()
-        //{
-        //    //arrange
-        //    var sut = GetPaypalApiClient();
-        //    var paymentStub = PaypalStubs.TestPayment;
-
-        //    //act
-        //    var accessToken = await sut.GetAccessToken();
-        //    var request = sut.CreateOrderRequest(accessToken.Token, PaypalApi, paymentStub);
-        //    var actual = await sut.SendOrderRequest(request);
-
-        //    //assert
-        //    Assert.Equal("created", actual.State);
-        //}
-
-
     }
 }

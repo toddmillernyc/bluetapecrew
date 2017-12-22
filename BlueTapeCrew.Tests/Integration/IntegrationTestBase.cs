@@ -1,4 +1,5 @@
-﻿using BlueTapeCrew.Interfaces;
+﻿using System;
+using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
@@ -13,8 +14,9 @@ namespace BlueTapeCrew.Tests.Integration
         protected IAccessTokenRepository AccessTokenRepository;
         protected ISettingsRepository SettingsRepository;
         protected IInvoiceRepository InvoiceRepository;
-
         protected SiteSetting Settings;
+
+        protected Uri RequestUri => new Uri("https://bluetapecrew.come/checkout/", UriKind.Absolute);
 
         public IntegrationTestBase()
         {

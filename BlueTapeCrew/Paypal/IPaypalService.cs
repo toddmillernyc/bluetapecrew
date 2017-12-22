@@ -1,5 +1,4 @@
-﻿using BlueTapeCrew.Models;
-using PayPal.Api;
+﻿using PayPal.Api;
 
 namespace BlueTapeCrew.Paypal
 {

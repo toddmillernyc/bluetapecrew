@@ -30,9 +30,6 @@ namespace BlueTapeCrew.Paypal
 
         public Payment GetPayment(PaymentRequest paymentRequest)
         {
-            var guid = new Guid().ToString();
-            var redirectUrl = "https://bluetapecrew.com" + "guid=" + guid;
-
             return new Payment
             {
                 intent = paymentRequest.Intent,
@@ -59,8 +56,8 @@ namespace BlueTapeCrew.Paypal
                 },
                 redirect_urls = new RedirectUrls
                 {
-                    cancel_url = redirectUrl + "&cancel=true",
-                    return_url = redirectUrl
+                    cancel_url = paymentRequest.ReturnUrl + "&cancel=true",
+                    return_url = paymentRequest.ReturnUrl
                 }
             };
         }

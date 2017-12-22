@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BlueTapeCrew.Models;
 using PayPal.Api;
@@ -10,12 +10,13 @@ namespace BlueTapeCrew.Paypal
     {
         private const string MoneyFormat = "0.00";
 
-        public PaymentRequest(SiteSetting settings, IList<CartView> cart, int invoiceNumber, string accessToken,  bool isSandbox = true)
+        public PaymentRequest(Uri requestUri, SiteSetting settings, IList<CartView> cart, int invoiceNumber, string accessToken,  bool isSandbox = true)
         {
             InitApiCredentials(settings, isSandbox);
             Init(settings, cart);
             ItemList = GetItemListFrom(cart);
             InvoiceNumber = invoiceNumber.ToString();
+            ReturnUrl = $"{requestUri.Scheme}://{requestUri.Authority}/checkoutreview";
         }
 
         public string Currency => "USD";
@@ -33,6 +34,7 @@ namespace BlueTapeCrew.Paypal
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string Total { get; set; }
+        public string ReturnUrl { get; set; }
 
         private void InitApiCredentials(SiteSetting settings, bool isSandbox)
         {
