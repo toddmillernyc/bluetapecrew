@@ -12,7 +12,6 @@ namespace BlueTapeCrew.Tests.Integration
 
         protected IAccessTokenRepository AccessTokenRepository;
         protected ISettingsRepository SettingsRepository;
-        protected IWebService WebService;
         protected IInvoiceRepository InvoiceRepository;
 
         protected SiteSetting Settings;
@@ -22,7 +21,6 @@ namespace BlueTapeCrew.Tests.Integration
             AccessTokenRepository = new AccessTokenRepository();
             InvoiceRepository = new InvoiceRepository();
             SettingsRepository = new SettingsRepository();
-            WebService = new WebService();
             Settings = SettingsRepository.Get().Result;
         }
 

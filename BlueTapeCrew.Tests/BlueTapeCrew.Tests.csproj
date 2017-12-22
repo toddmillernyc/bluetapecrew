@@ -135,7 +135,6 @@
     <Compile Include="Stubs\PaypalStubs.cs" />
     <Compile Include="Unit\PaymentRequestTests.cs" />
     <Compile Include="Unit\PaypalExtensionTests.cs" />
-    <Compile Include="Unit\PaypalTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

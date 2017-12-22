@@ -374,7 +374,6 @@
     <Compile Include="Interfaces\IInvoiceRepository.cs" />
     <Compile Include="Interfaces\IInvoiceService.cs" />
     <Compile Include="Interfaces\ISettingsRepository.cs" />
-    <Compile Include="Interfaces\IWebService.cs" />
     <Compile Include="Models\AccessToken.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\TokenType.cs" />
@@ -387,7 +386,6 @@
     <Compile Include="Repositories\InvoiceRepository.cs" />
     <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Services\InvoiceService.cs" />
-    <Compile Include="Services\WebService.cs" />
     <Compile Include="Utils\NVPAPICaller.cs" />
     <Compile Include="Interfaces\ICartService.cs" />
     <Compile Include="Interfaces\ICookieService.cs" />

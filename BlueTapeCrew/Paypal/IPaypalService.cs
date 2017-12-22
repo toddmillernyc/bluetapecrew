@@ -7,5 +7,6 @@ namespace BlueTapeCrew.Paypal
     {
         APIContext GetApiContext(PaymentRequest paymentRequest);
         Payment GetPayment(PaymentRequest paymentRequest);
+        string PaywithPaypal(PaymentRequest paymentRequest);
     }
 }

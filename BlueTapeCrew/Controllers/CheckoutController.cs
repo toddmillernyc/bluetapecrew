@@ -106,36 +106,13 @@ namespace BlueTapeCrew.Controllers
                 try
                 {
                     var paymentRequest = new PaymentRequest(settings, cart.Items, invoice.Id, accessToken, isSandbox);
-                    var apiContext = _paypalService.GetApiContext(paymentRequest);
-                    var payment = _paypalService.GetPayment(paymentRequest);
-                    var createdPayment = payment.Create(apiContext);
-                    var redirectUrl = createdPayment.GetApprovalUrl();
+                    var redirectUrl = _paypalService.PaywithPaypal(paymentRequest);
                     if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl);
                 }
                 catch (PaymentsException ex)
                 {
                     return Content(ex.Response);
                 }
-
-                //var paymentRequest = new PaymentRequest();
-                //if (amt != null)
-                //{
-                //    var ret = _paypalService.ShortcutExpressCheckout(itemamt, shipping, amt, ref token, ref retMsg, Session.SessionID);
-                //    if (ret)
-                //    {
-                //        Session["token"] = token;
-                //        Response.Redirect(retMsg);
-                //    }
-                //    else
-                //    {
-                //        return Content("CheckoutError?" + retMsg);
-                //    }
-                //}
-                //else
-                //{
-                //    return Content("CheckoutError?ErrorCode=AmtMissing");
-                //}
-                return Content("something went wrong");
             }
             ViewBag.Errors = true;
             model.Cart = await _cartService.GetCartViewModel(Session.SessionID);
@@ -275,11 +252,13 @@ namespace BlueTapeCrew.Controllers
                 var adminEmail = mailSettings.Username;
                 var order = await _orderService.GetOrder(id);
 
-                var myMessage = new IdentityMessage();
-                myMessage.Destination = order.Email;
-                myMessage.Subject = "Your BlueTapeCrew.com order";
+                var myMessage = new IdentityMessage
+                {
+                    Destination = order.Email,
+                    Subject = "Your BlueTapeCrew.com order",
+                    Body = "Your BlueTapeCrew.com order has been placed.\r\n\r\n Shipping Info:\r\n\r\n"
+                };
 
-                myMessage.Body = "Your BlueTapeCrew.com order has been placed.\r\n\r\n Shipping Info:\r\n\r\n";
                 myMessage.Body += order.FirstName + " " + order.LastName + "\r\n";
                 myMessage.Body += order.Email + "\r\n";
                 myMessage.Body += order.Phone + "\r\n";

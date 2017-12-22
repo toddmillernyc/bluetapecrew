@@ -65,6 +65,15 @@ namespace BlueTapeCrew.Paypal
             };
         }
 
+        public string PaywithPaypal(PaymentRequest paymentRequest)
+        {
+            var apiContext = GetApiContext(paymentRequest);
+            var payment = GetPayment(paymentRequest);
+            var createdPayment = payment.Create(apiContext);
+            var redirectUrl = createdPayment.GetApprovalUrl();
+            return redirectUrl;
+        }
+
         public void Run(PaymentRequest paymentRequest)
         {
             var payerId = "";

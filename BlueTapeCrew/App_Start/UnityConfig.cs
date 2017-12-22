@@ -66,7 +66,6 @@ namespace BlueTapeCrew
             container.RegisterType<ISiteSettingsService, SiteSettingsService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IViewModelService, ViewModelService>();
-            container.RegisterType<IWebService, WebService>();
         }
     }
 }
