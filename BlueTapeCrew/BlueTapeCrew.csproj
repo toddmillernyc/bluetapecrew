@@ -387,7 +387,6 @@
     <Compile Include="Repositories\InvoiceRepository.cs" />
     <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Services\InvoiceService.cs" />
-    <Compile Include="Utils\NVPAPICaller.cs" />
     <Compile Include="Interfaces\ICartService.cs" />
     <Compile Include="Interfaces\ICookieService.cs" />
     <Compile Include="Interfaces\IEmailSubscriptionService.cs" />
@@ -441,7 +440,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Identity\AccountViewModels.cs" />
-    <Compile Include="Utils\SnakeCaseContractResolver.cs" />
     <Compile Include="ViewModels\BestSellerViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\CatalogModel.cs" />
