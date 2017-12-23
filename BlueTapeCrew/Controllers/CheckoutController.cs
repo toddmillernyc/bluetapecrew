@@ -19,7 +19,7 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class CheckoutController : Controller
     {
-        private bool IsSandbox = false;
+        private readonly bool _isSandbox = false;
         private string PaypalClientId = "";
         private string PaypalClientSecret = "";
 
@@ -49,7 +49,7 @@ namespace BlueTapeCrew.Controllers
             _userManager = userManager;
 
 #if DEBUG
-            IsSandbox = true;
+            _isSandbox = true;
 #endif
         }
 
@@ -108,7 +108,7 @@ namespace BlueTapeCrew.Controllers
 
                 try
                 {
-                    var paymentRequest = new PaymentRequest(HttpContext.Request.Url, settings, cart.Items, invoice.Id, accessToken, IsSandbox);
+                    var paymentRequest = new PaymentRequest(HttpContext.Request.Url, settings, cart.Items, invoice.Id, accessToken, _isSandbox);
                     var redirectUrl = _paypalService.PaywithPaypal(paymentRequest);
                     if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl);
                 }
@@ -175,7 +175,7 @@ namespace BlueTapeCrew.Controllers
                 var clientSecret = "";
                 var settings = await _siteSettingsService.GetSettings();
 
-                if (IsSandbox)
+                if (_isSandbox)
                 {
                     clientId = settings.PaypalSandBoxClientId;
                     clientSecret = settings.PaypalSandBoxSecret;
@@ -185,7 +185,7 @@ namespace BlueTapeCrew.Controllers
                     clientId = settings.PaypalClientId;
                     clientSecret = settings.PaypalClientSecret;
                 }
-                completePaymentRequest.Token = _paypalService.GetAccessToken(clientId, clientSecret);
+                completePaymentRequest.Token = _paypalService.GetAccessToken(clientId, clientSecret, _isSandbox ? "sandbox" : "mode");
                 var completedPayment = _paypalService.CompletePayment(completePaymentRequest);
                 ViewBag.PaymentConfirmation = completedPayment.id;
             }

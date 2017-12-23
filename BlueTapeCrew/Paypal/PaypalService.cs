@@ -6,24 +6,23 @@ namespace BlueTapeCrew.Paypal
 {
     public class PaypalService : IPaypalService
     {
-        // Create the configuration map that contains mode and other optional configuration details.
-        public static Dictionary<string, string> GetConfig()
+        private static Dictionary<string, string> GetConfig(string mode)
         {
-            return ConfigManager.Instance.GetProperties();
+            return new Dictionary<string, string> { { "mode", mode } };
         }
 
-        public string GetAccessToken(string clientId, string clientSecret)
+        public string GetAccessToken(string clientId, string clientSecret, string mode)
         {
-            var accessToken = new OAuthTokenCredential(clientId, clientSecret, GetConfig()).GetAccessToken();
+            var accessToken = new OAuthTokenCredential(clientId, clientSecret, GetConfig(mode)).GetAccessToken();
             return accessToken;
         }
 
         public APIContext GetApiContext(PaymentRequest paymentRequest)
         {
             var apiContext = new APIContext(string.IsNullOrEmpty(paymentRequest.AccessToken)
-                                ? GetAccessToken(paymentRequest.ClientId, paymentRequest.ClientSecret)
+                                ? GetAccessToken(paymentRequest.ClientId, paymentRequest.ClientSecret, paymentRequest.Mode)
                                 : paymentRequest.AccessToken)
-            { Config = GetConfig() };
+            { Config = GetConfig(paymentRequest.Mode) };
             return apiContext;
         }
 
@@ -78,49 +77,5 @@ namespace BlueTapeCrew.Paypal
             var executedPayment = payment.Execute(apiContext, paymentExecution);
             return executedPayment;
         }
-
-        public void Run(PaymentRequest paymentRequest)
-        {
-            var payerId = "";
-            var apiContext = GetApiContext(paymentRequest);
-            var payment = GetPayment(paymentRequest);
-            var createdPayment = payment.Create(apiContext);
-            var paymentExecution = new PaymentExecution { payer_id = payerId };
-            var executedPayment = payment.Execute(apiContext, paymentExecution);
-
-            //Session.Add(guid, createdPayment.id);
-            //Session.Add("flow-" + guid, this.flow);
-            //else if payer id not null
-            //{
-            //    //var guid = request.Params["guid"];
-
-            //    // ^ Ignore workflow code segment
-            //    #region Track Workflow
-            //    //this.flow = Session["flow-" + guid] as RequestFlow;
-            //    //this.RegisterSampleRequestFlow();
-            //    //this.flow.RecordApproval("PayPal payment approved successfully.");
-            //    #endregion
-
-            //    // Using the information from the redirect, setup the payment to execute.
-            //    //var paymentId = Session[guid] as string;
-            //    var paymentExecution = new PaymentExecution() { payer_id = payerId };
-            //    var payment = new Payment() { /*id = paymentId */};
-
-            //    // ^ Ignore workflow code segment
-            //    #region Track Workflow
-            //    //this.flow.AddNewRequest("Execute PayPal payment", payment);
-            //    #endregion
-
-            //    // Execute the payment.
-            //    
-            //    // ^ Ignore workflow code segment
-            //    #region Track Workflow
-            //    //this.flow.RecordResponse(executedPayment);
-            //    #endregion
-
-            //    // For more information, please visit [PayPal Developer REST API Reference](https://developer.paypal.com/docs/api/).
-            //}
-        }
-
     }
 }

@@ -9,10 +9,12 @@ namespace BlueTapeCrew.Paypal
     public class PaymentRequest
     {
         private const string MoneyFormat = "0.00";
+        private const string SandboxMode = "sandbox";
+        private const string LiveMode = "live";
 
         public PaymentRequest(Uri requestUri, SiteSetting settings, IList<CartView> cart, int invoiceNumber, string accessToken,  bool isSandbox = true)
         {
-            InitApiCredentials(settings, isSandbox);
+            InitApiCredentialsForMode(settings, isSandbox);
             Init(settings, cart);
             ItemList = GetItemListFrom(cart);
             InvoiceNumber = invoiceNumber.ToString();
@@ -23,6 +25,7 @@ namespace BlueTapeCrew.Paypal
         public string PaymentDescription => "BlueTapeCrew.com Purchase";
         public string PaymentMethod => "paypal";
         public string Intent => "sale";
+        public string Mode;
 
         public string Shipping { get; set; }
         public string Tax => 0.ToString(MoneyFormat);
@@ -36,19 +39,23 @@ namespace BlueTapeCrew.Paypal
         public string Total { get; set; }
         public string ReturnUrl { get; set; }
 
-        private void InitApiCredentials(SiteSetting settings, bool isSandbox)
+        private void InitApiCredentialsForMode(SiteSetting settings, bool isSandbox)
         {
             if (isSandbox)
             {
+                Mode = SandboxMode;
                 ClientId = settings.PaypalSandBoxClientId;
                 ClientSecret = settings.PaypalSandBoxSecret;
+                
             }
             else
             {
+                Mode = LiveMode;
                 ClientId = settings.PaypalClientId;
                 ClientSecret = settings.PaypalClientSecret;
             }
         }
+
         private void Init(SiteSetting settings, IEnumerable<CartView> cart)
         {
             const decimal tax = 0.00m;

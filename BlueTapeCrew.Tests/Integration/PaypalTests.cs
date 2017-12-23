@@ -1,5 +1,4 @@
-﻿using System;
-using BlueTapeCrew.Paypal;
+﻿using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Tests.Stubs;
 using Xunit;
 
@@ -34,6 +33,32 @@ namespace BlueTapeCrew.Tests.Integration
 
             //assert
             Assert.Equal("created", createdPayment.state);
+        }
+
+        [Fact]
+        public void GetAccessToken_GivenSandBoxCredentials_ReturnsAccessToken()
+        {
+            //arrange
+            var sut = PaypalService;
+
+            //act
+            var accessToken = sut.GetAccessToken(Settings.PaypalSandBoxClientId, Settings.PaypalSandBoxSecret, "sandbox");
+
+            //assert
+            Assert.True(!string.IsNullOrEmpty(accessToken));
+        }
+
+        [Fact]
+        public void GetAccessToken_GivenLiveCredentials_ReturnsAccessToken()
+        {
+            //arrange
+            var sut = PaypalService;
+
+            //act
+            var accessToken = sut.GetAccessToken(Settings.PaypalClientId, Settings.PaypalClientSecret, "live");
+
+            //assert
+            Assert.True(!string.IsNullOrEmpty(accessToken));
         }
     }
 }
