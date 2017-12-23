@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 using Image = System.Drawing.Image;
 

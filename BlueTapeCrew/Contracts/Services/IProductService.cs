@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.ViewModels;
 
-namespace BlueTapeCrew.Interfaces
+namespace BlueTapeCrew.Contracts.Services
 {
     public interface IProductService
     {

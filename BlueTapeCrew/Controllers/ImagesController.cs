@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Utils;
 using System.Threading.Tasks;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Services;
 
 namespace BlueTapeCrew.Controllers
 {

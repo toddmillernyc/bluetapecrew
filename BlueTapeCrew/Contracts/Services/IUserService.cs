@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BlueTapeCrew.Models;
 
-namespace BlueTapeCrew.Interfaces
+namespace BlueTapeCrew.Contracts.Services
 {
     public interface IUserService
     {

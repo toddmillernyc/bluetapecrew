@@ -1,4 +1,4 @@
-﻿namespace BlueTapeCrew.Interfaces
+﻿namespace BlueTapeCrew.Contracts.Services
 {
     public interface IEmailSubscriptionService
     {

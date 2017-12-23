@@ -1,18 +1,22 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
-using BlueTapeCrew.Interfaces;
+﻿using System.Threading.Tasks;
+using BlueTapeCrew.Contracts.Repositories;
+using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Services
 {
     public class SiteSettingsService : ISiteSettingsService
     {
+        private readonly ISettingsRepository _settingsRepository;
+
+        public SiteSettingsService(ISendgridSettingsRepository sendgridSettingsRepository, ISettingsRepository settingsRepository)
+        {
+            _settingsRepository = settingsRepository;
+        }
+
         public async Task<SiteSetting> GetSettings()
         {
-            using (var db = new BtcEntities())
-            {
-                return await db.SiteSettings.FirstOrDefaultAsync();
-            }
+            return await _settingsRepository.Get();
         }
     }
 }

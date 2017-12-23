@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Services;
 
 namespace BlueTapeCrew.Controllers
 {   

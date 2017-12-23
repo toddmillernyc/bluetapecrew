@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.ViewModels;
 

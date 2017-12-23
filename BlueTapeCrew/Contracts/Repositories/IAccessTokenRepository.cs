@@ -1,7 +1,7 @@
-﻿using BlueTapeCrew.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using BlueTapeCrew.Models;
 
-namespace BlueTapeCrew.Interfaces
+namespace BlueTapeCrew.Contracts.Repositories
 {
     public interface IAccessTokenRepository
     {

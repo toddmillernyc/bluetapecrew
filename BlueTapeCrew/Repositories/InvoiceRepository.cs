@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Repositories;
 using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Repositories
@@ -24,6 +24,7 @@ namespace BlueTapeCrew.Repositories
         public async Task Delete(int id)
         {
             var invoice = await _db.Invoices.FindAsync(id);
+            if (invoice == null) return;
             _db.Invoices.Remove(invoice);
             await _db.SaveChangesAsync();
         }

@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace BlueTapeCrew.Interfaces
+namespace BlueTapeCrew.Contracts.Services
 {
     public interface ICookieService
     {

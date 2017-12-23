@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Repositories;
+using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Services

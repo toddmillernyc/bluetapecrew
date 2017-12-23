@@ -1,5 +1,5 @@
 ﻿using System;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Services;
 using MailChimp;
 using MailChimp.Helper;
 

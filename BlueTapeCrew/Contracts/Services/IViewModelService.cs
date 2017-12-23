@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using BlueTapeCrew.ViewModels;
 
-namespace BlueTapeCrew.Interfaces
+namespace BlueTapeCrew.Contracts.Services
 {
     public interface IViewModelService
     {

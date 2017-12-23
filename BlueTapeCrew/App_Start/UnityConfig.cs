@@ -1,5 +1,4 @@
 using System;
-using BlueTapeCrew.Interfaces;
 using Unity;
 using BlueTapeCrew.Services;
 using Microsoft.AspNet.Identity;
@@ -11,6 +10,8 @@ using Microsoft.Owin.Security;
 using Unity.Injection;
 using Unity.Lifetime;
 using System.Web;
+using BlueTapeCrew.Contracts.Repositories;
+using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
 
@@ -50,6 +51,7 @@ namespace BlueTapeCrew
         {
             container.RegisterType<IAccessTokenRepository, AccessTokenRepository>();
             container.RegisterType<IInvoiceRepository, InvoiceRepository>();
+            container.RegisterType<ISendgridSettingsRepository, SendgridSettingsRepository>();
             container.RegisterType<ISettingsRepository, SettingsRepository>();
         }
 
@@ -63,6 +65,7 @@ namespace BlueTapeCrew
             container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IPaypalService, PaypalService>();
             container.RegisterType<IProductService, ProductService>();
+            container.RegisterType<ISendgridSettingsService, SendgridSettingsService>();
             container.RegisterType<ISiteSettingsService, SiteSettingsService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IViewModelService, ViewModelService>();

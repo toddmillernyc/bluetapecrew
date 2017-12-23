@@ -31,6 +31,7 @@ namespace BlueTapeCrew.Models
         public virtual DbSet<PayPalPayment> PayPalPayments { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<SendgridSetting> SendgridSettings { get; set; }
         public virtual DbSet<SiteSetting> SiteSettings { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<Style> Styles { get; set; }

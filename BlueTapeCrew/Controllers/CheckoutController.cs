@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using BlueTapeCrew.Interfaces;
+using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Paypal;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using PayPal;
 
 namespace BlueTapeCrew.Controllers
@@ -26,7 +24,6 @@ namespace BlueTapeCrew.Controllers
         private readonly IPaypalService _paypalService;
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IUserService _userService;
-        private readonly ApplicationUserManager _userManager;
 
         public CheckoutController(
             IUserService userService,
@@ -34,8 +31,7 @@ namespace BlueTapeCrew.Controllers
             IOrderService orderService,
             IPaypalService paypalService,
             ISiteSettingsService siteSettingsService,
-            IInvoiceService invoiceService,
-            ApplicationUserManager userManager)
+            IInvoiceService invoiceService)
         {
             _cartService = cartService;
             _userService = userService;
@@ -43,14 +39,10 @@ namespace BlueTapeCrew.Controllers
             _invoiceService = invoiceService;
             _paypalService = paypalService;
             _siteSettingsService = siteSettingsService;
-            _userManager = userManager;
-
 #if DEBUG
             _isSandbox = true;
 #endif
         }
-
-        //public ApplicationUserManager UserManager => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         [HttpGet]
         public async Task<ActionResult> Index()

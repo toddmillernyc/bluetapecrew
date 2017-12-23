@@ -1,8 +1,8 @@
-﻿using BlueTapeCrew.Interfaces;
-using BlueTapeCrew.Models;
-using System;
+﻿using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using BlueTapeCrew.Contracts.Repositories;
+using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Repositories
 {
