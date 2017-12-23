@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
 using Xunit;
 
 namespace BlueTapeCrew.Tests.Integration

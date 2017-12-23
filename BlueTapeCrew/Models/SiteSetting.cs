@@ -1,5 +1,3 @@
-using System;
-
 namespace BlueTapeCrew.Models
 {
     using System.ComponentModel.DataAnnotations;

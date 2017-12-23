@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using PayPal.Api;
-
-namespace BlueTapeCrew.Tests.Stubs
+﻿namespace BlueTapeCrew.Tests.Stubs
 {
     public static class PaypalStubs
     {
