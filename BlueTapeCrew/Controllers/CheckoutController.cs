@@ -196,7 +196,7 @@ namespace BlueTapeCrew.Controllers
 
 
 
-            var cartView = await _cartService.Get(Session.SessionID);
+           var cartView = await _cartService.Get(Session.SessionID);
             var subtotal = cartView.Sum(x => x.SubTotal);
             var shipping = 0;
             if (subtotal < 50)
@@ -244,7 +244,7 @@ namespace BlueTapeCrew.Controllers
                 order.Zip = user.PostalCode;
                 order.Phone = user.PhoneNumber;
             }
-            await _orderService.AddOrder(order);
+
             order.OrderItems = new List<OrderItem>();
             foreach (var item in cartView.ToList())
             {
@@ -256,6 +256,7 @@ namespace BlueTapeCrew.Controllers
                     Quantity = item.Quantity
                 });
             }
+            await _orderService.AddOrder(order);
             await _cartService.EmptyCart(Session.SessionID);
             return RedirectToAction("OrderConfirmation", "Checkout", new { id = order.Id });
         }
