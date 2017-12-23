@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using BlueTapeCrew.Interfaces;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Paypal;
-using BlueTapeCrew.Utils;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -19,9 +18,7 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class CheckoutController : Controller
     {
-        private readonly bool _isSandbox = false;
-        private string PaypalClientId = "";
-        private string PaypalClientSecret = "";
+        private readonly bool _isSandbox;
 
         private readonly ICartService _cartService;
         private readonly IInvoiceService _invoiceService;
@@ -29,7 +26,7 @@ namespace BlueTapeCrew.Controllers
         private readonly IPaypalService _paypalService;
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IUserService _userService;
-        private ApplicationUserManager _userManager;
+        private readonly ApplicationUserManager _userManager;
 
         public CheckoutController(
             IUserService userService,
@@ -53,17 +50,7 @@ namespace BlueTapeCrew.Controllers
 #endif
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+        //public ApplicationUserManager UserManager => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         [HttpGet]
         public async Task<ActionResult> Index()
@@ -94,8 +81,6 @@ namespace BlueTapeCrew.Controllers
                         _userService.CreateGuestUser(Session.SessionID, model.FirstName, model.LastName, model.Address,
                             model.City, model.State, model.Zip, model.Phone, model.Email);
                 }
-                var retMsg = "";
-                var token = "";
 
                 var settings = await _siteSettingsService.GetSettings();
                 var cart = await _cartService.GetCartViewModel(Session.SessionID);
@@ -103,7 +88,6 @@ namespace BlueTapeCrew.Controllers
                 //todo: impliment token store and get token if not expired
                 var accessToken = string.Empty;
 
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 var invoice = await _invoiceService.Create(Session.SessionID);
 
                 try
