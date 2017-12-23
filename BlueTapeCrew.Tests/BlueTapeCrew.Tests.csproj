@@ -128,7 +128,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IntegrationTextFixture.cs" />
-    <Compile Include="Integration\CheckoutControllerTests.cs" />
     <Compile Include="Integration\InvoiceServiceTests.cs" />
     <Compile Include="Integration\PaypalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
