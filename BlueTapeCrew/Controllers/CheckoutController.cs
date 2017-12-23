@@ -128,8 +128,9 @@ namespace BlueTapeCrew.Controllers
         }
 
         [Route("checkoutreview")]
-        public async Task<ActionResult> CheckoutReview(string paymentId, string token, string payerId)
+        public async Task<ActionResult> CheckoutReview(string paymentId, string token, string payerId, string cancel = "false")
         {
+            if (cancel == "true") return RedirectToAction("CheckoutCancel");
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(payerId))
                 return RedirectToAction("Index", "Checkout");
 
@@ -266,7 +267,7 @@ namespace BlueTapeCrew.Controllers
             return View();
         }
 
-        public async  Task<ActionResult> OrderConfirmation(int id)
+        public async Task<ActionResult> OrderConfirmation(int id)
         {
             using (var db = new BtcEntities())
             {

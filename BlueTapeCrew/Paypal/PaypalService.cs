@@ -54,7 +54,7 @@ namespace BlueTapeCrew.Paypal
                 },
                 redirect_urls = new RedirectUrls
                 {
-                    cancel_url = paymentRequest.ReturnUrl + "&cancel=true",
+                    cancel_url = paymentRequest.ReturnUrl + "?cancel=true",
                     return_url = paymentRequest.ReturnUrl
                 }
             };
