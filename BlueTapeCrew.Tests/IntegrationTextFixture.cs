@@ -26,19 +26,17 @@ namespace BlueTapeCrew.Tests
 
         //repositories
         public static IInvoiceRepository InvoiceRepository => new InvoiceRepository();
-        public static ISendgridSettingsRepository SendgridSettingsRepository => new SendgridSettingsRepository();
-        public static ISettingsRepository SiteSettingsRepository => new SettingsRepository(); 
+        public static ISiteSettingsRepository SiteSettingsRepository => new SiteSettingsRepository();
 
         //services
         public IInvoiceService InvoiceService => new InvoiceService(InvoiceRepository);
         public IPaypalService PaypalService => new PaypalService();
-        public ISendgridSettingsService SendgridSettingsService => new SendgridSettingsService(SendgridSettingsRepository);
-        public static ISiteSettingsService SiteSettingsService => new SiteSettingsService(SendgridSettingsRepository, SiteSettingsRepository);
+        public static ISiteSettingsService SiteSettingsService => new SiteSettingsService(SiteSettingsRepository);
 
 
         public IntegrationTextFixture()
         {
-            SiteSettings = SiteSettingsService.GetSettings().Result;
+            SiteSettings = SiteSettingsService.Get().Result;
         }
 
         public void Teardown(object entity)
@@ -46,19 +44,14 @@ namespace BlueTapeCrew.Tests
             _objectsToDelete.Add(entity);
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
             foreach (var entity in _objectsToDelete)
             {
                 switch (entity)
                 {
-
-                    case SendgridSetting sendgridSetting:
-                        SendgridSettingsService.Delete(sendgridSetting.Id);
-                        break;
-
                     case Invoice invoice:
-                        InvoiceService.Delete(invoice.Id);
+                        await InvoiceService.Delete(invoice.Id);
                         break;
                 }
             }

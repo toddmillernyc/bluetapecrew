@@ -201,6 +201,8 @@
             var settingsApi = $resource('../../api/SiteSettings');
             settingsApi.get(function (data) {
                 $scope.settings = data;
+            }, function(error) {
+                console.log(error);
             });
             $scope.saveSettings = function (settings) {
                 settingsApi.save(settings, function () {

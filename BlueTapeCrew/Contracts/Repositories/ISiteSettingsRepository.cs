@@ -3,8 +3,9 @@ using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Contracts.Repositories
 {
-    public interface ISettingsRepository
+    public interface ISiteSettingsRepository
     {
         Task<SiteSetting> Get();
+        Task<SiteSetting> Set(SiteSetting siteSetting);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Web.Http;
+using Unity;
+using Unity.WebApi;
 
 namespace BlueTapeCrew
 {
@@ -6,9 +8,12 @@ namespace BlueTapeCrew
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            //config
+            var container = new UnityContainer();
+            UnityConfig.RegisterTypes(container);
+            config.DependencyResolver = new UnityDependencyResolver(container);
 
-            // Web API routes
+            // routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

@@ -20,7 +20,7 @@ namespace BlueTapeCrew.Controllers
         public async Task<ActionResult> Details()
         {
             var cart = await _cartService.Get(Session.SessionID);
-            var settings = await _siteSettingsService.GetSettings();
+            var settings = await _siteSettingsService.Get();
 
             var subTotal = cart.Sum(x => x.SubTotal);
             ViewBag.SubTotal = $"{subTotal:n2}";

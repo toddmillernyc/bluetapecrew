@@ -7,16 +7,21 @@ namespace BlueTapeCrew.Services
 {
     public class SiteSettingsService : ISiteSettingsService
     {
-        private readonly ISettingsRepository _settingsRepository;
+        private readonly ISiteSettingsRepository _settingsRepository;
 
-        public SiteSettingsService(ISendgridSettingsRepository sendgridSettingsRepository, ISettingsRepository settingsRepository)
+        public SiteSettingsService(ISiteSettingsRepository settingsRepository)
         {
             _settingsRepository = settingsRepository;
         }
 
-        public async Task<SiteSetting> GetSettings()
+        public async Task<SiteSetting> Get()
         {
             return await _settingsRepository.Get();
+        }
+
+        public async Task<SiteSetting> Set(SiteSetting siteSetting)
+        {
+            return await _settingsRepository.Set(siteSetting);
         }
     }
 }

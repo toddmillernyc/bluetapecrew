@@ -373,11 +373,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Contracts\Repositories\IInvoiceRepository.cs" />
     <Compile Include="Contracts\Services\IInvoiceService.cs" />
-    <Compile Include="Contracts\Services\ISendgridSettingsService.cs" />
-    <Compile Include="Contracts\Repositories\ISettingsRepository.cs" />
+    <Compile Include="Contracts\Repositories\ISiteSettingsRepository.cs" />
     <Compile Include="Models\AccessToken.cs" />
     <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\SendgridSetting.cs" />
     <Compile Include="Models\TokenType.cs" />
     <Compile Include="Contracts\Repositories\IAccessTokenRepository.cs" />
     <Compile Include="Paypal\CompletePaymentRequest.cs" />
@@ -387,8 +385,7 @@
     <Compile Include="Paypal\PaypalService.cs" />
     <Compile Include="Repositories\AccessTokenRepository.cs" />
     <Compile Include="Repositories\InvoiceRepository.cs" />
-    <Compile Include="Contracts\Repositories\ISendgridSettingsRepository.cs" />
-    <Compile Include="Repositories\SettingsRepository.cs" />
+    <Compile Include="Repositories\SiteSettingsRepository.cs" />
     <Compile Include="Services\InvoiceService.cs" />
     <Compile Include="Contracts\Services\ICartService.cs" />
     <Compile Include="Contracts\Services\ICookieService.cs" />
@@ -434,8 +431,6 @@
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\EmailSubscriptionService.cs" />
-    <Compile Include="Repositories\SendgridSettingsRepository.cs" />
-    <Compile Include="Services\SendgridSettingsService.cs" />
     <Compile Include="Services\SiteSettingsService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\ViewModelService.cs" />

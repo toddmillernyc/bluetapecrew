@@ -1,35 +1,30 @@
-﻿using System.Linq;
-using System.Web.Http;
-using BlueTapeCrew.Models;
+﻿using System.Web.Http;
 using System.Threading.Tasks;
-using System.Data.Entity;
+using BlueTapeCrew.Contracts.Services;
+using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class SiteSettingsController : ApiController
     {
-        public SiteSetting Get()
+        private readonly ISiteSettingsService _siteSettingsService;
+
+        public SiteSettingsController(ISiteSettingsService siteSettingsService)
         {
-            using (var db = new BtcEntities())
-            {
-                return db.SiteSettings.FirstOrDefault();
-            }
+            _siteSettingsService = siteSettingsService;
         }
 
-        [Authorize(Roles = "Admin")]
-        public async Task Post([FromBody]SiteSetting settings)
+        public async Task<SiteSetting> Get()
         {
-            using (var db = new BtcEntities())
-            {
-                var model = await db.SiteSettings.FirstOrDefaultAsync();
+            return await _siteSettingsService.Get();
+        }
 
-                db.SiteSettings.Add(settings);
-                await db.SaveChangesAsync();
-
-                db.SiteSettings.Remove(model);
-                await db.SaveChangesAsync();
-            }
+        public async Task<IHttpActionResult> Post([FromBody]SiteSetting siteSetting)
+        {
+            if (siteSetting.Id > 0) await _siteSettingsService.Set(siteSetting);
+            else return BadRequest("You tried to save settings without an Id");
+            return Ok();
         }
     }
 }

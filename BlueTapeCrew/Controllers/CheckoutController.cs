@@ -74,7 +74,7 @@ namespace BlueTapeCrew.Controllers
                             model.City, model.State, model.Zip, model.Phone, model.Email);
                 }
 
-                var settings = await _siteSettingsService.GetSettings();
+                var settings = await _siteSettingsService.Get();
                 var cart = await _cartService.GetCartViewModel(Session.SessionID);
                 
                 //todo: impliment token store and get token if not expired
@@ -150,7 +150,7 @@ namespace BlueTapeCrew.Controllers
             {
                 var clientId = "";
                 var clientSecret = "";
-                var settings = await _siteSettingsService.GetSettings();
+                var settings = await _siteSettingsService.Get();
 
                 if (_isSandbox)
                 {

@@ -46,7 +46,7 @@ namespace BlueTapeCrew.Services
 
         public async Task<CartViewModel> GetCartViewModel(string sessionId)
         {
-            var settings = await _siteSettingsService.GetSettings();
+            var settings = await _siteSettingsService.Get();
             using (var db = new BtcEntities())
             {
                 var cart = await db.CartViews.Where(x => x.CartId == sessionId).ToListAsync();
