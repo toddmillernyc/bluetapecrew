@@ -40,6 +40,14 @@
                     <dd><input class="form-control" type="text" ng-model="settings.SmtpUsername" /></dd>
                     <dt>Password</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.SmtpPassword" /></dd>
+                    <dt>Test Email Config</dt>
+                    <dd>
+                        <button style="width: 50%" type="button" class="btn btn-sm btn-success pull-right" ng-click="sendMail(testEmailAddress)">Send Test Email</button>
+                        <input style="width: 50%" type="text" class="form-control" ng-model="testEmailAddress" ng-change="clearErrors()"/>
+                        <span class="text text-danger">{{testEmailError}}</span>
+                        <span class="text text-success">{{emailSentMessage}}</span>
+
+                    </dd>
                 </dl>
             </div>
             <div class="col-md-6">
@@ -208,18 +216,49 @@
 
 @section Scripts {
     <script>
-        angular.module('myApp', ['ngResource']).controller('SettingsController', function ($scope, $resource) {
-            var settingsApi = $resource('../../api/SiteSettings');
-            settingsApi.get(function (data) {
-                $scope.settings = data;
-            }, function(error) {
-                console.log(error);
+        angular.module('myApp', ['ngResource']).controller('SettingsController',
+            function($scope, $resource) {
+
+                $scope.testEmailError = "";
+                $scope.emailSentMessage = "";
+
+                var settingsApi = $resource('../../api/SiteSettings');
+
+
+                settingsApi.get(function(data) {
+                        $scope.settings = data;
+                    },
+                    function(error) {
+                        console.log(error);
+                    });
+
+                $scope.saveSettings = function(settings) {
+                    settingsApi.save(settings,
+                        function() {
+                            alert("settings saved");
+                        });
+                };
+
+                $scope.sendMail = function(emailAddress) {
+                    var emailApi = $resource('../../api/EmailTest?email=' + emailAddress);
+
+                    emailApi.get(
+                        function () {
+                            $scope.clearErrors();
+                            $scope.emailSentMessage = "Sent email to: " + $scope.testEmailAddress;
+                            $scope.testEmailAddress = null;
+                        },
+                        function (error) {
+                            $scope.clearErrors();
+                            $scope.testEmailError = error.data.Message;
+                        }
+                    );
+                }
+
+                $scope.clearErrors = function() {
+                    $scope.emailSentMessage = null;
+                    $scope.testEmailError = null;
+                }
             });
-            $scope.saveSettings = function (settings) {
-                settingsApi.save(settings, function () {
-                    alert("settings saved");
-                });
-            };
-        });
     </script>
 }

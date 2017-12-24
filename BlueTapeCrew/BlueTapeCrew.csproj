@@ -366,6 +366,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AspNetUsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteSettingsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmailTestController.cs" />
     <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
     <Compile Include="Contracts\Services\IEmailService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -443,6 +444,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\ViewModelService.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
+    <Compile Include="Utils\EmailHelper.cs" />
     <Compile Include="Utils\EmailTemplates.cs" />
     <Compile Include="Utils\ImageResult.cs" />
     <Compile Include="Global.asax.cs">
