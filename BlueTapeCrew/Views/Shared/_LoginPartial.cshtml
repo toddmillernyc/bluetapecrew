@@ -14,5 +14,5 @@
 }
 else
 {
-    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Request.Url.AbsoluteUri }, htmlAttributes: new { id = "loginLink" })</li>
 }

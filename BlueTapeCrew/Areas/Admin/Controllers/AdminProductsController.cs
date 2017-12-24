@@ -183,8 +183,6 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,ProductName,Description,LinkName")] Product product, HttpPostedFileBase file, int categoryId)
         {
-            if(string.IsNullOrEmpty(file?.FileName)) ModelState.AddModelError("ImageId", "You cannot create a product without an image.");
-
             if (ModelState.IsValid)
             {
                 if (file != null)

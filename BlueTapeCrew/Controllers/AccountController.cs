@@ -83,19 +83,25 @@ namespace BlueTapeCrew.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (string.IsNullOrEmpty(returnUrl)) return View(model);
-                    if (!Url.IsLocalUrl(returnUrl))
-                        return Redirect(returnUrl);
+                    if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
+                    if (!Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
                     return RedirectToLocal(returnUrl);
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
+
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+
                 case SignInStatus.Failure:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    break;
+
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    break;
             }
+            return View(model);
         }
 
         //

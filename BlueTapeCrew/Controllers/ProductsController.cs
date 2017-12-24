@@ -29,6 +29,7 @@ namespace BlueTapeCrew.Controllers
             if (productViewModel == null) return RedirectToAction("Index", "Home");
             _cookieService.SetCurrentProduct(System.Web.HttpContext.Current, productViewModel.Id);
             _cookieService.SetCurrentCategory(System.Web.HttpContext.Current, productViewModel.Category);
+            ViewBag.ReturnUrl = HttpContext.Request.Url?.ToString();
             return View(productViewModel);
         }
 
