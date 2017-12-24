@@ -28,7 +28,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <input type="file" name="file" />
+                        <input type="file" name="file" required />
                         @Html.ValidationMessageFor(model => model.ImageId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductName, htmlAttributes: new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.ProductName, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.EditorFor(model => model.ProductName, new {htmlAttributes = new {@class = "form-control", @required=""}})
                         @Html.ValidationMessageFor(model => model.ProductName, "", new {@class = "text-danger"})
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.LinkName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.LinkName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.LinkName, new { htmlAttributes = new { @class = "form-control", @required="" } })
                         @Html.ValidationMessageFor(model => model.LinkName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Description, new  { @class = "form-control", @required = "" })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>

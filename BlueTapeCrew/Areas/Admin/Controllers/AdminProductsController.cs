@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -182,6 +183,8 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,ProductName,Description,LinkName")] Product product, HttpPostedFileBase file, int categoryId)
         {
+            if(string.IsNullOrEmpty(file?.FileName)) ModelState.AddModelError("ImageId", "You cannot create a product without an image.");
+
             if (ModelState.IsValid)
             {
                 if (file != null)
@@ -195,7 +198,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
                 return RedirectToAction("Edit", "AdminProducts", new { @id = product.Id });
             }
 
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "CategoryName", product.Categories.FirstOrDefault().Id);
+            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "CategoryName", product.Categories.FirstOrDefault()?.Id);
             return View(product);
         }
 
