@@ -1,7 +1,9 @@
-﻿namespace BlueTapeCrew.Contracts.Services
+﻿using System.Threading.Tasks;
+
+namespace BlueTapeCrew.Contracts.Services
 {
     public interface IEmailSubscriptionService
     {
-        string Subscribe(string email);
+        Task<string> Subscribe(string email);
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.Web.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 
-namespace BlueTapeCrew.Areas.Admin.Controllers
+namespace BlueTapeCrew.Areas.Api.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class SiteSettingsController : ApiController

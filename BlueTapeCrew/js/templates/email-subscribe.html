@@ -1,0 +1,13 @@
+﻿<h2>Newsletter</h2>
+<div class="input-group">
+    <input type="text" 
+           placeholder="youremail@mail.com" 
+           class="form-control" 
+           ng-model="vm.emailAddress"
+           ng-change="vm.clearMessages()">
+    <span class="input-group-btn">
+        <button class="btn btn-primary" ng-click="vm.subscribe(vm)">Subscribe</button>
+    </span>
+</div>
+<span ng-repeat="error in vm.modelErrors" class="text text-danger">{{error}}</span>
+<span class="text text-success">{{vm.success}}</span>

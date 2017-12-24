@@ -25,12 +25,5 @@ namespace BlueTapeCrew.Controllers
         {
             return PartialView(await _viewModelService.GetSidebarViewModel());
         }
-
-        [System.Web.Mvc.HttpPost]
-        public string Subscribe(string subscribeEmail)
-        {
-            return _emailSubscriptionService.Subscribe(subscribeEmail);
-        }
-
     }
 }

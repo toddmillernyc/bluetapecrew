@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using BlueTapeCrew.Contracts.Services;
 using MailChimp;
 using MailChimp.Helper;
@@ -7,20 +8,20 @@ namespace BlueTapeCrew.Services
 {
     public class EmailSubscriptionService : IEmailSubscriptionService
     {
-        public string Subscribe(string email)
+        private readonly ISiteSettingsService _siteSettingsService;
+
+        public EmailSubscriptionService(ISiteSettingsService siteSettingsService)
         {
-            var mc = new MailChimpManager("b747576e31c781186892432095f6c7d9-us10");
+            _siteSettingsService = siteSettingsService;
+        }
+
+        public async Task<string> Subscribe(string email)
+        {
+            var settings = await _siteSettingsService.Get();
+            var mc = new MailChimpManager(settings.MailChimpApiKey);
             var mcEmail = new EmailParameter { Email = email };
-            try
-            {
-                var results = mc.Subscribe("a663c9f79b", mcEmail);
-                return results.Email;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+            var results = mc.Subscribe(settings.MailChimpListId, mcEmail);
+            return results.Email;
         }
     }
-
 }

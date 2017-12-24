@@ -353,6 +353,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Api\Controllers\SubscribeController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -365,9 +366,10 @@
     <Compile Include="Areas\Admin\Controllers\AdminCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AspNetUsersController.cs" />
-    <Compile Include="Areas\Admin\Controllers\SiteSettingsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\EmailTestController.cs" />
+    <Compile Include="Areas\Api\Controllers\SiteSettingsController.cs" />
+    <Compile Include="Areas\Api\Controllers\EmailTestController.cs" />
     <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
+    <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Contracts\Services\IEmailService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -520,6 +522,8 @@
     <Content Include="Content\Themes\base\tabs.css" />
     <Content Include="Content\Themes\base\theme.css" />
     <Content Include="Content\Themes\base\tooltip.css" />
+    <Content Include="js\app.js" />
+    <Content Include="js\templates\email-subscribe.html" />
     <Content Include="Scripts\admin\demo.js" />
     <Content Include="Scripts\admin\layout.js" />
     <Content Include="Scripts\admin\quick-sidebar.js" />
@@ -1662,7 +1666,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ApiControllers\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

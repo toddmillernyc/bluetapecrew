@@ -4,7 +4,7 @@ using System.Web.Http;
 using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Utils;
 
-namespace BlueTapeCrew.Areas.Admin.Controllers
+namespace BlueTapeCrew.Areas.Api.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class EmailTestController : ApiController
