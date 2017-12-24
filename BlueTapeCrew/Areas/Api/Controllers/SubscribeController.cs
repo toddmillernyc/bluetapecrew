@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using BlueTapeCrew.Contracts.Services;
 using Newtonsoft.Json.Linq;
-using ServiceStack.Text;
 
 namespace BlueTapeCrew.Areas.Api.Controllers
 {
     public class SubscribeController : ApiController
     {
-        private const string SubsciptionMessage = "You have been subscribed to our newsletter.";
+        private const string SubsciptionMessage = "{0} has been subscribed to our newsletter.";
 
         private readonly IEmailSubscriptionService _emailSubscriptionService;
 
@@ -26,7 +23,8 @@ namespace BlueTapeCrew.Areas.Api.Controllers
             try
             {
                 await _emailSubscriptionService.Subscribe(emailAddress);
-                return Ok(JObject.FromObject(new { SubsciptionMessage }));
+                var subscriptionMessage = string.Format(SubsciptionMessage, emailAddress);
+                return Ok(JObject.FromObject(new { subscriptionMessage }));
             }
             catch (Exception ex)
             {
