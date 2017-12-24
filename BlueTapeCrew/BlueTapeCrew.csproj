@@ -481,6 +481,7 @@
     <Content Include="Content\fullcalendar.print.css" />
     <Content Include="Content\Scripts\bootstrap-hover-dropdown.js" />
     <Content Include="Content\Scripts\bootstrap-hover-dropdown.min.js" />
+    <Content Include="Content\spiral_train_logo.jpg" />
     <Content Include="Content\Themes\base\accordion.css" />
     <Content Include="Content\Themes\base\all.css" />
     <Content Include="Content\Themes\base\autocomplete.css" />
