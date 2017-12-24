@@ -95,6 +95,9 @@
     <Reference Include="MailChimp, Version=1.1.90.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MailChimp.NET.1.1.90\lib\net40\MailChimp.dll</HintPath>
     </Reference>
+    <Reference Include="MailKit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.2.0.0\lib\net45\MailKit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -143,6 +146,9 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.0.0\lib\net45\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -361,6 +367,7 @@
     <Compile Include="Areas\Admin\Controllers\AspNetUsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\SiteSettingsController.cs" />
     <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
+    <Compile Include="Contracts\Services\IEmailService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
@@ -375,6 +382,7 @@
     <Compile Include="Contracts\Repositories\ISiteSettingsRepository.cs" />
     <Compile Include="Models\AccessToken.cs" />
     <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\SmtpRequest.cs" />
     <Compile Include="Models\TokenType.cs" />
     <Compile Include="Contracts\Repositories\IAccessTokenRepository.cs" />
     <Compile Include="Paypal\CompletePaymentRequest.cs" />
@@ -385,6 +393,7 @@
     <Compile Include="Repositories\AccessTokenRepository.cs" />
     <Compile Include="Repositories\InvoiceRepository.cs" />
     <Compile Include="Repositories\SiteSettingsRepository.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\InvoiceService.cs" />
     <Compile Include="Contracts\Services\ICartService.cs" />
     <Compile Include="Contracts\Services\ICookieService.cs" />
@@ -434,6 +443,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\ViewModelService.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
+    <Compile Include="Utils\EmailTemplates.cs" />
     <Compile Include="Utils\ImageResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

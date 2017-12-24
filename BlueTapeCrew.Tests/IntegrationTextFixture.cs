@@ -30,9 +30,9 @@ namespace BlueTapeCrew.Tests
 
         //services
         public IInvoiceService InvoiceService => new InvoiceService(InvoiceRepository);
+        public IEmailService EmailService => new Services.EmailService();
         public IPaypalService PaypalService => new PaypalService();
         public static ISiteSettingsService SiteSettingsService => new SiteSettingsService(SiteSettingsRepository);
-
 
         public IntegrationTextFixture()
         {

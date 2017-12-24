@@ -33,7 +33,6 @@ namespace BlueTapeCrew
             RegisterIdentityTypes(container);
             RegisterRepositoryTypes(container);
             RegisterServiceTypes(container);
-
         }
 
         private static void RegisterIdentityTypes(IUnityContainer container)
@@ -58,6 +57,7 @@ namespace BlueTapeCrew
         {
             container.RegisterType<ICartService, CartService>();
             container.RegisterType<ICookieService, CookieService>();
+            container.RegisterType<IEmailService, Services.EmailService>();
             container.RegisterType<IEmailSubscriptionService, EmailSubscriptionService>();
             container.RegisterType<IImageService, ImageService>();
             container.RegisterType<IInvoiceService, InvoiceService>();

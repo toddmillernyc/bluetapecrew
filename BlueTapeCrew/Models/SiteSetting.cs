@@ -77,5 +77,11 @@ namespace BlueTapeCrew.Models
         public string PaypalSandboxAccount { get; set; }
         public string PaypalSandBoxClientId { get; set; }
         public string PaypalSandBoxSecret { get; set; }
+
+        // SMTP
+        public string SmtpHost { get; set; }
+        public int SmtpPort { get; set; }
+        public string SmtpUsername { get; set; }
+        public string SmtpPassword { get; set; }
     }
 }

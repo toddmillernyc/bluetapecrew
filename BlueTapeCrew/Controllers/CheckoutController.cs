@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Paypal;
+using BlueTapeCrew.Utils;
 using BlueTapeCrew.ViewModels;
-using Microsoft.AspNet.Identity;
 using PayPal;
 
 namespace BlueTapeCrew.Controllers
@@ -24,10 +23,12 @@ namespace BlueTapeCrew.Controllers
         private readonly IPaypalService _paypalService;
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
 
         public CheckoutController(
             IUserService userService,
             ICartService cartService,
+            IEmailService emailService,
             IOrderService orderService,
             IPaypalService paypalService,
             ISiteSettingsService siteSettingsService,
@@ -39,6 +40,7 @@ namespace BlueTapeCrew.Controllers
             _invoiceService = invoiceService;
             _paypalService = paypalService;
             _siteSettingsService = siteSettingsService;
+            _emailService = emailService;
 #if DEBUG
             _isSandbox = true;
 #endif
@@ -245,81 +247,18 @@ namespace BlueTapeCrew.Controllers
 
         public async Task<ActionResult> OrderConfirmation(int id)
         {
-            using (var db = new BtcEntities())
-            {
-                var mailSettings = await db.MailSettings.FirstOrDefaultAsync();
+            var order = await _orderService.GetOrder(id);
+            var emailRequest = await GetSmtpRequest(order);
+            await _emailService.SendEmail(emailRequest);
+            return View(order);
+        }
 
-                var adminEmail = mailSettings.Username;
-                var order = await _orderService.GetOrder(id);
-
-                var myMessage = new IdentityMessage
-                {
-                    Destination = order.Email,
-                    Subject = "Your BlueTapeCrew.com order",
-                    Body = "Your BlueTapeCrew.com order has been placed.\r\n\r\n Shipping Info:\r\n\r\n"
-                };
-
-                myMessage.Body += order.FirstName + " " + order.LastName + "\r\n";
-                myMessage.Body += order.Email + "\r\n";
-                myMessage.Body += order.Phone + "\r\n";
-                myMessage.Body += order.Address + "\r\n";
-                myMessage.Body += order.City + ", " + order.State + " " + order.Zip + "\r\n\r\n";
-
-                myMessage.Body += "Items: ";
-
-                foreach (var item in order.OrderItems)
-                {
-                    myMessage.Body += "Item: " + item.Description + "\r\n";
-                    myMessage.Body += "Price: " + item.Price + "\r\n";
-                    myMessage.Body += "Quantity: " + item.Quantity + "\r\n";
-                }
-
-                myMessage.Body += "\r\n\r\n";
-                myMessage.Body += "Subtotal: " + order.SubTotal;
-                myMessage.Body += "Shipping: " + order.Shipping;
-                myMessage.Body += "Total: " + order.Total;
-                myMessage.Body += "\r\n\r\n";
-                if (Request.IsAuthenticated)
-                {
-                    myMessage.Body += "Check your order status at https://bluetapecrew.com";
-                }
-                else
-                {
-                    myMessage.Body += "email info@bluetapecrew.com for order status.";
-                }
-                const string br = "<br/>";
-                const string sp = " ";
-
-                var html = "<h1>BlueTapeCrew.com Order #" + order.Id + "</h1>";
-                html += "<h2>Shipping Info:</h2>";
-                html += "<p>" + order.FirstName + sp + order.LastName + br;
-                html += order.Email + br;
-                html += order.Phone + br;
-                html += order.Address + br;
-                html += order.City + ", " + order.State + sp + order.Zip + "</p>";
-
-
-                foreach (var item in order.OrderItems)
-                {
-                    html += "<h3> Order Items:</h3>";
-                    html += "<b>" + item.Description + "</b>";
-                    html += "<p>" + item.Quantity + "</p>";
-                    html += "<p>Price: " + $"{item.Price:n2}" + "</p>";
-                    html += "<p>Subtotal: " + $"{item.SubTotal:n2}" + "</p>";
-                }
-                html += br + br;
-                html += "<p>" + " Order Subototal: " + $"{order.SubTotal:n2}" + "</p>";
-                html += "<p>" + "Shipping: " + $"{order.Shipping:n2}" + "</p>";
-                html += "<p>" + "Total: " + $"{order.Total:n2}" + "</p>";
-
-                html += "<p>Check your order status at <a href='https://bluetapecrew.com/account'>bluetapecrew.com/account</a> or email <a href='mailto:info@bluetapecrew.com'>info@bluetapecrew.com</a></p>";
-
-                myMessage.Body = html;
-                //await UserManager.SmsService.SendAsync(myMessage);
-
-                return View(order);
-            }
-
+        private async Task<SmtpRequest> GetSmtpRequest(Order order)
+        {
+            var settings = await _siteSettingsService.Get();
+            var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, User.Identity.IsAuthenticated);
+            var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
+            return new SmtpRequest(settings, htmlBody, textBody, order.Email);
         }
 
         public async Task<ActionResult> OrderError()
