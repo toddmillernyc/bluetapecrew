@@ -40,10 +40,19 @@
                     <dd><input class="form-control" type="text" ng-model="settings.SmtpUsername" /></dd>
                     <dt>Password</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.SmtpPassword" /></dd>
-                    <dt>Test Email Config</dt>
+                    <dt>Email Address</dt>
                     <dd>
-                        <button style="width: 50%" type="button" class="btn btn-sm btn-success pull-right" ng-click="sendMail(testEmailAddress)">Send Test Email</button>
-                        <input style="width: 50%" type="text" class="form-control" ng-model="testEmailAddress" ng-change="clearErrors()"/>
+                        <button style="width: 50%" 
+                                type="button" 
+                                class="btn btn-sm btn-success pull-right"
+                                ng-disabled="!testEmailAddress"
+                                ng-click="sendMail(testEmailAddress)">Send Test Email</button>
+                        <input 
+                            style="width: 50%" type="text" 
+                            class="form-control"
+                            placeholder="recipient@gmail.com"
+                            ng-model="testEmailAddress" 
+                            ng-change="clearErrors()"/>
                         <span class="text text-danger">{{testEmailError}}</span>
                         <span class="text text-success">{{emailSentMessage}}</span>
 
