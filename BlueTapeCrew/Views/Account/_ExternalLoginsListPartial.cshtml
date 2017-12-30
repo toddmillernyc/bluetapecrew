@@ -1,17 +1,22 @@
-﻿@model BlueTapeCrew.Identity.ExternalLoginListViewModel
+﻿@using Microsoft.Owin.Security
+@model BlueTapeCrew.Identity.ExternalLoginListViewModel
 
-<h4>Log in with an External Account</h4>
-@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+{
     @Html.AntiForgeryToken()
-    <div id="socialLoginList">
-        <p>
-            <button type="submit" class="btn btn-info" id="Instagram" name="provider" value="Instagram" title="Log in using your Instagram account"><i class="fa fa-instagram"></i></button>
-            <button type="submit" class="btn btn-info" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google"></i></button>
-            <button type="submit" class="btn btn-info" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i></button>
-            <button type="submit" class="btn btn-info" id="Twitter" name="provider" value="Twitter" title="Log in using your Twitter account"><i class="fa fa-twitter"></i></button>
-            <button type="submit" class="btn btn-info" id="Microsoft" name="provider" value="Microsoft" title="Log in using your Microsoft account">Microsoft</button>
-        </p>
-    </div>
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (loginProviders.Any())
+    {
+        <h4>Log in with an External Account</h4>
+        <div id="socialLoginList">
+            <p>
+                <button type="submit" class="btn btn-info" id="Instagram" name="provider" value="Instagram" title="Log in using your Instagram account"><i class="fa fa-instagram"></i></button>
+                <button type="submit" class="btn btn-info" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google"></i></button>
+                <button type="submit" class="btn btn-info" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i></button>
+                <button type="submit" class="btn btn-info" id="Twitter" name="provider" value="Twitter" title="Log in using your Twitter account"><i class="fa fa-twitter"></i></button>
+                <button type="submit" class="btn btn-info" id="Microsoft" name="provider" value="Microsoft" title="Log in using your Microsoft account">Microsoft</button>
+            </p>
+        </div>
+    }
+
 }
-
-
