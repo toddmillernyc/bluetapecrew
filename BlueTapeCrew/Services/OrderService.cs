@@ -1,27 +1,31 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Services
 {
-    public class OrderService : IOrderService
+    public class OrderService : IOrderService, IDisposable
     {
+        private readonly BtcEntities _db = new BtcEntities();
+
         public async Task AddOrder(Order order)
         {
-            using (var db = new BtcEntities())
-            {
-                db.Orders.Add(order);
-                await db.SaveChangesAsync();
-            }
+            _db.Orders.Add(order);
+            await _db.SaveChangesAsync();
         }
 
         public async Task<Order> GetOrder(int id)
         {
-            using (var db = new BtcEntities())
-            {
-               return await db.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(x => x.Id == id);
-            }
+
+            return await _db.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(x => x.Id == id);
+
+        }
+
+        public void Dispose()
+        {
+            _db?.Dispose();
         }
     }
 }
