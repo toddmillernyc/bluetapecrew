@@ -14,31 +14,7 @@ namespace BlueTapeCrew.Services
 {
     public class ImageService : IImageService, IDisposable
     {
-        private readonly BtcEntities _db;
-
-        public ImageService()
-        {
-            _db = new BtcEntities();
-        }
-
-        public async Task GenerateCartThumbs()
-        {
-            foreach (var item in await _db.Products.Where(item => item.Image != null).ToListAsync())
-            {
-                var cartImg = await _db.CartImages.FirstOrDefaultAsync(x => x.ProductId == item.Id);
-                if (cartImg != null)
-                {
-                    _db.CartImages.Remove(cartImg);
-                    await _db.SaveChangesAsync();
-                }
-                _db.CartImages.Add(new CartImage
-                {
-                    ProductId = item.Id,
-                    ImageData = await ResizeImage(item.Image.ImageData, 37, 34, ImageFormat.Bmp)
-                });
-                await _db.SaveChangesAsync();
-            }
-        }
+        private readonly BtcEntities _db = new BtcEntities();
 
         public async Task<byte[]> ResizeImage(byte[] imageData, int width, int height, ImageFormat format)
         {
@@ -85,61 +61,6 @@ namespace BlueTapeCrew.Services
             return await _db.Images.FindAsync(id);
         }
 
-        public async Task GenerateAzImages()
-        {
-            foreach (var item in _db.Products.OrderBy(x => x.ProductName))
-            {
-                _db.AzImages.Add(new AzImage
-                {
-                    ImageData = await ResizeImage(item.Image.ImageData, 200, 266, ImageFormat.Jpeg),
-                    ProductId = item.Id
-                });
-                await _db.SaveChangesAsync();
-            }
-        }
-
-        public async Task UpdateDimensions()
-        {
-            foreach (var item in _db.Images)
-            {
-                var image = Image.FromStream(new MemoryStream(item.ImageData));
-                item.Height = (short)image.Height;
-                item.Width = (short)image.Width;
-                await _db.SaveChangesAsync();
-            }
-        }
-
-        public async Task ResizeImages()
-        {
-            foreach (var item in _db.Images)
-            {
-                if (item.Width == 600 && item.Height == 800) continue;
-                var format = ImageFormat.Jpeg;
-                if (item.MimeType.Equals("image/png"))
-                {
-                    format = ImageFormat.Png;
-                }
-                else if (item.MimeType.Equals("image/gif"))
-                {
-                    format = ImageFormat.Gif;
-                }
-                item.ImageData = await ResizeImage(item.ImageData, 600, 800, format);
-            }
-            await _db.SaveChangesAsync();
-            await UpdateDimensions();
-        }
-
-        public async Task<CartImage> GetCartImageByProductId(int id)
-        {
-            return await _db.CartImages.FirstOrDefaultAsync(x => x.ProductId == id);
-        }
-
-        public async Task<AzImage> GetAzImageByName(string name)
-        {
-            var linkName = name.Split('.')[0];
-            var product = await _db.Products.FirstOrDefaultAsync(x => x.LinkName.Equals(linkName));
-            return product.AzImages.FirstOrDefault(x => x.ProductId == product.Id);
-        }
 
         public void Dispose()
         {
