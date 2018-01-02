@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Tests.Stubs;
 using Xunit;

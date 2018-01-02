@@ -2,6 +2,7 @@
 using BlueTapeCrew.Contracts.Repositories;
 using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.Services
 {

@@ -1,21 +1,21 @@
+using BlueTapeCrew.Models.Entities;
+using System.Data.Entity;
+
 namespace BlueTapeCrew.Models
 {
-    using System.Data.Entity;
-
     public partial class BtcEntities : DbContext
     {
-        public BtcEntities()
-            : base("name=BtcEntities")
-        {
-        }
+        public BtcEntities() : base("name=BtcEntities") { }
 
+        public virtual DbSet<AccessToken> AccessTokens { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AzImage> AzImages { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<CartImage> CartImages { get; set; }
+        public virtual DbSet<CartView> CartViews { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryImage> CategoryImages { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
@@ -24,8 +24,8 @@ namespace BlueTapeCrew.Models
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<MailSetting> MailSettings { get; set; }
         public virtual DbSet<OpenGraphTag> OpenGraphTags { get; set; }
-        public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<PageOpenGraphTag> PageOpenGraphTags { get; set; }
         public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<PayPalPayment> PayPalPayments { get; set; }
@@ -34,9 +34,7 @@ namespace BlueTapeCrew.Models
         public virtual DbSet<SiteSetting> SiteSettings { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<Style> Styles { get; set; }
-        public virtual DbSet<CartView> CartViews { get; set; }
         public virtual DbSet<StyleView> StyleViews { get; set; }
-        public virtual DbSet<AccessToken> AccessTokens { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

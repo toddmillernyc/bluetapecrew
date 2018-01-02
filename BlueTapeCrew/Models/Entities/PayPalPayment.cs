@@ -1,7 +1,7 @@
-namespace BlueTapeCrew.Models
-{
-    using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
+namespace BlueTapeCrew.Models.Entities
+{
     public class PayPalPayment
     {
         public int Id { get; set; }

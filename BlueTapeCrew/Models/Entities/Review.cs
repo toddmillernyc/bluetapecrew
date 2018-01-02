@@ -1,8 +1,8 @@
-namespace BlueTapeCrew.Models
-{
-    using System;
-    using System.ComponentModel.DataAnnotations;
+using System;
+using System.ComponentModel.DataAnnotations;
 
+namespace BlueTapeCrew.Models.Entities
+{
     public class Review
     {
         public int Id { get; set; }

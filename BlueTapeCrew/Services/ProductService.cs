@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.ViewModels;
 
 namespace BlueTapeCrew.Services

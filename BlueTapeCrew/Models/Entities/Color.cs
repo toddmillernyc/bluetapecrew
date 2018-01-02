@@ -1,12 +1,12 @@
-namespace BlueTapeCrew.Models
-{
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-    public class Size
+namespace BlueTapeCrew.Models.Entities
+{
+    public class Color
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Size()
+        public Color()
         {
             Styles = new HashSet<Style>();
         }
@@ -14,10 +14,8 @@ namespace BlueTapeCrew.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20)]
-        public string SizeText { get; set; }
-
-        public int SizeOrder { get; set; }
+        [StringLength(25)]
+        public string ColorText { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Style> Styles { get; set; }

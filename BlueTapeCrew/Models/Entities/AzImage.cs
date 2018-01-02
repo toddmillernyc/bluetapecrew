@@ -1,8 +1,8 @@
-namespace BlueTapeCrew.Models
-{
-    using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-    public class CartImage
+namespace BlueTapeCrew.Models.Entities
+{
+    public class AzImage
     {
         public int Id { get; set; }
 

@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace BlueTapeCrew.Models
+﻿namespace BlueTapeCrew.Models.Entities
 {
     public class Invoice
     {

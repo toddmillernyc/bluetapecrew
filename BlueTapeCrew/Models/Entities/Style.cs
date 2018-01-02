@@ -1,8 +1,8 @@
-namespace BlueTapeCrew.Models
-{
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace BlueTapeCrew.Models.Entities
+{
     public class Style
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BlueTapeCrew.Identity;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

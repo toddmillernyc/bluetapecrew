@@ -1,5 +1,6 @@
 ﻿using BlueTapeCrew.Models;
 using System.ComponentModel.DataAnnotations;
+using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.ViewModels
 {

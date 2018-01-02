@@ -1,4 +1,6 @@
-﻿namespace BlueTapeCrew.Models
+﻿using BlueTapeCrew.Models.Entities;
+
+namespace BlueTapeCrew.Models
 {
     public class SmtpRequest
     {

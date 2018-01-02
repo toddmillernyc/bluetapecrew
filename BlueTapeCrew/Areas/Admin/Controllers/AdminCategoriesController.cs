@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using BlueTapeCrew.Areas.Admin.Models;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
@@ -50,17 +50,12 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-
             var cat = _db.Categories.Find(id);
-            if (cat != null)
-            {
-                var products = cat.Products.ToList();
-                foreach (var product in products)
-                {
-                    cat.Products.Remove(product);
-                }
-            }
-            if (cat != null) _db.Categories.Remove(cat);
+            if (cat == null) return HttpNotFound();
+
+            var products = cat.Products.ToList();
+            foreach (var product in products) cat.Products.Remove(product);
+            _db.Categories.Remove(cat);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -87,11 +82,9 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         {
             var product = _db.Products.Find(productId);
             var category = _db.Categories.Find(categoryId);
-            if (category != null && !category.Products.Contains(product))
-            {
-                category.Products.Add(product);
-                _db.SaveChanges();
-            }
+            if (category == null || category.Products.Contains(product)) return RedirectToAction("Index");
+            category.Products.Add(product);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 

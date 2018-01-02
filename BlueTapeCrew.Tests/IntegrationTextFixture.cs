@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using BlueTapeCrew.Contracts.Repositories;
 using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Paypal;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Services;

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using BlueTapeCrew.Contracts.Services;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.Services
 {

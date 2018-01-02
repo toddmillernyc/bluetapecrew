@@ -1,7 +1,7 @@
-namespace BlueTapeCrew.Models
-{
-    using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace BlueTapeCrew.Models.Entities
+{
     public class OrderItem
     {
         public int Id { get; set; }

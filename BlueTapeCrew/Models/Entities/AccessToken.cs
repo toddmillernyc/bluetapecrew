@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueTapeCrew.Models
+namespace BlueTapeCrew.Models.Entities
 {
     public class AccessToken
     {

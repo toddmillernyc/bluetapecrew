@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using BlueTapeCrew.Areas.Admin.Models;
 using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 using Newtonsoft.Json.Linq;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers

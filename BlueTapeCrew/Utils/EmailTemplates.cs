@@ -1,4 +1,5 @@
 ﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.Utils
 {

@@ -48,7 +48,7 @@ namespace BlueTapeCrew.Services
             }
         }
 
-        public async Task<Models.Image> GetProductImageByName(string name)
+        public async Task<Models.Entities.Image> GetProductImageByName(string name)
         {
             var linkName = name.Split('.')[0];
             var product = await _db.Products.Where(x => x.LinkName.Equals(linkName)).FirstOrDefaultAsync();
@@ -56,7 +56,7 @@ namespace BlueTapeCrew.Services
 
         }
 
-        public async Task<Models.Image> GetImageById(int id)
+        public async Task<Models.Entities.Image> GetImageById(int id)
         {
             return await _db.Images.FindAsync(id);
         }
