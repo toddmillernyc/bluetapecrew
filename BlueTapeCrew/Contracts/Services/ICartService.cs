@@ -9,7 +9,6 @@ namespace BlueTapeCrew.Contracts.Services
     {
 
         Task<IEnumerable<CartView>> Get(string sessionId);
-        Task SetQuantity(string sessionId,int styleId, int quantity);
         Task<CartViewModel> GetCartViewModel(string sessionId);
         Task<int> Post(string sessionId, int styleId, int quantity);
         Task DeleteItem(int id);

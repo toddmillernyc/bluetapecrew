@@ -37,14 +37,6 @@ namespace BlueTapeCrew.Controllers
             return View(cart);                
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetQuantity(int styleId, int quantity)
-        {
-            await _cartService.SetQuantity(Session.SessionID,styleId,quantity);
-            return RedirectToAction("cart");
-        }
-
         public async Task<PartialViewResult> Index()
         {
             var model = await _cartService.GetCartViewModel(Session.SessionID);

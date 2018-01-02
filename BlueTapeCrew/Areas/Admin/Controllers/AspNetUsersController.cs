@@ -9,7 +9,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class AspNetUsersController : Controller
     {
-        private BtcEntities _db = new BtcEntities();
+        private readonly BtcEntities _db = new BtcEntities();
 
         public ActionResult Index()
         {
@@ -18,15 +18,9 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
 
         public ActionResult Details(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var aspNetUser = _db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
+            if (aspNetUser == null) return HttpNotFound();
             return View(aspNetUser);
         }
 
@@ -35,58 +29,41 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             return View();
         }
 
+        //todo: fix bugs in view
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Address,City,State,PostalCode")] AspNetUser aspNetUser)
         {
-            if (ModelState.IsValid)
-            {
-                _db.AspNetUsers.Add(aspNetUser);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid) return View(aspNetUser);
 
-            return View(aspNetUser);
+            _db.AspNetUsers.Add(aspNetUser);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Edit(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AspNetUser aspNetUser = await _db.AspNetUsers.FindAsync(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(aspNetUser);
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var user = await _db.AspNetUsers.FindAsync(id);
+            if (user == null) return HttpNotFound();
+            return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Address,City,State,PostalCode")] AspNetUser aspNetUser)
         {
-            if (ModelState.IsValid)
-            {
-                _db.Entry(aspNetUser).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(aspNetUser);
+            if (!ModelState.IsValid) return View(aspNetUser);
+            _db.Entry(aspNetUser).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var aspNetUser = _db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
+            if (aspNetUser == null) return HttpNotFound();
             return View(aspNetUser);
         }
 
@@ -94,8 +71,10 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            AspNetUser aspNetUser = _db.AspNetUsers.Find(id);
-            _db.AspNetUsers.Remove(aspNetUser);
+            var user = _db.AspNetUsers.Find(id);
+            if (user == null) return RedirectToAction("Index");
+
+            _db.AspNetUsers.Remove(user);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

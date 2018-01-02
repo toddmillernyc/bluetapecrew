@@ -15,6 +15,5 @@ namespace BlueTapeCrew.Areas.Admin.PartialClasses
         public string LinkName { get; set; }
         [Required]
         public string Description { get; set; }
-
     }
 }

@@ -150,8 +150,8 @@ namespace BlueTapeCrew.Controllers
         {
             try
             {
-                var clientId = "";
-                var clientSecret = "";
+                string clientId;
+                string clientSecret;
                 var settings = await _siteSettingsService.Get();
 
                 if (_isSandbox)
@@ -176,7 +176,8 @@ namespace BlueTapeCrew.Controllers
 
 
            var cartView = await _cartService.Get(Session.SessionID);
-            var subtotal = cartView.Sum(x => x.SubTotal);
+            var cartViews = cartView.ToList();
+            var subtotal = cartViews.Sum(x => x.SubTotal);
             var shipping = 0;
             if (subtotal < 50)
             {
@@ -225,7 +226,7 @@ namespace BlueTapeCrew.Controllers
             }
 
             order.OrderItems = new List<OrderItem>();
-            foreach (var item in cartView.ToList())
+            foreach (var item in cartViews.ToList())
             {
                 order.OrderItems.Add(new OrderItem
                 {

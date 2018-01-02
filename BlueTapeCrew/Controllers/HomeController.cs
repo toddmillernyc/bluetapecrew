@@ -7,13 +7,11 @@ namespace BlueTapeCrew.Controllers
     public class HomeController : Controller
     {
         private readonly IViewModelService _viewModelService;
-        private readonly IEmailSubscriptionService _emailSubscriptionService;
 
         public HomeController(IViewModelService viewModelService,
                               IEmailSubscriptionService iEmailSubscriptionService)
         {
             _viewModelService = viewModelService;
-            _emailSubscriptionService = iEmailSubscriptionService;
         }
 
         public async Task<ActionResult> Index()

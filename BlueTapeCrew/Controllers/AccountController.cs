@@ -13,32 +13,14 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class AccountController : Controller
     {
+        // Used for XSRF protection when adding external logins
+        private const string XsrfKey = "XsrfId";
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
-        }
+        public ApplicationSignInManager SignInManager => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+        public ApplicationUserManager UserManager => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         //
         // GET: /Account/Login
@@ -68,7 +50,7 @@ namespace BlueTapeCrew.Controllers
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                    await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
 
                     // Uncomment to debug locally  
                     //ViewBag.Link = callbackUrl;
@@ -91,7 +73,7 @@ namespace BlueTapeCrew.Controllers
                     return View("Lockout");
 
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
 
                 case SignInStatus.Failure:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -140,7 +122,6 @@ namespace BlueTapeCrew.Controllers
                     return RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
@@ -171,7 +152,7 @@ namespace BlueTapeCrew.Controllers
                     //  Comment the following line to prevent log in until the user is confirmed.
                     //  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+                    await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
 
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
@@ -228,8 +209,10 @@ namespace BlueTapeCrew.Controllers
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                if (Request.Url == null) return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);		
                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -330,7 +313,7 @@ namespace BlueTapeCrew.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //
@@ -354,7 +337,6 @@ namespace BlueTapeCrew.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
@@ -421,9 +403,10 @@ namespace BlueTapeCrew.Controllers
 
         private async Task<string> SendEmailConfirmationTokenAsync(string userId, string subject)
         {
-            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
-               new { userId = userId, code = code }, protocol: Request.Url.Scheme);
+               new {userId, code }, protocol: Request.Url?.Scheme);
             await UserManager.SendEmailAsync(userId, subject,
                "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
@@ -450,17 +433,7 @@ namespace BlueTapeCrew.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XSRF_KEY = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {
@@ -502,11 +475,10 @@ namespace BlueTapeCrew.Controllers
                 var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
                 if (UserId != null)
                 {
-                    properties.Dictionary[XSRF_KEY] = UserId;
+                    properties.Dictionary[XsrfKey] = UserId;
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-        #endregion
     }
 }

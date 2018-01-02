@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
@@ -170,8 +171,9 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             {
                 return Redirect("~/Account/Login");
             }
-            return View(AdminCategoriesController.GetCategoryList());
+            return View(GetCategoryList());
         }
+
 
         public ActionResult Create()
         {
@@ -359,6 +361,26 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
                 await _db.SaveChangesAsync();
             }
             return RedirectToAction("Index");
+        }
+
+        public List<AdminCategoryViewModel> GetCategoryList()
+        {
+            var categories =
+                _db.Categories.OrderBy(category => category.CategoryName)
+                    .Select(category => new AdminCategoryViewModel
+                    {
+                        Id = category.Id,
+                        Name = category.CategoryName,
+                        ImageId = category.ImageId,
+                        Products = category.Products.OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
+                        {
+                            Description = product.Description,
+                            Id = product.Id,
+                            ImageId = product.ImageId,
+                            Name = product.ProductName
+                        }).ToList()
+                    }).ToList();
+            return categories;
         }
 
         protected override void Dispose(bool disposing)

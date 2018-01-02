@@ -391,7 +391,6 @@
     <Compile Include="Paypal\CompletePaymentRequest.cs" />
     <Compile Include="Paypal\IPaypalService.cs" />
     <Compile Include="Paypal\PaymentRequest.cs" />
-    <Compile Include="Paypal\PaypalExtensions.cs" />
     <Compile Include="Paypal\PaypalService.cs" />
     <Compile Include="Repositories\AccessTokenRepository.cs" />
     <Compile Include="Repositories\InvoiceRepository.cs" />

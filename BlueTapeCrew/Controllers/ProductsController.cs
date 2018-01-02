@@ -6,7 +6,6 @@ namespace BlueTapeCrew.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly IImageService _imageService;
         private readonly IProductService _productService;
         private readonly ICookieService _cookieService;
 
@@ -14,7 +13,6 @@ namespace BlueTapeCrew.Controllers
                                   IProductService productService,
                                   ICookieService cookieService)
         {
-            _imageService = imageService;
             _productService = productService;
             _cookieService = cookieService;
         }
@@ -41,15 +39,9 @@ namespace BlueTapeCrew.Controllers
             return RedirectToAction("Details", new { name = await _productService.AddReview(productId, name, email, review, rating) });
         }
 
-        [Route("product-pop-up/{name}")]
-        public async Task<PartialViewResult> _ProductPopUp(string name)
-        {
-            return PartialView(await _productService.GetProductViewModel(name));
-        }
-
         public async Task<PartialViewResult> _BestSellers()
         {
-            return PartialView(await _productService.GetBestSellers(3));
+            return PartialView(await _productService.GetBestSellers());
         }
 
         public async Task<string> GetStylePrice(int id)

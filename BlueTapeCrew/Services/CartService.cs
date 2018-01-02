@@ -25,21 +25,6 @@ namespace BlueTapeCrew.Services
             return await _db.CartViews.Where(x => x.CartId.Equals(sessionId)).OrderByDescending(x => x.Id).ToListAsync();
         }
 
-        public async Task SetQuantity(string sessionId, int styleId, int quantity)
-        {
-            var items = _db.Carts.Where(x => x.CartId.Equals(sessionId));
-            var item = items.FirstOrDefault(x => x.StyleId == styleId);
-            if (quantity == 0)
-            {
-                _db.Carts.Remove(item);
-            }
-            else
-            {
-                if (item != null) item.Count = quantity;
-            }
-            await _db.SaveChangesAsync();
-        }
-
         public async Task<CartViewModel> GetCartViewModel(string sessionId)
         {
             var settings = await _siteSettingsService.Get();

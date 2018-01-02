@@ -9,127 +9,88 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminCategoriesController : Controller
     {
+        readonly BtcEntities _db = new BtcEntities();
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            using (var db = new BtcEntities())
-            {
-                return View(db.Categories.Find(id));
-            }
+            return View(_db.Categories.Find(id));
         }
 
         [HttpPost]
         public ActionResult Edit(Category category)
         {
-            using (var db = new BtcEntities())
-            {
-                var existingCategory = db.Categories.Find(category.Id);
-                existingCategory.CategoryName = category.CategoryName;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var existingCategory = _db.Categories.Find(category.Id);
+            if (existingCategory != null) existingCategory.CategoryName = category.CategoryName;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Index()
         {
-            using (var db = new BtcEntities())
+            var categories =
+            _db.Categories.OrderBy(category => category.CategoryName)
+            .Select(category => new AdminCategoryViewModel
             {
-                var productList = new List<Product>();
-
-                var categories = 
-                db.Categories.OrderBy(category => category.CategoryName)
-                .Select(category => new AdminCategoryViewModel
+                Id = category.Id,
+                Name = category.CategoryName,
+                ImageId = category.ImageId,
+                Published = category.Published,
+                Products = category.Products.OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
                 {
-                    Id = category.Id,
-                    Name = category.CategoryName,
-                    ImageId = category.ImageId,
-                    Published = category.Published,
-                    Products = category.Products.OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
-                    {
-                        Description = product.Description,
-                        Id = product.Id,
-                        ImageId = product.ImageId,
-                        Name = product.ProductName
-                    }).ToList()
-                }).ToList();
-                ViewBag.ProductId = new SelectList(db.Products.OrderBy(x => x.ProductName).ToList(), "Id", "ProductName");
-                return View(categories);
-            }
+                    Description = product.Description,
+                    Id = product.Id,
+                    ImageId = product.ImageId,
+                    Name = product.ProductName
+                }).ToList()
+            }).ToList();
+            ViewBag.ProductId = new SelectList(_db.Products.OrderBy(x => x.ProductName).ToList(), "Id", "ProductName");
+            return View(categories);
         }
-        public static List<AdminCategoryViewModel> GetCategoryList()
-        {
-            using (var db = new BtcEntities())
-            {
-                var categories = 
-                    db.Categories.OrderBy(category => category.CategoryName)
-                        .Select(category => new AdminCategoryViewModel
-                        {
-                            Id = category.Id,
-                            Name = category.CategoryName,
-                            ImageId = category.ImageId,
-                            Products = category.Products.OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
-                            {
-                                Description = product.Description,
-                                Id = product.Id,
-                                ImageId = product.ImageId,
-                                Name = product.ProductName
-                            }).ToList()
-                        }).ToList();
-                return categories;
-            }
-        }
+
         public ActionResult Delete(int id)
         {
-            using (var db = new BtcEntities())
+
+            var cat = _db.Categories.Find(id);
+            if (cat != null)
             {
-                var cat = db.Categories.Find(id);
                 var products = cat.Products.ToList();
                 foreach (var product in products)
                 {
                     cat.Products.Remove(product);
                 }
-                db.Categories.Remove(cat);
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
+            if (cat != null) _db.Categories.Remove(cat);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Index(string categoryName)
         {
-            using (var db = new BtcEntities())
-            {
-                var model = new Category { CategoryName = categoryName };
-                db.Categories.Add(model);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            
+            var model = new Category { CategoryName = categoryName };
+            _db.Categories.Add(model);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Create(Category category)
         {
-            using (var db = new BtcEntities())
-            {
-                db.Categories.Add(category);
-                db.SaveChanges();
-            }
+            _db.Categories.Add(category);
+            _db.SaveChanges();
             return RedirectToAction("Index", "AdminProducts");
         }
 
         [HttpPost]
         public ActionResult AddProductToCategory(int productId, int categoryId)
         {
-            using (var db = new BtcEntities())
+            var product = _db.Products.Find(productId);
+            var category = _db.Categories.Find(categoryId);
+            if (category != null && !category.Products.Contains(product))
             {
-                var product = db.Products.Find(productId);
-                var category = db.Categories.Find(categoryId);
-                if (!category.Products.Contains(product))
-                {
-                    category.Products.Add(product);
-                    db.SaveChanges();
-                }
+                category.Products.Add(product);
+                _db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
@@ -137,26 +98,25 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult RemoveProductFromCategory(int productId, int categoryId)
         {
-            using (var db = new BtcEntities())
-            {
-                var product = db.Products.Find(productId);
-                var category = db.Categories.Find(categoryId);
-                category.Products.Remove(product);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var product = _db.Products.Find(productId);
+            var category = _db.Categories.Find(categoryId);
+            category?.Products.Remove(product);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult PublishCategory(int id)
         {
-            using (var db = new BtcEntities())
-            {
-                var category = db.Categories.Find(id);
-                category.Published = !category.Published;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var category = _db.Categories.Find(id);
+            if (category != null) category.Published = !category.Published;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public new void Dispose()
+        {
+            _db?.Dispose();
         }
     }
 }

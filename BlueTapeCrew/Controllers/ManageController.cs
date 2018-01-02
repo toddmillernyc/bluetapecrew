@@ -31,26 +31,14 @@ namespace BlueTapeCrew.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            private set => _signInManager = value;
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
         }
 
         //
@@ -100,14 +88,18 @@ namespace BlueTapeCrew.Controllers
             using (var db = new BtcEntities())
             {
                 var model = await db.AspNetUsers.FindAsync(user.Id);
-                model.Email = user.Email;
-                model.FirstName = user.FirstName;
-                model.LastName = user.LastName;
-                model.PhoneNumber = user.PhoneNumber;
-                model.Address = user.Address;
-                model.City = user.City;
-                model.State = user.State;
-                model.PostalCode = user.PostalCode;
+                if (model != null)
+                {
+                    model.Email = user.Email;
+                    model.FirstName = user.FirstName;
+                    model.LastName = user.LastName;
+                    model.PhoneNumber = user.PhoneNumber;
+                    model.Address = user.Address;
+                    model.City = user.City;
+                    model.State = user.State;
+                    model.PostalCode = user.PostalCode;
+                }
+
                 await db.SaveChangesAsync();
             }
             return RedirectToAction("Index","Manage");
@@ -202,7 +194,7 @@ namespace BlueTapeCrew.Controllers
         // GET: /Manage/VerifyPhoneNumber
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
+            await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
             // Send an SMS through the SMS provider to verify the phone number
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
@@ -349,7 +341,7 @@ namespace BlueTapeCrew.Controllers
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XSRF_KEY, User.Identity.GetUserId());
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
@@ -369,17 +361,10 @@ namespace BlueTapeCrew.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
         // Used for XSRF protection when adding external logins
-        private const string XSRF_KEY = "XsrfId";
+        private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {
@@ -387,26 +372,6 @@ namespace BlueTapeCrew.Controllers
             {
                 ModelState.AddModelError("", error);
             }
-        }
-
-        private bool HasPassword()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PasswordHash != null;
-            }
-            return false;
-        }
-
-        private bool HasPhoneNumber()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PhoneNumber != null;
-            }
-            return false;
         }
 
         public enum ManageMessageId
@@ -419,7 +384,5 @@ namespace BlueTapeCrew.Controllers
             RemovePhoneSuccess,
             Error
         }
-
-#endregion
     }
 }
