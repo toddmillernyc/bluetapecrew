@@ -529,6 +529,7 @@
     <Content Include="Content\Themes\base\theme.css" />
     <Content Include="Content\Themes\base\tooltip.css" />
     <Content Include="js\app.js" />
+    <Content Include="js\templates\header-menu.html" />
     <Content Include="js\templates\email-subscribe.html" />
     <Content Include="Scripts\admin\demo.js" />
     <Content Include="Scripts\admin\layout.js" />
