@@ -53,22 +53,6 @@
                 <a href="javascript:;"><i class="fa fa-shopping-cart"></i></a>
             </div>
             <header-menu></header-menu>
-            @*<div class="header-navigation" style="display: block">
-                <ul>
-                    @foreach (var item in layoutModel.Menu)
-                    {
-                        <li class="dropdown">
-                            <a class="dropdown-toggle catLink" data-toggle="dropdown" data-target="#" href="javascript:;">@Html.DisplayFor(modelItem => item.MenuName)</a>
-                            <ul class="dropdown-menu">
-                                @foreach (var itm in item.Items)
-                                {
-                                    <li>@Html.ActionLink(itm.ItemName, "Details", "Products", new { @name = itm.LinkName }, new { @class = "product-link" })</li>
-                                }
-                            </ul>
-                        </li>
-                    }
-                </ul>
-            </div>*@
         </div>
     </div>
     @RenderBody()
