@@ -11,6 +11,9 @@ namespace BlueTapeCrew
             var container = new UnityContainer();
             UnityConfig.RegisterTypes(container);
             config.DependencyResolver = new UnityDependencyResolver(container);
+
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            formatters.Remove(formatters.XmlFormatter);
         }
     }
 }

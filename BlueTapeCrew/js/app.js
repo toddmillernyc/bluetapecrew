@@ -21,7 +21,9 @@
                     api.save(function (data) {
                         scope.vm.success = data.subscriptionMessage;
                         scope.vm.emailAddress = "";
-                    }, function (error) { scope.vm.modelErrors = error.data.ModelState.emailAddress; });
+                    }, function (error) {
+                        scope.vm.modelErrors = error.data.modelState.emailAddress;
+                    });
                 }
             }
         };

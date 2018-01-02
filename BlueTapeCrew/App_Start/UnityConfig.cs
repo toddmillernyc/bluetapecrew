@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using BlueTapeCrew.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
+using System.Linq.Expressions;
 using BlueTapeCrew.Controllers;
 using Microsoft.Owin.Security;
 using Unity.Injection;
@@ -49,7 +50,9 @@ namespace BlueTapeCrew
         private static void RegisterRepositoryTypes(IUnityContainer container)
         {
             container.RegisterType<IAccessTokenRepository, AccessTokenRepository>();
+            container.RegisterType<ICategoryProductsRepository, CategoryProductsRepository>();
             container.RegisterType<IInvoiceRepository, InvoiceRepository>();
+            container.RegisterType<IMenuService, MenuService>();
             container.RegisterType<ISiteSettingsRepository, SiteSettingsRepository>();
         }
 

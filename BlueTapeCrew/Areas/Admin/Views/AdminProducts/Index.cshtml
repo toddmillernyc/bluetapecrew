@@ -24,22 +24,22 @@
                 <h2>Site</h2>
                 <dl class="dl-horizontal">
                     <dt>Title</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.SiteTitle" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.siteTitle" /></dd>
                     <dt>Url</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.SiteUrl" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.siteUrl" /></dd>
                     <dt>Logo Url</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.SiteLogoUrl" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.siteLogoUrl" /></dd>
                 </dl>
                 <h2>Smtp Email</h2>
                 <dl class="dl-horizontal">
                     <dt>Host</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.SmtpHost" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.smtpHost" /></dd>
                     <dt>Port</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.SmtpPort" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.smtpPort" /></dd>
                     <dt>Username</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.SmtpUsername" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.smtpUsername" /></dd>
                     <dt>Password</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.SmtpPassword" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.smtpPassword" /></dd>
                     <dt>Email Address</dt>
                     <dd>
                         <button style="width: 50%" 
@@ -63,16 +63,16 @@
                 <h2>Contact</h2>
                 <dl class="dl-horizontal">
                     <dt>Email</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.ContactEmailAddress" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.contactEmailAddress" /></dd>
                     <dt>Phone</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.ContactPhoneNumber" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.contactPhoneNumber" /></dd>
                 </dl>
                 <h2>Shipping</h2>
                 <dl class="dl-horizontal">
                     <dt>Free Shipping Threshold</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.FreeShippingThreshold" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.freeShippingThreshold" /></dd>
                     <dt>Flat Shipping Rage</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.FlatShippingRate" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.flatShippingRate" /></dd>
                 </dl>
             </div>
         </div>
@@ -81,11 +81,11 @@
                 <h2>Content</h2>
                 <dl class="dl-horizontal">
                     <dt>About Us</dt>
-                    <dd><textarea class="form-control" ng-model="settings.AboutUs"></textarea></dd>
+                    <dd><textarea class="form-control" ng-model="settings.aboutUs"></textarea></dd>
                     <dt>Description</dt>
-                    <dd><textarea rows="10" class="form-control" ng-model="settings.Description"></textarea></dd>
+                    <dd><textarea rows="10" class="form-control" ng-model="settings.description"></textarea></dd>
                     <dt>Keywords</dt>
-                    <dd><textarea class="form-control" ng-model="settings.Keywords"></textarea></dd>
+                    <dd><textarea class="form-control" ng-model="settings.keywords"></textarea></dd>
                 </dl>
             </div>
         </div>
@@ -94,21 +94,21 @@
                 <h2>PayPal Live</h2>
                 <dl class="dl-horizontal">
                     <dt>Api User Name</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.PaypalApiUsername" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.paypalApiUsername" /></dd>
                     <dt>Client Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.PaypalClientId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.paypalClientId" /></dd>
                     <dt>Client Secret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.PaypalClientSecret" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.paypalClientSecret" /></dd>
                 </dl>
 
                 <h2>PayPal SandBox</h2>
                 <dl class="dl-horizontal">
                     <dt>Api User Name</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.PaypalSandboxAccount" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.paypalSandboxAccount" /></dd>
                     <dt>Sandbox ClientId</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.PaypalSandBoxClientId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.paypalSandBoxClientId" /></dd>
                     <dt>Sanbox Secret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.PaypalSandBoxSecret" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.paypalSandBoxSecret" /></dd>
                 </dl>
             </div>
             <div class="col-md-6">
@@ -117,72 +117,72 @@
                 <h3>FaceBook</h3>
                 <dl class="dl-horizontal">
                     <dt>Url</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.FaceBookUrl" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.faceBookUrl" /></dd>
                     <dt>App Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.FacebookAppId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.facebookAppId" /></dd>
                     <dt>Client Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.FacebookClientId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.facebookClientId" /></dd>
                     <dt>Client Secret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.FacebookClientSecret" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.facebookClientSecret" /></dd>
                 </dl>
 
                 <h3>Google</h3>
                 <dl class="dl-horizontal">
                     <dt>Client Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.GoogleClientId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.googleClientId" /></dd>
                     <dt>Client Secret </dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.GoogleClientSecret" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.googleClientSecret" /></dd>
                 </dl>
 
                 <h3>Instagram</h3>
                 <dl class="dl-horizontal">
                     <dt>Client Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.InstagramClientId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.instagramClientId" /></dd>
                     <dt>Client Secret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.InstagramClientSecret" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.instagramClientSecret" /></dd>
                 </dl>
 
                 <h3>LinkedIn</h3>
                 <dl class="dl-horizontal">
                     <dt>LinkedInUrl</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.LinkedInUrl" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.linkedInUrl" /></dd>
                 </dl>
 
                 <h3>Mail Chimp</h3>
                 <dl class="dl-horizontal">
                     <dt>Api Key</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.MailChimpApiKey" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.mailChimpApiKey" /></dd>
                     <dt>List Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.MailChimpListId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.mailChimpListId" /></dd>
                 </dl>
 
                 <h3>Microsoft</h3>
                 <dl class="dl-horizontal">
                     <dt>MicrosoftClientId</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.MicrosoftClientId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.microsoftClientId" /></dd>
                     <dt>MicrosoftClientSecret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.MicrosoftClientSecret" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.microsoftClientSecret" /></dd>
                 </dl>
 
                 <h3>Twitter</h3>
                 <dl class="dl-horizontal">
                     <dt>TwitterUrl</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.TwitterUrl" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.twitterUrl" /></dd>
                     <dt>TwitterClientId</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.TwitterClientId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.twitterClientId" /></dd>
                     <dt>TwitterClientSecret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.TwitterClientSecret" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.twitterClientSecret" /></dd>
                     <dt>Twitter Widget Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.TwitterWidgetId" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.twitterWidgetId" /></dd>
                 </dl>
 
                 <dl class="dl-horizontal">
                     <dt>CopyrightText</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.CopyrightText" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.copyrightText" /></dd>
                     <dt>CopyrightUrl</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.CopyrightUrl" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.copyrightUrl" /></dd>
                     <dt>CopyrightLinktext</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.CopyrightLinktext" /></dd>
+                    <dd><input class="form-control" type="text" ng-model="settings.copyrightLinktext" /></dd>
                 </dl>
             </div>
         </div>

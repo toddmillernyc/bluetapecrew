@@ -387,6 +387,7 @@
     <Compile Include="Contracts\Repositories\ISiteSettingsRepository.cs" />
     <Compile Include="Models\Entities\AccessToken.cs" />
     <Compile Include="Models\Entities\Invoice.cs" />
+    <Compile Include="Models\MenuCategory.cs" />
     <Compile Include="Models\SmtpRequest.cs" />
     <Compile Include="Models\TokenType.cs" />
     <Compile Include="Contracts\Repositories\IAccessTokenRepository.cs" />
@@ -395,6 +396,8 @@
     <Compile Include="Paypal\PaymentRequest.cs" />
     <Compile Include="Paypal\PaypalService.cs" />
     <Compile Include="Repositories\AccessTokenRepository.cs" />
+    <Compile Include="Contracts\Repositories\ICategoryProductsRepository.cs" />
+    <Compile Include="Repositories\CategoryProductsRepository.cs" />
     <Compile Include="Repositories\InvoiceRepository.cs" />
     <Compile Include="Repositories\SiteSettingsRepository.cs" />
     <Compile Include="Services\EmailService.cs" />
