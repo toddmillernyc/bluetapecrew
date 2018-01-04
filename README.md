@@ -40,7 +40,6 @@ JS/JQuery Plugins:
 - RateIt
 - MS JQuery Unobtrusive Validation
 - Back-To-Top
-- JQuery Zoon
 - Bootstrap TouchSpin
 - JQuery Zoom        
 - JQuery Slimscroll
