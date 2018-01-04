@@ -7,14 +7,16 @@ I make improvements sporadically when I have time, focusing on improving consist
 
 ## Features
   - Front end based on [KeenThemes] Metronic Store HTML Template
-  - Social Logins: Instagram, Google+, Microsoft, FaceBook (breaking changes in these services currentl
   - Paypal integration
   - MailChimp Subsription Integration
   - Mobile Repsonsive
   - Client Accessable Admin
   - Built in Image Handling
   - SSL
-  - GMail SMTP
+  - Emails from SMTP account.
+  - Social Logins
+  
+ *Breaking changes in External services over the past few months -- currently fixing social login feature
  
 ## Tech
 BlueTapeCrew uses a typical .NET stack:
