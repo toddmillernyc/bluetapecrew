@@ -1,9 +1,11 @@
 # BlueTapeCrew
 
 https://bluetapecrew.com
+* **Live Site: Self Hosted Windows Server 2016/SQL Server Instance** 
 
 BlueTapeCrew is a client website I built from scratch in ASP.NET while I was freelancing.
 I make improvements sporadically when I have time, focusing on improving consistency, technical design, and scalablity.
+Previously was hosted on Azure, now I self host in a Windows Server 2016 VM
 
 ## Features
   - Front end based on [KeenThemes] Metronic Store HTML Template
@@ -29,7 +31,19 @@ BlueTapeCrew uses a typical .NET stack:
 - HTML5
 - CSS
 
-* **Live Site: Self Hosted Windows Server 2016/SQL Server Instance** https://bluetapecrew.com
+JS/JQuery Plugins:
+- Font Awesome
+- Bootstrap
+- FancyBox
+- Owl Carousel
+- UniformJs
+- RateIt
+- MS JQuery Unobtrusive Validation
+- Back-To-Top
+- JQuery Zoon
+- Bootstrap TouchSpin
+- JQuery Zoom        
+- JQuery Slimscroll
 
 ## Roadmap
 - Improve Integration / Unit Test Coverage
