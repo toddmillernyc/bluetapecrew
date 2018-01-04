@@ -2,13 +2,12 @@
 
 https://bluetapecrew.com
 
-BlueTapeCrew is a client website I built from scratch in ASP.NET.
-
-I was far less experienced when I initially pushed this to production and have been improving the source gradually over time.
+BlueTapeCrew is a client website I built from scratch in ASP.NET while I was freelancing.
+I make improvements sporadically when I have time, focusing on improving consistency, technical design, and scalablity.
 
 ## Features
-  - Front end based on [KeenThemes] Metronic Store Template
-  - Social Logins: Instagram, Google+, Microsoft, FaceBook
+  - Front end based on [KeenThemes] Metronic Store HTML Template
+  - Social Logins: Instagram, Google+, Microsoft, FaceBook (breaking changes in these services currentl
   - Paypal integration
   - MailChimp Subsription Integration
   - Mobile Repsonsive
@@ -19,7 +18,6 @@ I was far less experienced when I initially pushed this to production and have b
  
 ## Tech
 BlueTapeCrew uses a typical .NET stack:
-- Anemic Domain Model W/Service Layer
 - Dependency Injection
 - Homegrown, I did not use an existing schema or site design.
 - ASP.NET MVC 5
@@ -29,22 +27,17 @@ BlueTapeCrew uses a typical .NET stack:
 - HTML5
 - CSS
 
-* **Live Site: Azure Web App/SQL Server Instance** https://bluetapecrew.com
-
-## Development
-
-*I am open to contributions, and you are welcome to use the site code with one caveat; the Admin contains elements from a purchased templates, you must purchase a license from [KeenThemes] (Metronic Admin Template)
+* **Live Site: Self Hosted Windows Server 2016/SQL Server Instance** https://bluetapecrew.com
 
 ## Roadmap
-- Write Unit tests
-- Configure Scope of DI Container
+- Improve Integration / Unit Test Coverage
+- Review DI setup and set LifetimeRequestManagers where appropriate.
 - Migrate to ASP.NET Core
 - Add support for multi-tenancy
 - Strip paid template elements from Admin
-- Complete Admin functionality so site is fully configurable from UI
 - Complete de-branding of the source
 - Replace stored procedures and views with ORM queries
-- Convert admin app to 100% angular
+- Angular Conversion
 
 ## Installation
 
@@ -67,6 +60,7 @@ Add connection strings to web.config:
 </connectionStrings>
 ```
 
+### Setup
 ### Databae Migrations
 Add Code-First Migration from Package Manager Console
 (You will have to do this once for each connection string.  Follow the prompts in package manager console)
@@ -77,16 +71,8 @@ Update Database
 ```sh
 $ Update-Database
 ```
-
-### Local Setup
-Right click on Web.config in Visual Studio solution explorer
-"Add Config Transform"
-Do it 2x, it will add Web.Release.confg & Web.Debug config
-Add a transform in Web.Debug.config for the connection strings (Web.Debug.config is in .gitignore)
-**To run on Azure:** Just add the connection strings to your Azure Web App configuration
-
-### SQL Server Stored Procedures and Views
-You will need to create these stored procedures and Views on your SQL Database:
+### Stored Procedures and Views
+You will need to create these Views on your SQL Database:
 #### CartView View
 ```sh
 create view [dbo].[CartView] AS
