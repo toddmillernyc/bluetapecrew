@@ -50,35 +50,37 @@ namespace BlueTapeCrew
             using (var db = new BtcEntities())
             {
                 var settings = db.SiteSettings.FirstOrDefaultAsync().Result;
+                if(settings != null)
+                {
+                    if (!string.IsNullOrEmpty(settings.MicrosoftClientId))
+                        app.UseMicrosoftAccountAuthentication(
+                        clientId: settings.MicrosoftClientId,
+                        clientSecret: settings.MicrosoftClientSecret);
 
-                if (!string.IsNullOrEmpty(settings.MicrosoftClientId))
-                    app.UseMicrosoftAccountAuthentication(
-                    clientId: settings.MicrosoftClientId,
-                    clientSecret: settings.MicrosoftClientSecret);
+                    if (!string.IsNullOrEmpty(settings.TwitterClientId))
+                        app.UseTwitterAuthentication(
+                       consumerKey: settings.TwitterClientId,
+                       consumerSecret: settings.TwitterClientSecret);
 
-                if (!string.IsNullOrEmpty(settings.TwitterClientId))
-                    app.UseTwitterAuthentication(
-                   consumerKey: settings.TwitterClientId,
-                   consumerSecret: settings.TwitterClientSecret);
+                    if (!string.IsNullOrEmpty(settings.FacebookClientId))
+                        app.UseFacebookAuthentication(
+                        appId: settings.FacebookClientId,
+                       appSecret: settings.FacebookClientSecret);
 
-                if (!string.IsNullOrEmpty(settings.FacebookClientId))
-                    app.UseFacebookAuthentication(
-                    appId: settings.FacebookClientId,
-                   appSecret: settings.FacebookClientSecret);
+                    if (!string.IsNullOrEmpty(settings.GoogleClientId))
+                        app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+                        {
+                            ClientId = settings.GoogleClientId,
+                            ClientSecret = settings.GoogleClientSecret
+                        });
 
-                if (!string.IsNullOrEmpty(settings.GoogleClientId))
-                    app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-                    {
-                        ClientId = settings.GoogleClientId,
-                        ClientSecret = settings.GoogleClientSecret
-                    });
-
-                if (!string.IsNullOrEmpty(settings.InstagramClientId))
-                    app.UseInstagramAuthentication(new InstagramAuthenticationOptions()
-                    {
-                        ClientId = settings.InstagramClientId,
-                        ClientSecret = settings.InstagramClientSecret
-                    });
+                    if (!string.IsNullOrEmpty(settings.InstagramClientId))
+                        app.UseInstagramAuthentication(new InstagramAuthenticationOptions()
+                        {
+                            ClientId = settings.InstagramClientId,
+                            ClientSecret = settings.InstagramClientSecret
+                        });
+                }
             }
         }
     }
