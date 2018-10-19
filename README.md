@@ -1,8 +1,10 @@
 # BlueTapeCrew
 
+https://bluetapecrew.toddmiller.nyc
+
 BlueTapeCrew is a client website I built from scratch in ASP.NET while I was freelancing.
 I make improvements sporadically when I have time.
-**client site is down demo site soon**
+
 
 ## Features
   - Front end based on [KeenThemes] Metronic Store HTML Template
