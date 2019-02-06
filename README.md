@@ -1,7 +1,6 @@
 # BlueTapeCrew
 
 https://bluetapecrew.com
-https://bluetapecrew.toddmiller.nyc
 
 BlueTapeCrew is a client website I built in ASP.NET while I was freelancing.
 I was a junior developer when I built this, I have made small improvements over the last few years.
