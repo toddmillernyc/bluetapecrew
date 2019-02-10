@@ -375,6 +375,7 @@
     <Compile Include="Models\CompletePaymentRequest.cs" />
     <Compile Include="Services\Interfaces\IPaypalService.cs" />
     <Compile Include="Models\PaymentRequest.cs" />
+    <Compile Include="Services\Interfaces\IShippingService.cs" />
     <Compile Include="Services\PaypalService.cs" />
     <Compile Include="Repositories\AccessTokenRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICategoryProductsRepository.cs" />
@@ -428,6 +429,7 @@
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\EmailSubscriptionService.cs" />
+    <Compile Include="Services\ShippingService.cs" />
     <Compile Include="Services\SiteSettingsService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\ViewModelService.cs" />

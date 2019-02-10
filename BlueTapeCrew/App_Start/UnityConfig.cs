@@ -65,6 +65,7 @@ namespace BlueTapeCrew
             container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IPaypalService, PaypalService>();
             container.RegisterType<IProductService, ProductService>();
+            container.RegisterType<IShippingService, ShippingService>();
             container.RegisterType<ISiteSettingsService, SiteSettingsService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IViewModelService, ViewModelService>();
