@@ -1588,8 +1588,6 @@
     <Content Include="Content\Themes\uniformjs\default\css\uniform.default.scss" />
     <Content Include="Content\Themes\uniformjs\aristo\css\uniform.aristo.scss" />
     <Content Include="Content\Themes\uniformjs\agent\css\uniform.agent.scss" />
-    <None Include="Properties\PublishProfiles\btcrew - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\btcrew - Web Deploy.pubxml" />
     <Content Include="Content\css\googleFontsOne.css" />
     <Content Include="Content\css\googleFontsTwo.css" />
     <Content Include="Scripts\angular-ui-router.js" />
