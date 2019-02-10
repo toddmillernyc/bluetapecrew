@@ -8,14 +8,14 @@ namespace BlueTapeCrew
         {
             bundles.Add(new StyleBundle("~/bluetape/homecss")
                 .Include(
-                    "~/Content/font-awesome.css",
+                    "~/Content/fontawesome-all.css",
                     "~/Content/bootstrap.min.css")
                 .Include("~/Content/jquery.fancybox.css", new CssRewriteUrlTransform())
                 .Include("~/Content/OwlCarousel/owl.carousel.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new StyleBundle("~/bluetape/productcss")
                 .Include(
-                         "~/Content/font-awesome.min.css",
+                         "~/Content/fontawesome-all.min.css",
                          "~/Content/bootstrap.min.css")
                 .Include("~/Content/jquery.fancybox.css", new CssRewriteUrlTransform())
                 .Include("~/Content/OwlCarousel/owl.carousel.css")
@@ -25,7 +25,7 @@ namespace BlueTapeCrew
             bundles.Add(new StyleBundle("~/bluetape/css")
                 .Include("~/Content/Themes/uniformjs/default/css/uniform.default.css", new CssRewriteUrlTransform())
                 .Include(
-                    "~/Content/font-awesome.min.css",
+                    "~/Content/fontawesome-all.min.css",
                     "~/Content/bootstrap.min.css")
                     .Include("~/Content/jquery.fancybox.css", new CssRewriteUrlTransform())
                     .Include(
