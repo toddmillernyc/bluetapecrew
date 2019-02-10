@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using BlueTapeCrew.Services.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using BlueTapeCrew.Contracts.Services;
 
 namespace BlueTapeCrew.Controllers
-{   
+{
     public class CartController : Controller
     {
         private readonly ICartService _cartService;

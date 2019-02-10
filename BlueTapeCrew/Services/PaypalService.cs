@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using BlueTapeCrew.Models;
+using BlueTapeCrew.Services.Interfaces;
 using PayPal.Api;
 
-namespace BlueTapeCrew.Paypal
+namespace BlueTapeCrew.Services
 {
     public class PaypalService : IPaypalService
     {

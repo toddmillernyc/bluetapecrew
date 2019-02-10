@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using BlueTapeCrew.Services.Interfaces;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using BlueTapeCrew.Contracts.Services;
 
 namespace BlueTapeCrew.Controllers
 {

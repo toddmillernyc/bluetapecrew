@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BlueTapeCrew.Services.Interfaces;
+using BlueTapeCrew.Utils;
+using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Utils;
 
 namespace BlueTapeCrew.Areas.Api.Controllers
 {

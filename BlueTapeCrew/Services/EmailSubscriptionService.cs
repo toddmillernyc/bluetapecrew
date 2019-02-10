@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using BlueTapeCrew.Contracts.Services;
+﻿using BlueTapeCrew.Services.Interfaces;
 using MailChimp;
 using MailChimp.Helper;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.ViewModels;
 
-namespace BlueTapeCrew.Contracts.Services
+namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IProductService
     {

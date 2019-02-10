@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using BlueTapeCrew.Contracts.Repositories;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.Paypal;
+﻿using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories;
+using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services;
+using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.Tests.Stubs;
+using System;
+using System.Collections.Concurrent;
 using Xunit;
 
 namespace BlueTapeCrew.Tests

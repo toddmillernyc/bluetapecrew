@@ -1,20 +1,18 @@
-using System;
-using Unity;
-using BlueTapeCrew.Services;
-using Microsoft.AspNet.Identity;
-using BlueTapeCrew.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using BlueTapeCrew.Controllers;
+using BlueTapeCrew.Identity;
+using BlueTapeCrew.Repositories;
+using BlueTapeCrew.Repositories.Interfaces;
+using BlueTapeCrew.Services;
+using BlueTapeCrew.Services.Interfaces;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using System;
+using System.Data.Entity;
+using System.Web;
+using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
-using System.Web;
-using BlueTapeCrew.Contracts.Repositories;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Paypal;
-using BlueTapeCrew.Repositories;
 
 namespace BlueTapeCrew
 {

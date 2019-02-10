@@ -1,8 +1,8 @@
-﻿using System.Drawing.Imaging;
-using System.Web.Mvc;
-using BlueTapeCrew.Utils;
+﻿using BlueTapeCrew.Utils;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
-using BlueTapeCrew.Contracts.Services;
+using System.Web.Mvc;
+using BlueTapeCrew.Services.Interfaces;
 
 namespace BlueTapeCrew.Controllers
 {

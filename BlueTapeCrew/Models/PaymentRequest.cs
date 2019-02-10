@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using PayPal.Api;
 
-namespace BlueTapeCrew.Paypal
+namespace BlueTapeCrew.Models
 {
     public class PaymentRequest
     {

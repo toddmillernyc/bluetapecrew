@@ -1,9 +1,8 @@
 ﻿using System.Drawing.Imaging;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 
-namespace BlueTapeCrew.Contracts.Services
+namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IImageService
     {

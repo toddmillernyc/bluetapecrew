@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Repositories.Interfaces;
+using BlueTapeCrew.Services.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Contracts.Repositories;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Services
 {

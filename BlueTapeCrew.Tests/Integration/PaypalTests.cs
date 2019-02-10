@@ -1,4 +1,4 @@
-﻿using BlueTapeCrew.Paypal;
+﻿using BlueTapeCrew.Models;
 using BlueTapeCrew.Tests.Stubs;
 using Xunit;
 

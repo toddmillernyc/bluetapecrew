@@ -1,6 +1,7 @@
-﻿using PayPal.Api;
+﻿using BlueTapeCrew.Models;
+using PayPal.Api;
 
-namespace BlueTapeCrew.Paypal
+namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IPaypalService
     {

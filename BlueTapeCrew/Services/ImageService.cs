@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Services.Interfaces;
+using System;
 using System.Data.Entity;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -6,8 +8,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
 using Image = System.Drawing.Image;
 
 namespace BlueTapeCrew.Services

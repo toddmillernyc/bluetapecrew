@@ -1,4 +1,4 @@
-﻿namespace BlueTapeCrew.Paypal
+﻿namespace BlueTapeCrew.Models
 {
     public class CompletePaymentRequest
     {

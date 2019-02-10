@@ -1,5 +1,5 @@
-﻿using System.Web;
-using BlueTapeCrew.Contracts.Services;
+﻿using BlueTapeCrew.Services.Interfaces;
+using System.Web;
 
 namespace BlueTapeCrew.Services
 {

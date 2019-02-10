@@ -352,8 +352,8 @@
     <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\MenuController.cs" />
-    <Compile Include="Contracts\Services\IEmailService.cs" />
-    <Compile Include="Contracts\Services\IMenuService.cs" />
+    <Compile Include="Services\Interfaces\IEmailService.cs" />
+    <Compile Include="Services\Interfaces\IMenuService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
@@ -363,34 +363,34 @@
     <Compile Include="Areas\Admin\Models\AdminCategoryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditProductViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Contracts\Repositories\IInvoiceRepository.cs" />
-    <Compile Include="Contracts\Services\IInvoiceService.cs" />
-    <Compile Include="Contracts\Repositories\ISiteSettingsRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IInvoiceRepository.cs" />
+    <Compile Include="Services\Interfaces\IInvoiceService.cs" />
+    <Compile Include="Repositories\Interfaces\ISiteSettingsRepository.cs" />
     <Compile Include="Models\Entities\AccessToken.cs" />
     <Compile Include="Models\Entities\Invoice.cs" />
     <Compile Include="Models\MenuCategory.cs" />
     <Compile Include="Models\SmtpRequest.cs" />
     <Compile Include="Models\TokenType.cs" />
-    <Compile Include="Contracts\Repositories\IAccessTokenRepository.cs" />
-    <Compile Include="Paypal\CompletePaymentRequest.cs" />
-    <Compile Include="Paypal\IPaypalService.cs" />
-    <Compile Include="Paypal\PaymentRequest.cs" />
-    <Compile Include="Paypal\PaypalService.cs" />
+    <Compile Include="Repositories\Interfaces\IAccessTokenRepository.cs" />
+    <Compile Include="Models\CompletePaymentRequest.cs" />
+    <Compile Include="Services\Interfaces\IPaypalService.cs" />
+    <Compile Include="Models\PaymentRequest.cs" />
+    <Compile Include="Services\PaypalService.cs" />
     <Compile Include="Repositories\AccessTokenRepository.cs" />
-    <Compile Include="Contracts\Repositories\ICategoryProductsRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICategoryProductsRepository.cs" />
     <Compile Include="Repositories\CategoryProductsRepository.cs" />
     <Compile Include="Repositories\InvoiceRepository.cs" />
     <Compile Include="Repositories\SiteSettingsRepository.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\InvoiceService.cs" />
-    <Compile Include="Contracts\Services\ICartService.cs" />
-    <Compile Include="Contracts\Services\ICookieService.cs" />
-    <Compile Include="Contracts\Services\IEmailSubscriptionService.cs" />
-    <Compile Include="Contracts\Services\IImageService.cs" />
-    <Compile Include="Contracts\Services\IProductService.cs" />
-    <Compile Include="Contracts\Services\ISiteSettingsService.cs" />
-    <Compile Include="Contracts\Services\IUserService.cs" />
-    <Compile Include="Contracts\Services\IViewModelService.cs" />
+    <Compile Include="Services\Interfaces\ICartService.cs" />
+    <Compile Include="Services\Interfaces\ICookieService.cs" />
+    <Compile Include="Services\Interfaces\IEmailSubscriptionService.cs" />
+    <Compile Include="Services\Interfaces\IImageService.cs" />
+    <Compile Include="Services\Interfaces\IProductService.cs" />
+    <Compile Include="Services\Interfaces\ISiteSettingsService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Services\Interfaces\IViewModelService.cs" />
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Identity\ManageViewModels.cs" />
     <Compile Include="Models\Entities\AspNetRole.cs" />
@@ -423,7 +423,7 @@
     <Compile Include="Services\CartService.cs" />
     <Compile Include="Services\CookieService.cs" />
     <Compile Include="Services\ImageService.cs" />
-    <Compile Include="Contracts\Services\IOrderService.cs" />
+    <Compile Include="Services\Interfaces\IOrderService.cs" />
     <Compile Include="Services\MenuService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
@@ -1688,7 +1688,10 @@
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Contracts\Services\" />
+    <Folder Include="Paypal\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

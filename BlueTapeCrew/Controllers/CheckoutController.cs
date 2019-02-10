@@ -1,15 +1,14 @@
-﻿using System;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
+using BlueTapeCrew.Services.Interfaces;
+using BlueTapeCrew.Utils;
+using BlueTapeCrew.ViewModels;
+using PayPal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.Paypal;
-using BlueTapeCrew.Utils;
-using BlueTapeCrew.ViewModels;
-using PayPal;
 
 namespace BlueTapeCrew.Controllers
 {

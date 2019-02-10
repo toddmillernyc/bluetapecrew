@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BlueTapeCrew.Contracts.Services
+namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IEmailSubscriptionService
     {

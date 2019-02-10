@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Services.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Areas.Api.Controllers
 {

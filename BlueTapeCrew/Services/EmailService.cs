@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Services.Interfaces;
 using MailKit.Net.Smtp;
 using MimeKit;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {

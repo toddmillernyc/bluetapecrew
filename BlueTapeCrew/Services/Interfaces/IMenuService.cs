@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using BlueTapeCrew.Models;
 
-namespace BlueTapeCrew.Contracts.Services
+namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IMenuService
     {

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
+using BlueTapeCrew.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using BlueTapeCrew.Contracts.Services;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.ViewModels;
+using BlueTapeCrew.Services.Interfaces;
 
 namespace BlueTapeCrew.Services
 {

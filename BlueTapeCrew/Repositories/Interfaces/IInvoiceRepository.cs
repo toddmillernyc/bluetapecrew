@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 
-namespace BlueTapeCrew.Contracts.Repositories
+namespace BlueTapeCrew.Repositories.Interfaces
 {
     public interface IInvoiceRepository
     {
