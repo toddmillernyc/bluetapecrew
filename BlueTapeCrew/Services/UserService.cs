@@ -1,8 +1,10 @@
-﻿using BlueTapeCrew.Models;
+﻿using System;
+using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using BlueTapeCrew.ViewModels;
 
 namespace BlueTapeCrew.Services
 {
@@ -21,35 +23,34 @@ namespace BlueTapeCrew.Services
         }
 
         //TODO: try to give checkoutviewmodel a user object rather than flat
-        public async Task UpdateUser(string userName, string firstName, string lastName,
-            string address, string city, string state, string zip, string phone, string email)
+        public async Task UpdateUser(CheckoutViewModel model)
         {
-            var dbUser = await _db.AspNetUsers.FirstOrDefaultAsync(x => x.UserName.Equals(userName));
-            dbUser.FirstName = firstName;
-            dbUser.LastName = lastName;
-            dbUser.Address = address;
-            dbUser.City = city;
-            dbUser.State = state;
-            dbUser.PostalCode = zip;
-            dbUser.PhoneNumber = phone;
-            dbUser.Email = email;
+            var dbUser = await _db.AspNetUsers.FirstOrDefaultAsync(x => x.UserName.Equals(model.UserName));
+            if(dbUser == null) throw new Exception("user not found");
+            dbUser.FirstName = model.FirstName;
+            dbUser.LastName = model.LastName;
+            dbUser.Address = model.Address;
+            dbUser.City = model.City;
+            dbUser.State = model.State;
+            dbUser.PostalCode = model.Zip;
+            dbUser.PhoneNumber = model.Phone;
+            dbUser.Email = model.Email;
             await _db.SaveChangesAsync();
         }
 
-        public async Task CreateGuestUser(string sessionId, string firstName, string lastName,
-            string address, string city, string state, string zip, string phone, string email)
+        public async Task CreateGuestUser(CheckoutViewModel model)
         {
             var dbUser = new GuestUser
             {
-                SessionId = sessionId,
-                FirstName = firstName,
-                LastName = lastName,
-                Address = address,
-                City = city,
-                State = state,
-                PostalCode = zip,
-                PhoneNumber = phone,
-                Email = email,
+                SessionId = model.SessionId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Address = model.Address,
+                City = model.City,
+                State = model.State,
+                PostalCode = model.Zip,
+                PhoneNumber = model.Phone,
+                Email = model.Email,
 
             };
             _db.GuestUsers.Add(dbUser);

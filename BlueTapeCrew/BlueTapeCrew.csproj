@@ -352,9 +352,12 @@
     <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\MenuController.cs" />
+    <Compile Include="Extensions\OrderExtensions.cs" />
     <Compile Include="Models\CartTotals.cs" />
     <Compile Include="Services\CartCalculatorService.cs" />
+    <Compile Include="Services\CheckoutService.cs" />
     <Compile Include="Services\Interfaces\ICartCalculatorService.cs" />
+    <Compile Include="Services\Interfaces\ICheckoutService.cs" />
     <Compile Include="Services\Interfaces\IEmailService.cs" />
     <Compile Include="Services\Interfaces\IMenuService.cs" />
     <Compile Include="Controllers\AccountController.cs" />

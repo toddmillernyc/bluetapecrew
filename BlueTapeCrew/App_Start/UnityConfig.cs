@@ -58,6 +58,7 @@ namespace BlueTapeCrew
         {
             container.RegisterType<ICartService, CartService>();
             container.RegisterType<ICartCalculatorService, CartCalculatorService>();
+            container.RegisterType<ICheckoutService, CheckoutService>();
             container.RegisterType<ICookieService, CookieService>();
             container.RegisterType<IEmailService, Services.EmailService>();
             container.RegisterType<IEmailSubscriptionService, EmailSubscriptionService>();

@@ -3,7 +3,9 @@ using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
+using BlueTapeCrew.ViewModels;
 
 namespace BlueTapeCrew.Services
 {
@@ -11,17 +13,29 @@ namespace BlueTapeCrew.Services
     {
         private readonly BtcEntities _db = new BtcEntities();
 
-        public async Task AddOrder(Order order)
+        public async Task<int> Create(Order order, CartViewModel cart)
         {
+            order.Shipping = cart.Totals.Shipping;
+            order.SubTotal = cart.Totals.SubTotal;
+            order.Total = cart.Totals.Total;
+
+            order.OrderItems = cart.Items.Select(item => new OrderItem
+            {
+                Description = item.ProductName + " " + item.StyleText,
+                Price = item.Price,
+                SubTotal = item.SubTotal,
+                Quantity = item.Quantity
+
+            }).ToList();
+            order.DateCreated = DateTime.Now;
             _db.Orders.Add(order);
             await _db.SaveChangesAsync();
+            return order.Id;
         }
 
         public async Task<Order> GetOrder(int id)
         {
-
             return await _db.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(x => x.Id == id);
-
         }
 
         public void Dispose()

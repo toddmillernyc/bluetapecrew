@@ -1,12 +1,10 @@
-﻿using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Extensions;
+using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.Utils;
 using BlueTapeCrew.ViewModels;
 using PayPal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -18,33 +16,29 @@ namespace BlueTapeCrew.Controllers
         private readonly bool _isSandbox;
 
         private readonly ICartService _cartService;
-        private readonly IInvoiceService _invoiceService;
+        private readonly ICheckoutService _checkoutService;
+        private readonly IEmailService _emailService;
         private readonly IOrderService _orderService;
-        private readonly IPaypalService _paypalService;
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IUserService _userService;
-        private readonly IEmailService _emailService;
-        private readonly ICartCalculatorService _cartCalculatorService;
 
         public CheckoutController(
-            IUserService userService,
             ICartService cartService,
+            ICheckoutService checkoutService,
+            IUserService userService,
             IEmailService emailService,
             IOrderService orderService,
-            IPaypalService paypalService,
+
             ISiteSettingsService siteSettingsService,
-            IInvoiceService invoiceService, 
             ICartCalculatorService cartCalculatorService)
         {
             _cartService = cartService;
             _userService = userService;
-            _orderService = orderService;
-            _invoiceService = invoiceService;
-            _cartCalculatorService = cartCalculatorService;
-            _paypalService = paypalService;
-            _siteSettingsService = siteSettingsService;
-            _cartCalculatorService = cartCalculatorService;
             _emailService = emailService;
+            _orderService = orderService;
+            _checkoutService = checkoutService;
+            _siteSettingsService = siteSettingsService;
+
 #if DEBUG
             _isSandbox = true;
 #endif
@@ -63,35 +57,17 @@ namespace BlueTapeCrew.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(CheckoutViewModel model,string itemamt,string shipping,string amt)
+        public async Task<ActionResult> Index(CheckoutViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (Request.IsAuthenticated)
-                {
-                    await
-                        _userService.UpdateUser(User.Identity.Name, model.FirstName, model.LastName, model.Address,
-                            model.City, model.State, model.Zip, model.Phone, model.Email);
-                }
-                else
-                {
-                    await
-                        _userService.CreateGuestUser(Session.SessionID, model.FirstName, model.LastName, model.Address,
-                            model.City, model.State, model.Zip, model.Phone, model.Email);
-                }
-
-                var settings = await _siteSettingsService.Get();
-                var cart = await _cartService.GetCartViewModel(Session.SessionID);
-                
-                //todo: impliment token store and get token if not expired
-                var accessToken = string.Empty;
-
-                var invoice = await _invoiceService.Create(Session.SessionID);
-
                 try
                 {
-                    var paymentRequest = new PaymentRequest(HttpContext.Request.Url, settings, cart.Items, invoice.Id, accessToken, _isSandbox);
-                    var redirectUrl = _paypalService.PaywithPaypal(paymentRequest);
+                    model.UserName = User.Identity.Name;
+                    model.SessionId = Session.SessionID;
+                    if (Request.IsAuthenticated) await _userService.UpdateUser(model);
+                    else await _userService.CreateGuestUser(model);
+                    var redirectUrl = await _checkoutService.Start(Session.SessionID, HttpContext.Request.Url, _isSandbox);
                     if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl, false);
                 }
                 catch (PaymentsException ex)
@@ -100,7 +76,6 @@ namespace BlueTapeCrew.Controllers
                 }
             }
             ViewBag.Errors = true;
-            model.Cart = await _cartService.GetCartViewModel(Session.SessionID);
             return View(model);
         }
 
@@ -119,32 +94,10 @@ namespace BlueTapeCrew.Controllers
             ViewBag.Token = token;
             ViewBag.PayerId = payerId;
             ViewBag.PaymentId = paymentId;
-            var model = new CheckoutViewModel();
-            if (Request.IsAuthenticated)
-            {
-                var user = await _userService.GetUserByName(User.Identity.Name);
-                model.FirstName = user.FirstName;
-                model.LastName = user.LastName;
-                model.Email = user.Email;
-                model.Phone = user.PhoneNumber;
-                model.Address = user.Address;
-                model.City = user.City;
-                model.State = user.State;
-                model.Zip = user.PostalCode;
-            }
-            else
-            {
-                var user = await _userService.GetGuestUser(Session.SessionID);
-                model.FirstName = user.FirstName;
-                model.LastName = user.LastName;
-                model.Email = user.Email;
-                model.Phone = user.PhoneNumber;
-                model.Address = user.Address;
-                model.City = user.City;
-                model.State = user.State;
-                model.Zip = user.PostalCode;
-            }
-            model.Cart = await _cartService.GetCartViewModel(Session.SessionID);
+            var cart = await _cartService.GetCartViewModel(Session.SessionID);
+            var model = Request.IsAuthenticated
+                ? new CheckoutViewModel(await _userService.GetUserByName(User.Identity.Name), cart)
+                : new CheckoutViewModel(await _userService.GetGuestUser(Session.SessionID), cart);
             return View(model);
         }
 
@@ -154,88 +107,28 @@ namespace BlueTapeCrew.Controllers
         {
             try
             {
-                string clientId;
-                string clientSecret;
-                var settings = await _siteSettingsService.Get();
-
-                if (_isSandbox)
-                {
-                    clientId = settings.PaypalSandBoxClientId;
-                    clientSecret = settings.PaypalSandBoxSecret;
-                }
-                else
-                {
-                    clientId = settings.PaypalClientId;
-                    clientSecret = settings.PaypalClientSecret;
-                }
-                completePaymentRequest.Token = _paypalService.GetAccessToken(clientId, clientSecret, _isSandbox ? "sandbox" : "mode");
-                var completedPayment = _paypalService.CompletePayment(completePaymentRequest);
-                ViewBag.PaymentConfirmation = completedPayment.id;
+                ViewBag.PaymentConfirmation = await _checkoutService.Complete(completePaymentRequest, _isSandbox);
+                var cartViewModel = await _cartService.GetCartViewModel(Session.SessionID);
+                var orderId = await _orderService.Create(await GetOrderModel(), cartViewModel);
+                await _cartService.EmptyCart(Session.SessionID);
+                return RedirectToAction("OrderConfirmation", "Checkout", new { id = orderId });
             }
             catch (PaymentsException ex)
             {
                 return Content(ex.Response);
             }
-
-            var cartItems = await _cartService.Get(Session.SessionID);
-            var totals = await _cartCalculatorService.CalculateCartTotals(cartItems);
-
-
-            var order = new Order
-            {
-                IpAddress = Request.UserHostAddress,
-                SessionId = Session.SessionID,
-                Shipping = totals.Shipping,
-                SubTotal = totals.SubTotal,
-                Total = totals.Total,
-                DateCreated = DateTime.UtcNow
-            };
-
-            if (Request.IsAuthenticated)
-            {
-                var user = await _userService.GetUserByName(User.Identity.Name);
-                if (user != null)
-                {
-                    order.UserName = user.UserName;
-                    order.Email = user.Email;
-                    order.FirstName = user.FirstName;
-                    order.LastName = user.LastName;
-                    order.Address = user.Address;
-                    order.City = user.City;
-                    order.State = user.State;
-                    order.Zip = user.PostalCode;
-                    order.Phone = user.PhoneNumber;
-                }
-            }
-            else
-            {
-                var user = await _userService.GetGuestUser(Session.SessionID);
-                order.Email = user.Email;
-                order.FirstName = user.FirstName;
-                order.LastName = user.LastName;
-                order.Address = user.Address;
-                order.City = user.City;
-                order.State = user.State;
-                order.Zip = user.PostalCode;
-                order.Phone = user.PhoneNumber;
-            }
-
-            order.OrderItems = new List<OrderItem>();
-            foreach (var item in cartItems)
-            {
-                order.OrderItems.Add(new OrderItem
-                {
-                    Description = item.ProductName + " " + item.StyleText,
-                    Price = item.Price,
-                    SubTotal = item.SubTotal,
-                    Quantity = item.Quantity
-                });
-            }
-            await _orderService.AddOrder(order);
-            await _cartService.EmptyCart(Session.SessionID);
-            return RedirectToAction("OrderConfirmation", "Checkout", new { id = order.Id });
         }
-        
+
+        private async Task<Order> GetOrderModel()
+        {
+            var order = new Order { IpAddress = Request.UserHostAddress, SessionId = Session.SessionID };
+            if (Request.IsAuthenticated)
+                order.UpdateUser(await _userService.GetUserByName(User.Identity.Name));
+            else
+                order.UpdateUser(await _userService.GetGuestUser(Session.SessionID));
+            return order;
+        }
+
         public ActionResult CheckoutCancel()
         {
             return View();
@@ -260,7 +153,7 @@ namespace BlueTapeCrew.Controllers
         public async Task<ActionResult> OrderError()
         {
             ViewBag.Message = "Your order was not placed, there was an issue.  Please contact us.";
-            return View( await _cartService.GetCartViewModel(Session.SessionID));
+            return View(await _cartService.GetCartViewModel(Session.SessionID));
         }
     }
 }
