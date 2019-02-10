@@ -21,10 +21,12 @@ namespace BlueTapeCrew.Services
 
         public APIContext GetApiContext(PaymentRequest paymentRequest)
         {
-            var apiContext = new APIContext(string.IsNullOrEmpty(paymentRequest.AccessToken)
-                                ? GetAccessToken(paymentRequest.ClientId, paymentRequest.ClientSecret, paymentRequest.Mode)
-                                : paymentRequest.AccessToken)
-            { Config = GetConfig(paymentRequest.Mode) };
+            var accessToken = paymentRequest.AccessToken ?? GetAccessToken(paymentRequest.ClientId,
+                                        paymentRequest.ClientSecret, paymentRequest.Mode);
+            var apiContext = new APIContext(accessToken)
+            {
+                Config = GetConfig(paymentRequest.Mode)
+            };
             return apiContext;
         }
 

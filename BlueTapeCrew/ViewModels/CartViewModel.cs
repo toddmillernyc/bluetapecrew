@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using BlueTapeCrew.Models.Entities;
+using System.Collections.Generic;
 using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.ViewModels
 {
     public class CartViewModel
     {
-        public string SubTotal { get; set; }
-        public string Shipping { get; set; }
-        public string Total { get; set; }
-        public int Count { get; set; }
+        public CartViewModel(List<CartView> items, CartTotals totals)
+        {
+            Items = items;
+            Totals = totals;
+        }
+
+        public CartTotals Totals { get; set; }
         public List<CartView> Items { get; set; }
     }
 }

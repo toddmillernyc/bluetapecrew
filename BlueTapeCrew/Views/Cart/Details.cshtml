@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BlueTapeCrew.Models.Entities.CartView>
+﻿@model BlueTapeCrew.ViewModels.CartViewModel
 @{
     ViewBag.Title = "Shopping Cart";
 }
@@ -14,19 +14,19 @@
                 <h1>Shopping Cart</h1>
                 <div class="goods-page">
                     <div class="goods-data clearfix">
-                        @if (Model.Any())
+                        @if (Model.Items.Any())
                         {
                             <div class="table-wrapper-responsive">
                                 <table summary="Shopping cart">
                                     <tr>
-                                        <th class="goods-page-image">Image</th>
+                                        <th></th>
                                         <th class="goods-page-description">Description</th>
-                                        <th class="goods-page-ref-no">Ref No</th>
+                                        <th class="goods-page-ref-no">Sku</th>
                                         <th class="goods-page-quantity">Quantity</th>
                                         <th class="goods-page-price">Unit price</th>
                                         <th class="goods-page-total" colspan="2">Total</th>
                                     </tr>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.Items)
                                     {
                                         <tr>
                                             <td class="goods-page-image">
@@ -44,12 +44,8 @@
                                             <td>
                                                 <h2 class="text-center text text-info">@item.Quantity</h2>
                                             </td>
-                                            <td class="goods-page-price">
-                                                <strong><span>$</span>@string.Format("{0:n2}", item.Price)</strong>
-                                            </td>
-                                            <td class="goods-page-total">
-                                                <strong><span>$</span>@string.Format("{0:n2}", item.SubTotal)</strong>
-                                            </td>
+                                            <td class="goods-page-price">@Html.DisplayFor(x => item.Price)</td>
+                                            <td class="goods-page-total">@Html.DisplayFor(x => item.SubTotal)</td>
                                             <td class="del-goods-col">
                                                 <button type="button" style="border: none;" class="del-goods" onclick="removeFromCart(@item.Id);">&nbsp;</button>
                                             </td>
@@ -61,15 +57,15 @@
                                 <ul>
                                     <li>
                                         <em>Sub total</em>
-                                        <strong class="price"><span>$</span>@ViewBag.SubTotal</strong>
+                                        <strong class="price">@Html.DisplayFor(x=>x.Totals.SubTotal)</strong>
                                     </li>
                                     <li>
                                         <em>Shipping cost</em>
-                                        <strong class="price"><span>$</span>@ViewBag.Shipping</strong>
+                                        <strong class="price">@Html.DisplayFor(x => x.Totals.Shipping)</strong>
                                     </li>
                                     <li class="shopping-total-price">
                                         <em>Total</em>
-                                        <strong class="price"><span>$</span>@ViewBag.Total</strong>
+                                        <strong class="price">@Html.DisplayFor(x => x.Totals.Total)</strong>
                                     </li>
                                 </ul>
                             </div>
@@ -80,7 +76,7 @@
                         }
                     </div>
                     <a class="btn btn-info" href="~/">Continue shopping <i class="fa fa-shopping-cart"></i></a>
-                    @if (Model.Any())
+                    @if (Model.Items.Any())
                     {
                         <a class="btn btn-info pull-right" href="~/checkout">Checkout <i class="fa fa-check"></i></a>
                     }

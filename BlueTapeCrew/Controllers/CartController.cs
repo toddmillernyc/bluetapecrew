@@ -1,5 +1,5 @@
 ﻿using BlueTapeCrew.Services.Interfaces;
-using System.Linq;
+using BlueTapeCrew.ViewModels;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -8,24 +8,20 @@ namespace BlueTapeCrew.Controllers
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
-        private readonly IShippingService _shippingService;
+        private readonly ICartCalculatorService _cartCartCalculatorService;
 
-        public CartController(ICartService cartService, IShippingService shippingService)
+        public CartController(ICartService cartService, ICartCalculatorService cartCartCalculatorService)
         {
             _cartService = cartService;
-            _shippingService = shippingService;
+            _cartCartCalculatorService = cartCartCalculatorService;
         }
 
         [Route("cart")]
         public async Task<ActionResult> Details()
         {
             var cart = await _cartService.Get(Session.SessionID);
-            var subTotal = cart.Sum(x => x.SubTotal);
-            var shipping = await _shippingService.Caclulate(subTotal ?? 0.00m);
-            ViewBag.Shipping = $"{shipping:n2}";
-            ViewBag.SubTotal = $"{subTotal:n2}";
-            ViewBag.Total = $"{(subTotal + shipping) + 6:n2}";
-            return View(cart);                
+            var totals = await _cartCartCalculatorService.CalculateCartTotals(cart);
+            return View(new CartViewModel(cart, totals));                
         }
 
         public async Task<PartialViewResult> Index()

@@ -1,7 +1,7 @@
 ﻿@model BlueTapeCrew.ViewModels.CartViewModel
 <div class="top-cart-info">
-    <a href="javascript:void(0);" class="top-cart-info-cunt">@Model.Count items</a>
-    <a href="javascript:void(0);" class="top-cart-info-value">$@Html.DisplayFor(x=>x.Total)</a>
+    <a href="javascript:void(0);" class="top-cart-info-count">@Model.Totals.Count items</a>
+    <a href="javascript:void(0);" class="top-cart-info-value">@Html.DisplayFor(x=>x.Totals.Total)</a>
 </div>
 <i class="fa fa-shopping-cart"></i>
 <div class="top-cart-content-wrapper">
@@ -20,7 +20,7 @@
                         </a>
                         <span class="cart-content-count">x @item.Quantity</span>
                         <strong>@Html.ActionLink(item.ProductName, "Details", "Products", new { @name = item.LinkName }, null)</strong>
-                        <em>$ @Html.DisplayFor(modelItem => item.SubTotal)</em>
+                        <em>@Html.DisplayFor(modelItem => item.SubTotal)</em>
                         <button type="button" class="del-goods" onclick="removeItem(@item.Id)">&nbsp;</button>
                         <br />
                         @Html.DisplayFor(modelItem => item.StyleText)

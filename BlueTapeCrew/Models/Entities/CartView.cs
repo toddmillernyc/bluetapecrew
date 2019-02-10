@@ -36,6 +36,7 @@ namespace BlueTapeCrew.Models.Entities
 
         [Key]
         [Column(Order = 5, TypeName = "smallmoney")]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         [Key]
@@ -56,6 +57,7 @@ namespace BlueTapeCrew.Models.Entities
         public string StyleText { get; set; }
 
         [Column(TypeName = "smallmoney")]
+        [DataType(DataType.Currency)]
         public decimal? SubTotal { get; set; }
 
         public byte[] ImageData { get; set; }

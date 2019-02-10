@@ -24,8 +24,8 @@
                     <tr>
                         <td>@item.ProductName</td>
                         <td>@item.StyleText</td>
-                        <td>@string.Format("{0:n2}", item.Quantity)</td>
-                        <td>$ @string.Format("{0:n2}", item.SubTotal)</td>
+                        <td>@Html.DisplayFor(x => item.Quantity)</td>
+                        <td>@Html.DisplayFor(x=> item.SubTotal)</td>
                     </tr>
                 }
             }
@@ -42,9 +42,9 @@
                 @Model.City, @Model.State @Model.Zip
                 <hr />
                 <h1>Order Total</h1>
-                Subtotal: $ @Model.Cart.SubTotal<br />
-                Shipping: $ @Model.Cart.Shipping<br />
-                Total: <b>$ @Model.Cart.Total</b>
+                Subtotal: @Html.DisplayFor(x=>x.Cart.Totals.SubTotal)<br />
+                Shipping: @Html.DisplayFor(x=>x.Cart.Totals.Shipping)<br />
+                Total: <b>@Html.DisplayFor(x=>x.Cart.Totals.Total)</b>
                 <hr />
                 @using (Html.BeginForm("Complete", "Checkout", FormMethod.Post))
     {
@@ -52,7 +52,7 @@
             <input type="hidden" value="@ViewBag.Token" name="token" />
             <input type="hidden" value="@ViewBag.PayerId" name="payerId" />
             <input type="hidden" value="@ViewBag.PaymentId" name="paymentId" />
-            <input type="hidden" name="finalPaymentAmount" value="@Model.Cart.Total" />
+            <input type="hidden" name="finalPaymentAmount" value="@Model.Cart.Totals.Total" />
             <button type="submit" class="btn btn-info">Confirm Order</button>
 }
             </div>

@@ -14,47 +14,25 @@ namespace BlueTapeCrew.Services
     {
         private readonly BtcEntities _db;
         private readonly ISiteSettingsService _siteSettingsService;
+        private readonly ICartCalculatorService _cartCalculatorService;
 
-        public CartService(ISiteSettingsService siteSettingsService)
+        public CartService(ISiteSettingsService siteSettingsService, ICartCalculatorService cartCalculatorService)
         {
             _db = new BtcEntities();
             _siteSettingsService = siteSettingsService;
+            _cartCalculatorService = cartCalculatorService;
         }
 
-        public async Task<IEnumerable<CartView>> Get(string sessionId)
+        public async Task<List<CartView>> Get(string sessionId)
         {
             return await _db.CartViews.Where(x => x.CartId.Equals(sessionId)).OrderByDescending(x => x.Id).ToListAsync();
         }
 
         public async Task<CartViewModel> GetCartViewModel(string sessionId)
         {
-            var settings = await _siteSettingsService.Get();
             var cart = await _db.CartViews.Where(x => x.CartId == sessionId).ToListAsync();
-            if (!cart.Any())
-            {
-                return new CartViewModel
-                {
-                    Count = 0
-                };
-            }
-
-            var subtotal = cart.Sum(x => x.SubTotal);
-            decimal shipping = 0;
-            if (subtotal < settings.FreeShippingThreshold)
-            {
-                shipping = settings.FlatShippingRate;
-            }
-            var total = subtotal + shipping;
-
-            var model = new CartViewModel
-            {
-                Count = cart.Sum(x => x.Quantity),
-                Items = _db.CartViews.Where(x => x.CartId.Equals(sessionId)).OrderBy(x => x.Id).ToList(),
-                SubTotal = $"{subtotal:n2}",
-                Shipping = $"{shipping:n2}",
-                Total = $"{total:n2}"
-            };
-            return model;
+            var totals = await _cartCalculatorService.CalculateCartTotals(cart);
+            return new CartViewModel(cart, totals);
         }
 
         public async Task<int> Post(string sessionId, int styleId, int quantity)

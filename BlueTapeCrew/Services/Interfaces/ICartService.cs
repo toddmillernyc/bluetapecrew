@@ -8,7 +8,7 @@ namespace BlueTapeCrew.Services.Interfaces
     public interface ICartService
     {
 
-        Task<IEnumerable<CartView>> Get(string sessionId);
+        Task<List<CartView>> Get(string sessionId);
         Task<CartViewModel> GetCartViewModel(string sessionId);
         Task<int> Post(string sessionId, int styleId, int quantity);
         Task DeleteItem(int id);

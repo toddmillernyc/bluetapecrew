@@ -24,6 +24,7 @@ namespace BlueTapeCrew.Controllers
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IUserService _userService;
         private readonly IEmailService _emailService;
+        private readonly ICartCalculatorService _cartCalculatorService;
 
         public CheckoutController(
             IUserService userService,
@@ -32,14 +33,17 @@ namespace BlueTapeCrew.Controllers
             IOrderService orderService,
             IPaypalService paypalService,
             ISiteSettingsService siteSettingsService,
-            IInvoiceService invoiceService)
+            IInvoiceService invoiceService, 
+            ICartCalculatorService cartCalculatorService)
         {
             _cartService = cartService;
             _userService = userService;
             _orderService = orderService;
             _invoiceService = invoiceService;
+            _cartCalculatorService = cartCalculatorService;
             _paypalService = paypalService;
             _siteSettingsService = siteSettingsService;
+            _cartCalculatorService = cartCalculatorService;
             _emailService = emailService;
 #if DEBUG
             _isSandbox = true;
@@ -88,7 +92,7 @@ namespace BlueTapeCrew.Controllers
                 {
                     var paymentRequest = new PaymentRequest(HttpContext.Request.Url, settings, cart.Items, invoice.Id, accessToken, _isSandbox);
                     var redirectUrl = _paypalService.PaywithPaypal(paymentRequest);
-                    if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl);
+                    if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl, false);
                 }
                 catch (PaymentsException ex)
                 {
@@ -173,26 +177,17 @@ namespace BlueTapeCrew.Controllers
                 return Content(ex.Response);
             }
 
+            var cartItems = await _cartService.Get(Session.SessionID);
+            var totals = await _cartCalculatorService.CalculateCartTotals(cartItems);
 
-
-           var cartView = await _cartService.Get(Session.SessionID);
-            var cartViews = cartView.ToList();
-            var subtotal = cartViews.Sum(x => x.SubTotal);
-            var shipping = 0;
-            if (subtotal < 50)
-            {
-                shipping = 6;
-            }
-                    
-            var total = subtotal + shipping;
 
             var order = new Order
             {
                 IpAddress = Request.UserHostAddress,
                 SessionId = Session.SessionID,
-                Shipping = shipping,
-                SubTotal = subtotal,
-                Total = total,
+                Shipping = totals.Shipping,
+                SubTotal = totals.SubTotal,
+                Total = totals.Total,
                 DateCreated = DateTime.UtcNow
             };
 
@@ -226,7 +221,7 @@ namespace BlueTapeCrew.Controllers
             }
 
             order.OrderItems = new List<OrderItem>();
-            foreach (var item in cartViews.ToList())
+            foreach (var item in cartItems)
             {
                 order.OrderItems.Add(new OrderItem
                 {

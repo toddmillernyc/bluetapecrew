@@ -57,6 +57,7 @@ namespace BlueTapeCrew
         private static void RegisterServiceTypes(IUnityContainer container)
         {
             container.RegisterType<ICartService, CartService>();
+            container.RegisterType<ICartCalculatorService, CartCalculatorService>();
             container.RegisterType<ICookieService, CookieService>();
             container.RegisterType<IEmailService, Services.EmailService>();
             container.RegisterType<IEmailSubscriptionService, EmailSubscriptionService>();
