@@ -1,20 +1,28 @@
-﻿using System;
-using System.Data.Entity;
-using System.Net.Mail;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using BlueTapeCrew.Identity;
-using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Identity;
+using BlueTapeCrew.Services.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using System;
+using System.Net.Mail;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using BlueTapeCrew.Repositories;
+using BlueTapeCrew.Services;
 
 namespace BlueTapeCrew
 {
     public class EmailService : IIdentityMessageService
     {
+        private readonly ISiteSettingsService _siteSettingsService;
+
+        public EmailService(ISiteSettingsService siteSettingsService)
+        {
+            _siteSettingsService = siteSettingsService;
+        }
+
         public async Task SendAsync(IdentityMessage message)
         {
             await SendIdentityMessage(message);
@@ -22,29 +30,26 @@ namespace BlueTapeCrew
 
         private async Task SendIdentityMessage(IdentityMessage message)
         {
-            using (var db = new BtcEntities())
+            var siteSettings = await _siteSettingsService.Get();
+            var client = new SmtpClient
             {
-                var mailSettings = await db.MailSettings.FirstOrDefaultAsync();
-                var client = new SmtpClient
-                {
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    EnableSsl = true,
-                    Host = "smtp.gmail.com",
-                    Port = 587
-                };
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = true,
+                Host = "smtp.gmail.com",
+                Port = 587
+            };
 
-                var credentials = new System.Net.NetworkCredential(mailSettings.Username, mailSettings.Password);
-                client.UseDefaultCredentials = false;
-                client.Credentials = credentials;
+            var credentials = new System.Net.NetworkCredential(siteSettings.SmtpUsername, siteSettings.SmtpPassword);
+            client.UseDefaultCredentials = false;
+            client.Credentials = credentials;
 
-                var msg = new MailMessage { From = new MailAddress(mailSettings.Username) };
-                msg.To.Add(new MailAddress(message.Destination));
+            var msg = new MailMessage { From = new MailAddress(siteSettings.SmtpUsername) };
+            msg.To.Add(new MailAddress(message.Destination));
 
-                msg.Subject = message.Subject;
-                msg.IsBodyHtml = true;
-                msg.Body = string.Format(message.Body);
-                client.Send(msg);
-            }
+            msg.Subject = message.Subject;
+            msg.IsBodyHtml = true;
+            msg.Body = string.Format(message.Body);
+            client.Send(msg);
         }
     }
 
@@ -102,7 +107,7 @@ namespace BlueTapeCrew
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
-            manager.EmailService = new EmailService();
+            manager.EmailService = new EmailService(new SiteSettingsService(new SiteSettingsRepository()));
             manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
