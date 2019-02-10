@@ -25,7 +25,7 @@ namespace BlueTapeCrew
             bundles.Add(new StyleBundle("~/bluetape/css")
                 .Include("~/Content/Themes/uniformjs/default/css/uniform.default.css", new CssRewriteUrlTransform())
                 .Include(
-                    "~/Content/fontawesome-all.min.css",
+                    "~/Content/fontawesome-all.css",
                     "~/Content/bootstrap.min.css")
                     .Include("~/Content/jquery.fancybox.css", new CssRewriteUrlTransform())
                     .Include(
