@@ -1,14 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.ViewModels
 {
     public class CheckoutViewModel
     {
+        public string ReturnUrl { get; }
+
         public CheckoutViewModel() { }
 
-        public CheckoutViewModel(AspNetUser user, CartViewModel cart)
+        public CheckoutViewModel(AspNetUser user, CartViewModel cart, string returnUrl)
         {
+            ReturnUrl = returnUrl;
             Cart = cart;
             if (user == null) return;
 

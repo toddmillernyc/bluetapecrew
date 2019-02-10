@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BlueTapeCrew.Extensions;
+﻿using BlueTapeCrew.Extensions;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
@@ -14,7 +13,9 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class CheckoutController : Controller
     {
+        private const string OrderErrorMessage = "Your order was not placed, there was an issue.  Please contact us.";
         private readonly bool _isSandbox;
+
         private readonly ICartService _cartService;
         private readonly ICheckoutService _checkoutService;
         private readonly IEmailService _emailService;
@@ -25,71 +26,65 @@ namespace BlueTapeCrew.Controllers
         public CheckoutController(
             ICartService cartService,
             ICheckoutService checkoutService,
-            IUserService userService,
             IEmailService emailService,
             IOrderService orderService,
-            ISiteSettingsService siteSettingsService)
+            ISiteSettingsService siteSettingsService,
+            IUserService userService)
         {
             _cartService = cartService;
-            _userService = userService;
+            _checkoutService = checkoutService;
             _emailService = emailService;
             _orderService = orderService;
-            _checkoutService = checkoutService;
             _siteSettingsService = siteSettingsService;
+            _userService = userService;
 #if DEBUG
             _isSandbox = true;
 #endif
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ViewResult> Index()
         {
-            var cart = await _cartService.GetCartViewModel(Session.SessionID);
-            if (cart.IsEmpty) return View("EmptyCart");
-            var user = await _userService.GetUserByName(User.Identity.Name);
-            var model = new CheckoutViewModel(user, cart);
-            ViewBag.ReturnUrl = HttpContext.Request.Url?.ToString();
-            return View(model);
+            var cart = await Cart;
+            return cart.IsEmpty 
+                ? View("EmptyCart") 
+                : View(new CheckoutViewModel(await GetUserBy(User.Identity.Name), cart, HttpContext.Request.Url?.ToString()));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Index(CheckoutViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+            try
             {
-                try
-                {
-                    model.UserName = User.Identity.Name;
-                    model.SessionId = Session.SessionID;
-                    if (Request.IsAuthenticated) await _userService.UpdateUser(model);
-                    else await _userService.CreateGuestUser(model);
-                    var redirectUrl = await _checkoutService.Start(Session.SessionID, HttpContext.Request.Url, _isSandbox);
-                    if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl, false);
-                }
-                catch (PaymentsException ex)
-                {
-                    return Content(ex.Response);
-                }
+                model.UserName = User.Identity.Name;
+                model.SessionId = Session.SessionID;
+                if (Request.IsAuthenticated) await _userService.UpdateUser(model);
+                else await _userService.CreateGuestUser(model);
+                var redirectUrl = await _checkoutService.Start(Session.SessionID, HttpContext.Request.Url, _isSandbox);
+                if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl, false);
             }
-            ViewBag.Errors = true;
+            catch (PaymentsException ex)
+            {
+                return Content(ex.Response);
+            }
             return View(model);
         }
 
         [Route("checkoutreview")]
         public async Task<ActionResult> CheckoutReview(string paymentId, string token, string payerId, string cancel = "false")
         {
-            if (cancel == "true") return RedirectToAction("CheckoutCancel");
+            if (cancel == "true") return View("CheckoutCancel");
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(payerId))
                 return RedirectToAction("Index", "Checkout");
 
             ViewBag.Token = token;
             ViewBag.PayerId = payerId;
             ViewBag.PaymentId = paymentId;
-            var cart = await _cartService.GetCartViewModel(Session.SessionID);
             var model = Request.IsAuthenticated
-                ? new CheckoutViewModel(await _userService.GetUserByName(User.Identity.Name), cart)
-                : new CheckoutViewModel(await _userService.GetGuestUser(Session.SessionID), cart);
+                ? new CheckoutViewModel(await GetUserBy(User.Identity.Name), await Cart, HttpContext.Request.Url?.ToString())
+                : new CheckoutViewModel(await GuestUser, await Cart);
             return View(model);
         }
 
@@ -100,8 +95,7 @@ namespace BlueTapeCrew.Controllers
             try
             {
                 ViewBag.PaymentConfirmation = await _checkoutService.Complete(completePaymentRequest, _isSandbox);
-                var cartViewModel = await _cartService.GetCartViewModel(Session.SessionID);
-                var orderId = await _orderService.Create(await GetOrderModel(), cartViewModel);
+                var orderId = await _orderService.Create(await GetOrderModel(), await Cart);
                 await _cartService.EmptyCart(Session.SessionID);
                 return RedirectToAction("OrderConfirmation", "Checkout", new { id = orderId });
             }
@@ -115,15 +109,10 @@ namespace BlueTapeCrew.Controllers
         {
             var order = new Order { IpAddress = Request.UserHostAddress, SessionId = Session.SessionID };
             if (Request.IsAuthenticated)
-                order.UpdateUser(await _userService.GetUserByName(User.Identity.Name));
+                order.UpdateUser(await GetUserBy(User.Identity.Name));
             else
-                order.UpdateUser(await _userService.GetGuestUser(Session.SessionID));
+                order.UpdateUser(await GuestUser);
             return order;
-        }
-
-        public ActionResult CheckoutCancel()
-        {
-            return View();
         }
 
         public async Task<ActionResult> OrderConfirmation(int id)
@@ -134,6 +123,14 @@ namespace BlueTapeCrew.Controllers
             return View(order);
         }
 
+        public async Task<ActionResult> OrderError()
+        {
+            ViewBag.Message = OrderErrorMessage;
+            return View(await Cart);
+        }
+
+        //private helper methods
+        private Task<CartViewModel> Cart => _cartService.GetCartViewModel(Session?.SessionID);
         private async Task<SmtpRequest> GetSmtpRequest(Order order)
         {
             var settings = await _siteSettingsService.Get();
@@ -141,11 +138,7 @@ namespace BlueTapeCrew.Controllers
             var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
             return new SmtpRequest(settings, htmlBody, textBody, order.Email);
         }
-
-        public async Task<ActionResult> OrderError()
-        {
-            ViewBag.Message = "Your order was not placed, there was an issue.  Please contact us.";
-            return View(await _cartService.GetCartViewModel(Session.SessionID));
-        }
+        private Task<AspNetUser> GetUserBy(string name) => _userService.GetUserByName(name);
+        private Task<GuestUser> GuestUser => _userService.GetGuestUser(Session.SessionID);
     }
 }

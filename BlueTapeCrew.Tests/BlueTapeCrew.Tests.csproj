@@ -107,6 +107,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml" />
     <Reference Include="Unity.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.5.0\lib\net45\Unity.Abstractions.dll</HintPath>
@@ -151,6 +152,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="UnitTestFixture.cs" />
     <Compile Include="IntegrationTextFixture.cs" />
     <Compile Include="Integration\InvoiceServiceTests.cs" />
     <Compile Include="Integration\EmailTests.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Stubs\ConfigurationStubs.cs" />
     <Compile Include="Stubs\OrderStubs.cs" />
     <Compile Include="Stubs\PaypalStubs.cs" />
+    <Compile Include="Unit\CheckoutControllerTests.cs" />
     <Compile Include="Unit\PaymentRequestTests.cs" />
     <Compile Include="Unit\PaypalExtensionTests.cs" />
     <Compile Include="Unit\ShippingServiceTests.cs" />
