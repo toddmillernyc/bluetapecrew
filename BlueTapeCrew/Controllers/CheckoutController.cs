@@ -1,4 +1,5 @@
-﻿using BlueTapeCrew.Extensions;
+﻿using System.Linq;
+using BlueTapeCrew.Extensions;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
@@ -14,7 +15,6 @@ namespace BlueTapeCrew.Controllers
     public class CheckoutController : Controller
     {
         private readonly bool _isSandbox;
-
         private readonly ICartService _cartService;
         private readonly ICheckoutService _checkoutService;
         private readonly IEmailService _emailService;
@@ -28,9 +28,7 @@ namespace BlueTapeCrew.Controllers
             IUserService userService,
             IEmailService emailService,
             IOrderService orderService,
-
-            ISiteSettingsService siteSettingsService,
-            ICartCalculatorService cartCalculatorService)
+            ISiteSettingsService siteSettingsService)
         {
             _cartService = cartService;
             _userService = userService;
@@ -38,7 +36,6 @@ namespace BlueTapeCrew.Controllers
             _orderService = orderService;
             _checkoutService = checkoutService;
             _siteSettingsService = siteSettingsService;
-
 #if DEBUG
             _isSandbox = true;
 #endif
@@ -48,7 +45,7 @@ namespace BlueTapeCrew.Controllers
         public async Task<ActionResult> Index()
         {
             var cart = await _cartService.GetCartViewModel(Session.SessionID);
-            if (cart == null) return RedirectToAction("EmptyCart");
+            if (cart.IsEmpty) return View("EmptyCart");
             var user = await _userService.GetUserByName(User.Identity.Name);
             var model = new CheckoutViewModel(user, cart);
             ViewBag.ReturnUrl = HttpContext.Request.Url?.ToString();
@@ -77,11 +74,6 @@ namespace BlueTapeCrew.Controllers
             }
             ViewBag.Errors = true;
             return View(model);
-        }
-
-        public ViewResult EmptyCart()
-        {
-            return View();
         }
 
         [Route("checkoutreview")]

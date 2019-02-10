@@ -1,5 +1,6 @@
 ﻿using BlueTapeCrew.Models.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.ViewModels
@@ -14,5 +15,7 @@ namespace BlueTapeCrew.ViewModels
 
         public CartTotals Totals { get; set; }
         public List<CartView> Items { get; set; }
+
+        public bool IsEmpty => !Items.Any();
     }
 }
