@@ -10,8 +10,8 @@ namespace BlueTapeCrew.Services.Interfaces
 
         Task<List<CartView>> Get(string sessionId);
         Task<CartViewModel> GetCartViewModel(string sessionId);
-        Task<int> Post(string sessionId, int styleId, int quantity);
-        Task DeleteItem(int id);
+        Task AddOrUpdate(string sessionId, int styleId, int quantity);
+        Task DecrementCartItem(int id);
         Task EmptyCart(string sessionId);
     }
 }

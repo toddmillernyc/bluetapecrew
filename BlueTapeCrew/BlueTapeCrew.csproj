@@ -354,6 +354,8 @@
     <Compile Include="Areas\Api\Controllers\MenuController.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
     <Compile Include="Models\CartTotals.cs" />
+    <Compile Include="Repositories\CartRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICartRepository.cs" />
     <Compile Include="Services\CartCalculatorService.cs" />
     <Compile Include="Services\CheckoutService.cs" />
     <Compile Include="Services\Interfaces\ICartCalculatorService.cs" />

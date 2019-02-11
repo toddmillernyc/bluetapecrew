@@ -31,14 +31,14 @@ namespace BlueTapeCrew.Controllers
         }
         
         [HttpPost]
-        public async Task<int> Post(int styleId,int quantity)
+        public async Task Post(int styleId,int quantity)
         {
-            return await _cartService.Post(Session.SessionID, styleId, quantity);
+            await _cartService.AddOrUpdate(Session.SessionID, styleId, quantity);
         }
 
         public async Task Delete(int id)
         {
-            await _cartService.DeleteItem(id);
+            await _cartService.DecrementCartItem(id);
         }
     }
 }

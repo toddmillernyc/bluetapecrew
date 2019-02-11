@@ -51,6 +51,7 @@ namespace BlueTapeCrew
             container.RegisterType<ICategoryProductsRepository, CategoryProductsRepository>();
             container.RegisterType<IInvoiceRepository, InvoiceRepository>();
             container.RegisterType<IMenuService, MenuService>();
+            container.RegisterType<ICartRepository, CartRepository>();
             container.RegisterType<ISiteSettingsRepository, SiteSettingsRepository>();
         }
 

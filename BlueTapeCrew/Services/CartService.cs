@@ -1,48 +1,48 @@
 ﻿using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
+using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {
-    public class CartService : ICartService, IDisposable
+    public class CartService : ICartService
     {
-        private readonly BtcEntities _db;
-        private readonly ISiteSettingsService _siteSettingsService;
         private readonly ICartCalculatorService _cartCalculatorService;
+        private readonly ICartRepository _cartRepository;
 
-        public CartService(ISiteSettingsService siteSettingsService, ICartCalculatorService cartCalculatorService)
+        public CartService(ICartCalculatorService cartCalculatorService, ICartRepository cartRepository)
         {
-            _db = new BtcEntities();
-            _siteSettingsService = siteSettingsService;
             _cartCalculatorService = cartCalculatorService;
+            _cartRepository = cartRepository;
         }
 
         public async Task<List<CartView>> Get(string sessionId)
         {
-            return await _db.CartViews.Where(x => x.CartId.Equals(sessionId)).OrderByDescending(x => x.Id).ToListAsync();
+            return await _cartRepository.GetBy(sessionId);
         }
 
         public async Task<CartViewModel> GetCartViewModel(string sessionId)
         {
-            var cart = await _db.CartViews.Where(x => x.CartId == sessionId).ToListAsync();
-            var totals = await _cartCalculatorService.CalculateCartTotals(cart);
-            return new CartViewModel(cart, totals);
+            var cartItems = await _cartRepository.GetBy(sessionId);
+            var totals = await _cartCalculatorService.CalculateCartTotals(cartItems);
+            return new CartViewModel(cartItems, totals);
         }
 
-        public async Task<int> Post(string sessionId, int styleId, int quantity)
+        public async Task AddOrUpdate(string sessionId, int styleId, int quantity)
         {
-            var temp = _db.Carts.Where(x => x.CartId.Equals(sessionId)).ToList();
-            var style = temp.FirstOrDefault(x => x.StyleId == styleId);
-
-            if (style == null)
+            var cartItem = await _cartRepository.GetBy(sessionId, styleId);
+            if (cartItem != null)
             {
-                _db.Carts.Add(new Cart
+                cartItem.Count += quantity;
+                await _cartRepository.Update(cartItem);
+            }
+            else
+            {
+                await _cartRepository.Add(new Cart
                 {
                     CartId = sessionId,
                     StyleId = styleId,
@@ -50,42 +50,25 @@ namespace BlueTapeCrew.Services
                     DateCreated = DateTime.UtcNow
                 });
             }
-            else
-            {
-                style.Count = style.Count + quantity;
-                style.DateCreated = DateTime.UtcNow;
-            }
-            await _db.SaveChangesAsync();
-            return 1;
         }
 
-        public async Task DeleteItem(int id)
+        public async Task DecrementCartItem(int id)
         {
-            var temp = await _db.Carts.FindAsync(id);
-            if (temp == null) return;
-            if (temp.Count < 2)
+            var cartItem = await _cartRepository.GetBy(id);
+            if (cartItem.Count <= 1)
             {
-                _db.Carts.Remove(temp);
+                await _cartRepository.DeleteItem(id);
             }
-            else if (temp.Count > 1)
+            else
             {
-                temp.Count--;
+                cartItem.Count--;
+                await _cartRepository.Update(cartItem);
             }
-            _db.SaveChanges();
         }
 
         public async Task EmptyCart(string sessionId)
         {
-            foreach (var item in await _db.Carts.Where(x => x.CartId.Equals(sessionId)).ToListAsync())
-            {
-                _db.Carts.Remove(item);
-            }
-            await _db.SaveChangesAsync();
-        }
-
-        public void Dispose()
-        {
-            _db?.Dispose();
+            await _cartRepository.DeleteCart(sessionId);
         }
     }
 }
