@@ -24,7 +24,7 @@ namespace BlueTapeCrew.Services
             var total = shipping + subTotal;
             return new CartTotals
             {
-                Count = cartItems.Count(),
+                Count = cartItems.Sum(x=>x.Quantity),
                 SubTotal = subTotal ?? 0.00m,
                 Shipping = shipping,
                 Total = total ?? 0.00m
