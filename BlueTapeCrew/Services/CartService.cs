@@ -1,5 +1,4 @@
-﻿using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
+﻿using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
@@ -20,10 +19,9 @@ namespace BlueTapeCrew.Services
             _cartRepository = cartRepository;
         }
 
-        public async Task<List<CartView>> Get(string sessionId)
-        {
-            return await _cartRepository.GetBy(sessionId);
-        }
+        public async Task<List<CartView>> Get(string sessionId) => await _cartRepository.GetBy(sessionId);
+
+        public async Task EmptyCart(string sessionId) => await _cartRepository.DeleteCart(sessionId);
 
         public async Task<CartViewModel> GetCartViewModel(string sessionId)
         {
@@ -64,11 +62,6 @@ namespace BlueTapeCrew.Services
                 cartItem.Count--;
                 await _cartRepository.Update(cartItem);
             }
-        }
-
-        public async Task EmptyCart(string sessionId)
-        {
-            await _cartRepository.DeleteCart(sessionId);
         }
     }
 }
