@@ -2,11 +2,11 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("BlueTapeCrew")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Urban Clothing E-Shop")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Miller Web Dev LLC")]
 [assembly: AssemblyProduct("BlueTapeCrew")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright © 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
