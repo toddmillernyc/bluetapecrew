@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.Areas.Admin.Models

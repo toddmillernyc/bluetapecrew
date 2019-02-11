@@ -1,5 +1,4 @@
 ﻿using System;
-using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Tests.Stubs
 {
