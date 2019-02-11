@@ -46,9 +46,9 @@ namespace BlueTapeCrew.Controllers
         public async Task<ViewResult> Index()
         {
             var cart = await Cart;
-            return cart.IsEmpty 
-                ? View("EmptyCart") 
-                : View(new CheckoutViewModel(await GetUserBy(User.Identity.Name), cart, HttpContext.Request.Url?.ToString()));
+            if (cart.IsEmpty) return View("EmptyCart");
+            var model = new CheckoutViewModel(await GetUserBy(User.Identity.Name), cart, HttpContext.Request.Url?.ToString());
+            return View(model);
         }
 
         [HttpPost]
@@ -63,7 +63,7 @@ namespace BlueTapeCrew.Controllers
                 if (Request.IsAuthenticated) await _userService.UpdateUser(model);
                 else await _userService.CreateGuestUser(model);
                 var redirectUrl = await _checkoutService.Start(Session.SessionID, HttpContext.Request.Url, _isSandbox);
-                if (!string.IsNullOrEmpty(redirectUrl)) Response.Redirect(redirectUrl, false);
+                if (!string.IsNullOrEmpty(redirectUrl)) return Redirect(redirectUrl);
             }
             catch (PaymentsException ex)
             {
