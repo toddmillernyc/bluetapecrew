@@ -1,5 +1,6 @@
 ﻿using BlueTapeCrew.Utils;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using BlueTapeCrew.Services.Interfaces;
@@ -21,7 +22,7 @@ namespace BlueTapeCrew.Controllers
         public async Task<ActionResult> Images(string name)
         {
             var image = await _imageService.GetProductImageByName(name);
-            return this.Image(image.ImageData, image.MimeType);
+            return new ImageResult(new MemoryStream(image.ImageData), image.MimeType);
         }
 
         public async Task<ActionResult> ProductThumb(int? id)

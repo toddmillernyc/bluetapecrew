@@ -441,7 +441,6 @@
     <Compile Include="Services\SiteSettingsService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\ViewModelService.cs" />
-    <Compile Include="Utils\ControllerExtensions.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
     <Compile Include="Utils\EmailTemplates.cs" />
     <Compile Include="Utils\ImageResult.cs" />
