@@ -55,7 +55,11 @@ namespace BlueTapeCrew.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Index(CheckoutViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                model.Cart = await Cart;
+                return View(model);
+            }
             try
             {
                 model.UserName = User.Identity.Name;
