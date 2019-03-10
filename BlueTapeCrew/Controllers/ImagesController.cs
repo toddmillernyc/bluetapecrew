@@ -1,15 +1,15 @@
-﻿using BlueTapeCrew.Utils;
+﻿using BlueTapeCrew.Extensions;
+using BlueTapeCrew.Services.Interfaces;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using BlueTapeCrew.Services.Interfaces;
 
 namespace BlueTapeCrew.Controllers
 {
     [OutputCache(Duration = 3600)]
     public class ImagesController : Controller
     {
+        private const string JpegMimeType = "image/jpeg";
         private readonly IImageService _imageService;
 
         public ImagesController(IImageService imageService)
@@ -17,20 +17,19 @@ namespace BlueTapeCrew.Controllers
             _imageService = imageService;
         }
 
-        // GET: Images
         [Route("images/{name}")]
         public async Task<ActionResult> Images(string name)
         {
             var image = await _imageService.GetProductImageByName(name);
-            return new ImageResult(new MemoryStream(image.ImageData), image.MimeType);
+            return image.ImageData.ToImageResult(image.MimeType);
         }
 
         public async Task<ActionResult> ProductThumb(int? id)
         {
             if (id == null) return null;
             var imageModel = await _imageService.GetImageById((int) id);
-            return this.Image(await _imageService.ResizeImage(imageModel.ImageData, 75, 100, ImageFormat.Jpeg),"image/jpeg");
+            var resizedImage = await _imageService.ResizeImage(imageModel.ImageData, 75, 100, ImageFormat.Jpeg);
+            return resizedImage.ToImageResult(JpegMimeType);
         }
-
     }
 }

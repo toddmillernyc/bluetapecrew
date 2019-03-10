@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 
-namespace BlueTapeCrew.Utils
+namespace BlueTapeCrew.Email
 {
     public static class EmailHelper
     {

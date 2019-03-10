@@ -352,6 +352,7 @@
     <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\MenuController.cs" />
+    <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
     <Compile Include="Models\CartTotals.cs" />
     <Compile Include="Repositories\CartRepository.cs" />
@@ -441,9 +442,9 @@
     <Compile Include="Services\SiteSettingsService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\ViewModelService.cs" />
-    <Compile Include="Utils\EmailHelper.cs" />
-    <Compile Include="Utils\EmailTemplates.cs" />
-    <Compile Include="Utils\ImageResult.cs" />
+    <Compile Include="Email\EmailHelper.cs" />
+    <Compile Include="Email\EmailTemplates.cs" />
+    <Compile Include="ActionResults\ImageResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

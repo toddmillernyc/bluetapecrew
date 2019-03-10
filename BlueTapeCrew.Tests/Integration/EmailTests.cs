@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BlueTapeCrew.Email;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Tests.Stubs;
-using BlueTapeCrew.Utils;
 using Xunit;
 
 namespace BlueTapeCrew.Tests.Integration

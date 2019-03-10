@@ -2,11 +2,11 @@
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
-using BlueTapeCrew.Utils;
 using BlueTapeCrew.ViewModels;
 using PayPal;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using BlueTapeCrew.Email;
 
 namespace BlueTapeCrew.Controllers
 {

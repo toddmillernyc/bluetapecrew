@@ -1,8 +1,8 @@
 ﻿using BlueTapeCrew.Services.Interfaces;
-using BlueTapeCrew.Utils;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BlueTapeCrew.Email;
 
 namespace BlueTapeCrew.Areas.Api.Controllers
 {
