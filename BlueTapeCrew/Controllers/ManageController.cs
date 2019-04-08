@@ -1,5 +1,4 @@
-﻿using BlueTapeCrew.Identity;
-using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNet.Identity;

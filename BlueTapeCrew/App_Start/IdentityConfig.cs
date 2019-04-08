@@ -1,4 +1,6 @@
-﻿using BlueTapeCrew.Identity;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Repositories;
+using BlueTapeCrew.Services;
 using BlueTapeCrew.Services.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -9,8 +11,6 @@ using System;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BlueTapeCrew.Repositories;
-using BlueTapeCrew.Services;
 
 namespace BlueTapeCrew
 {

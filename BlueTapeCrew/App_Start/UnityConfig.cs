@@ -1,5 +1,4 @@
 using BlueTapeCrew.Controllers;
-using BlueTapeCrew.Identity;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services;
@@ -10,6 +9,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Data.Entity;
 using System.Web;
+using BlueTapeCrew.Models;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
