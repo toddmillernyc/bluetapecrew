@@ -12,6 +12,7 @@
 </p>
 <table class="table table-condensed table-hover table-striped table-bordered">
     <tr>
+        <th>Admin</th>
         <th>
             @Html.DisplayNameFor(model => model.Email) /
             @Html.DisplayNameFor(model => model.UserName)
@@ -44,7 +45,13 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr id="@item.Id">
+        <td>
+            @if (item.AspNetRoles.Any(x => x.Name == "Admin"))
+            {
+                <span>X</span>
+            }
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
             @if (!@item.Email.Equals(@item.UserName))
@@ -79,9 +86,9 @@
             @Html.DisplayFor(modelItem => item.AccessFailedCount)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new { @class = "delete-user" })
         </td>
     </tr>
 }

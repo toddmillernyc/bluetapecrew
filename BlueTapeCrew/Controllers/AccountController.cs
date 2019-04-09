@@ -63,7 +63,7 @@ namespace BlueTapeCrew.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
+                    if (string.IsNullOrEmpty(returnUrl) || returnUrl.Contains("confirmemail")) return RedirectToAction("Index", "Home");
                     if (!Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
                     return RedirectToLocal(returnUrl);
                     

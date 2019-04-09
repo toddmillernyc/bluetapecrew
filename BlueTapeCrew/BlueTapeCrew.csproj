@@ -320,6 +320,7 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
+    <Compile Include="Areas\Admin\Models\AdminCreateUserModel.cs" />
     <Compile Include="Areas\Api\Controllers\SubscribeController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
