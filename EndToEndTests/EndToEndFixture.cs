@@ -26,6 +26,7 @@ namespace EndToEndTests
             Driver = new ChromeDriver(chromeOptions);
         }
 
+
         public void RegisterNewUserAndOpenAccountPage(string email, string password)
         {
             var helper = new RegistrationHelper(Driver, BaseUrl);

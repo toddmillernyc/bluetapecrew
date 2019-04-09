@@ -1,5 +1,5 @@
-using System;
 using EndToEndTests.Extensions;
+using EndToEndTests.Models;
 using OpenQA.Selenium;
 using Xunit;
 
@@ -21,19 +21,17 @@ namespace EndToEndTests.Tests
         public void Register_New_User()
         {
             //arrange
-            var id = Guid.NewGuid().ToString().Substring(0,5);
-            var expected = $"BTC-integration-test-user-{id}@mailinator.com";
-            var password = "A" + Guid.NewGuid().ToString().Substring(5);
+            var user = new User();
 
             //act
-            _fixture.RegisterNewUserAndOpenAccountPage(expected, password);
-            var actual = _driver.Value("User_Email");
-            _driver.ClickId("logoff");
+            _fixture.RegisterNewUserAndOpenAccountPage(user.Email, user.Password);
+            var actualEmail = _driver.Value("User_Email");
 
             //assert
-            Assert.Equal(expected, actual);
+            Assert.Equal(user.Email, actualEmail);
 
             //cleanup
+            _driver.ClickId("logoff");
             _fixture.RemoveAllIntegrationTestUsers();
         }
     }
