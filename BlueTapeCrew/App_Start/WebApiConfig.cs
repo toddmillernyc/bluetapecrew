@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Cors;
 using Unity;
 using Unity.AspNet.WebApi;
 
@@ -8,6 +9,10 @@ namespace BlueTapeCrew
     {
         public static void Register(HttpConfiguration config)
         {
+#if DEBUG
+            var corsAttr = new EnableCorsAttribute("http://localhost:3000", "*", "*");
+            config.EnableCors(corsAttr);
+#endif
             var container = new UnityContainer();
             UnityConfig.RegisterTypes(container);
             config.DependencyResolver = new UnityDependencyResolver(container);

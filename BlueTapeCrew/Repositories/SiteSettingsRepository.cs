@@ -3,6 +3,7 @@ using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories.Interfaces;
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Repositories
@@ -18,7 +19,9 @@ namespace BlueTapeCrew.Repositories
 
         public async Task<SiteSetting> Get()
         {
-            return await _db.SiteSettings.FirstOrDefaultAsync();
+//            return await _db.SiteSettings.FirstOrDefaultAsync();
+            var settings = await _db.SiteSettings.ToListAsync();
+            return settings.Last();
         }
 
         public async Task<SiteSetting> Set(SiteSetting siteSetting)

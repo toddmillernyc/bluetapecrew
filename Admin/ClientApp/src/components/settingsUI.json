@@ -1,0 +1,16 @@
+{
+    "site": {
+        "siteTitle": {
+            "title": "Title",
+            "type": "string"
+          },
+          "siteUrl": {
+            "title": "",
+            "type": "string"
+          },
+          "siteLogoUrl": {
+            "title": "",
+            "type": "string"
+          }
+    }
+}

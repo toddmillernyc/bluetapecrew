@@ -5,7 +5,7 @@ using BlueTapeCrew.Services.Interfaces;
 
 namespace BlueTapeCrew.Areas.Api.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class SiteSettingsController : ApiController
     {
         private readonly ISiteSettingsService _siteSettingsService;
