@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { getCategories } from '../modules/Api'
 import "react-tabs/style/react-tabs.css";
-import Settings from '../components/Settings'
+import Settings from './settings/Settings'
 
 export default class MainTabs extends Component {
-
+  constructor(props) {
+    super(props)
+    this.state = {
+      categories: []
+    }
+  }
   componentDidMount = async() => {
     this.setState({categories: await getCategories()})
   }
@@ -16,9 +21,9 @@ export default class MainTabs extends Component {
       <TabList>
         <Tab>Site Settings</Tab>
         {
-           Object.keys(this.props.categories).map((key, index) => ( 
-            <Tab key={index}>{this.state.categories[key]}</Tab>
-          ))
+          this.state.categories.map((category, index) => {
+            return (<Tab key={index}>{category.name}</Tab>)
+          })
         }
       </TabList>
   
@@ -27,11 +32,13 @@ export default class MainTabs extends Component {
         <Settings />
       </TabPanel>
       {
-           Object.keys(this.props.categories).map((key, index) => ( 
-            <TabPanel key={index}>
-              <h2>{this.props.categories[key]}</h2>
-            </TabPanel>
-          ))
+          this.state.categories.map((category, index) => {
+            return (
+              <TabPanel key={index}>
+                <h2>{category.name}</h2>
+              </TabPanel>
+            )
+          })
         }
     </Tabs>
     );

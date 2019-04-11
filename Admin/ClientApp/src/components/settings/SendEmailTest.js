@@ -24,7 +24,7 @@ export default class SendEmailTest extends Component {
 
     _onClick = async() => {
         try {
-            const result = await fetch("http://localhost/api/emailtest/get?email="+ this.state.value)
+            const result = await fetch("http://localhost/api/emailtest?email="+ this.state.value)
             
             this.setState({status: result.status})
         }
@@ -54,6 +54,7 @@ export default class SendEmailTest extends Component {
                         placeholder="recipient@gmail.com"/>
                     <div className="input-group-append">
                         <button
+                            type="button"
                             className={
                                 this.state.isValid
                                 ? "btn btn-sm btn-success"

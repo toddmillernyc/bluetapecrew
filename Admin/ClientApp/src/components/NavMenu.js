@@ -26,7 +26,10 @@ export class NavMenu extends Component {
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
           <Container>
-            <NavbarBrand tag={Link} to="/">Admin</NavbarBrand>
+            <NavbarBrand tag={Link} to="/" style={styles.brandLink}>Admin</NavbarBrand>
+            <NavbarBrand tag={Link} to="/" style={styles.brandLink}>Create New Product</NavbarBrand>
+            <NavbarBrand tag={Link} to="/" style={styles.brandLink}>Edit Categories</NavbarBrand>
+            <NavbarBrand tag={Link} to="/" style={styles.brandLink}>Manage Site Users</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
@@ -45,5 +48,11 @@ export class NavMenu extends Component {
         </Navbar>
       </header>
     );
+  }
+}
+
+const styles = {
+  brandLink: {
+    paddingRight: 15
   }
 }

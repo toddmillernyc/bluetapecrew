@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SendEmailTest from './SendEmailTest'
-import { getSitSettings, saveSiteSettings } from '../modules/Api'
+import { getSitSettings, saveSiteSettings } from '../../modules/Api'
 
 export default class Settings extends Component {
     constructor(props) {
@@ -20,10 +20,6 @@ export default class Settings extends Component {
       const target = event.target;
       const value = target.type === 'checkbox' ? target.checked : target.value;
       this.setState({[target.name]: value})
-    }
-
-    sendMail(emailAddress) {
-      console.log(`"send mail ${emailAddress}`)
     }
 
     saveSettings = async() => {
@@ -57,13 +53,13 @@ export default class Settings extends Component {
         {label("Logo Url")} {input("siteLogoUrl")}
       </dl>
       <h2>Smtp Email</h2>
+      <SendEmailTest />
       <dl className="dl-horizontal">
         {label("Host")}     {input("smtpHost")}
         {label("Port")}     {input("smtpPort")}
         {label("Username")} {input("smtpUsername")}
         {label("Password")} {input("smtpPassword")}
       </dl>
-      <SendEmailTest />
     </div>
     <div className="col-md-6">
       <h2>Contact</h2>
