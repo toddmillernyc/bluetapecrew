@@ -17,5 +17,4 @@ const post = async(endpoint, data) => {
 }
 export const getCategories = async() => await get("categories")
 export const getSitSettings = async() => await get("siteSettings")
-
 export const saveSiteSettings = async(model) => await post("siteSettings", model)

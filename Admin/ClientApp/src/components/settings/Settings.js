@@ -22,6 +22,7 @@ export default class Settings extends Component {
       this.setState({[target.name]: value})
     }
 
+
     saveSettings = async() => {
       const response = await saveSiteSettings(this.state)
       console.log(response)
@@ -74,7 +75,6 @@ export default class Settings extends Component {
       </dl>
     </div>
   </div>
-
   <div className="row">
     <div className="col-md-12">
       <h2>Content</h2>
@@ -85,7 +85,6 @@ export default class Settings extends Component {
       </dl>
     </div>
   </div>
-
   <div className="row">
     <div className="col-md-6">
       <h2>PayPal Live</h2>
