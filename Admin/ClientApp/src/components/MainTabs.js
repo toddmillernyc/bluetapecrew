@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { getCategories, getImage } from '../modules/Api'
-import "react-tabs/style/react-tabs.css";
+import React, { Component } from 'react'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { baseUrl, getCategories } from '../Api'
+import "react-tabs/style/react-tabs.css"
 import Settings from './settings/Settings'
 
 export default class MainTabs extends Component {
@@ -11,14 +11,14 @@ export default class MainTabs extends Component {
       categories: []
     }
   }
-  componentDidMount = async() => this.setState({categories:  await getCategories()})
+
   render () {
     return (
       <Tabs>
       <TabList>
         <Tab>Site Settings</Tab>
         {
-          this.state.categories.map((category, index) => {
+          this.props.categories.map((category, index) => {
             return (<Tab key={index}>{category.name}</Tab>)
           })
         }
@@ -47,10 +47,10 @@ export default class MainTabs extends Component {
                       return (
                         <tr key={index}>
                           <td>
-                            <img src={"http://localhost/images/productthumb/" + itm.imageId} />
+                            <img src={ baseUrl + "/images/thumb/" + itm.imageId} alt={itm.name} />
                           </td>
                           <td>
-                            <a href="~/Admin/AdminProducts/Edit/@itm.Id" className="bold label label-info">{itm.name}</a>
+                            <a href={`product/edit/${itm.id}`} className="bold label label-info">{itm.name}</a>
                           </td>
                           <td>
                             <p className="text text-danger">{itm.description}</p>

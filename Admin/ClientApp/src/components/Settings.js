@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import SendEmailTest from './SendEmailTest'
-import { getSitSettings, saveSiteSettings } from '../../modules/Api'
+import { getSiteSettings, saveSiteSettings } from '../Api'
 
 export default class Settings extends Component {
     constructor(props) {
       super(props)
 
-      this.state = {}
+      this.state = {
+        linkName: ""
+      }
       this.handleInputChange = this.handleInputChange.bind(this)
       this.saveSettings = this.saveSettings.bind(this)
     }
     
     componentDidMount = async() =>  {
-      var settings = await getSitSettings()
-      this.setState(settings)
+      this.setState(await getSiteSettings())
     }
 
     handleInputChange(event) {

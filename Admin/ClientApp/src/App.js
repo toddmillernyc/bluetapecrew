@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
+import { ProductEditor } from './components/ProductEditor';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -10,6 +11,7 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
+        <Route exact path='/product/edit/:id' component={ProductEditor} />
       </Layout>
     );
   }
