@@ -15,7 +15,7 @@
     <AssemblyName>BlueTapeCrew</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort>44307</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -31,7 +31,7 @@
     <NuGetPackageImportStamp>f3b826e7</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -327,7 +327,11 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="Areas\Admin\Models\AdminCreateUserModel.cs" />
+    <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
     <Compile Include="Areas\Api\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Api\Controllers\IHttpActionResult.cs" />
+    <Compile Include="Areas\Api\Controllers\ProductInfoController.cs" />
+    <Compile Include="Areas\Api\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Api\Controllers\SubscribeController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -342,9 +346,9 @@
     <Compile Include="Areas\Admin\Controllers\AspNetUsersController.cs" />
     <Compile Include="Areas\Api\Controllers\SiteSettingsController.cs" />
     <Compile Include="Areas\Api\Controllers\EmailTestController.cs" />
-    <Compile Include="Areas\Admin\PartialClasses\Product.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Api\Models\ProductInfo.cs" />
     <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -1675,7 +1679,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>12812</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44307/</IISUrl>
+          <IISUrl>http://localhost/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>https://bluetapecrew.com</CustomServerUrl>

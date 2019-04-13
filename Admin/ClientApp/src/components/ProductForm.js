@@ -13,7 +13,7 @@ export default class ProductForm extends Component {
   }
 
   componentDidMount = async() => {
-    this.setState(await getProduct(this.props.id))
+    this.setState(this.props)
   }
 
   handleInputChange(event) {
@@ -39,7 +39,7 @@ export default class ProductForm extends Component {
             <span className="anchor" id="formRegister"></span>
             <div className="card card-outline-secondary">
               <div className="card-header">
-                <h3 className="mb-0">Edit Product - {this.state.productName}</h3>
+                <h3 className="mb-0">{this.state.productName}</h3>
               </div>
               <div className="card-body">
               <form onSubmit={this.handleSubmit} className="form" role="form">

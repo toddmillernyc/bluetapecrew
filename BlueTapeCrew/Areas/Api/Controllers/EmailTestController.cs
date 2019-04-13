@@ -6,7 +6,7 @@ using BlueTapeCrew.Email;
 
 namespace BlueTapeCrew.Areas.Api.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class EmailTestController : ApiController
     {
         private readonly ISiteSettingsService _siteSettingsService;

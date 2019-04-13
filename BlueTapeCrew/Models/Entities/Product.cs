@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BlueTapeCrew.Models.Entities
 {
@@ -22,11 +24,13 @@ namespace BlueTapeCrew.Models.Entities
 
         [Required]
         [StringLength(255)]
+        [JsonProperty("name")]
         public string ProductName { get; set; }
 
         public string Description { get; set; }
 
         [StringLength(255)]
+        [JsonProperty("slug")]
         public string LinkName { get; set; }
 
         public virtual ICollection<AzImage> AzImages { get; set; }

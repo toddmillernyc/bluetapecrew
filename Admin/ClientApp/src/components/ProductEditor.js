@@ -2,32 +2,35 @@ import React, { Component } from 'react';
 import "react-tabs/style/react-tabs.css";
 import ProductStyles from './ProductStyles'
 import ProductForm from './ProductForm'
-import { getProductStyles } from '../Api'
+import { getProduct, getProductStyles } from '../Api'
 
 export class ProductEditor extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      styles: []
+      product: {},
+      styleVm: {}
     }
-
-    this.id = this.props.match.params.id
-    this.cardClass = "col-sm"
   }
 
   componentDidMount = async() => {
-    this.setState({styles: await getProductStyles(this.id)}, ()=>{
-      console.log(this.state)
+    const id = this.props.match.params.id
+    this.setState({
+      product: await getProduct(id),
+      styleVm: await getProductStyles(id)
     })
+    
   }
 
   render () {
+    const cardClass = "col-sm"
     return (
-      <div className="row">
-        <ProductForm   id={this.id} cardClass={this.cardClass} />
-        <ProductStyles id={this.id} cardClass={this.cardClass} model={this.state.styles} />
-      </div>
+      this.state.product.id > 0
+      ?  <div className="row">
+          <ProductForm   cardClass={cardClass} {...this.state.product} />
+          <ProductStyles cardClass={cardClass} {...this.state.styleVm} />
+        </div>
+      : null
     )
   }
 }
