@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import "react-tabs/style/react-tabs.css";
 import ProductStyles from './ProductStyles'
 import ProductForm from './ProductForm'
-import { getProduct, getProductStyles } from '../Api'
+import * as api from '../Api'
+import ProductImages from './ProductImages'
 
 export class ProductEditor extends Component {
   constructor(props) {
@@ -15,10 +16,12 @@ export class ProductEditor extends Component {
 
   componentDidMount = async() => {
     const id = this.props.match.params.id
+    const images = await api.getProductImages(id)
     this.setState({
-      product: await getProduct(id),
-      styleVm: await getProductStyles(id)
-    })
+      product: await api.getProduct(id),
+      styleVm: await api.getProductStyles(id),
+      images
+    }, () => console.log(images))
     
   }
 
@@ -26,9 +29,14 @@ export class ProductEditor extends Component {
     const cardClass = "col-sm"
     return (
       this.state.product.id > 0
-      ?  <div className="row">
-          <ProductForm   cardClass={cardClass} {...this.state.product} />
-          <ProductStyles cardClass={cardClass} {...this.state.styleVm} />
+      ? <div className="container-fluid">
+          <div className="row">
+            <ProductForm   cardClass={cardClass} {...this.state.product} />
+            <ProductStyles cardClass={cardClass} {...this.state.styleVm} />
+          </div>
+          <div className="row">
+            <ProductImages cardClass={cardClass} images={this.state.images} />
+          </div>
         </div>
       : null
     )
