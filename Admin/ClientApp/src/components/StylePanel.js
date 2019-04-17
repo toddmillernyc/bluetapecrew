@@ -4,7 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default class StylePanel extends Component {
   constructor(props) {
     super(props)
-    this.state = this.props
+
+    this.state = {
+      size: "",
+      color: "",
+      style: ""
+    }
+
     this.inputClass = "form-control form-control-sm"
     this.trashButton = "btn btn-danger btn-sm float-right"
   }
@@ -21,7 +27,7 @@ export default class StylePanel extends Component {
             </thead>
             <tbody>
             {
-              this.state.styles.map(style =>
+              this.props.styleVm.styles.map(style =>
                 <tr key={style.id}>
                   <td>{style.id}</td>
                   <td>{style.colorText}</td>
@@ -47,9 +53,12 @@ export default class StylePanel extends Component {
                 onChange={this.handleInputChange}>
                 <option value={0}>Size</option>
                 {
-                  this.state.colors != null
-                  ? this.state.colors.map(color=><option value={color.id} key={color.id}>{color.colorText}</option>)
-                  : null
+                  this.props.styleVm.colors.map(color=>
+                  <option 
+                    value={color.id} 
+                    key={color.id}>
+                      {color.colorText}
+                  </option>)
                 }
               </select>
             </div>
@@ -60,9 +69,11 @@ export default class StylePanel extends Component {
                 onChange={this.handleInputChange}>
                 <option value={0}>Size</option>
                 {
-                  this.state.sizes !=null
-                  ? this.state.sizes.map(size=> <option value={size.id} key={size.id}>{size.sizeText}</option>)
-                  : null
+                  this.props.styleVm.sizes.map(size=> 
+                  <option 
+                    value={size.id}
+                    key={size.id}>{size.sizeText}
+                  </option>)
                 }
               </select>
             </div>

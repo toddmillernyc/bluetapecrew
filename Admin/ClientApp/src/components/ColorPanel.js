@@ -15,8 +15,8 @@ export default class ColorPanel extends Component {
             </thead>
             <tbody>
             {
-              this.props.colors.map(color =>
-                <tr>
+              this.props.styleVm.colors.map(color =>
+                <tr key={color.id}>
                   <td>{color.id}</td>
                   <td>{color.colorText}</td>
                   <td></td>
@@ -24,11 +24,11 @@ export default class ColorPanel extends Component {
               )
             }
               <tr>
-                <td><strong>Add New Size:</strong></td>
+                <td><strong>Add Color:</strong></td>
                 <td><input type="text" name="size" /></td>
                 <td>
                   <input type="hidden" name="productId" value="1" />
-                  <button type="submit" className="btn btn-success">Add Size</button>
+                  <button type="submit" className="btn btn-success">Save</button>
                 </td>
               </tr>
             </tbody>

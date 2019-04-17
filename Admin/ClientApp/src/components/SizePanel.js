@@ -19,11 +19,11 @@ export default class SizePanel extends Component {
           <td></td>
         </tr>
         <tr>
-          <td><strong>Add New Size:</strong></td>
+          <td><strong>Add Size:</strong></td>
           <td><input type="text" name="size" /></td>
           <td>
             <input type="hidden" name="productId" value="1" />
-            <button type="submit" className="btn btn-success">Add Size</button>
+            <button type="submit" className="btn btn-success">Save</button>
           </td>
         </tr>
       </tbody>
