@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 
 export default class SizePanel extends Component {
-  constructor(props) {
-    super(props)
-  }
   render = () =>
-
 <div className="col-xs-6">
   <form action="/admin/adminproducts/createsize" method="post">
     <table className="table table-condensed table-bordered table-hover">

@@ -1,0 +1,11 @@
+.selectedThumb {
+    padding:"4px";
+    border: "1px solid #021a40";
+    background-color: "blue";
+}
+
+.thumb {
+    padding: "20px";
+    border: "1px solid #021a40";
+    background-color: "blue";
+}

@@ -12,7 +12,7 @@ export default class StylePanel extends Component {
   render = () =>
     <div className="card card-outline-secondary">
       <div className="card-body">
-        <form onSubmit={this.handleSubmit} className="form" role="form">
+        <form onSubmit={this.handleSubmit} className="form">
           <table className="table">
             <thead>
               <tr>

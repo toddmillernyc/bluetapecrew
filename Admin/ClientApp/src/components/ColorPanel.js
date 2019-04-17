@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 
 export default class ColorPanel extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render = () => 
     <div className="card card-outline-secondary">
-      <form onSubmit={this.handleSubmit} className="form" role="form">
+      <form onSubmit={this.handleSubmit} className="form">
         <div className="card-body">    
           <table className="table">
             <thead>

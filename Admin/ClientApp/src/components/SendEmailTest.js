@@ -37,6 +37,7 @@ export default class SendEmailTest extends Component {
         switch(status) {
             case 0: return null
             case 200: return <span className="text text-success">Email Sent Successfully</span>
+            default: return <span className="text text-danger">Unable to send Email</span>
         }
     }
 

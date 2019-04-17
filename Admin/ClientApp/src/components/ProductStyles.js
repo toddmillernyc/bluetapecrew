@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import ColorPanel from './ColorPanel'
 import StylePanel from './StylePanel';
 import SizePanel from './SizePanel';
+import ProductForm from './ProductForm'
 
 export default class ProductStyles extends Component {
   constructor(props) {
@@ -47,6 +48,9 @@ export default class ProductStyles extends Component {
     <div className={this.props.cardClass}>
       <Tabs className="card card-outline-secondary">
         <TabList className="card-header">
+        <Tab>
+            <h5 className="mb-0">Product</h5>
+          </Tab>
           <Tab>
             <h5 className="mb-0">Styles</h5>
           </Tab>
@@ -57,6 +61,9 @@ export default class ProductStyles extends Component {
             <h5 className="mb-0">Sizes</h5>
           </Tab>
         </TabList>
+        <TabPanel>
+        </TabPanel>
+          <ProductForm {...this.props} />
         <TabPanel>
           <StylePanel {...this.props} />  
         </TabPanel>

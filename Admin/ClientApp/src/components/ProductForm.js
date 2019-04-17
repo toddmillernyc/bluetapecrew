@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "react-tabs/style/react-tabs.css";
-import { getProduct, updateProduct } from '../Api'
+import { updateProduct } from '../Api'
 
 export default class ProductForm extends Component {
   constructor(props) {
@@ -32,11 +32,11 @@ export default class ProductForm extends Component {
   }
 
   render() {
-    const inputClass = "form-control"
-    const groupClass = "form-group"
+    // const inputClass = "form-control"
+    // const groupClass = "form-group"
     return (
           <div className={this.props.cardClass}>
-            <span className="anchor" id="formRegister"></span>
+            {/* <span className="anchor" id="formRegister"></span>
             <div className="card card-outline-secondary">
               <div className="card-header">
                 <h3 className="mb-0">{this.state.productName}</h3>
@@ -86,7 +86,7 @@ export default class ProductForm extends Component {
                   </div>
                 </form>
               </div>
-            </div>
+            </div> */}
           </div>
 
     )
