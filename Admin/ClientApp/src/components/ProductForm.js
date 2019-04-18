@@ -5,9 +5,7 @@ import { updateProduct } from '../Api'
 export default class ProductForm extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {};
-
+    this.state = this.props.product;
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -28,42 +26,36 @@ export default class ProductForm extends Component {
 
   handleSubmit = async(event) => {
     event.preventDefault()
-    await updateProduct(this.props.id, this.state)
+    await updateProduct(this.state.id, this.state)
   }
 
   render() {
-    // const inputClass = "form-control"
-    // const groupClass = "form-group"
+      const inputClass = "form-control"
+      const groupClass = "form-group"
     return (
-          <div className={this.props.cardClass}>
-            {/* <span className="anchor" id="formRegister"></span>
             <div className="card card-outline-secondary">
-              <div className="card-header">
-                <h3 className="mb-0">{this.state.productName}</h3>
-              </div>
               <div className="card-body">
-              <form onSubmit={this.handleSubmit} className="form" role="form">
-
+              <form onSubmit={this.handleSubmit} className="form">
                   <div className={groupClass}>
-                    <label htmlFor="productName">Name</label>
+                    <label htmlFor="name">Product Name</label>
                     <input
                       className={inputClass}
                       placeholder="Product name"
-                      name="productName" 
+                      name="name" 
                       type="text" 
-                      value={this.state.productName} 
+                      value={this.state.name} 
                       onChange={this.handleInputChange} 
                      />
                   </div>
                   
                   <div className={groupClass}>
-                    <label htmlFor="linkName">Slug</label>
+                    <label htmlFor="slug">Slug</label>
                     <input
-                      name="linkName"
+                      name="slug"
                       placeholder="Slug"
                       className={inputClass}
                       type="text"
-                      value={this.state.linkName} 
+                      value={this.state.slug} 
                       onChange={this.handleInputChange} 
                      />
                   </div>
@@ -86,9 +78,7 @@ export default class ProductForm extends Component {
                   </div>
                 </form>
               </div>
-            </div> */}
-          </div>
-
+            </div>
     )
   }
 }

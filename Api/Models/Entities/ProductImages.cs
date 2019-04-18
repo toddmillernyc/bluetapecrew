@@ -1,6 +1,6 @@
 ﻿namespace Api.Models.Entities
 {
-    public class ProductImages
+    public class ProductImage
     {
         public int ProductId { get; set; }
         public int ImageId { get; set; }

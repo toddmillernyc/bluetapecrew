@@ -1,12 +1,12 @@
-﻿using System;
-using Api.Models;
+﻿using Api.Models;
 using Api.Models.Entities;
 using Api.Repositories.Interfaces;
+using Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.ViewModels;
 
 namespace Api.Controllers
 {
@@ -21,6 +21,24 @@ namespace Api.Controllers
         {
             _styleViewRepository = styleViewRepository;
             _db = context;
+        }
+
+        // POST: api/Styles
+        [HttpPost]
+        public async Task<ActionResult<Style>> Post(Style style)
+        {
+            try
+            {
+                _db.Styles.Add(style);
+                await _db.SaveChangesAsync();
+                return CreatedAtAction("GetStyles", new {id = style.Id}, style);
+            }
+            catch (Exception ex)
+            {
+                if(ex.Message.Contains("See the inner exception for details."))
+                    return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/Styles/5
@@ -90,18 +108,6 @@ namespace Api.Controllers
 
             return NoContent();
         }
-
-        // POST: api/Styles
-        [HttpPost]
-        public async Task<ActionResult<Style>> PostStyles(Style styles)
-        {
-            _db.Styles.Add(styles);
-            await _db.SaveChangesAsync();
-
-            return CreatedAtAction("GetStyles", new { id = styles.Id }, styles);
-        }
-
-
 
         private bool StylesExists(int id)
         {

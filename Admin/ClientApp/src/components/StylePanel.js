@@ -1,18 +1,44 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { addStyle, deleteSytle } from '../Api'
 
 export default class StylePanel extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      size: "",
-      color: "",
-      style: ""
+      color: 0,
+      size: 0,
+      price: ""
     }
 
     this.inputClass = "form-control form-control-sm"
     this.trashButton = "btn btn-danger btn-sm float-right"
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);    
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    this.setState({
+      [target.name]: target.value
+    });
+  }
+
+  handleTrashClick(id) {
+    deleteSytle(id)
+    window.location.reload()
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    addStyle({
+      productId: this.props.product.id,
+      sizeId: this.state.size,
+      colorId: this.state.color,
+      price: this.state.price
+    })
+    window.location.reload()
   }
 
   render = () =>
@@ -51,7 +77,7 @@ export default class StylePanel extends Component {
                 name="color"
                 className={this.inputClass}  
                 onChange={this.handleInputChange}>
-                <option value={0}>Size</option>
+                <option value={0}>Color</option>
                 {
                   this.props.styleVm.colors.map(color=>
                   <option 
@@ -87,9 +113,11 @@ export default class StylePanel extends Component {
               />
             </div>
             <button
-              disabled={!this.state.size && !this.state.color && !this.state.price}
-                type="submit" 
-              className="btn btn-success btn-sm float-right">Add</button>
+              disabled={
+                this.state.color === 0 || this.state.size === 0 || this.state.price === ""
+              }
+              type="submit" 
+              className="btn btn-success btn-sm float-right">Save</button>
               </div>
           </form>
         </div>

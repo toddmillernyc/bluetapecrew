@@ -35,7 +35,7 @@ namespace Api.Models
         public virtual DbSet<Pages> Pages { get; set; }
         public virtual DbSet<PayPalPayments> PayPalPayments { get; set; }
         public virtual DbSet<ProductCategories> ProductCategories { get; set; }
-        public virtual DbSet<ProductImages> ProductImages { get; set; }
+        public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<SiteSetting> SiteSettings { get; set; }
@@ -456,7 +456,7 @@ namespace Api.Models
                     .HasConstraintName("FK_ProductCategories_ProductId");
             });
 
-            modelBuilder.Entity<ProductImages>(entity =>
+            modelBuilder.Entity<ProductImage>(entity =>
             {
                 entity.HasKey(e => new { e.ImageId, e.ProductId })
                     .HasName("PK_ProductImages_ImageId_ProductId");

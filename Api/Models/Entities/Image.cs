@@ -7,7 +7,7 @@ namespace Api.Models.Entities
         public Image()
         {
             Categories = new HashSet<Categories>();
-            ProductImages = new HashSet<ProductImages>();
+            ProductImages = new HashSet<ProductImage>();
             Products = new HashSet<Product>();
         }
 
@@ -19,7 +19,7 @@ namespace Api.Models.Entities
         public short? Height { get; set; }
 
         public virtual ICollection<Categories> Categories { get; set; }
-        public virtual ICollection<ProductImages> ProductImages { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

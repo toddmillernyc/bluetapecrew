@@ -1,6 +1,6 @@
-﻿using System.Drawing.Imaging;
+﻿using Api.Models.Entities;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
-using Api.Models.Entities;
 
 namespace Api.Services.Interfaces
 {

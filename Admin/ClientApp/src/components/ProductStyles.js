@@ -45,7 +45,6 @@ export default class ProductStyles extends Component {
   }
 
   render = () =>
-    <div className={this.props.cardClass}>
       <Tabs className="card card-outline-secondary">
         <TabList className="card-header">
         <Tab>
@@ -62,17 +61,16 @@ export default class ProductStyles extends Component {
           </Tab>
         </TabList>
         <TabPanel>
-        </TabPanel>
           <ProductForm {...this.props} />
+        </TabPanel>          
         <TabPanel>
           <StylePanel {...this.props} />  
         </TabPanel>
         <TabPanel>
-          <ColorPanel { ...this.props } />
+          <ColorPanel {...this.props} />
         </TabPanel>
         <TabPanel>
-          <SizePanel { ...this.props }  />
+          <SizePanel {...this.props}  />
         </TabPanel>
       </Tabs>
-    </div>
   }

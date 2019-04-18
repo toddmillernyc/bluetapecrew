@@ -9,6 +9,7 @@ export const getProductImages = async(id) => await get("productimages/"+id)
 export const getProductStyles = async(id) => await get("productstyles/" + id)
 export const updateProduct = async(id, model) => await put("products/" + id, model)
 export const deleteSytle = async(id) => await remove("productstyles/" + id)
+export const addStyle = async(style) => await post("productstyles", style)
 
 const get = async(endpoint) => {
     const response =  await fetch(`${baseUrl}/${endpoint}`)

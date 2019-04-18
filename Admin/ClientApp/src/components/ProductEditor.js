@@ -21,17 +21,20 @@ export class ProductEditor extends Component {
       styleVm: await api.getProductStyles(id),
       imageVm
     })
-    
   }
 
-  render () {
-    const cardClass = "col-sm"
+  render = () => {
     return (
       this.state.product.id > 0
-      ? <div className="container-fluid">
+      ? <div className="container">
+          <h1>{this.state.product.name}</h1>
           <div className="row">
-            <ProductStyles cardClass={cardClass} {...this.state} />
-            <ProductImages cardClass={cardClass} imageVm={this.state.imageVm} />
+            <div className="col-md-6">
+              <ProductStyles {...this.state} />
+            </div>
+            <div className="col-md-6">
+              <ProductImages {...this.state} />
+            </div>
           </div>
         </div>
       : null
