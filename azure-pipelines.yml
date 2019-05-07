@@ -13,6 +13,8 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  azureSubscription: $(azureSubscription)
+  resourceGroupName: $(resourceGroupName)
 
 steps:
 - task: NuGetToolInstaller@0
@@ -32,3 +34,14 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: '$(azureSubscription)'
+    appType: 'webApp'
+    WebAppName: 'bluetapecrew'
+    deployToSlotOrASE: true
+    ResourceGroupName: '$(resourceGroupName)'
+    SlotName: 'dev'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
