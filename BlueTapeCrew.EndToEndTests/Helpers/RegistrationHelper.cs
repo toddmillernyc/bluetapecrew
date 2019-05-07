@@ -1,7 +1,7 @@
-﻿using EndToEndTests.Extensions;
+﻿using BlueTapeCrew.EndToEndTests.Extensions;
 using OpenQA.Selenium;
 
-namespace EndToEndTests.Helpers
+namespace BlueTapeCrew.EndToEndTests.Helpers
 {
     public class RegistrationHelper
     {
@@ -16,7 +16,7 @@ namespace EndToEndTests.Helpers
 
         public string GetConfirmEmailLinkFromMailinator(string userEmail)
         {
-            var username = userEmail.Split("@")[0];
+            var username = userEmail.Split('@')[0];
             var url =
                 $"https://www.mailinator.com/v3/index.jsp?zone=public&query={username}#/#inboxpane";
             _driver.Goto(url);

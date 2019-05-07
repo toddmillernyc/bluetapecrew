@@ -1,7 +1,7 @@
-﻿using EndToEndTests.Extensions;
+﻿using BlueTapeCrew.EndToEndTests.Extensions;
 using OpenQA.Selenium;
 
-namespace EndToEndTests.Helpers
+namespace BlueTapeCrew.EndToEndTests.Helpers
 {
     public class AdminHelper
     {

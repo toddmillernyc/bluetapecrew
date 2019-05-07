@@ -1,11 +1,11 @@
 ﻿using System;
-using EndToEndTests.Extensions;
-using EndToEndTests.Helpers;
+using BlueTapeCrew.EndToEndTests.Extensions;
+using BlueTapeCrew.EndToEndTests.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Xunit;
 
-namespace EndToEndTests
+namespace BlueTapeCrew.EndToEndTests
 {
     [CollectionDefinition("EndToEnd")]
     public class IntegrationTest : ICollectionFixture<EndToEndFixture> { }

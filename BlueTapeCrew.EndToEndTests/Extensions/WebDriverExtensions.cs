@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 
-namespace EndToEndTests.Extensions
+namespace BlueTapeCrew.EndToEndTests.Extensions
 {
     public static class WebDriverExtensions
     {

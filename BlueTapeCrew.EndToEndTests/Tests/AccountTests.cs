@@ -1,9 +1,9 @@
-using EndToEndTests.Extensions;
-using EndToEndTests.Models;
+using BlueTapeCrew.EndToEndTests.Extensions;
+using BlueTapeCrew.EndToEndTests.Models;
 using OpenQA.Selenium;
 using Xunit;
 
-namespace EndToEndTests.Tests
+namespace BlueTapeCrew.EndToEndTests.Tests
 {
     [Collection("EndToEnd")]
     public class AccountTests

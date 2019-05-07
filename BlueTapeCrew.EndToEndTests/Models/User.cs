@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EndToEndTests.Models
+namespace BlueTapeCrew.EndToEndTests.Models
 {
     public class User
     {
