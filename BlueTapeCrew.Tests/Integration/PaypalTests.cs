@@ -11,7 +11,7 @@ namespace BlueTapeCrew.Tests.Integration
 
         public PaypalTests(IntegrationTextFixture fixture) { _fixture = fixture; }
 
-        [Fact]
+        [Fact(Skip = "Skipping Integration Tests while setting up azure pipeline")]
         public void GetApiContext_GivenAPaymentRequestWithValidApiCredentials_ReturnsAnApiContextWithAValidRequestId()
         {
             //arrange
@@ -24,7 +24,7 @@ namespace BlueTapeCrew.Tests.Integration
             Assert.Equal(36, apiContext.RequestId.Length);
         }
 
-        [Fact]
+        [Fact(Skip = "Skipping Integration Tests while setting up azure pipeline")]
         public void PaymentCreate_GivenAValidPaymentAndApiContext_ReturnsAValidCreatedPayment()
         {
             //arrange
@@ -39,7 +39,7 @@ namespace BlueTapeCrew.Tests.Integration
             Assert.Equal("created", createdPayment.state);
         }
 
-        [Fact]
+        [Fact(Skip = "Skipping Integration Tests while setting up azure pipeline")]
         public void GetAccessToken_GivenSandBoxCredentials_ReturnsAccessToken()
         {
             //arrange
@@ -52,7 +52,7 @@ namespace BlueTapeCrew.Tests.Integration
             Assert.True(!string.IsNullOrEmpty(accessToken));
         }
 
-        [Fact]
+        [Fact(Skip = "Skipping Integration Tests while setting up azure pipeline")]
         public void GetAccessToken_GivenLiveCredentials_ReturnsAccessToken()
         {
             //arrange
