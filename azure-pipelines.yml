@@ -13,9 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  azureSubscription: $(azureSubscription)
-  resourceGroupName: $(resourceGroupName)
-
+  
 steps:
 - task: NuGetToolInstaller@0
 
