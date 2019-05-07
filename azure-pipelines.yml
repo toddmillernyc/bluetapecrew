@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- master
+- develop
 
 pool:
   vmImage: 'windows-latest'
@@ -42,4 +42,3 @@ steps:
     deployToSlotOrASE: true
     ResourceGroupName: '$(resourceGroupName)'
     SlotName: 'dev'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
