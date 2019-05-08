@@ -31,20 +31,20 @@ namespace BlueTapeCrew.Tests.Unit
                 );
         }
 
-        [Fact]
-        public async Task GetIndex_ReturnsEmptyCartView_IfCartIsEmpty()
-        {
-            //arrange
-            _fixture.CartService
-                    .Setup(x => x.GetCartViewModel(null))
-                    .ReturnsAsync(new CartViewModel(new List<CartView>(), new CartTotals()));
-            var sut = GetSut();
+        //[Fact]
+        //public async Task GetIndex_ReturnsEmptyCartView_IfCartIsEmpty()
+        //{
+        //    //arrange
+        //    _fixture.CartService
+        //            .Setup(x => x.GetCartViewModel(null))
+        //            .ReturnsAsync(new CartViewModel(new List<CartView>(), new CartTotals()));
+        //    var sut = GetSut();
 
-            //act
-            var response = await sut.Index();
+        //    //act
+        //    var response = await sut.Index();
 
-            //assert
-            Assert.Equal("EmptyCart", response.ViewName);
-        }
+        //    //assert
+        //    Assert.Equal("EmptyCart", response.ViewName);
+        //}
     }
 }
