@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-3.3.1.js" />
+﻿/// <reference path="jquery-3.4.1.js" />
 /// <autosync enabled="true" />
 /// <reference path="../Content/Scripts/bootstrap-hover-dropdown.js" />
 /// <reference path="../Content/simple-line-icons/icons-lte-ie7.js" />
