@@ -1,193 +1,193 @@
 ﻿@model BlueTapeCrew.ViewModels.CheckoutViewModel
 <div class="main">
-  <div class="container">
-    @using (Html.BeginForm("Index", "Checkout", FormMethod.Post))
-    {
-      @Html.AntiForgeryToken()
-      <div class="row margin-bottom-40">
-        <div class="col-md-12 col-sm-12">
-          <h1>Checkout</h1>
-          <div class="panel-group checkout-page accordion scrollable" id="checkout-page">
-            <div id="checkout" class="panel panel-default">
-              <div class="panel-heading">
-                <h2 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#checkout-page" href="#checkout-content" class="accordion-toggle">
-                    Step 1: Checkout Options
-                  </a>
-                </h2>
-              </div>
-              <div id="checkout-content" class="panel-collapse collapse in">
-                <div class="panel-body row">
-                  @if (!User.Identity.IsAuthenticated)
-                  {
-                    <div class="col-md-6 col-sm-6">
-                      <h3>New Customer</h3>
-                      <p>Checkout Options:</p>
-                      <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
-                      <div class="h3">@Html.ActionLink("Login/Register", "Login", "Account", new { Model.ReturnUrl }, null)</div>
-                      <button class="btn btn-info" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#payment-address-content">Continue with guest checkout</button>
-                    </div>
-                  }
-                  else
-                  {
-                    <div class="col-md-6 col-sm-6">
-                      <button class="btn btn-info" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#payment-address-content">Continue as @User.Identity.Name</button>
-                      <a class="btn btn-default" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                    </div>
-                  }
-                </div>
-              </div>
-            </div>
-            <div id="payment-address" class="panel panel-default">
-              <div class="panel-heading">
-                <h2 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#checkout-page" href="#payment-address-content" class="accordion-toggle" id="shippingInfo">
-                    Step 2: Shipping Info
-                  </a>
-                </h2>
-              </div>
-              <div id="payment-address-content" class="panel-collapse collapse">
-                <div class="panel-body row">
-                  <div class="col-md-6 col-sm-6">
-                    <h3>Your Personal Details</h3>
-                    <div class="form-group">
-                      <label for="firstname">
-                        First Name
-                        <span class="require">*</span>
-                        @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "text text-danger" })
-                      </label>
-                      <input class="form-control" id="firstname" name="FirstName" type="text" value="@Model.FirstName">
+    <div class="container">
+        @using (Html.BeginForm("Index", "Checkout", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row margin-bottom-40">
+                <div class="col-md-12 col-sm-12">
+                    <h1>Checkout</h1>
+                    <div class="panel-group checkout-page accordion scrollable" id="checkout-page">
+                        <div id="checkout" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#checkout-page" href="#checkout-content" class="accordion-toggle">
+                                        Step 1: Checkout Options
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="checkout-content" class="panel-collapse collapse in">
+                                <div class="panel-body row">
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="col-md-6 col-sm-6">
+                                            <h3>New Customer</h3>
+                                            <p>Checkout Options:</p>
+                                            <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
+                                            <div class="h3">@Html.ActionLink("Login/Register", "Login", "Account", new { Model.ReturnUrl }, null)</div>
+                                            <button class="btn btn-info" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#payment-address-content">Continue with guest checkout</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 col-sm-6">
+                                            <button class="btn btn-info" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#payment-address-content">Continue as @User.Identity.Name</button>
+                                            <a class="btn btn-default" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div id="payment-address" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#checkout-page" href="#payment-address-content" class="accordion-toggle" id="shippingInfo">
+                                        Step 2: Shipping Info
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="payment-address-content" class="panel-collapse collapse">
+                                <div class="panel-body row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <h3>Your Personal Details</h3>
+                                        <div class="form-group">
+                                            <label for="firstname">
+                                                First Name
+                                                <span class="require">*</span>
+                                                @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "text text-danger" })
+                                            </label>
+                                            <input class="form-control" id="firstname" name="FirstName" type="text" value="@Model.FirstName">
 
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lastname">Last Name <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.LastName, null, new { @class = "text text-danger" })
+                                            <input type="text" id="lastname" name="LastName" class="form-control" value="@Model.LastName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">E-Mail <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Email, null, new { @class = "text text-danger" })
+                                            <input type="text" id="email" name="Email" class="form-control" value="@Model.Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="telephone">Telephone <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Phone, null, new { @class = "text text-danger" })
+                                            <input type="text" id="telephone" name="Phone" class="form-control" value="@Model.Phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <h3>Your Address</h3>
+                                        <div class="form-group">
+                                            <label for="address">Street Address<span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Address, null, new { @class = "text text-danger" })
+                                            <input type="text" id="address" name="Address" class="form-control" value="@Model.Address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">City <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.City, null, new { @class = "text text-danger" })
+                                            <input type="text" id="city" name="City" class="form-control" value="@Model.City">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state">State <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.State, null, new { @class = "text text-danger" })
+                                            <input type="text" id="state" name="State" class="form-control" value="@Model.State">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="zip">Zip <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Zip, null, new { @class = "text text-danger" })
+                                            <input type="text" id="zip" name="Zip" class="form-control" value="@Model.Zip">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-info  pull-right" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#confirm-content" id="button-payment-address">Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="confirm" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#checkout-page" href="#confirm-content" class="accordion-toggle">
+                                        Step 3: Confirm Order
+                                    </a>
+                                </h2>
+                            </div>
+                            <div id="confirm-content" class="panel-collapse collapse">
+                                <div class="panel-body row">
+                                    <div class="col-md-12 clearfix">
+                                        <div class="table-wrapper-responsive">
+                                            <table>
+                                                <tr>
+                                                    <th></th>
+                                                    <th class="checkout-description">Description</th>
+                                                    <th class="checkout-model">Sku</th>
+                                                    <th class="checkout-quantity">Quantity</th>
+                                                    <th class="checkout-price">Price</th>
+                                                    <th class="checkout-total">Total</th>
+                                                </tr>
+                                                @if (Model.Cart.Items != null)
+                                                {
+                                                    foreach (var item in Model.Cart.Items)
+                                                    {
+                                                        <tr>
+                                                            <td class="checkout-image">
+                                                                <a href="products/@item.LinkName"><img src="images/@item.LinkName" alt="@item.ProductName"></a>
+                                                            </td>
+                                                            <td class="checkout-description">
+                                                                <h3>@Html.ActionLink(item.ProductName, @item.LinkName, "Products")</h3>
+                                                                <p>@item.StyleText</p>
+                                                            </td>
+                                                            <td class="checkout-model">@item.StyleId</td>
+                                                            <td class="checkout-quantity">@item.Quantity</td>
+                                                            <td class="checkout-price">@Html.DisplayFor(x => item.Price)</td>
+                                                            <td class="checkout-total">@Html.DisplayFor(x => item.SubTotal)</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </table>
+                                        </div>
+                                        <div class="checkout-total-block">
+                                            <ul>
+                                                <li>
+                                                    <em>Sub total</em>
+                                                    <strong class="price">@Html.DisplayFor(x => x.Cart.Totals.SubTotal)</strong>
+                                                </li>
+                                                <li>
+                                                    <em>Shipping cost</em>
+                                                    <strong class="price">@Html.DisplayFor(x => x.Cart.Totals.Shipping)</strong>
+                                                </li>
+                                                <li>
+                                                    <em>Total</em>
+                                                    <strong class="price">@Html.DisplayFor(x => x.Cart.Totals.Total)</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <input type="hidden" name="amt" value="@Model.Cart.Totals.Total" />
+                                        <input type="hidden" name="itemamt" value="@Model.Cart.Totals.SubTotal" />
+                                        <input type="hidden" name="shipping" value="@Model.Cart.Totals.Shipping" />
+                                        <button class="btn btn-info pull-right" type="submit" id="button-confirm">Checkout</button>
+                                        <a href="~/" class="btn btn-default pull-right margin-right-20">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                      <label for="lastname">Last Name <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.LastName, null, new { @class = "text text-danger" })
-                      <input type="text" id="lastname" name="LastName" class="form-control" value="@Model.LastName">
-                    </div>
-                    <div class="form-group">
-                      <label for="email">E-Mail <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Email, null, new { @class = "text text-danger" })
-                      <input type="text" id="email" name="Email" class="form-control" value="@Model.Email">
-                    </div>
-                    <div class="form-group">
-                      <label for="telephone">Telephone <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Phone, null, new { @class = "text text-danger" })
-                      <input type="text" id="telephone" name="Phone" class="form-control" value="@Model.Phone">
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-6">
-                    <h3>Your Address</h3>
-                    <div class="form-group">
-                      <label for="address">Street Address<span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Address, null, new { @class = "text text-danger" })
-                      <input type="text" id="address" name="Address" class="form-control" value="@Model.Address">
-                    </div>
-                    <div class="form-group">
-                      <label for="city">City <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.City, null, new { @class = "text text-danger" })
-                      <input type="text" id="city" name="City" class="form-control" value="@Model.City">
-                    </div>
-                    <div class="form-group">
-                      <label for="state">State <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.State, null, new { @class = "text text-danger" })
-                      <input type="text" id="state" name="State" class="form-control" value="@Model.State">
-                    </div>
-                    <div class="form-group">
-                      <label for="zip">Zip <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Zip, null, new { @class = "text text-danger" })
-                      <input type="text" id="zip" name="Zip" class="form-control" value="@Model.Zip">
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="col-md-12">
-                    <button class="btn btn-info  pull-right" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#confirm-content" id="button-payment-address">Continue</button>
-                  </div>
                 </div>
-              </div>
             </div>
-            <div id="confirm" class="panel panel-default">
-              <div class="panel-heading">
-                <h2 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#checkout-page" href="#confirm-content" class="accordion-toggle">
-                    Step 3: Confirm Order
-                  </a>
-                </h2>
-              </div>
-              <div id="confirm-content" class="panel-collapse collapse">
-                <div class="panel-body row">
-                  <div class="col-md-12 clearfix">
-                    <div class="table-wrapper-responsive">
-                      <table>
-                        <tr>
-                          <th></th>
-                          <th class="checkout-description">Description</th>
-                          <th class="checkout-model">Sku</th>
-                          <th class="checkout-quantity">Quantity</th>
-                          <th class="checkout-price">Price</th>
-                          <th class="checkout-total">Total</th>
-                        </tr>
-                        @if (Model.Cart.Items != null)
-                        {
-                          foreach (var item in Model.Cart.Items)
-                          {
-                            <tr>
-                              <td class="checkout-image">
-                                <a href="products/@item.LinkName"><img src="images/@item.LinkName" alt="@item.ProductName"></a>
-                              </td>
-                              <td class="checkout-description">
-                                <h3>@Html.ActionLink(item.ProductName, @item.LinkName, "Products")</h3>
-                                <p>@item.StyleText</p>
-                              </td>
-                              <td class="checkout-model">@item.StyleId</td>
-                              <td class="checkout-quantity">@item.Quantity</td>
-                              <td class="checkout-price">@Html.DisplayFor(x => item.Price)</td>
-                              <td class="checkout-total">@Html.DisplayFor(x => item.SubTotal)</td>
-                            </tr>
-                          }
-                        }
-                      </table>
-                    </div>
-                    <div class="checkout-total-block">
-                      <ul>
-                        <li>
-                          <em>Sub total</em>
-                          <strong class="price">@Html.DisplayFor(x => x.Cart.Totals.SubTotal)</strong>
-                        </li>
-                        <li>
-                          <em>Shipping cost</em>
-                          <strong class="price">@Html.DisplayFor(x => x.Cart.Totals.Shipping)</strong>
-                        </li>
-                        <li>
-                          <em>Total</em>
-                          <strong class="price">@Html.DisplayFor(x => x.Cart.Totals.Total)</strong>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="clearfix"></div>
-                    <input type="hidden" name="amt" value="@Model.Cart.Totals.Total" />
-                    <input type="hidden" name="itemamt" value="@Model.Cart.Totals.SubTotal" />
-                    <input type="hidden" name="shipping" value="@Model.Cart.Totals.Shipping" />
-                    <button class="btn btn-info pull-right" type="submit" id="button-confirm">Checkout</button>
-                    <a href="~/" class="btn btn-default pull-right margin-right-20">Cancel</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    }
-  </div>
+        }
+    </div>
 </div>
 @section Scripts {
-    <partial name="_BlueTapeJs"/>
-  <script>
-    jQuery(document).ready(function () {
-      Layout.init();
-      Layout.initTwitter();
-      Layout.initOWL();
-      Layout.initImageZoom();
-      Layout.initTouchspin();
-      Layout.initUniform();
-    });
-  </script>
-  @if (!ViewData.ModelState.IsValid)
-  {
+    <partial name="_BlueTapeJs" />
     <script>
-      $("#shippingInfo").click();
+        jQuery(document).ready(function () {
+            Layout.init();
+            Layout.initTwitter();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+            Layout.initUniform();
+        });
     </script>
-  }
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <script>
+            $("#shippingInfo").click();
+        </script>
+    }
 }

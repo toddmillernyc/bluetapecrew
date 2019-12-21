@@ -53,7 +53,7 @@
                                 <ul>
                                     <li>
                                         <em>Sub total</em>
-                                        <strong class="price">@Html.DisplayFor(x=>x.Totals.SubTotal)</strong>
+                                        <strong class="price">@Html.DisplayFor(x => x.Totals.SubTotal)</strong>
                                     </li>
                                     <li>
                                         <em>Shipping cost</em>
@@ -84,9 +84,9 @@
 </div>
 @section Scripts
 {
-    <partial name="_BlueTapeJs"/>
+    <partial name="_BlueTapeJs" />
     <script>
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
             Layout.init();
             Layout.initTwitter();
             Layout.initOWL();

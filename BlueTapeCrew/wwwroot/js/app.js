@@ -7,13 +7,13 @@
             scope: {},
             templateUrl: "js/templates/header-menu.html",
             replace: true,
-            link: function (scope) {
+            link: function(scope) {
                 scope.vm = {};
                 api.query(function(data) {
-                    scope.vm.catagories = data;
+                    scope.vm.categories = data;
                 });
             }
-        }
+        };
     })
 
     .directive("emailSubscribe", function ($resource) {
@@ -30,17 +30,18 @@
                 scope.vm.clearMessages = function() {
                     scope.vm.success = "";
                     scope.vm.modelErrors = "";
-                }
+                };
 
-                scope.vm.subscribe = function (vm) {
-                    var api = $resource("/api/subscribe?emailAddress=" + vm.emailAddress);
-                    api.save(function (data) {
-                        scope.vm.success = data.subscriptionMessage;
-                        scope.vm.emailAddress = "";
-                    }, function (error) {
-                        scope.vm.modelErrors = error.data.modelState.emailAddress;
-                    });
-                }
+                scope.vm.subscribe = function(vm) {
+                    var api = $resource("api/subscribe?emailAddress=" + vm.emailAddress);
+                    api.save(function(data) {
+                            scope.vm.success = data.subscriptionMessage;
+                            scope.vm.emailAddress = "";
+                        },
+                        function(error) {
+                            scope.vm.modelErrors = error.data.modelState.emailAddress;
+                        });
+                };
             }
         };
     });

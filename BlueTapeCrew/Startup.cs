@@ -37,7 +37,7 @@ namespace BlueTapeCrew
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
-            }); 
+            });
             RegisterRepositoryTypes(services);
             RegisterServiceTypes(services);
         }

@@ -9,6 +9,6 @@
     @Html.HiddenFor(x=>x.Id)
     <div class="col-md-2">@Html.DisplayNameFor(x => x.CategoryName)</div>
     <div class="col-md-2">@Html.EditorFor(x => x.CategoryName)</div>
-    <input type="submit" value="Save" class="btn btn-default btn-xs"/>
+    <input type="submit" value="Save" class="btn btn-default btn-xs" />
     @Html.ActionLink("Cancel", "Index",null,new {@class="btn btn-xs btn-default"})
 </form>

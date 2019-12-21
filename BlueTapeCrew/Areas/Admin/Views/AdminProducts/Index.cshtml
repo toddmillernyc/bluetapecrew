@@ -42,17 +42,18 @@
                     <dd><input class="form-control" type="text" ng-model="settings.smtpPassword" /></dd>
                     <dt>Email Address</dt>
                     <dd>
-                        <button style="width: 50%" 
-                                type="button" 
+                        <button style="width: 50%"
+                                type="button"
                                 class="btn btn-sm btn-success pull-right"
                                 ng-disabled="!testEmailAddress"
-                                ng-click="sendMail(testEmailAddress)">Send Test Email</button>
-                        <input 
-                            style="width: 50%" type="text" 
-                            class="form-control"
-                            placeholder="recipient@gmail.com"
-                            ng-model="testEmailAddress" 
-                            ng-change="clearErrors()"/>
+                                ng-click="sendMail(testEmailAddress)">
+                            Send Test Email
+                        </button>
+                        <input style="width: 50%" type="text"
+                               class="form-control"
+                               placeholder="recipient@gmail.com"
+                               ng-model="testEmailAddress"
+                               ng-change="clearErrors()" />
                         <span class="text text-danger">{{testEmailError}}</span>
                         <span class="text text-success">{{emailSentMessage}}</span>
 
@@ -226,7 +227,7 @@
 @section Scripts {
     <script>
         angular.module('myApp', ['ngResource']).controller('SettingsController',
-            function($scope, $resource) {
+            function ($scope, $resource) {
 
                 $scope.testEmailError = "";
                 $scope.emailSentMessage = "";
@@ -234,21 +235,21 @@
                 var settingsApi = $resource('../../api/SiteSettings');
 
 
-                settingsApi.get(function(data) {
-                        $scope.settings = data;
-                    },
-                    function(error) {
+                settingsApi.get(function (data) {
+                    $scope.settings = data;
+                },
+                    function (error) {
                         console.log(error);
                     });
 
-                $scope.saveSettings = function(settings) {
+                $scope.saveSettings = function (settings) {
                     settingsApi.save(settings,
-                        function() {
+                        function () {
                             alert("settings saved");
                         });
                 };
 
-                $scope.sendMail = function(emailAddress) {
+                $scope.sendMail = function (emailAddress) {
                     var emailApi = $resource('../../api/EmailTest?email=' + emailAddress);
 
                     emailApi.get(
@@ -264,7 +265,7 @@
                     );
                 }
 
-                $scope.clearErrors = function() {
+                $scope.clearErrors = function () {
                     $scope.emailSentMessage = null;
                     $scope.testEmailError = null;
                 }

@@ -6,40 +6,40 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <h4>Create a new account.</h4>
-    <hr/>
-    @Html.ValidationSummary("", new {@class = "text-danger"})
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.IsAdmin, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.IsAdmin, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.IsAdmin, new {@class = "form-control"})
+            @Html.EditorFor(m => m.IsAdmin, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input id="register"  type="submit" class="btn btn-info" value="Register"/>
+            <input id="register" type="submit" class="btn btn-info" value="Register" />
         </div>
     </div>
 }
@@ -49,8 +49,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $("#Email").on("input", function() {
+    $(document).ready(function () {
+        $("#Email").on("input", function () {
             $("#UserName").val($(this).val());
         });
     });
