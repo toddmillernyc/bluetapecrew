@@ -2,10 +2,10 @@
 
     .directive("headerMenu", function ($resource) {
 
-        var api = $resource("/api/menu");
+        var api = $resource("api/menu");
         return {
             scope: {},
-            templateUrl: "/js/templates/header-menu.html",
+            templateUrl: "js/templates/header-menu.html",
             replace: true,
             link: function (scope) {
                 scope.vm = {};
@@ -19,7 +19,7 @@
     .directive("emailSubscribe", function ($resource) {
         return {
             scope: {},
-            templateUrl: "/js/templates/email-subscribe.html",
+            templateUrl: "js/templates/email-subscribe.html",
             link: function (scope) {
 
                 scope.vm = {};
