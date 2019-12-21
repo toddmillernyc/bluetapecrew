@@ -2,11 +2,11 @@
 
 [![N|Solid](https://bluetapecrew.com/content/logo.png)](https://bluetapecrew.com)
 
-BlueTapeCrew is a client website from my freelancing days that I have kept up to date.
+BlueTapeCrew is a client website from my freelancing days
 
 I was far less experienced when I initially pushed this to production and have been improving the source gradually over time.
 
-12-21-2019 - .Net Core Migration Complete
+12-21-2019 - ASP.NET 4.5 to .NET Core 3.1 Migration Complete
 
 ## Features
   - Front end based on [KeenThemes] Metronic Store Template
