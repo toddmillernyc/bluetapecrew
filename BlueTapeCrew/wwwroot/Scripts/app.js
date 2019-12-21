@@ -1,5 +1,5 @@
 ﻿var getCart = function () {
-    $.get("../../Cart/Index", function (data) {
+    $.get("Cart/Index", function (data) {
         $(".top-cart-block").html(data);
         var isRtl = false;
         $(".scroller").each(function () {
