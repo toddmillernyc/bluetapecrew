@@ -10,9 +10,9 @@ I was far less experienced when I initially pushed this to production and have b
 
 ## Features
   - Front end based on [KeenThemes] Metronic Store Template
-  - Social Logins: Instagram, Google+, Microsoft, FaceBook
+
   - Paypal integration
-  - MailChimp Subsription Integration
+
   - Mobile Repsonsive
   - Client Accessable Admin
   - Built in Image Handling
@@ -39,6 +39,9 @@ BlueTapeCrew uses a typical .NET stack:
 *I am open to contributions, and you are welcome to use the site code with one caveat; the Admin contains elements from a purchased templates, you must purchase a license from [KeenThemes] (Metronic Admin Template)
 
 ## Roadmap
+- Impliment Admin & Client Side SPA w/modern Javascript Framework
+- Social Logins: Instagram, Google+, Microsoft, FaceBook (as of 12/21 broken from .NET Core config)
+- MailChimp Subsription Integration (as of 12/21 broken from .NET Core config)
 - Write Unit tests
 - Configure Scope of DI Container
 - Add support for multi-tenancy
