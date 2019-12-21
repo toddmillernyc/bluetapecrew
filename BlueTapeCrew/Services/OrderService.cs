@@ -2,16 +2,22 @@
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using System;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using BlueTapeCrew.Data;
 using BlueTapeCrew.ViewModels;
 
 namespace BlueTapeCrew.Services
 {
     public class OrderService : IOrderService, IDisposable
     {
-        private readonly BtcEntities _db = new BtcEntities();
+        private readonly BtcEntities _db;
+
+        public OrderService(BtcEntities db)
+        {
+            _db = db;
+        }
 
         public async Task<int> Create(Order order, CartViewModel cart)
         {

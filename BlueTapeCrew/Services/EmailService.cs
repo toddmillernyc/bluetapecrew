@@ -1,8 +1,9 @@
-﻿using BlueTapeCrew.Models;
+﻿using System;
+using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
-using MailKit.Net.Smtp;
 using MimeKit;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
 
 namespace BlueTapeCrew.Services
 {
@@ -32,6 +33,7 @@ namespace BlueTapeCrew.Services
 
         private static MimeMessage CreateMessage(SmtpRequest request)
         {
+            if(request.To == null) throw new ArgumentNullException("request", "[To] property is null on the SmtpRequest Object");
             var message = CreateMimeMessage(request.From, request.To, request.Subject);
             message.Body = CreateMessageBody(request.TextBody, request.HtmlBody);
             return message;

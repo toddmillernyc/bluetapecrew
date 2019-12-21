@@ -1,53 +1,25 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlueTapeCrew.Models.Entities
 {
+    [Table("SiteSettings")]
     public class SiteSetting
     {
-        [Required]
-        [StringLength(255)]
         public string SiteTitle { get; set; }
-
-        [Required]
         public string Description { get; set; }
-
-        [Required]
         public string Keywords { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string Author { get; set; }
-
         public int Id { get; set; }
-
         public string AboutUs { get; set; }
-
-        [StringLength(50)]
         public string TwitterWidgetId { get; set; }
-
-        [StringLength(255)]
         public string GoogleClientId { get; set; }
-
-        [StringLength(255)]
         public string GoogleClientSecret { get; set; }
-
-        [StringLength(255)]
         public string SiteUrl { get; set; }
-
-        [StringLength(255)]
         public string SiteLogoUrl { get; set; }
-
-        [StringLength(255)]
         public string FacebookAppId { get; set; }
-
-        [StringLength(255)]
         public string MailChimpApiKey { get; set; }
-
-        [StringLength(50)]
         public string MailChimpListId { get; set; }
-
-        public decimal FreeShippingThreshold { get; set; }
-        public decimal FlatShippingRate { get; set; }
+        public string PaypalApiUsername { get; set; }
         public string ContactPhoneNumber { get; set; }
         public string ContactEmailAddress { get; set; }
         public string TwitterUrl { get; set; }
@@ -64,24 +36,17 @@ namespace BlueTapeCrew.Models.Entities
         public string TwitterClientSecret { get; set; }
         public string InstagramClientId { get; set; }
         public string InstagramClientSecret { get; set; }
-
-        // PayPal
-        [StringLength(100)]
-        public string PaypalApiUsername { get; set; }
-        [StringLength(100)]
-        public string PaypalClientSecret { get; set; }
-        [StringLength(100)]
-        public string PaypalClientId { get; set; }
-
-        // Paypal Sandbox
+        public string PaypalEndpointUrl { get; set; }
+        public decimal? FreeShippingThreshold { get; set; }
+        public decimal? FlatShippingRate { get; set; }
         public string PaypalSandboxAccount { get; set; }
         public string PaypalSandBoxClientId { get; set; }
         public string PaypalSandBoxSecret { get; set; }
-
-        // SMTP
+        public string PaypalClientSecret { get; set; }
+        public string PaypalClientId { get; set; }
         public string SmtpHost { get; set; }
-        public int SmtpPort { get; set; }
         public string SmtpUsername { get; set; }
         public string SmtpPassword { get; set; }
+        public int? SmtpPort { get; set; }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
+using PayPal;
 using PayPal.Api;
 
 namespace BlueTapeCrew.Services
@@ -64,7 +66,7 @@ namespace BlueTapeCrew.Services
             };
         }
 
-        public string PaywithPaypal(PaymentRequest paymentRequest)
+        public string PayWithPaypal(PaymentRequest paymentRequest)
         {
             var apiContext = GetApiContext(paymentRequest);
             var payment = GetPayment(paymentRequest);
@@ -75,11 +77,24 @@ namespace BlueTapeCrew.Services
 
         public Payment CompletePayment(CompletePaymentRequest paymentRequest)
         {
-            var apiContext = new APIContext(paymentRequest.Token);
-            var paymentExecution = new PaymentExecution { payer_id = paymentRequest.PayerId };
-            var payment = new Payment { id = paymentRequest.PaymentId };
-            var executedPayment = payment.Execute(apiContext, paymentExecution);
-            return executedPayment;
+            try
+            {
+                var apiContext = new APIContext(paymentRequest.Token);
+                var paymentExecution = new PaymentExecution
+                {
+                    payer_id = paymentRequest.PayerId
+                };
+                var payment = new Payment
+                {
+                    id = paymentRequest.PaymentId,
+                };
+                var executedPayment = payment.Execute(apiContext, paymentExecution);
+                return executedPayment;
+            }
+            catch (PaymentsException ex)
+            {
+                throw new Exception(ex.Response);
+            }
         }
     }
 }

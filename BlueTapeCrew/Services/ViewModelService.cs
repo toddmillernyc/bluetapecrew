@@ -1,40 +1,47 @@
-﻿using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Data;
+using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Services.Interfaces;
 
 namespace BlueTapeCrew.Services
 {
     public class ViewModelService : IViewModelService, IDisposable
     {
-        private readonly BtcEntities _db = new BtcEntities();
+        private readonly BtcEntities _db;
+
+        public ViewModelService(BtcEntities db)
+        {
+            _db = db;
+        }
 
         public async Task<HomeViewModel> GetHomeViewModel()
         {
             var settings = await _db.SiteSettings.FirstOrDefaultAsync();
             var catalog = new List<CatalogModel>();
+            var categories = await _db.Categories
+                                        .Include(category => category.ProductCategories)
+                                        .ThenInclude(productCategory => productCategory.Product)
+                                        .ThenInclude(product => product.Styles)
+                                        .OrderByDescending(category => category.ProductCategories.Count)
+                                        .ToListAsync();
 
-            foreach (var category in _db.Categories.OrderByDescending(x => x.Products.Count))
+            foreach (var category in categories)
             {
-                var catalogModel = new CatalogModel
-                {
-                    CategoryName = category.CategoryName,
-                    Products = new List<ProductsAzViewModel>()
-                };
-                foreach (var item in category.Products.OrderBy(x => x.ProductName))
+                var catalogModel = new CatalogModel(category.CategoryName);
+                var categoryProducts = category.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName);
+                foreach (var product in categoryProducts)
                 {
                     catalogModel.Products.Add(new ProductsAzViewModel
                     {
-                        Id = item.Id,
-                        Name = item.ProductName,
-                        LinkName = item.LinkName,
-                        // ReSharper disable once PossibleNullReferenceException
-                        Price = $"{item.Styles.FirstOrDefault().Price:n2}",
-                        ImgSource = "images/" + item.LinkName + ".jpg"
+                        Id = product.Id,
+                        Name = product.ProductName,
+                        LinkName = product.LinkName,
+                        Price = $"{product.Styles?.FirstOrDefault()?.Price:n2}",
+                        ImgSource = "images/" + product.LinkName + ".jpg"
                     });
                 }
                 catalog.Add(catalogModel);
@@ -53,7 +60,7 @@ namespace BlueTapeCrew.Services
             {
                 Id = item.Id,
                 MenuName = item.CategoryName,
-                Items = item.Products.OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
+                Items = item.ProductCategories.Select(x=>x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                 {
                     LinkName = product.LinkName,
                     ItemName = product.ProductName
@@ -83,7 +90,7 @@ namespace BlueTapeCrew.Services
                 {
                     Id = item.Id,
                     MenuName = item.CategoryName,
-                    Items = item.Products.OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
+                    Items = item.ProductCategories.Select(x=>x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                     {
                         LinkName = product.LinkName,
                         ItemName = product.ProductName

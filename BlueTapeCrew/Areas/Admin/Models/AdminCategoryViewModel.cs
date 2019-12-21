@@ -10,12 +10,4 @@ namespace BlueTapeCrew.Areas.Admin.Models
         public List<AdminProductViewModel> Products { get; set; }
         public bool Published { get; set; }
     }
-
-    public class AdminProductViewModel
-    {
-        public int Id { get; set; }
-        public int? ImageId { get; set; }
-        public string Description { get; set; }
-        public string Name { get; set; }
-    }
 }

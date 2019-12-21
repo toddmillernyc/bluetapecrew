@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
+using PayPal;
 
 namespace BlueTapeCrew.Services
 {
@@ -9,15 +10,15 @@ namespace BlueTapeCrew.Services
     {
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly ICartService _cartService;
-        private readonly IInvoiceService _invoiceService;
         private readonly IPaypalService _paypalService;
 
-        public CheckoutService(ISiteSettingsService siteSettingsService, 
-            ICartService cartService, IInvoiceService invoiceService, IPaypalService paypalService)
+        public CheckoutService(
+            ISiteSettingsService siteSettingsService, 
+            ICartService cartService,
+            IPaypalService paypalService)
         {
             _siteSettingsService = siteSettingsService;
             _cartService = cartService;
-            _invoiceService = invoiceService;
             _paypalService = paypalService;
         }
 
@@ -25,31 +26,40 @@ namespace BlueTapeCrew.Services
         {
             var settings = await _siteSettingsService.Get();
             var cart = await _cartService.GetCartViewModel(sessionId);
-            var invoice = await _invoiceService.Create(sessionId);
-            var paymentRequest = new PaymentRequest(requestUri, settings, cart.Items, invoice.Id, string.Empty, isSandbox);
-            var redirectUrl = _paypalService.PaywithPaypal(paymentRequest);
+            var invoiceId = DateTime.Now.Ticks;
+            var paymentRequest = new PaymentRequest(requestUri, settings, cart.Items, invoiceId, string.Empty, isSandbox);
+            var redirectUrl = _paypalService.PayWithPaypal(paymentRequest);
             return redirectUrl;
         }
 
         public async Task<string> Complete(CompletePaymentRequest request, bool isSandbox)
         {
-            string clientId;
-            string clientSecret;
-            var settings = await _siteSettingsService.Get();
+            try
+            {
+                string clientId;
+                string clientSecret;
+                var settings = await _siteSettingsService.Get();
 
-            if (isSandbox)
-            {
-                clientId = settings.PaypalSandBoxClientId;
-                clientSecret = settings.PaypalSandBoxSecret;
+                if (isSandbox)
+                {
+                    clientId = settings.PaypalSandBoxClientId;
+                    clientSecret = settings.PaypalSandBoxSecret;
+                }
+                else
+                {
+                    clientId = settings.PaypalClientId;
+                    clientSecret = settings.PaypalClientSecret;
+                }
+
+                request.Token = _paypalService.GetAccessToken(clientId, clientSecret, isSandbox ? "sandbox" : "mode");
+                var completedPayment = _paypalService.CompletePayment(request);
+                return completedPayment.id;
             }
-            else
+            catch (PaymentsException ex)
             {
-                clientId = settings.PaypalClientId;
-                clientSecret = settings.PaypalClientSecret;
+                throw new Exception(ex.Response);
             }
-            request.Token = _paypalService.GetAccessToken(clientId, clientSecret, isSandbox ? "sandbox" : "mode");
-            var completedPayment = _paypalService.CompletePayment(request);
-            return completedPayment.id;
+
         }
     }
 }

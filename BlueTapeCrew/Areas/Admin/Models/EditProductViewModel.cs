@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BlueTapeCrew.Models.Entities;
+﻿using BlueTapeCrew.Models.Entities;
+using System.Collections.Generic;
 
 namespace BlueTapeCrew.Areas.Admin.Models
 {
@@ -8,6 +8,6 @@ namespace BlueTapeCrew.Areas.Admin.Models
         public Product Product { get; set; }
         public List<Color> Colors { get; set; }
         public List<Size> Sizes { get; set; }
-        public List<Image> Images { get; set; } 
+        public List<ProductImage> Images { get; set; } 
     }
 }

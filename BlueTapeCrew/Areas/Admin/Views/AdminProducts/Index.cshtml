@@ -5,9 +5,9 @@
     }
 </style>
 <p>
-    @Html.ActionLink("Create New Product", "Create", "AdminProducts", null, new { @class = "btn btn-xs btn-info" }) |
-    @Html.ActionLink("Edit Categories", "Index", "AdminCategories", null, new { @class = "btn btn-xs btn-info" }) |
-    @Html.ActionLink("Manage Site Users", "Index", "AspNetUsers", null, new { @class = "btn btn-xs btn-info", @id="manageSiteUsers"  })
+    <a class="btn btn-xs btn-info" href="~/Admin/AdminProducts/Create">Create New Product</a> |
+    <a class="btn btn-xs btn-info" href="~/Admin/AdminCategories/Index">Edit Categories</a> |
+    <a class="btn btn-xs btn-info" href="~/Admin/AspNetUsers/Index">Manage Site Users</a>
 </p>
 <ul class="nav nav-tabs">
     <li class="active"><a href="#tab_settings" data-toggle="tab">Site Settings</a></li>

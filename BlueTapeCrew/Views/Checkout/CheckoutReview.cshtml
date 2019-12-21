@@ -1,8 +1,4 @@
 ﻿@model BlueTapeCrew.ViewModels.CheckoutViewModel
-@section HeadCss
-{
-    
-}
 <div class="main">
     <div class="container">
         <h1>Order Review</h1>
@@ -52,8 +48,7 @@
             <input type="hidden" value="@ViewBag.Token" name="token" />
             <input type="hidden" value="@ViewBag.PayerId" name="payerId" />
             <input type="hidden" value="@ViewBag.PaymentId" name="paymentId" />
-            <input type="hidden" name="finalPaymentAmount" value="@Model.Cart.Totals.Total" />
-            <button type="submit" class="btn btn-info">Confirm Order</button>
+        <button type="submit" class="btn btn-info">Confirm Order</button>
 }
             </div>
         </div>
@@ -61,7 +56,7 @@
 </div>
 @section Scripts
 {
-    @Scripts.Render("~/bluetape/js")
+    <partial name="_BlueTapeJs" />
     <script>
         jQuery(document).ready(function () {
             Layout.init();

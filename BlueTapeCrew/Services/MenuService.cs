@@ -23,7 +23,8 @@ namespace BlueTapeCrew.Services
                 new MenuCategory 
                 {
                     Name = category.CategoryName,
-                    Products = category.Products
+                    Products = category.ProductCategories
+                                .Select(x=>x.Product)
                                 .OrderBy(x=>x.LinkName)
                                 .ToDictionary(x => x.LinkName, x => x.ProductName)
                 })

@@ -9,7 +9,7 @@ namespace BlueTapeCrew.ViewModels
 
         public CheckoutViewModel() { }
 
-        public CheckoutViewModel(AspNetUser user, CartViewModel cart, string returnUrl)
+        public CheckoutViewModel(ApplicationUser user, CartViewModel cart, string returnUrl)
         {
             ReturnUrl = returnUrl;
             Cart = cart;

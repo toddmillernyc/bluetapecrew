@@ -1,20 +1,26 @@
 ﻿using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
 using System;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BlueTapeCrew.Data;
 using Image = System.Drawing.Image;
 
 namespace BlueTapeCrew.Services
 {
     public class ImageService : IImageService, IDisposable
     {
-        private readonly BtcEntities _db = new BtcEntities();
+        private readonly BtcEntities _db;
+
+        public ImageService(BtcEntities db)
+        {
+            _db = db;
+        }
 
         public async Task<byte[]> ResizeImage(byte[] imageData, int width, int height, ImageFormat format)
         {
@@ -51,7 +57,7 @@ namespace BlueTapeCrew.Services
         public async Task<Models.Entities.Image> GetProductImageByName(string name)
         {
             var linkName = name.Split('.')[0];
-            var product = await _db.Products.Where(x => x.LinkName.Equals(linkName)).FirstOrDefaultAsync();
+            var product = await _db.Products.Include(x=>x.Image).Where(x => x.LinkName.Equals(linkName)).FirstOrDefaultAsync();
             return product.Image;
 
         }

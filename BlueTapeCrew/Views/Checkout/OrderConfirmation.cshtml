@@ -2,10 +2,6 @@
 @{
     ViewBag.Title = "Order Confirmed!";
 }
-@section HeadCss
-{
-    
-}
 <div class="main">
     <div class="container">
         @ViewBag.Response
@@ -50,7 +46,7 @@
 </div>
 @section Scripts
 {
-    @Scripts.Render("~/bluetape/js")
+    <partial name="_BlueTapeJs" />
     <script>
         jQuery(document).ready(function () {
             Layout.init();

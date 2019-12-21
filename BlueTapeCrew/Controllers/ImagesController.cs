@@ -2,11 +2,11 @@
 using BlueTapeCrew.Services.Interfaces;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlueTapeCrew.Controllers
 {
-    [OutputCache(Duration = 3600)]
+    [ResponseCache(Duration = 3600)]
     public class ImagesController : Controller
     {
         private const string JpegMimeType = "image/jpeg";

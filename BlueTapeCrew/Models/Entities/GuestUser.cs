@@ -1,35 +1,37 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlueTapeCrew.Models.Entities
 {
+    [Table("GuestUsers")]
     public class GuestUser
     {
         public int Id { get; set; }
 
-        [StringLength(24)]
+        [MaxLength(24)]
         public string SessionId { get; set; }
-
-        [StringLength(60)]
+        
+        [MaxLength(60)]
         public string FirstName { get; set; }
 
-        [StringLength(60)]
+        [MaxLength(60)]
         public string LastName { get; set; }
 
         public string PhoneNumber { get; set; }
 
-        [StringLength(256)]
+        [MaxLength(256)]
         public string Email { get; set; }
 
-        [StringLength(255)]
+        [MaxLength(255)]
         public string Address { get; set; }
 
-        [StringLength(75)]
+        [MaxLength(75)]
         public string City { get; set; }
 
-        [StringLength(50)]
+        [MaxLength(50)]
         public string State { get; set; }
 
-        [StringLength(20)]
+        [MaxLength(20)]
         public string PostalCode { get; set; }
     }
 }

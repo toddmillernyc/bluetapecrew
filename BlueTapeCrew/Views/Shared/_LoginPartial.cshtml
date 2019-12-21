@@ -1,4 +1,4 @@
-﻿@if (Request.IsAuthenticated)
+﻿@if (User.Identity.IsAuthenticated)
 {
     <li>
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
@@ -9,10 +9,10 @@
     </li>
     if (User.IsInRole("Admin"))
     {
-        <li><a id="adminLogin" class="text text-danger bg-danger" href="~/admin">Site Administration</a></li>
+        <li><a id="adminLogin" class="text text-danger bg-danger" href="~/Admin/AdminProducts/Index">Site Administration</a></li>
     }
 }
 else
 {
-    <li>@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Request.Url.AbsoluteUri }, htmlAttributes: new { id = "loginLink" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Context.Request.Host + Context.Request.Path }, htmlAttributes: new { id = "loginLink" })</li>
 }

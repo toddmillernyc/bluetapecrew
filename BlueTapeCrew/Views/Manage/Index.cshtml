@@ -2,10 +2,6 @@
 @{
     ViewBag.Title = "Manage";
 }
-@section HeadCss
-{
-    
-}
 <div class="main">
 <div class="container">
 <div class="row">
@@ -149,7 +145,7 @@
 </div>
 @section Scripts
 {
-    @Scripts.Render("~/bluetape/js")
+    <partial name="_BlueTapeJs"/>
     <script>
         jQuery(document).ready(function () {
             Layout.init();

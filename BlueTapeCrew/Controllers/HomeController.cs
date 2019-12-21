@@ -1,6 +1,6 @@
 ﻿using BlueTapeCrew.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -8,15 +8,15 @@ namespace BlueTapeCrew.Controllers
     {
         private readonly IViewModelService _viewModelService;
 
-        public HomeController(IViewModelService viewModelService,
-                              IEmailSubscriptionService iEmailSubscriptionService)
+        public HomeController(IViewModelService viewModelService)
         {
             _viewModelService = viewModelService;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-            return View(await _viewModelService.GetHomeViewModel());
+            var model = await _viewModelService.GetHomeViewModel();
+            return View(model);
         }
 
         public async Task<PartialViewResult> _Sidebar()

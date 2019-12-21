@@ -1,13 +1,12 @@
-﻿using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Data;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.ViewModels;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -15,72 +14,51 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly BtcEntities _db;
 
-        public ManageController()
+        public ManageController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, BtcEntities db)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _db = db;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
+        private async Task<ApplicationUser> GetCurrentUser() => await _userManager.FindByNameAsync(User.Identity.Name);
 
-        public ApplicationSignInManager SignInManager
-        {
-            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            private set => _signInManager = value;
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            private set => _userManager = value;
-        }
-
-        //
-        // GET: /Manage/Index
         [Route("account")]
-        public ActionResult Index(ManageMessageId? message)
+        public async Task<IActionResult> Index(ManageMessageId? message)
         {
-            using (var db = new BtcEntities())
+            return View(new ManageViewModel
             {
-                return View(new ManageViewModel
-                {
-                    Orders =
-                        db.Orders.Include(x => x.OrderItems)
-                            .Where(x => x.UserName.Equals(User.Identity.Name))
-                            .OrderByDescending(x => x.DateCreated).ToList(),
-                    User = db.AspNetUsers.FirstOrDefault(x => x.UserName.Equals(User.Identity.Name))
-                });
-            }
-            
+                Orders =
+                    _db.Orders.Include(x => x.OrderItems)
+                        .Where(x => x.UserName.Equals(User.Identity.Name))
+                        .OrderByDescending(x => x.DateCreated).ToList(),
+                User = await GetCurrentUser()
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("account")]
-        public async Task<ActionResult> Index(AspNetUser user)
+        public async Task<IActionResult> Index(ApplicationUser user)
         {
-            using (var db = new BtcEntities())
+            var model = await _userManager.FindByIdAsync(user.Id);
+            if (model != null)
             {
-                var model = await db.AspNetUsers.FindAsync(user.Id);
-                if (model != null)
-                {
-                    model.Email = user.Email;
-                    model.FirstName = user.FirstName;
-                    model.LastName = user.LastName;
-                    model.PhoneNumber = user.PhoneNumber;
-                    model.Address = user.Address;
-                    model.City = user.City;
-                    model.State = user.State;
-                    model.PostalCode = user.PostalCode;
-                }
-
-                await db.SaveChangesAsync();
+                model.Email = user.Email;
+                model.FirstName = user.FirstName;
+                model.LastName = user.LastName;
+                model.PhoneNumber = user.PhoneNumber;
+                model.Address = user.Address;
+                model.City = user.City;
+                model.State = user.State;
+                model.PostalCode = user.PostalCode;
             }
+
+            await _db.SaveChangesAsync();
             return RedirectToAction("Index","Manage");
         }
 
@@ -101,13 +79,13 @@ namespace BlueTapeCrew.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            var user = await GetCurrentUser();
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await _signInManager.SignInAsync(user, false);
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
@@ -128,20 +106,16 @@ namespace BlueTapeCrew.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+            var user = await GetCurrentUser();
+            if (user == null) return NotFound("User not found");
+            var result = await _userManager.AddPasswordAsync(user, model.NewPassword);
+            if (result.Succeeded)
             {
-                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                if (result.Succeeded)
-                {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                    if (user != null)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    }
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-                }
-                AddErrors(result);
+                await _signInManager.SignInAsync(user, false);
+                return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
             }
+            AddErrors(result);
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -149,12 +123,8 @@ namespace BlueTapeCrew.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && _userManager != null)
-            {
-                _userManager.Dispose();
-                _userManager = null;
-            }
-
+            _db?.Dispose();
+            _userManager?.Dispose();
             base.Dispose(disposing);
         }
 
@@ -162,7 +132,7 @@ namespace BlueTapeCrew.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError(error.Code, error.Description);
             }
         }
 

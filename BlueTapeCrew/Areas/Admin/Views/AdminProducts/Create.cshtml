@@ -1,26 +1,24 @@
-﻿@model BlueTapeCrew.Models.Entities.Product
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
+@model BlueTapeCrew.Models.Entities.Product
 
 @{
     ViewBag.Title = "Create";
 }
 @section Styles{
-<style>
-    textarea {
-        width: 100%;
-        height: 150px;
-    }
-</style>
+    <style>
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+    </style>
 }
 
 <div class="row">
     <div class="col-md-6">
 
         <h2>Create</h2>
-
-        @using (Html.BeginForm("Create", "AdminProducts", FormMethod.Post, new { @enctype = "multipart/form-data" ,@id="createProductForm" }))
-        {
-            @Html.AntiForgeryToken()
-
+        <form asp-area="Admin" asp-controller="AdminProducts" asp-action="Create" asp-antiforgery="true" method="post" enctype="multipart/form-data" id="createProductForm">
             <div class="form-horizontal">
                 <h4>Product</h4>
                 <hr />
@@ -34,17 +32,17 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ProductName, htmlAttributes: new {@class = "control-label col-md-2"})
+                    @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.ProductName, new {htmlAttributes = new {@class = "form-control", @required=""}})
-                        @Html.ValidationMessageFor(model => model.ProductName, "", new {@class = "text-danger"})
+                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.LinkName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.LinkName, new { htmlAttributes = new { @class = "form-control", @required="" } })
+                        @Html.EditorFor(model => model.LinkName, new { htmlAttributes = new { @class = "form-control", @required = "" } })
                         @Html.ValidationMessageFor(model => model.LinkName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -52,26 +50,26 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Description, new  { @class = "form-control", @required = "" })
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @required = "" })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Categories, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.ProductCategories, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Categories, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.ProductCategories, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Create" class="btn btn-success" />
-                        @Html.ActionLink("Cancel", "Index", "AdminProducts", null, new { @class = "btn btn-warning" })
+                        <a class="btn btn-warning" href="../../Admin">Cancel</a>
                     </div>
                 </div>
             </div>
-        }
+        </form>
     </div>
 </div>
 

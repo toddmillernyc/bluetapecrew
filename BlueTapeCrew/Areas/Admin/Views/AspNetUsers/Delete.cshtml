@@ -1,5 +1,4 @@
-﻿@model BlueTapeCrew.Models.Entities.AspNetUser
-
+﻿@model BlueTapeCrew.Models.Entities.ApplicationUser
 @{
     ViewBag.Title = "Delete";
 }
@@ -65,14 +64,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.TwoFactorEnabled)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEndDateUtc)
         </dd>
 
         <dt>

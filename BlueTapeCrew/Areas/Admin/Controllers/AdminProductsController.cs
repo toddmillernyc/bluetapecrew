@@ -1,180 +1,137 @@
-﻿using System;
+﻿using BlueTapeCrew.Areas.Admin.Models;
+using BlueTapeCrew.Data;
+using BlueTapeCrew.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using BlueTapeCrew.Areas.Admin.Models;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
-using Newtonsoft.Json.Linq;
+using BlueTapeCrew.Services.Interfaces;
+using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
     [Authorize(Roles="Admin")]
+    [Area("Admin")]
     public class AdminProductsController : Controller
     {
-        private readonly BtcEntities _db = new BtcEntities();
+        private readonly IProductService _productService;
+
+        private readonly BtcEntities _db;
+
+        public AdminProductsController(BtcEntities db, IProductService productService)
+        {
+            _db = db;
+            _productService = productService;
+        }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<int> AddAdditionalImage(int productId,HttpPostedFileBase file)
+        public async Task<IActionResult> AddAdditionalImage(int productId, IFormFile file)
         {
-            using (var db = new BtcEntities())
+            var product = await _db.Products.FindAsync(productId);
+            try
             {
-                var product = await db.Products.FindAsync(productId);
-                try
+                var imageId = await SaveImage(file);
+                var image = await _db.Images.FindAsync(imageId);
+                product.ProductImages.Add(new ProductImage
                 {
-                    var image = await db.Images.FindAsync(SaveImage(file));
-                    product.Images.Add(image);
-                    await db.SaveChangesAsync();
-                    return image.Id;
-                }
-                catch(Exception ex)
-                {
-                    var msg = ex.Message;
-                    if (ex.InnerException != null)
-                    {
-                        msg += ex.InnerException.Message;
-                        if (ex.InnerException.InnerException != null)
-                        {
-                            msg += ex.InnerException.InnerException.Message;
-                        }
-                    }
-                }
-                return 0;
+                    ProductId = productId,
+                    ImageId = imageId
+                });
+                await _db.SaveChangesAsync();
+                return Ok(image.Id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPost]
         public string DeleteStyle(int id)
         {
-            using (var db = new BtcEntities())
+            var style = _db.Styles.Find(id);
+            _db.Styles.Remove(style);
+            foreach (var item in _db.Carts.Where(x => x.StyleId.Equals(id)).ToList())
             {
-                var style = db.Styles.Find(id);
-                db.Styles.Remove(style);
-                foreach (var item in db.Carts.Where(x => x.StyleId.Equals(id)).ToList())
-                {
-                    db.Carts.Remove(item);
-                }
-                try
-                {
-                    db.SaveChanges();
-                    return "1";
-                }
-                catch (Exception ex)
-                {
-                    var msg = ex.Message;
-                    if (ex.InnerException != null)
-                    {
-                        msg += ex.InnerException.Message;
-                        if (ex.InnerException.InnerException != null)
-                        {
-                            msg += ex.InnerException.InnerException.Message;
-                        }
-                    }
-                    return msg;
-                }
+                _db.Carts.Remove(item);
             }
-        }
-
-        public string DeleteImage(int imageId)
-        {
-            using (var db = new BtcEntities())
+            try
             {
-                var image = db.Images.Find(imageId);
-                try
+                _db.SaveChanges();
+                return "1";
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+                if (ex.InnerException != null)
                 {
-                    foreach (var item in db.Products.ToList())
+                    msg += ex.InnerException.Message;
+                    if (ex.InnerException.InnerException != null)
                     {
-                        var productImage = item.Images.FirstOrDefault(x => x.Id == imageId);
-                        if (productImage != null)
-                        {
-                            item.Images.Remove(productImage);
-                        }
+                        msg += ex.InnerException.InnerException.Message;
                     }
-                    db.Images.Remove(image);
-                    db.SaveChanges();
-                    return "1";
                 }
-                catch(Exception ex)
-                {
-                    var msg = ex.Message;
-                    if (ex.InnerException != null)
-                    {
-                        msg += ex.InnerException.Message;
-                        if (ex.InnerException.InnerException != null)
-                        {
-                            msg += ex.InnerException.InnerException.Message;
-                        }
-                    }
-                    return msg;
-                }
+                return msg;
             }
         }
 
         public JObject SiteSettings()
         {
-            using (var db = new BtcEntities())
-            {
-                var model = db.SiteSettings.FirstOrDefault();
-                return JObject.FromObject(model);
-            }
+            var model = _db.SiteSettings.FirstOrDefault();
+            return JObject.FromObject(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Admin/AdminProducts/CreateColor")]
         public ActionResult CreateColor(int productId, string newColor)
         {
-            using (var db = new BtcEntities())
-            {
-                db.Colors.Add(new Color
-                {
-                    ColorText = newColor
-                });
-                db.SaveChanges();
-            }
-            return RedirectToAction("Edit", new { @id = productId });
+            _db.Colors.Add(new Color { ColorText = newColor });
+            _db.SaveChanges();
+            return RedirectToAction("Edit", new { id = productId });
         }
 
         [HttpPost]
-        public ActionResult CreateSize(int productId, string size)
+        [ValidateAntiForgeryToken]
+        [Route("Admin/AdminProducts/CreateSize")]
+        public async Task<IActionResult> CreateSize(int productId, string size)
         {
-            using (var db = new BtcEntities())
+            var lastSize = await _db.Sizes.OrderByDescending(x => x.SizeOrder).FirstOrDefaultAsync();
+            var sizeOrder = lastSize?.SizeOrder ?? 0;
+            _db.Sizes.Add(new Size
             {
-                db.Sizes.Add(new Size
-                {
-                    SizeText = size,
-                    SizeOrder = db.Sizes.OrderByDescending(x => x.SizeOrder).FirstOrDefault().SizeOrder + 1
-                });
-                db.SaveChanges();
-            }
-            return RedirectToAction("Edit", new { @id = productId });
+                SizeText = size,
+                SizeOrder = sizeOrder + 1
+            });
+            _db.SaveChanges();
+            return RedirectToAction("Edit", new { id = productId });
         }
 
         [HttpPost]
-        public ActionResult CreateStyle([Bind(Include = "ProductId,ColorId,SizeId,Price,InventoryCount")] Style style)
+        [ValidateAntiForgeryToken]
+        [Route("Admin/AdminProducts/CreateStyle")]
+        public ActionResult CreateStyle(Style style)
         {
-            using (var db = new BtcEntities())
-            {
-                db.Styles.Add(style);
-                db.SaveChanges();
-            }
-            return RedirectToAction("Edit", "AdminProducts", new { @id = style.ProductId });
+            _db.Styles.Add(style);
+            _db.SaveChanges();
+            return RedirectToAction("Edit", "AdminProducts", new { id = style.ProductId });
         }
 
         public ActionResult Index()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return Redirect("~/Account/Login");
-            }
             return View(GetCategoryList());
         }
 
-
+        [HttpGet]
+        [Route("Admin/AdminProducts/Create")]
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "CategoryName", null);
@@ -183,155 +140,142 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ProductName,Description,LinkName")] Product product, HttpPostedFileBase file, int categoryId)
+        [Route("Admin/AdminProducts/Create")]
+        public async Task<ActionResult> Create(Product product, IFormFile file, int categoryId)
         {
             if (ModelState.IsValid)
             {
-                if (file != null)
-                {
-                    product.ImageId = SaveImage(file);
-                }
+                if (file != null) product.ImageId = await SaveImage(file);
                 var category = _db.Categories.Find(categoryId);
-                product.Categories.Add(category);
+                product.ProductCategories.Add(new ProductCategory { Category = category, Product = product});
                 _db.Products.Add(product);
                 await _db.SaveChangesAsync();
-                return RedirectToAction("Edit", "AdminProducts", new { @id = product.Id });
+                return RedirectToAction("Edit", "AdminProducts", new { id = product.Id });
             }
 
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "CategoryName", product.Categories.FirstOrDefault()?.Id);
+            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "CategoryName", product.ProductCategories.FirstOrDefault()?.CategoryId);
             return View(product);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<int> SaveProductImage(int productId,HttpPostedFileBase file)
+        public async Task<int> SaveProductImage(int productId, IFormFile file)
         {
-            using (var db = new BtcEntities())
+            var product = await _db.Products.FindAsync(productId);
+            var imageId = await SaveImage(file);
+            if (product.Image != null)
             {
-                var product = await db.Products.FindAsync(productId);
-                var imageId = SaveImage(file);
-                if (product.Image != null)
-                {
-                    db.Images.Remove(product.Image);
-                }
-                product.ImageId = imageId;
-                await db.SaveChangesAsync();
-                return imageId;
+                _db.Images.Remove(product.Image);
             }
+            product.ImageId = imageId;
+            await _db.SaveChangesAsync();
+            return imageId;
         }
 
-        public static int SaveImage(HttpPostedFileBase file)
+        public async Task<int> SaveImage(IFormFile file)
         {
-            using (var db = new BtcEntities())
-            using (var target = new MemoryStream())
+            await using var target = new MemoryStream();
+            await file.CopyToAsync(target);
+
+            var data = target.ToArray();
+            var fileName = file.FileName;
+            var c = 0;
+            while (true)
             {
-                file.InputStream.CopyTo(target);
-                var data = target.ToArray();
-                var fileName = file.FileName;
-                int c = 0;
-                while (true)
-                {
-                    if (!db.Images.Any(x => x.Name.Equals(fileName))) break;
-                    c++;
-                    var tokens = file.FileName.Split('.');
-                    fileName = tokens[0] + "(" + c + ")." + tokens[tokens.Length - 1];
-                }
-
-                var image = new Image
-                {
-                    Name = fileName,
-                    ImageData = data,
-                    MimeType = MimeMapping.GetMimeMapping(file.ContentType)
-                };
-
-                var ext = file.FileName.Split('.')[1];
-                if (ext.Equals("jpg") || ext.Equals("jpeg"))
-                {
-                    image.MimeType = "image/jpeg";
-                }
-                else if (ext.Equals("png"))
-                {
-                    image.MimeType = "image/png";
-                }
-
-                db.Images.Add(image);
-                db.SaveChanges();
-                return image.Id;
+                if (!_db.Images.Any(x => x.Name.Equals(fileName))) break;
+                c++;
+                var tokens = file.FileName.Split('.');
+                fileName = tokens[0] + "(" + c + ")." + tokens[^1];
             }
-        }
 
-        public ActionResult Edit(int? id)
+            var image = new Image
+            {
+                Name = fileName,
+                ImageData = data,
+                MimeType = file.ContentType
+            };
+
+            var ext = file.FileName.Split('.')[1];
+            if (ext.Equals("jpg") || ext.Equals("jpeg"))
+            {
+                image.MimeType = "image/jpeg";
+            }
+            else if (ext.Equals("png"))
+            {
+                image.MimeType = "image/png";
+            }
+
+            _db.Images.Add(image);
+            _db.SaveChanges();
+            return image.Id;
+        }
+        
+        public ActionResult Edit(int id)
         {
-            if (id == null) return RedirectToAction("Index");
+            if (id == 0) return RedirectToAction("Index");
             ViewBag.ColorId = new SelectList(_db.Colors, "Id", "ColorText");
             ViewBag.SizeId = new SelectList(_db.Sizes, "Id", "SizeText");
-            using (var db = new BtcEntities())
+            var products = 
+                _db.Products
+                    .Include(x=>x.Image)
+                    .Include(x=>x.ProductImages)
+                    .ThenInclude(pi=>pi.Image)
+                    .Include(x=>x.Styles)
+                    .Where(x=>x.Id == id);
+            var model = new EditProductViewModel
             {
-                var product = db.Products.Include(x=>x.Image).Include(x=>x.Styles).FirstOrDefault(x => x.Id == id);
-                var model = new EditProductViewModel
-                {
-                    Product = product,
-                    Colors = db.Colors.OrderBy(x => x.ColorText).ToList(),
-                    Sizes = db.Sizes.OrderBy(x => x.SizeOrder).ToList()
-                };
+                Product = products.FirstOrDefault(),
+                Colors = _db.Colors.OrderBy(x => x.ColorText).ToList(),
+                Sizes = _db.Sizes.OrderBy(x => x.SizeOrder).ToList()
+            };
 
-                if (product!=null && product.Images.Any())
-                {
-                    model.Images = product.Images.ToList();
-                }
-                return View(model);
-            }
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ImageId,ProductName,Description,LinkName")] Product product, HttpPostedFileBase file)
+        [Route("Admin/AdminProducts/Edit")]
+        public async Task<ActionResult> Edit(Product product, IFormFile file)
         {
-            if (ModelState.IsValid)
-            {
-                _db.Entry(product).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
+            if (!ModelState.IsValid) return RedirectToAction("Edit", "AdminProducts", new {id = product.Id});
+            _db.Entry(product).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
 
-                if (file != null)
-                {
-                    if (product.ImageId > 0)
-                    {
-                        var oldImageId = product.ImageId;
-                        product.ImageId = SaveImage(file);
-                        _db.SaveChanges();
-                        DeleteImage(oldImageId);
-                    }
-                    else
-                    {
-                        product.ImageId = SaveImage(file);
-                    }
-                    _db.SaveChanges();
-                }
+            if (file == null) return RedirectToAction("Edit", "AdminProducts", new {id = product.Id});
+            if (product.ImageId > 0)
+            {
+                var oldImageId = product.ImageId;
+                product.ImageId = await SaveImage(file);
+                _db.SaveChanges();
+                await DeleteImage((int)oldImageId);
             }
+            else
+            {
+                product.ImageId = await SaveImage(file);
+            }
+            _db.SaveChanges();
             return RedirectToAction("Edit", "AdminProducts", new {id = product.Id});
         }
 
-        public static void DeleteImage(int? id)
+        public async Task DeleteImage(int? imageId)
         {
-            using (var db = new BtcEntities())
-            {
-                var image = db.Images.Find(id);
-                db.Images.Remove(image);
-                db.SaveChanges();
-            }
+            var image = _db.Images.Find(imageId);
+            var productImages = _db.ProductImages.Where(x => x.ImageId == imageId);
+            _db.ProductImages.RemoveRange(productImages);
+            _db.Images.Remove(image);
+            await _db.SaveChangesAsync();
         }
 
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = await _db.Products.FindAsync(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
+            var product = await _db
+                .Products
+                .Include(x=>x.Image)
+                .Include(x=>x.ProductImages)
+                .ThenInclude(p=>p.Image)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            if (product == null) return NotFound();
             return View(product);
         }
 
@@ -339,28 +283,8 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Product product = await _db.Products.FindAsync(id);
-            var image = product.Image;
-            product.Image = null;
-            if (product.Categories.Any())
-            {
-                foreach (var cat in product.Categories.ToList())
-                {
-                    cat.Products.Remove(product);
-                }
-            }
-            foreach (var item in product.Styles.ToList())
-            {
-                _db.Styles.Remove(item);
-            }
-            _db.Products.Remove(product);
-            _db.SaveChanges();
-            if (image != null)
-            {
-                _db.Images.Remove(image);
-                await _db.SaveChangesAsync();
-            }
-            return RedirectToAction("Index");
+            await _productService.Delete(id);
+            return RedirectToAction("Index", "AdminProducts", GetCategoryList());
         }
 
         public List<AdminCategoryViewModel> GetCategoryList()
@@ -372,7 +296,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
                         Id = category.Id,
                         Name = category.CategoryName,
                         ImageId = category.ImageId,
-                        Products = category.Products.OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
+                        Products = category.ProductCategories.Select(x=>x.Product).OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
                         {
                             Description = product.Description,
                             Id = product.Id,
@@ -385,10 +309,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                _db.Dispose();
-            }
+            if (disposing) _db?.Dispose();
             base.Dispose(disposing);
         }
     }

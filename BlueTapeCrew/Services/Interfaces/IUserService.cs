@@ -6,10 +6,8 @@ namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<AspNetUser> GetUserByName(string name);
         Task<GuestUser> GetGuestUser(string sessionId);
         Task UpdateUser(CheckoutViewModel model);
-
-        Task CreateGuestUser(CheckoutViewModel model);
+        Task CreateGuestUser(GuestUser model);
     }
 }

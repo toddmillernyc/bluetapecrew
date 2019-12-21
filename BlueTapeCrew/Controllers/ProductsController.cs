@@ -1,6 +1,7 @@
 ﻿using BlueTapeCrew.Services.Interfaces;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -8,13 +9,15 @@ namespace BlueTapeCrew.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICookieService _cookieService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductsController(IImageService imageService,
-                                  IProductService productService,
-                                  ICookieService cookieService)
+        public ProductsController(IProductService productService,
+                                  ICookieService cookieService,
+                                  IHttpContextAccessor httpContextAccessor)
         {
             _productService = productService;
             _cookieService = cookieService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [Route("products/{name}")]
@@ -25,9 +28,9 @@ namespace BlueTapeCrew.Controllers
             if (string.IsNullOrEmpty(name)) return RedirectToAction("Index", "Home");
             var productViewModel = await _productService.GetProductViewModel(name);
             if (productViewModel == null) return RedirectToAction("Index", "Home");
-            _cookieService.SetCurrentProduct(System.Web.HttpContext.Current, productViewModel.Id);
-            _cookieService.SetCurrentCategory(System.Web.HttpContext.Current, productViewModel.Category);
-            ViewBag.ReturnUrl = HttpContext.Request.Url?.ToString();
+            _cookieService.SetCurrentProduct(_httpContextAccessor.HttpContext, productViewModel.Id);
+            _cookieService.SetCurrentCategory(_httpContextAccessor.HttpContext, productViewModel.Category);
+            ViewBag.ReturnUrl = HttpContext.Request.Path.ToString();
             return View(productViewModel);
         }
 

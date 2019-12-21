@@ -12,7 +12,7 @@ namespace BlueTapeCrew.Models
         private const string SandboxMode = "sandbox";
         private const string LiveMode = "live";
 
-        public PaymentRequest(Uri requestUri, SiteSetting settings, IList<CartView> cart, int invoiceNumber, string accessToken,  bool isSandbox = true)
+        public PaymentRequest(Uri requestUri, SiteSetting settings, IList<CartView> cart, long invoiceNumber, string accessToken,  bool isSandbox = true)
         {
             InitApiCredentialsForMode(settings, isSandbox);
             Init(settings, cart);
@@ -70,9 +70,9 @@ namespace BlueTapeCrew.Models
 
         private static decimal CalculateShipping(SiteSetting settings, decimal subtotal)
         {
-            return subtotal > settings.FreeShippingThreshold 
-                        ? 0 
-                        : settings.FlatShippingRate;
+            var freeShippingThreshold = settings.FreeShippingThreshold ?? 0.0m;
+            var flatShippingRate = settings.FlatShippingRate ?? 0.0m;
+            return subtotal > freeShippingThreshold ? 0.0m : flatShippingRate;
         }
 
         private static decimal CalculateSubTotal(IEnumerable<CartView> cart)

@@ -1,8 +1,8 @@
-﻿using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Data;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Repositories
@@ -11,9 +11,9 @@ namespace BlueTapeCrew.Repositories
     {
         private readonly BtcEntities _db;
 
-        public SiteSettingsRepository()
+        public SiteSettingsRepository(BtcEntities db)
         {
-            _db = new BtcEntities();
+            _db = db;
         }
 
         public async Task<SiteSetting> Get()

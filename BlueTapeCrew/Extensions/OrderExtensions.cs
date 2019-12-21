@@ -16,7 +16,7 @@ namespace BlueTapeCrew.Extensions
             order.Phone = user.PhoneNumber;
         }
 
-        public static void UpdateUser(this Order order, AspNetUser user)
+        public static void UpdateUser(this Order order, ApplicationUser user)
         {
             order.UserName = user.UserName;
             order.Email = user.Email;

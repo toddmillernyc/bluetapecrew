@@ -6,10 +6,6 @@
     <meta property="og:image" content="https://bluetapecrew.com/content/spiral_train_logo.jpg">
     <meta property="og:url" content="https://bluetapecrew.com">
 }
-@section HeadCss
-{
-    @Styles.Render("~/bluetape/homecss")
-}
 <div class="main">
     <div class="container">
         @foreach (var category in Model.Catalog)
@@ -44,7 +40,7 @@
 </div>
 
 @section Scripts{
-    @Scripts.Render("~/bluetape/homejs")
+    <partial name="~/Views/Shared/_HomeJs.cshtml" />
     <script>
         Layout.initTouchspin();
         $(".owl-carousel-home").owlCarousel({

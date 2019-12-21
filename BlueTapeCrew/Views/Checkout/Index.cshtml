@@ -1,8 +1,4 @@
 ﻿@model BlueTapeCrew.ViewModels.CheckoutViewModel
-@section HeadCss
-{
-
-}
 <div class="main">
   <div class="container">
     @using (Html.BeginForm("Index", "Checkout", FormMethod.Post))
@@ -22,7 +18,7 @@
               </div>
               <div id="checkout-content" class="panel-collapse collapse in">
                 <div class="panel-body row">
-                  @if (!Request.IsAuthenticated)
+                  @if (!User.Identity.IsAuthenticated)
                   {
                     <div class="col-md-6 col-sm-6">
                       <h3>New Customer</h3>
@@ -177,7 +173,7 @@
   </div>
 </div>
 @section Scripts {
-  @Scripts.Render("~/bluetape/js")
+    <partial name="_BlueTapeJs"/>
   <script>
     jQuery(document).ready(function () {
       Layout.init();

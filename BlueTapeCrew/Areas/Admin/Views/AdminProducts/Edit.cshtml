@@ -1,117 +1,127 @@
-﻿@model BlueTapeCrew.Areas.Admin.Models.EditProductViewModel
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
+@model BlueTapeCrew.Areas.Admin.Models.EditProductViewModel
 
 @{
     ViewBag.Title = "Edit";
 }
+
 <style>
     textarea {
         width: 100%;
         height: 150px;
     }
+
     .listImage {
         width: 50%;
         height: 50%;
     }
 </style>
 <div>
-    @Html.ActionLink("Back to List", "Index",null,new {@class="label label-info"})
-    @Html.ActionLink("Delete This Product", "Delete", new{@id=Model.Product.Id}, new { @class = "label label-danger pull-right" })
+    <a href="~/admin" class="label label-info">Back to List</a>
+    <a class="label label-danger pull-right" href="~/Admin/AdminProducts/Delete/@Model.Product.Id">Delete This Product</a>
 </div>
 <h2>Edit</h2>
 <div class="row">
     <div class="col-md-8">
         <div class="row">
             <div class="col-xs-12">
-                @using (Html.BeginForm("Edit", "AdminProducts", FormMethod.Post, new {enctype = "multipart/form-data", @class = "margin-bottom-20"}))
-                {
-                    @Html.AntiForgeryToken()
-
-
+                <form asp-area="Admin"
+                      asp-controller="AdminProducts"
+                      asp-action="Edit"
+                      asp-antiforgery="true"
+                      method="post"
+                      enctype="multipart/form-data"
+                      class="margin-bottom-20">
                     <h4>Product</h4>
-                    <hr/>
-                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Product.Id)
                     @Html.HiddenFor(model => model.Product.ImageId)
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Product.ProductName, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.LabelFor(model => model.Product.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Product.ProductName, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Product.ProductName, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Product.LinkName, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.LabelFor(model => model.Product.LinkName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Product.LinkName, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Product.LinkName, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.Product.LinkName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Product.LinkName, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Product.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.Product.Description, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Product.Description, "", new {@class = "text-danger"})
+                            @Html.TextAreaFor(model => model.Product.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-info"/>
-                            @Html.ActionLink("Cancel", "Index", "AdminProducts", new {@class = "btn btn-default"})
+                            <input type="submit" value="Save" class="btn btn-info" />
+                            @Html.ActionLink("Cancel", "Index", "AdminProducts", new { @class = "btn btn-default" })
                         </div>
                     </div>
-
-                }
+                </form>
             </div>
         </div>
-        <hr/>
+        <hr />
         <h2>Styles</h2>
         <div class="row">
             <div class="col-xs-12">
                 <table class="table table-condensed table-bordered table-hover table margin-top-20">
                     <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Color</th>
-                        <th>Size</th>
-                        <th>Price</th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th>Id</th>
+                            <th>Color</th>
+                            <th>Size</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.Product.Styles)
-                    {
-                        <tr id="styleRow@(item.Id)">
-                            <td>@item.Id</td>
-                            <td>@item.Color.ColorText</td>
-                            <td>@item.Size.SizeText</td>
-                            <td class="text text-success">$ @string.Format("{0:n2}", item.Price)</td>
-                            <td>
-                                <button type="button" class="btn btn-danger" onclick="deleteStyle(@item.Id)"><i class="fa fa-remove"></i></button>
-                            </td>
-                        </tr>
-                    }
-                    <tr class="bg-blue-dark" style="height: 20px">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        @using (Html.BeginForm("CreateStyle", "AdminProducts", FormMethod.Post))
+                        @foreach (var item in Model.Product.Styles)
                         {
-                            <td><input type="hidden" name="ProductId" value="@Model.Product.Id"/></td>
-                            <td>@Html.DropDownList("ColorId")</td>
-                            <td>@Html.DropDownList("SizeId")</td>
-                            <td><input type="text" name="Price"/></td>
-                            <td><button type="submit" class="btn bg-blue-dark">Add Style</button></td>
+                            <tr id="styleRow@(item.Id)">
+                                <td>@item.Id</td>
+                                <td>@item.Color.ColorText</td>
+                                <td>@item.Size.SizeText</td>
+                                <td class="text text-success">$ @string.Format("{0:n2}", item.Price)</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" onclick="deleteStyle(@item.Id)"><i class="fa fa-remove"></i></button>
+                                </td>
+                            </tr>
                         }
-                    </tr>
+                        <tr class="bg-blue-dark" style="height: 20px">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <form asp-area="Admin"
+                                  asp-controller="AdminProducts"
+                                  asp-action="CreateStyle"
+                                  asp-antiforgery="true"
+                                  method="post"
+                                  enctype="multipart/form-data"
+                                  class="margin-bottom-20">
+                                <td><input type="hidden" name="ProductId" value="@Model.Product.Id" /></td>
+                                <td>@Html.DropDownList("ColorId")</td>
+                                <td>@Html.DropDownList("SizeId")</td>
+                                <td><input type="text" name="Price" /></td>
+                                <td><button type="submit" class="btn bg-blue-dark">Add Style</button></td>
+                            </form>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="row">
@@ -119,37 +129,40 @@
                         <h2>Sizes</h2>
                         <table class="table table-condensed table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th>Order</th>
-                                <th>Size</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Size</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var item in Model.Sizes)
-                            {
-                                <tr>
-                                    <td>@item.SizeOrder</td>
-                                    <td>@item.SizeText</td>
+                                @foreach (var item in Model.Sizes)
+                                {
+                                    <tr>
+                                        <td>@item.SizeOrder</td>
+                                        <td>@item.SizeText</td>
+                                        <td></td>
+                                    </tr>
+                                }
+                                <tr class="bg-success" style="height: 20px">
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
-                            }
-                            <tr class="bg-success" style="height: 20px">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            @using (Html.BeginForm("CreateSize", "AdminProducts", FormMethod.Post))
-                            {
-                                <tr>
-                                    <td><strong>Add New Size:</strong></td>
-                                    <td><input type="text" name="size"/></td>
-                                    <td>
-                                        <input type="hidden" name="productId" value="@Model.Product.Id"/>
-                                        <button type="submit" class="btn btn-success">Add Size</button>
-                                    </td>
-                                </tr>
-                            }
+                                <form asp-area="Admin"
+                                      asp-controller="AdminProducts"
+                                      asp-action="CreateSize"
+                                      asp-antiforgery="true"
+                                      method="post">
+                                    <tr>
+                                        <td><strong>Add New Size:</strong></td>
+                                        <td><input type="text" name="size" /></td>
+                                        <td>
+                                            <input type="hidden" name="productId" value="@Model.Product.Id" />
+                                            <button type="submit" class="btn btn-success">Add Size</button>
+                                        </td>
+                                    </tr>
+                                </form>
                             </tbody>
                         </table>
                     </div>
@@ -157,37 +170,42 @@
                         <h2>Colors</h2>
                         <table class="table table-condensed table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th>Color</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Color</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var item in Model.Colors)
-                            {
-                                <tr>
+                                @foreach (var item in Model.Colors)
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>@item.ColorText</td>
+                                        <td></td>
+                                    </tr>
+                                }
+                                <tr class="bg-purple-medium" style="height: 20px">
                                     <td></td>
-                                    <td>@item.ColorText</td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
-                            }
-                            <tr class="bg-purple-medium" style="height: 20px">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            @using (Html.BeginForm("CreateColor", "AdminProducts", FormMethod.Post))
-                            {
-                                <tr>
-                                    <td>Color Name:</td>
-                                    <td>
-                                        <input type="hidden" value="@Model.Product.Id" name="productId"/>
-                                        <input type="text" name="newColor"/>
-                                    </td>
-                                    <td><button type="submit" class="btn purple-medium">Add Color</button></td>
-                                </tr>
-                            }
+
+                                <form asp-area="Admin"
+                                      asp-controller="AdminProducts"
+                                      asp-action="CreateColor"
+                                      asp-antiforgery="true"
+                                      method="post">
+                                    <tr>
+                                        <td>Color Name:</td>
+                                        <td>
+                                            <input type="hidden" value="@Model.Product.Id" name="productId" />
+                                            <input type="text" name="newColor" />
+                                        </td>
+                                        <td><button type="submit" class="btn purple-medium">Add Color</button></td>
+                                    </tr>
+                                </form>
+
                             </tbody>
                         </table>
                     </div>
@@ -195,63 +213,66 @@
             </div>
         </div>
     </div>
-<div class="col-md-4">
-    <h1>Images</h1>
-    <h2>Main Image</h2>
-    <form action="SaveProductImage" id="saveImageForm" enctype="multipart/form-data">
-        @Html.AntiForgeryToken()
-        <input type="hidden" value="@Model.Product.Id" name="productId"/>
-        <div class="form-group">
-            <div class="col-md-10">
-                <input type="file" name="file"/>
-                <input type="submit" value="Upload" class="btn btn-default" />
-                @Html.ValidationMessageFor(model => model.Product.ImageId, "", new {@class = "text-danger"})
+    <div class="col-md-4">
+        <h1>Images</h1>
+        <h2>Main Image</h2>
+        <form action="SaveProductImage" id="saveImageForm" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" value="@Model.Product.Id" name="productId" />
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="file" name="file" />
+                    <input type="submit" value="Upload" class="btn btn-default" />
+                    @Html.ValidationMessageFor(model => model.Product.ImageId, "", new { @class = "text-danger" })
+                </div>
             </div>
+            <div id="imageWrapper">
+                @if (Model.Product.Image != null)
+                {
+                    <img src="data:@Model.Product.Image.MimeType;base64,@Convert.ToBase64String(Model.Product.Image.ImageData)" />
+                }
+            </div>
+        </form>
+        <hr />
+        <h2>Additional Images</h2>
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Add New Image</h3>
+                <form action="AddAdditionalImage" id="additonalImageForm" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input type="file" name="file" />
+                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <input type="submit" value="Upload" class="btn btn-default" />
+                </form>
+            </div>
+            <hr />
         </div>
-        <div id="imageWrapper">
-            <img src="data:@Model.Product.Image.MimeType;base64,@Convert.ToBase64String(Model.Product.Image.ImageData)"/>
-        </div>
-    </form>
-    <hr/>
-    <h2>Additional Images</h2>
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>Add New Image</h3>
-            <form action="AddAdditionalImage" id="additonalImageForm" enctype="multipart/form-data">
-                @Html.AntiForgeryToken()
-                <input type="file" name="file"/>
-                <input type="hidden" name="productId" value="@Model.Product.Id"/>
-                <input type="submit" value="Upload" class="btn btn-default"/>
-            </form>
-        </div>
-        <hr/>
-    </div>
-    @if (Model.Images != null)
-    {
-        foreach (var item in Model.Images)
+        @if (Model.Product.ProductImages != null)
         {
-            <hr/>
-            <div class="row" id="imageRow@(item.Id)">
-                <div class="col-xs-9">
-                    <img class="listImage" src="data:@item.MimeType;base64,@Convert.ToBase64String(item.ImageData)"/>
+            foreach (var image in Model.Product.ProductImages.Select(x => x.Image))
+            {
+                <hr />
+                <div class="row" id="imageRow@(image.Id)">
+                    <div class="col-xs-9">
+                        <img class="listImage" src="data:@image.MimeType;base64,@Convert.ToBase64String(image.ImageData)" />
+                    </div>
+                    <div class="col-xs-3">
+                        <button class="btn rounded-2 btn-danger" onclick="deleteImage(@image.Id)"><i class="fa fa-remove"></i></button>
+                    </div>
                 </div>
-                <div class="col-xs-3">
-                    <button class="btn rounded-2 btn-danger" onclick="deleteImage(@item.Id)"><i class="fa fa-remove"></i></button>
-                </div>
-            </div>
+            }
         }
-    }
 
-</div>
+    </div>
 </div>
 @section Scripts
 {
     <script>
-        var deleteStyle = function(styleId) {
+        var deleteStyle = function (styleId) {
             if (!confirm("Are you sure you want to delete this style?")) return;
-            $.post("../DeleteStyle/" + styleId, function(data) {
+            $.post("../DeleteStyle/" + styleId, function (data) {
                 if (data == "1") {
-                    var row =  $("#styleRow" + styleId);
+                    var row = $("#styleRow" + styleId);
                     row.html('');
                 } else {
                     alert(data);
@@ -259,10 +280,10 @@
             });
         }
 
-        var deleteImage = function(imageId) {
+        var deleteImage = function (imageId) {
             var answer = confirm("Are you sure you want to delete this image?");
             if (!answer) return;
-            $.post("../DeleteImage?imageId=" + imageId, function(response) {
+            $.post("../DeleteImage?imageId=" + imageId, function (response) {
                 if (response == "1") {
                     $("#imageRow" + imageId).html("");
                 } else {

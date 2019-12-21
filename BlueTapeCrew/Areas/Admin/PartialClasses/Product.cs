@@ -3,7 +3,7 @@
 namespace BlueTapeCrew.Areas.Admin.PartialClasses
 {
     [MetadataType(typeof(ProductMeta))]
-    public class Product
+    public partial class Product
     {
     }
 

@@ -1,15 +1,14 @@
-﻿@model IEnumerable<BlueTapeCrew.Models.Entities.AspNetUser>
+﻿@using BlueTapeCrew.Models.Entities
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<BlueTapeCrew.Models.Entities.ApplicationUser>
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewBag.Title = "Index";
 }
 
-<p>
-    @Html.ActionLink("Return To Admin Panel", "Index","AdminProducts",null,new{@class="btn btn-warning"})
-</p>
-<p>
-    @Html.ActionLink("Create New User", "Create",null,null,new{@class="btn btn-success"})
-</p>
+<p><a class="btn btn-warning" href="../../Admin">Return To Admin Panel</a></p>
+<p><a class="btn btn-success" href="../../Admin/AspNetUsers/Create">Create New User</a></p>
 <table class="table table-condensed table-hover table-striped table-bordered">
     <tr>
         <th>Admin</th>
@@ -33,9 +32,6 @@
             @Html.DisplayNameFor(model => model.TwoFactorEnabled)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.LockoutEnabled)
         </th>
         <th>
@@ -47,7 +43,7 @@
 @foreach (var item in Model) {
     <tr id="@item.Id">
         <td>
-            @if (item.AspNetRoles.Any(x => x.Name == "Admin"))
+            @if(await UserManager.IsInRoleAsync(item, "Admin"))
             {
                 <span>X</span>
             }
@@ -77,9 +73,6 @@
             @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.LockoutEnabled)
         </td>
         <td>
@@ -92,5 +85,4 @@
         </td>
     </tr>
 }
-
 </table>

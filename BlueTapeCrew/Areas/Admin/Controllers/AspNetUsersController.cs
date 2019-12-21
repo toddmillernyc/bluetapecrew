@@ -1,39 +1,42 @@
 ﻿using BlueTapeCrew.Areas.Admin.Models;
-using BlueTapeCrew.Models;
+using BlueTapeCrew.Data;
 using BlueTapeCrew.Models.Entities;
-using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.Entity;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
+    [Area("Admin")]
     public class AspNetUsersController : Controller
     {
-        private readonly BtcEntities _db = new BtcEntities();
-        private readonly ApplicationUserManager _userManager;
+        private readonly BtcEntities _db;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AspNetUsersController(ApplicationUserManager userManager)
+        public AspNetUsersController(UserManager<ApplicationUser> userManager, BtcEntities db)
         {
             _userManager = userManager;
+            _db = db;
         }
 
-        public ApplicationUserManager UserManager => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        private async Task<ApplicationUser> FindUser(string id) => await _userManager.FindByIdAsync(id);
 
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_db.AspNetUsers);
+            var users = await _userManager.Users.ToListAsync();
+            return View(users);
         }
 
-        public ActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var aspNetUser = _db.AspNetUsers.Find(id);
-            if (aspNetUser == null) return HttpNotFound();
+            if (id == null) return BadRequest("User id NULL");
+            var aspNetUser = await FindUser(id);
+            if (aspNetUser == null) return NotFound();
             return View(aspNetUser);
         }
 
@@ -60,10 +63,11 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                 };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if(result.Succeeded == false) throw new Exception("There was an error creating user");
                 if (model.IsAdmin)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    await _userManager.AddToRoleAsync(user, "Admin");
                 }
                 return RedirectToAction("Index");
             }
@@ -73,17 +77,17 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             }
         }
 
-        public async Task<ActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var user = await _db.AspNetUsers.FindAsync(id);
-            if (user == null) return HttpNotFound();
+            if (id == null) return BadRequest("User Id null");
+            var user = await FindUser(id);
+            if (user == null) return NotFound();
             return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Address,City,State,PostalCode")] AspNetUser aspNetUser)
+        public IActionResult Edit(ApplicationUser aspNetUser)
         {
             if (!ModelState.IsValid) return View(aspNetUser);
             _db.Entry(aspNetUser).State = EntityState.Modified;
@@ -91,33 +95,29 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var aspNetUser = _db.AspNetUsers.Find(id);
-            if (aspNetUser == null) return HttpNotFound();
+            if (id == null) BadRequest();
+            var aspNetUser = await FindUser(id);
+            if (aspNetUser == null) NotFound();
             return View(aspNetUser);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var user = _db.AspNetUsers.Find(id);
+            var user = await FindUser(id);
             if (user == null) return RedirectToAction("Index");
 
-            _db.AspNetUsers.Remove(user);
-            _db.SaveChanges();
+            await _userManager.DeleteAsync(user);
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                _db.Dispose();
-            }
-            base.Dispose(disposing);
+            _db?.Dispose();
+            _userManager?.Dispose();
         }
     }
 }

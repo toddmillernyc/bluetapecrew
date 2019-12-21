@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using BlueTapeCrew.Models;
+﻿using System;
 using BlueTapeCrew.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using BlueTapeCrew.Models;
+using BlueTapeCrew.Models.Entities;
+using BlueTapeCrew.Services.Interfaces;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -13,12 +14,31 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private const string LoginFailMessage = "Invalid login attempt.";
 
-        public ApplicationSignInManager SignInManager => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailService _emailSender;
+        private readonly ISiteSettingsService _settings;
 
-        public ApplicationUserManager UserManager => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        public AccountController(
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IEmailService emailSender,
+            ISiteSettingsService settings,
+            RoleManager<IdentityRole> roleManager)
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _emailSender = emailSender;
+            _settings = settings;
+            var role = new IdentityRole
+            {
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            };
+            _ = roleManager.CreateAsync(role).Result;
+        }
 
         //
         // GET: /Account/Login
@@ -36,49 +56,57 @@ namespace BlueTapeCrew.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                // Require the user to have a confirmed email before they can log on.
+                // var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    {
+                        await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+
+                        // Uncomment to debug locally  
+                        //ViewBag.Link = callbackUrl;
+                        ViewBag.errorMessage =
+                            "Please confirm your email before logging in.  The email has been re-sent to your account.";
+                        return View("Error");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", LoginFailMessage);
+                    return View(model);
+                }
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to lockOutOnFailure: true
+                var result =
+                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    if (string.IsNullOrEmpty(returnUrl) || returnUrl.Contains("confirmemail"))
+                        return RedirectToAction("Index", "Home");
+                    return !Url.IsLocalUrl(returnUrl)
+                        ? Redirect(returnUrl)
+                        : RedirectToLocal(returnUrl);
+                }
+
+                if (result.IsLockedOut) return View("Lockout");
+                if (result.Succeeded == false) ModelState.AddModelError("", LoginFailMessage);
                 return View(model);
             }
-
-            // Require the user to have a confirmed email before they can log on.
-            // var user = await UserManager.FindByNameAsync(model.Email);
-            var user = UserManager.Find(model.Email, model.Password);
-            if (user != null)
+            catch (Exception ex)
             {
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                {
-                    await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
-
-                    // Uncomment to debug locally  
-                    //ViewBag.Link = callbackUrl;
-                    ViewBag.errorMessage = "Please confirm your email before logging in.  The email has been re-sent to your account.";
-                    return View("Error");
-                }
+                return BadRequest(ex);
             }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    if (string.IsNullOrEmpty(returnUrl) || returnUrl.Contains("confirmemail")) return RedirectToAction("Index", "Home");
-                    if (!Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
-                    return RedirectToLocal(returnUrl);
-                    
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-
-                case SignInStatus.Failure:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    break;
-
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    break;
-            }
-            return View(model);
         }
 
         //
@@ -98,7 +126,7 @@ namespace BlueTapeCrew.Controllers
         {
             if (!ModelState.IsValid) return View(model);
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-            var result = await UserManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 //  Comment the following line to prevent log in until the user is confirmed.
@@ -125,11 +153,12 @@ namespace BlueTapeCrew.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
+            var user = await _userManager.FindByIdAsync(userId);
             if (userId == null || code == null)
             {
                 return View("Error");
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -150,8 +179,8 @@ namespace BlueTapeCrew.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                var user = await _userManager.FindByNameAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -159,11 +188,12 @@ namespace BlueTapeCrew.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                if (Request.Url == null) return RedirectToAction("ForgotPasswordConfirmation", "Account");
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);		
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                if (Request.Path == null) return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Scheme);
+                var settings = await _settings.Get();
+                var htmlBody = $"Please reset your password by clicking <a href=\"{callbackUrl}\">here</a>";
+                await _emailSender.SendEmail(new SmtpRequest(settings, htmlBody, htmlBody, user.UserName));
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -198,13 +228,13 @@ namespace BlueTapeCrew.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -225,51 +255,34 @@ namespace BlueTapeCrew.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public async Task<IActionResult> LogOff()
         {
-            AuthenticationManager.SignOut();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
-        private async Task<string> SendEmailConfirmationTokenAsync(string userId, string subject)
+        private async Task SendEmailConfirmationTokenAsync(string userId, string subject)
         {
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
-               new {userId, code }, protocol: Request.Url?.Scheme);
-            await UserManager.SendEmailAsync(userId, subject,
-               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-            return callbackUrl;
+               new {userId, code }, protocol: Request?.Scheme);
+            var settings = await _settings.Get();
+            var htmlBody = $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>";
+            await _emailSender.SendEmail(new SmtpRequest(settings, htmlBody, htmlBody, user.Email));
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
+            _userManager?.Dispose();
         }
-
-        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError(error.Code, error.Description);
             }
         }
 

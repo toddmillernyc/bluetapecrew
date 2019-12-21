@@ -1,21 +1,25 @@
-﻿using System;
-using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Data;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
-using System.Data.Entity;
-using System.Threading.Tasks;
 using BlueTapeCrew.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {
-    public class UserService : IUserService
+    public class UserService : IUserService, IDisposable
     {
-        private readonly BtcEntities _db = new BtcEntities();
+        private readonly BtcEntities _db;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public async Task<AspNetUser> GetUserByName(string name)
+        public UserService(UserManager<ApplicationUser> userManager, BtcEntities db)
         {
-            return await _db.AspNetUsers.FirstOrDefaultAsync(x => x.UserName.Equals(name));
+            _userManager = userManager;
+            _db = db;
         }
+
 
         public async Task<GuestUser> GetGuestUser(string sessionId)
         {
@@ -25,8 +29,8 @@ namespace BlueTapeCrew.Services
         //TODO: try to give checkoutviewmodel a user object rather than flat
         public async Task UpdateUser(CheckoutViewModel model)
         {
-            var dbUser = await _db.AspNetUsers.FirstOrDefaultAsync(x => x.UserName.Equals(model.UserName));
-            if(dbUser == null) throw new Exception("user not found");
+            var dbUser = await _userManager.FindByNameAsync(model.UserName);
+            if (dbUser == null) throw new Exception("user not found");
             dbUser.FirstName = model.FirstName;
             dbUser.LastName = model.LastName;
             dbUser.Address = model.Address;
@@ -38,23 +42,16 @@ namespace BlueTapeCrew.Services
             await _db.SaveChangesAsync();
         }
 
-        public async Task CreateGuestUser(CheckoutViewModel model)
+        public async Task CreateGuestUser(GuestUser model)
         {
-            var dbUser = new GuestUser
-            {
-                SessionId = model.SessionId,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Address = model.Address,
-                City = model.City,
-                State = model.State,
-                PostalCode = model.Zip,
-                PhoneNumber = model.Phone,
-                Email = model.Email,
-
-            };
-            _db.GuestUsers.Add(dbUser);
+            _db.GuestUsers.Add(model);
             await _db.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            _db?.Dispose();
+            _userManager?.Dispose();
         }
     }
 }

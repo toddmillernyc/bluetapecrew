@@ -1,27 +1,44 @@
-﻿using System.Data.Entity;
+﻿using System;
+using BlueTapeCrew.Data;
+using BlueTapeCrew.Models.Entities;
+using BlueTapeCrew.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using BlueTapeCrew.Interfaces;
-using BlueTapeCrew.Models;
+using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace BlueTapeCrew.Services
 {
-    public class SettingsService : ISettingsService
+    public class SettingsService : ISiteSettingsService, IDisposable
     {
+        private readonly BtcEntities _db;
+
+        public SettingsService(BtcEntities db)
+        {
+            _db = db;
+        }
+
         public async Task<SiteSetting> Get()
         {
-            using (var db = new BtcEntities())
-            {
-                return await db.SiteSettings.FirstOrDefaultAsync();
-            }
+            return await _db.SiteSettings.FirstOrDefaultAsync();
+        }
+
+        public async Task<SiteSetting> Set(SiteSetting siteSetting)
+        {
+            _db.SiteSettings.RemoveRange(_db.SiteSettings);
+            _db.SiteSettings.Add(siteSetting);
+            await _db.SaveChangesAsync();
+            return siteSetting;
         }
 
         public async Task Update(SiteSetting settings)
         {
-            using (var db = new BtcEntities())
-            {
-                db.Entry(settings).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-            }
+            _db.Entry(settings).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            _db?.Dispose();
         }
     }
 }

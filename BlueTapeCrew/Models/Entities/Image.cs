@@ -1,42 +1,25 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlueTapeCrew.Models.Entities
 {
+    [Table("Images")]
     public class Image
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Image()
         {
             Categories = new HashSet<Category>();
+            ProductImages = new HashSet<ProductImage>();
             Products = new HashSet<Product>();
-            Products1 = new HashSet<Product>();
         }
 
         public int Id { get; set; }
-
-        [Required]
-        [StringLength(255)]
         public string Name { get; set; }
-
-        [Required]
         public byte[] ImageData { get; set; }
-
-        [Required]
-        [StringLength(255)]
         public string MimeType { get; set; }
 
-        public short? Width { get; set; }
-
-        public short? Height { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<Product> Products { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products1 { get; set; }
     }
 }

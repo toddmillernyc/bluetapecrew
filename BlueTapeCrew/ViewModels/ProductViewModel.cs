@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BlueTapeCrew.ViewModels
 {
     public class ProductViewModel
     {
         public int Id { get; set; }
-
         public IList<string> AdditionalImages { get; set; } 
         public decimal AverageReview { get; set; }
         public IList<BestSellerViewModel> BestSellers { get; set; } 
@@ -19,7 +18,5 @@ namespace BlueTapeCrew.ViewModels
         public string Price { get; set; }
         public List<ReviewViewModel> Reviews { get; set; }
         public SelectList StyleId { get; set; }
-
-
     }
 }

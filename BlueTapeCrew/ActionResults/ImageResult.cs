@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.ActionResults
 {
@@ -16,7 +17,7 @@ namespace BlueTapeCrew.ActionResults
         public Stream ImageStream { get; }
         public string ContentType { get; }
 
-        public override void ExecuteResult(ControllerContext context)
+        public override async Task ExecuteResultAsync(ActionContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
             try
@@ -29,9 +30,9 @@ namespace BlueTapeCrew.ActionResults
                 {
                     var read = ImageStream.Read(buffer, 0, buffer.Length);
                     if (read == 0) break;
-                    response.OutputStream.Write(buffer, 0, read);
+                    await response.BodyWriter.WriteAsync(buffer);
                 }
-                response.End();
+                await response.CompleteAsync();
             }
             catch(Exception ex)
             {

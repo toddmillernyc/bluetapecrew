@@ -2,10 +2,6 @@
 @{
     ViewBag.Title = "OrderError";
 }
-@section HeadCss
-{
-    
-}
 <div class="main">
     <div class="container">
         <h2>@ViewBag.Message</h2>
@@ -15,7 +11,7 @@
 </div>
 @section Scripts
 {
-    @Scripts.Render("~/bluetape/js")
+    <partial name="_BlueTapeJs" />
     <script>
         jQuery(document).ready(function () {
             Layout.init();

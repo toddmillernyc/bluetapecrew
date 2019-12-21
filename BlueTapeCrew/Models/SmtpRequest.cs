@@ -13,7 +13,7 @@ namespace BlueTapeCrew.Models
             TextBody = textBody;
             Subject = "Your BlueTapeCrew.com order";
             To = toEmail;
-            Port = settings.SmtpPort;
+            Port = settings.SmtpPort ?? 0;
             Host = settings.SmtpHost;
             Password = settings.SmtpPassword;
             UserName = settings.SmtpUsername;

@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Data;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace BlueTapeCrew.Repositories
 {
     public class CartRepository : ICartRepository, IDisposable
     {
-        private readonly BtcEntities _db = new BtcEntities();
+        private readonly BtcEntities _db;
+
+        public CartRepository(BtcEntities db)
+        {
+            _db = db;
+        }
 
         public async Task<List<CartView>> GetBy(string cartId)
         {

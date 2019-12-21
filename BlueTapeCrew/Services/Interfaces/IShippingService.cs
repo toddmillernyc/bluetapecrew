@@ -4,6 +4,6 @@ namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IShippingService
     {
-        Task<decimal> Caclulate(decimal subtotal);
+        Task<decimal> Calculate(decimal subtotal);
     }
 }

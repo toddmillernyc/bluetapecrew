@@ -20,7 +20,7 @@ namespace BlueTapeCrew.Services
         {
             if(!cartItems.Any()) return new CartTotals();
             var subTotal = cartItems.Sum(x => x.SubTotal);
-            var shipping = await _shippingService.Caclulate(subTotal ?? 0.00m);
+            var shipping = await _shippingService.Calculate(subTotal ?? 0.00m);
             var total = shipping + subTotal;
             return new CartTotals
             {

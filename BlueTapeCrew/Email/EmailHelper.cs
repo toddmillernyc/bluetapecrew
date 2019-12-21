@@ -7,25 +7,23 @@ namespace BlueTapeCrew.Email
 {
     public static class EmailHelper
     {
-        public static SmtpRequest GetTestEmailRequest(SiteSetting settings, string email)
+        public static SmtpRequest GetTestEmailRequest(SiteSetting settings, string email, string sessionId)
         {
-            var order = GetTestOrder(email);
+            var order = GetTestOrder(email, sessionId);
             var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, true);
             var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
             return new SmtpRequest(settings, htmlBody, textBody, order.Email);
         }
 
-        private static Order GetTestOrder(string email)
+        private static Order GetTestOrder(string email, string sessionId)
         {
             return new Order
             {
                 Id = 1,
-                Invoice = new Invoice("abc"),
                 Total = 100.00m,
                 State = "NY",
                 City = "Manhattan",
                 Email = email,
-                InvoiceId = 2,
                 Phone = "555-555-5555",
                 Shipping = 5.00m,
                 UserName = "customeruser",
@@ -45,7 +43,7 @@ namespace BlueTapeCrew.Email
                             SubTotal = 95.00m
                         }
                     },
-                SessionId = "sessionabc",
+                SessionId = sessionId,
                 Zip = "10001"
             };
         }

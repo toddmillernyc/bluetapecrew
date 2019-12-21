@@ -1,5 +1,5 @@
 ﻿using BlueTapeCrew.Services.Interfaces;
-using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace BlueTapeCrew.Services
 {
@@ -7,12 +7,12 @@ namespace BlueTapeCrew.Services
     {
         public void SetCurrentProduct(HttpContext context, int productId)
         {
-            context.Response.Cookies["UserSettings"]["CurrendProductId"] = productId.ToString();
+            context.Response.Cookies.Append("CurrentProductId", productId.ToString());
         }
 
         public void SetCurrentCategory(HttpContext context, string categoryName)
         {
-            context.Response.Cookies["UserSettings"]["CurrentCategoryName"] = categoryName;
+            context.Response.Cookies.Append("CurrentCategoryName", categoryName);
         }
     }
 }

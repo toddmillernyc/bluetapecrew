@@ -6,10 +6,6 @@
     <meta property="og:image" content="https://bluetapecrew.com/images/@(Model.LinkName).jpg">
     <meta property="og:url" content="https://bluetapecrew.com/products/@Model.LinkName">
 }
-@section HeadCss
-{
-    @Styles.Render("~/bluetape/productcss")
-}
 <script>
     function sideMenuClick() {
         if ($(this).hasClass('open')) {
@@ -115,10 +111,6 @@
                         <ul class="social-icons">
                             <li><a class="facebook" data-original-title="facebook" href="http://www.facebook.com/sharer/sharer.php?u=https://bluetapecrew.com/products/@(Model.LinkName)" title="Share on Facebook"></a></li>
                             <li><a href="https://twitter.com/share" class="twitter" data-url="https://bluetapecrew.com/products/@Model.LinkName" data-text="BlueTapeCrew" data-via="bluetapecrew" data-count="none" title="Share on Twitter">Tweet</a></li>
-                            <li>
-                                <a class="googleplus" data-orginal-title="googleplus" title="Share on Google" href="https://plus.google.com/share?url=https://bluetapecrew.com/products/@(Model.LinkName)" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-                                </a>
-                            </li>
                             <li><a class="tumblr" data-original-title="tumblr" href="http://tumblr.com/widgets/share/tool?canonicalUrl=https://bluetapecrew.com/products/@(Model.Id)"></a></li>
                         </ul>
                     </div>
@@ -149,7 +141,7 @@
                                         </div>
                                     }
                                 }
-                                @if (Request.IsAuthenticated)
+                                @if (User.Identity.IsAuthenticated)
                                 {
                                     using (Html.BeginForm("AddReview", "Products", FormMethod.Post, new {@class = "reviews-form"}))
                                     {
@@ -198,7 +190,7 @@
 </div>
 @section Scripts
 {
-    @Scripts.Render("~/bluetape/productjs")
+    <partial name="_BlueTapeJs"/>
     <script>
         Layout.initOWL();
         Layout.initImageZoom();
