@@ -266,6 +266,8 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             await _db.SaveChangesAsync();
         }
 
+        [HttpGet]
+        [Route("Admin/AdminProducts/Delete/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var product = await _db
@@ -279,12 +281,13 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             return View(product);
         }
 
-        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [HttpPost]
+        [Route("Admin/AdminProducts/Delete/{id}")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             await _productService.Delete(id);
-            return RedirectToAction("Index", "AdminProducts", GetCategoryList());
+            return RedirectToAction("Index");
         }
 
         public List<AdminCategoryViewModel> GetCategoryList()
