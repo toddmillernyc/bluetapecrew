@@ -5,9 +5,9 @@
     }
 </style>
 <p>
-    <a class="btn btn-xs btn-info" href="~/Admin/AdminProducts/Create">Create New Product</a> |
-    <a class="btn btn-xs btn-info" href="~/Admin/AdminCategories/Index">Edit Categories</a> |
-    <a class="btn btn-xs btn-info" href="~/Admin/AspNetUsers/Index">Manage Site Users</a>
+    <a class="btn btn-xs btn-info" href="Admin/AdminProducts/Create">Create New Product</a> |
+    <a class="btn btn-xs btn-info" href="Admin/AdminCategories/Index">Edit Categories</a> |
+    <a class="btn btn-xs btn-info" href="Admin/AspNetUsers/Index">Manage Site Users</a>
 </p>
 <ul class="nav nav-tabs">
     <li class="active"><a href="#tab_settings" data-toggle="tab">Site Settings</a></li>
@@ -208,10 +208,10 @@
                 {
                     <tr>
                         <td>
-                            <img src="~/images/productthumb/@itm.ImageId" />
+                            <img src="images/productthumb/@itm.ImageId" />
                         </td>
                         <td>
-                            <a href="~/Admin/AdminProducts/Edit/@itm.Id" class="bold label label-info">@itm.Name</a>
+                            <a href="Admin/AdminProducts/Edit/@itm.Id" class="bold label label-info">@itm.Name</a>
                         </td>
                         <td>
                             <p class="text text-danger">@itm.Description</p>
@@ -232,7 +232,7 @@
                 $scope.testEmailError = "";
                 $scope.emailSentMessage = "";
 
-                var settingsApi = $resource('../../api/SiteSettings');
+                var settingsApi = $resource("api/SiteSettings");
 
 
                 settingsApi.get(function (data) {
@@ -250,7 +250,7 @@
                 };
 
                 $scope.sendMail = function (emailAddress) {
-                    var emailApi = $resource('../../api/EmailTest?email=' + emailAddress);
+                    var emailApi = $resource("api/EmailTest?email=" + emailAddress);
 
                     emailApi.get(
                         function () {
