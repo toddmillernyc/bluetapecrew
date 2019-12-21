@@ -3,7 +3,7 @@
         <li class="dropdown" ng-repeat="category in vm.catagories">
             <a class="dropdown-toggle catLink" data-toggle="dropdown" data-target="#" href="javascript:;">{{category.name}}</a>
             <ul class="dropdown-menu">
-                <li ng-repeat="(key, value) in category.products"><a class="product-link" href="/products/{{key}}">{{value}}</a></li>
+                <li ng-repeat="(key, value) in category.products"><a class="product-link" href="products/{{key}}">{{value}}</a></li>
             </ul>
         </li>
     </ul>
