@@ -14,5 +14,6 @@
 }
 else
 {
-    <li>@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Context.Request.Host + Context.Request.Path }, htmlAttributes: new { id = "loginLink" })</li>
+    var returnUrl = Context.Request.PathBase + Context.Request.Path;
+   <li>@Html.ActionLink("Log in", "Login", "Account", new { returnUrl }, htmlAttributes: new { id = "loginLink" })</li>
 }

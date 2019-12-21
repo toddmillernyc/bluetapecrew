@@ -94,9 +94,7 @@ namespace BlueTapeCrew.Controllers
                 {
                     if (string.IsNullOrEmpty(returnUrl) || returnUrl.Contains("confirmemail"))
                         return RedirectToAction("Index", "Home");
-                    return !Url.IsLocalUrl(returnUrl)
-                        ? Redirect(returnUrl)
-                        : RedirectToLocal(returnUrl);
+                    return RedirectToLocal(returnUrl);
                 }
 
                 if (result.IsLockedOut) return View("Lockout");
