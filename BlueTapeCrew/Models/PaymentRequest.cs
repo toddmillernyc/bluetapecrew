@@ -18,7 +18,7 @@ namespace BlueTapeCrew.Models
             Init(settings, cart);
             ItemList = GetItemListFrom(cart);
             InvoiceNumber = invoiceNumber.ToString();
-            ReturnUrl = $"{requestUri.Scheme}://{requestUri.Authority}/checkoutreview";
+            ReturnUrl = ($"{requestUri}review").ToLower();
         }
 
         public string Currency => "USD";
