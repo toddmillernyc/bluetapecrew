@@ -4,6 +4,6 @@ namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IEmailSubscriptionService
     {
-        Task<string> Subscribe(string email);
+        Task Subscribe(string email);
     }
 }

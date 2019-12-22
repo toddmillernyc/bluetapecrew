@@ -26,12 +26,11 @@ namespace BlueTapeCrew.ApiControllers
             {
                 await _emailSubscriptionService.Subscribe(emailAddress);
                 var subscriptionMessage = string.Format(SubscriptionMessage, emailAddress);
-                return Ok(JObject.FromObject(new { subscriptionMessage }));
+                return Ok();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("emailAddress", ex.Message);
-                return BadRequest(ModelState);
+                return BadRequest(ex.Message);
             }
         }
     }

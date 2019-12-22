@@ -34,12 +34,12 @@
 
                 scope.vm.subscribe = function(vm) {
                     var api = $resource("api/subscribe?emailAddress=" + vm.emailAddress);
-                    api.save(function(data) {
-                            scope.vm.success = data.subscriptionMessage;
-                            scope.vm.emailAddress = "";
+                    api.save(function() {
+                            alert("Thank you for subscribing");
                         },
-                        function(error) {
-                            scope.vm.modelErrors = error.data.modelState.emailAddress;
+                        function (error) {
+                            console.error(error);
+                            alert("There was an error subscribing");
                         });
                 };
             }

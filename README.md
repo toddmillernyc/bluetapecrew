@@ -40,8 +40,7 @@ BlueTapeCrew uses a typical .NET stack:
 
 ## Roadmap
 - Impliment Admin & Client Side SPA w/modern Javascript Framework
-- Social Logins: Instagram, Google+, Microsoft, FaceBook (as of 12/21 broken from .NET Core config)
-- MailChimp Subsription Integration (as of 12/21 broken from .NET Core config)
+- Social Logins: (as of 12/21 broken from .NET Core config)
 - Write Unit tests
 - Configure Scope of DI Container
 - Add support for multi-tenancy

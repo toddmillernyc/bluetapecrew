@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueTapeCrew", "BlueTapeCrew\BlueTapeCrew.csproj", "{4027019D-1AA9-4609-8548-B4C258A3F8B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Btc.Tests", "Btc.Tests\Btc.Tests.csproj", "{25D36624-C644-4924-A6BF-1C83396EB29F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Btc.Tests", "Btc.Tests\Btc.Tests.csproj", "{25D36624-C644-4924-A6BF-1C83396EB29F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AD5466CB-28B5-49B6-8013-03A8F933C60C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
