@@ -1,14 +1,32 @@
 ﻿@{
     ViewBag.Title = "Confirm Email";
+    var modelErrors = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors);
 }
 <div class="main">
     <div class="container">
-        <h2>@ViewBag.Title.</h2>
-        <div>
-            <p>
-                Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-            </p>
-        </div>
+        @if (modelErrors.Any())
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var error in modelErrors)
+                    {
+                        <span class="text-danger">@error.ErrorMessage</span>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <h2>@ViewBag.Title.</h2>
+            <div>
+                <p>
+                    Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </p>
+            </div>
+        }
+
+
+
         @section Scripts{
             <partial name="_BlueTapeJs" />
             <script>
@@ -22,5 +40,6 @@
                 });;
             </script>
         }
+
     </div>
 </div>

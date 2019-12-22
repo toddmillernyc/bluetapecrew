@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text;
+using System.Threading.Tasks;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace BlueTapeCrew.Services
 {
@@ -27,12 +29,29 @@ namespace BlueTapeCrew.Services
 
         public async Task SendEmailConfirmationLink(HttpRequest request, ApplicationUser user)
         {
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = $"{request?.Scheme}://{request?.Host}{request?.PathBase}/Account/ConfirmEmail/{user.Id}?code={code}";
+            var token = await GetEncodedToken(user);
+            var callbackUrl = $"{request?.Scheme}://{request?.Host}{request?.PathBase}/Account/ConfirmEmail/{user.Id}?code={token}";
             var settings = await _settings.Get();
             var htmlBody = $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>";
             var smtpRequest = new SmtpRequest(settings, htmlBody, callbackUrl, user.Email, Subject);
             await _emailSender.SendEmail(smtpRequest);
+        }
+
+        public async Task<IdentityResult> ConfirmEmail(string userId, string encodedToken)
+        {
+            var decodedBytes = WebEncoders.Base64UrlDecode(encodedToken);
+            var code = Encoding.UTF8.GetString(decodedBytes);
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            return result;
+        }
+
+        private async Task<string> GetEncodedToken(ApplicationUser user)
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var tokenBytes = Encoding.UTF8.GetBytes(token);
+            var encodedToken = WebEncoders.Base64UrlEncode(tokenBytes);
+            return encodedToken;
         }
     }
 }

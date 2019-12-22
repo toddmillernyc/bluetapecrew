@@ -8,6 +8,7 @@ using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -29,7 +30,6 @@ namespace BlueTapeCrew.Controllers
             UserManager<ApplicationUser> userManager,
             IEmailService emailSender,
             ISiteSettingsService settings,
-            RoleManager<IdentityRole> roleManager,
             IUserRegistrationService userRegistrationService)
         {
             _signInManager = signInManager;
@@ -134,20 +134,13 @@ namespace BlueTapeCrew.Controllers
         [HttpGet("Account/ConfirmEmail/{userId}")]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (userId == null || code == null)
-            {
-                return View("Error");
-            }
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (result.Errors != null)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(error.Code, error.Description);
-                }
-            }
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if(string.IsNullOrEmpty(userId)) ModelState.AddModelError("userId", "User Id Can't be null");
+            if(string.IsNullOrEmpty(code)) ModelState.AddModelError("code", "Confirmation code can't be null");
+            if(!ModelState.IsValid) return View();
+            var result = await _userRegistrationService.ConfirmEmail(userId, code);
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(error.Code, error.Description);
+            return View();
         }
 
         //
