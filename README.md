@@ -90,14 +90,7 @@ select Styles.Id as Id,ProductId,SizeId,SizeOrder,SizeText,ColorId,ColorText,Pri
 from Styles inner join Sizes ON SizeId = Sizes.id
 			inner join Colors on ColorId = Colors.Id
 ```
-#### GetCart Stored Procedure
-```sh
-CREATE PROCEDURE [dbo].[uspGetCart] @SessionId char(24)
-AS
-SELECT * 
-FROM CartView
-WHERE CartId = @SessionId
-```
+
 [KeenThemes]: <http://keenthemes.com/free-bootstrap-templates/fully-responsive-bootstrap-based-ecommerce-frontend-theme>
 [Todd Miller]: <https://toddmiller.nyc>
 [BlueTapeCrew]: <https://bluetapecrew.com>
