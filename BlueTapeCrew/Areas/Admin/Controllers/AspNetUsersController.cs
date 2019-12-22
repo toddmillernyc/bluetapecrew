@@ -1,5 +1,4 @@
 ﻿using BlueTapeCrew.Areas.Admin.Models;
-using BlueTapeCrew.Data;
 using BlueTapeCrew.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,16 +13,12 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
     [Area("Admin")]
     public class AspNetUsersController : Controller
     {
-        private readonly BtcEntities _db;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AspNetUsersController(UserManager<ApplicationUser> userManager, BtcEntities db)
+        public AspNetUsersController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _db = db;
         }
-
-        private async Task<ApplicationUser> FindUser(string id) => await _userManager.FindByIdAsync(id);
 
         public async Task<IActionResult> Index()
         {
@@ -34,7 +29,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Details(string id)
         {
             if (id == null) return BadRequest("User id NULL");
-            var aspNetUser = await FindUser(id);
+            var aspNetUser = await _userManager.FindByIdAsync(id);
             if (aspNetUser == null) return NotFound();
             return View(aspNetUser);
         }
@@ -86,7 +81,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null) return BadRequest("User Id null");
-            var user = await FindUser(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null) return NotFound();
             return View(user);
         }
@@ -111,7 +106,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null) BadRequest();
-            var aspNetUser = await FindUser(id);
+            var aspNetUser = await _userManager.FindByIdAsync(id);
             if (aspNetUser == null) NotFound();
             return View(aspNetUser);
         }
@@ -120,17 +115,13 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var user = await FindUser(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null) return RedirectToAction("Index");
 
             await _userManager.DeleteAsync(user);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            _db?.Dispose();
-            _userManager?.Dispose();
-        }
+        protected override void Dispose(bool disposing) => _userManager?.Dispose();
     }
 }
