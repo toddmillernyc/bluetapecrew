@@ -15,6 +15,7 @@ namespace BlueTapeCrew.Controllers
     public class AccountController : Controller
     {
         private const string LoginFailMessage = "Invalid login attempt.";
+        private const string ResetPasswordEmailSubject = "Reset your bluetapecrew.com password";
 
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -70,7 +71,7 @@ namespace BlueTapeCrew.Controllers
                 {
                     if (!await _userManager.IsEmailConfirmedAsync(user))
                     {
-                        await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                        await SendEmailConfirmationTokenAsync(user, "Confirm your account-Resend");
 
                         // Uncomment to debug locally  
                         //ViewBag.Link = callbackUrl;
@@ -130,7 +131,7 @@ namespace BlueTapeCrew.Controllers
                 //  Comment the following line to prevent log in until the user is confirmed.
                 //  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+                await SendEmailConfirmationTokenAsync(user, "Confirm your account");
 
 
                 ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
@@ -191,7 +192,8 @@ namespace BlueTapeCrew.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Scheme);
                 var settings = await _settings.Get();
                 var htmlBody = $"Please reset your password by clicking <a href=\"{callbackUrl}\">here</a>";
-                await _emailSender.SendEmail(new SmtpRequest(settings, htmlBody, htmlBody, user.UserName));
+                var smtpRequest = new SmtpRequest(settings, htmlBody, htmlBody, user.UserName, ResetPasswordEmailSubject);
+                await _emailSender.SendEmail(smtpRequest);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -259,16 +261,15 @@ namespace BlueTapeCrew.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private async Task SendEmailConfirmationTokenAsync(string userId, string subject)
+        private async Task SendEmailConfirmationTokenAsync(ApplicationUser user, string subject)
         {
-            var user = await _userManager.FindByIdAsync(userId);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
-               new {userId, code }, protocol: Request?.Scheme);
+               new {user.Id, code }, protocol: Request?.Scheme);
             var settings = await _settings.Get();
             var htmlBody = $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>";
-            await _emailSender.SendEmail(new SmtpRequest(settings, htmlBody, htmlBody, user.Email));
+            var request = new SmtpRequest(settings, htmlBody, htmlBody, user.Email, subject);
+            await _emailSender.SendEmail(request);
         }
 
         protected override void Dispose(bool disposing)

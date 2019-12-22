@@ -17,6 +17,8 @@ namespace BlueTapeCrew.Controllers
     public class CheckoutController : Controller
     {
         private const string OrderErrorMessage = "Your order was not placed, there was an issue.  Please contact us.";
+        private const string OrderEmailSubject = "Your BlueTapeCrew.com order";
+
         private readonly bool _isSandbox;
 
         private readonly ICartService _cartService;
@@ -175,7 +177,7 @@ namespace BlueTapeCrew.Controllers
             var settings = await _siteSettingsService.Get();
             var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, User.Identity.IsAuthenticated);
             var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
-            return new SmtpRequest(settings, htmlBody, textBody, order.Email);
+            return new SmtpRequest(settings, htmlBody, textBody, order.Email, OrderEmailSubject);
         }
 
         private async Task<ApplicationUser> GetUserBy(string name)

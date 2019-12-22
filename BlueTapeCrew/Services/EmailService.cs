@@ -1,19 +1,29 @@
 ﻿using System;
+using System.IO;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
 using MimeKit;
 using System.Threading.Tasks;
+using BlueTapeCrew.Extensions;
 using MailKit.Net.Smtp;
+using Newtonsoft.Json;
 
 namespace BlueTapeCrew.Services
 {
     public class EmailService : IEmailService
     {
+        private const string DeadLetterDir = "C:\\SMTP\\DeadLetter";
+
         public async Task SendEmail(SmtpRequest request)
         {
-            using (var client = new SmtpClient())
+            using var client = new SmtpClient();
+            var message = CreateMessage(request);
+            if (string.IsNullOrEmpty(request.Password) || string.IsNullOrEmpty(request.Host) || request.Port == 0)
             {
-                var message = CreateMessage(request);
+                HandleDeadLetter(request);
+            }
+            else
+            {
                 await client.ConnectAsync(request.Host, request.Port).ConfigureAwait(false);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
                 await client.AuthenticateAsync(request.UserName, request.Password).ConfigureAwait(false);
@@ -22,10 +32,20 @@ namespace BlueTapeCrew.Services
             }
         }
 
+        private static void HandleDeadLetter(SmtpRequest request)
+        {
+            var dir = Directory.CreateDirectory(DeadLetterDir);
+            var fileName = "outbound-email-" + DateTime.UtcNow.ToFileTimeUtc() + ".json";
+            var path = Path.Combine(dir.FullName, fileName);
+            request.Password = "";
+            var json = request.ToJson();
+            File.WriteAllText(path, json);
+        }
+
         private static MimeMessage CreateMimeMessage(string from, string to, string subject)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("", from));
+            message.From.Add(new MailboxAddress("", from ?? ""));
             message.To.Add(new MailboxAddress("", to));
             message.Subject = subject;
             return message;

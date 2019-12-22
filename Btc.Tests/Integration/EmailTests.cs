@@ -29,7 +29,7 @@ namespace Btc.Tests.Integration
                 var order = OrderStubs.Orders(testAddress).FirstOrDefault();
                 var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, true);
                 var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
-                var request = new SmtpRequest(settings, htmlBody, textBody, order.Email);
+                var request = new SmtpRequest(settings, htmlBody, textBody, order.Email, "BlueTapeCrew.com Email Integration Test");
 
                 //act
                 await sut.SendEmail(request);

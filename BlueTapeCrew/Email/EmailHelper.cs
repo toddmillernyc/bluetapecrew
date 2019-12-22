@@ -7,12 +7,12 @@ namespace BlueTapeCrew.Email
 {
     public static class EmailHelper
     {
-        public static SmtpRequest GetTestEmailRequest(SiteSetting settings, string email, string sessionId)
+        public static SmtpRequest GetTestEmailRequest(SiteSetting settings, string email, string sessionId, string subject)
         {
             var order = GetTestOrder(email, sessionId);
             var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, true);
             var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
-            return new SmtpRequest(settings, htmlBody, textBody, order.Email);
+            return new SmtpRequest(settings, htmlBody, textBody, order.Email, subject);
         }
 
         private static Order GetTestOrder(string email, string sessionId)

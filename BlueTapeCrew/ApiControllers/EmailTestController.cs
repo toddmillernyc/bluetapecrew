@@ -12,6 +12,8 @@ namespace BlueTapeCrew.ApiControllers
     [Route("api/[controller]")]
     public class EmailTestController : ControllerBase
     {
+        private const string TestEmailSubject = "Testing BlueTapeCrew Email System";
+
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IEmailService _emailService;
         private readonly ISessionService _sessionService;
@@ -27,7 +29,7 @@ namespace BlueTapeCrew.ApiControllers
         {
             try
             {
-                var request = EmailHelper.GetTestEmailRequest(await _siteSettingsService.Get(), email, _sessionService.SessionId());
+                var request = EmailHelper.GetTestEmailRequest(await _siteSettingsService.Get(), email, _sessionService.SessionId(), TestEmailSubject);
                 await _emailService.SendEmail(request);
                 return Ok();
             }
