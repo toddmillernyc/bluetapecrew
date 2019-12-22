@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -21,28 +22,23 @@ namespace BlueTapeCrew.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailService _emailSender;
         private readonly ISiteSettingsService _settings;
+        private readonly IUserRegistrationService _userRegistrationService;
 
         public AccountController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IEmailService emailSender,
             ISiteSettingsService settings,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IUserRegistrationService userRegistrationService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _emailSender = emailSender;
             _settings = settings;
-            var role = new IdentityRole
-            {
-                Name = "Admin",
-                NormalizedName = "ADMIN"
-            };
-            _ = roleManager.CreateAsync(role).Result;
+            _userRegistrationService = userRegistrationService;
         }
 
-        //
-        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -71,12 +67,8 @@ namespace BlueTapeCrew.Controllers
                 {
                     if (!await _userManager.IsEmailConfirmedAsync(user))
                     {
-                        await SendEmailConfirmationTokenAsync(user, "Confirm your account-Resend");
-
-                        // Uncomment to debug locally  
-                        //ViewBag.Link = callbackUrl;
-                        ViewBag.errorMessage =
-                            "Please confirm your email before logging in.  The email has been re-sent to your account.";
+                        await _userRegistrationService.SendEmailConfirmationLink(Request, user);
+                        ViewBag.errorMessage = "Please confirm your email before logging in.  The email has been re-sent to your account.";
                         return View("Error");
                     }
                 }
@@ -128,28 +120,18 @@ namespace BlueTapeCrew.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                //  Comment the following line to prevent log in until the user is confirmed.
-                //  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                await SendEmailConfirmationTokenAsync(user, "Confirm your account");
-
-
+                await _userRegistrationService.SendEmailConfirmationLink(Request, user);
                 ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
                                   + "before you can log in.";
-
                 return View("Info");
-                //return RedirectToAction("Index", "Home");
             }
             AddErrors(result);
-
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // GET: /Account/ConfirmEmail
         [AllowAnonymous]
+        [HttpGet("Account/ConfirmEmail/{userId}")]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -158,6 +140,13 @@ namespace BlueTapeCrew.Controllers
                 return View("Error");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
+            if (result.Errors != null)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+            }
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -259,17 +248,6 @@ namespace BlueTapeCrew.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }
-
-        private async Task SendEmailConfirmationTokenAsync(ApplicationUser user, string subject)
-        {
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account",
-               new {user.Id, code }, protocol: Request?.Scheme);
-            var settings = await _settings.Get();
-            var htmlBody = $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>";
-            var request = new SmtpRequest(settings, htmlBody, htmlBody, user.Email, subject);
-            await _emailSender.SendEmail(request);
         }
 
         protected override void Dispose(bool disposing)

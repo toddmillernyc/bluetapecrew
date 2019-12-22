@@ -6,6 +6,12 @@ namespace BlueTapeCrew.Extensions
     public static class ObjectExtensions
     {
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-        public static string ToJson(this object obj) => JsonConvert.SerializeObject(obj, Settings);
+
+        public static string ToJson(this object obj, bool prettyPrint = false)
+        {
+            Settings.Formatting = prettyPrint ? Formatting.Indented : Formatting.None;
+            var json = JsonConvert.SerializeObject(obj, Settings);
+            return json;
+        }
     }
 }

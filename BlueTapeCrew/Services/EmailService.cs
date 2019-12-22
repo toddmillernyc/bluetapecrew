@@ -38,7 +38,7 @@ namespace BlueTapeCrew.Services
             var fileName = "outbound-email-" + DateTime.UtcNow.ToFileTimeUtc() + ".json";
             var path = Path.Combine(dir.FullName, fileName);
             request.Password = "";
-            var json = request.ToJson();
+            var json = request.ToJson(true);
             File.WriteAllText(path, json);
         }
 

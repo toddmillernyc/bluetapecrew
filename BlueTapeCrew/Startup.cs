@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.AspNetCore.Identity;
+using IUserRegistrationService = BlueTapeCrew.Services.Interfaces.IUserRegistrationService;
 
 namespace BlueTapeCrew
 {
@@ -69,6 +70,7 @@ namespace BlueTapeCrew
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IViewModelService, ViewModelService>();
             services.AddTransient<INewSiteService, NewSiteService>();
+            services.AddTransient<IUserRegistrationService, UserRegistrationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

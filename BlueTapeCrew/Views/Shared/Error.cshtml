@@ -3,18 +3,29 @@
 }
 <div class="main">
     <div class="container">
-        <div class="col-md-12">
-            <h1 class="text-danger">Error</h1>
-            @{
-                if (String.IsNullOrEmpty(ViewBag.errorMessage))
+        <h1 class="text-danger">Error</h1>
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
                 {
-                    <h2 class="text-danger">An error occurred while processing your request.</h2>
+                    <span class="text-danger">@error.ErrorMessage</span>
                 }
-                else
-                {
-                    <h2 class="text-danger">@ViewBag.errorMessage</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                @{
+                    if (string.IsNullOrEmpty(ViewBag.errorMessage))
+                    {
+                        <h2 class="text-danger">An error occurred while processing your request.</h2>
+                    }
+                    else
+                    {
+                        <h2 class="text-danger">@ViewBag.errorMessage</h2>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 </div>

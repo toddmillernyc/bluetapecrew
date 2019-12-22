@@ -59,11 +59,7 @@ namespace BlueTapeCrew.EndToEndTests
             var filePath = Directory.GetFiles(DeadLetterPath).FirstOrDefault();
             var deadLetterJson = await File.ReadAllTextAsync(filePath);
             var email = JsonConvert.DeserializeObject<DeadLetter>(deadLetterJson);
-            var hrefLink = XElement.Parse(email.HtmlBody)
-                .Descendants("a")
-                .Select(x => x.Attribute("href")?.Value)
-                .FirstOrDefault();
-            return hrefLink;
+            return email.TextBody;
         }
 
         private void RegisterUser(RemoteWebDriver driver)
