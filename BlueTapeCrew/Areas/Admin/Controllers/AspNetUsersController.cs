@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
@@ -40,12 +39,12 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             return View(aspNetUser);
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        //todo: fix bugs in view
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AdminCreateUserModel model)
@@ -64,7 +63,14 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
                     Email = model.Email,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if(result.Succeeded == false) throw new Exception("There was an error creating user");
+                if (result.Succeeded == false)
+                {
+                    foreach (var identityError in result.Errors)
+                    {
+                        ModelState.AddModelError("", identityError.Description);
+                        return View(model);
+                    }
+                }
                 if (model.IsAdmin)
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
@@ -87,11 +93,18 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(ApplicationUser aspNetUser)
+        public async Task<IActionResult> Edit(ApplicationUser user)
         {
-            if (!ModelState.IsValid) return View(aspNetUser);
-            _db.Entry(aspNetUser).State = EntityState.Modified;
-            _db.SaveChanges();
+            if (!ModelState.IsValid) return View(user);
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Errors != null)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(user);
+            }
             return RedirectToAction("Index");
         }
 

@@ -5,7 +5,7 @@
 }
 
 <h2>Edit @Model.CategoryName Category</h2>
-<form method="post" action="Edit">
+<form method="post" asp-area="Admin" asp-controller="AdminCategories" asp-action="Edit">
     @Html.HiddenFor(x=>x.Id)
     <div class="col-md-2">@Html.DisplayNameFor(x => x.CategoryName)</div>
     <div class="col-md-2">@Html.EditorFor(x => x.CategoryName)</div>

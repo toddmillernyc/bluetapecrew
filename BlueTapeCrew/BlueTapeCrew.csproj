@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-BlueTapeCrew-3F2453A2-ECB2-4CDA-AA9D-B48E91A8F658</UserSecretsId>
+    <Authors>Todd Miller</Authors>
+    <Company>Miller Web Dev</Company>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
 

@@ -3,10 +3,7 @@
     ViewBag.Title = "Create";
 }
 <h2>Create</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
+<form asp-area="Admin" asp-controller="AspNetUsers" asp-action="Create" method="post">
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -39,10 +36,9 @@
             <input id="register" type="submit" class="btn btn-info" value="Register" />
         </div>
     </div>
-}
-
+</form>
 <div>
-    <a href="../AspNetUsers/Index">Back to List</a>
+    <a asp-area="Admin" asp-controller="AspNetUsers" asp-action="Index">Back to List</a>
 </div>
 
 <script>
