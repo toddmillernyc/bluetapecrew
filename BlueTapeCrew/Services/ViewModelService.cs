@@ -49,8 +49,8 @@ namespace BlueTapeCrew.Services
             return (new HomeViewModel
             {
                 Catalog = catalog,
-                SiteTitle = settings.SiteTitle,
-                Description = settings.Description
+                SiteTitle = settings?.SiteTitle ?? "NEW SITE",
+                Description = settings?.Description ?? "NEW SITE DESCRIPTION"
             });
         }
 
@@ -71,6 +71,7 @@ namespace BlueTapeCrew.Services
         public async Task<LayoutViewModel> GetLayoutViewModel()
         {
             var settings = await _db.SiteSettings.FirstOrDefaultAsync();
+            if(settings == null) return new LayoutViewModel();
             return new LayoutViewModel
             {
                 ContactEmail = settings.ContactEmailAddress,
