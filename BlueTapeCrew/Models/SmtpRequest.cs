@@ -8,15 +8,19 @@ namespace BlueTapeCrew.Models
 
         public SmtpRequest(SiteSetting settings, string htmlBody, string textBody, string toEmail, string subject)
         {
-            From = settings?.SmtpUsername;
+            if (settings != null)
+            {
+                From = settings.SmtpUsername;
+                Port = settings.SmtpPort ?? 0;
+                Host = settings.SmtpHost;
+                Password = settings.SmtpPassword;
+                UserName = settings.SmtpUsername;
+            }
+
             HtmlBody = htmlBody;
             TextBody = textBody;
             Subject = subject;
             To = toEmail;
-            Port = settings?.SmtpPort ?? 0;
-            Host = settings?.SmtpHost;
-            Password = settings?.SmtpPassword;
-            UserName = settings?.SmtpUsername;
         }
 
         public string Host { get; set; }
