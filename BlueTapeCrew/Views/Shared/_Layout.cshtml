@@ -58,7 +58,7 @@
                         <ul class="list-unstyled list-inline pull-right">
                             <li id="myAccount">@Html.ActionLink("My Account", "Index", "Manage")</li>
                             <li><a href="~/cart">Shopping Cart</a></li>
-                            @Html.PartialAsync("_LoginPartial")
+                            <partial name="_LoginPartial" />
                         </ul>
                     </div>
                 </div>

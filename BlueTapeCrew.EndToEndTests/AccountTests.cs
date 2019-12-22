@@ -1,9 +1,9 @@
-using System;
 using Dapper;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using System;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -29,12 +29,6 @@ namespace BlueTapeCrew.EndToEndTests
             _settings = JsonConvert.DeserializeObject<TestSettings>(configJson);
         }
 
-        private async Task CreateDatabase()
-        {
-            await using var conn = new SqlConnection(_settings.ConnectionString);
-
-        }
-
         [Fact]
         public async Task LoginTest()
         {
@@ -49,8 +43,8 @@ namespace BlueTapeCrew.EndToEndTests
             finally
             {
                 await Cleanup(_settings.ConnectionString);
-                //driver.Close();
-                //driver.Dispose();
+                driver.Close();
+                driver.Dispose();
             }
         }
 
