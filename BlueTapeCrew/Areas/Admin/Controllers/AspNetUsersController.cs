@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using BlueTapeCrew.Data;
+using BlueTapeCrew.ViewModels;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
@@ -14,10 +16,12 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
     public class AspNetUsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly BtcEntities _db;
 
-        public AspNetUsersController(UserManager<ApplicationUser> userManager)
+        public AspNetUsersController(UserManager<ApplicationUser> userManager, BtcEntities db)
         {
             _userManager = userManager;
+            _db = db;
         }
 
         public async Task<IActionResult> Index()
@@ -81,25 +85,20 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null) return BadRequest("User Id null");
-            var user = await _userManager.FindByIdAsync(id);
+            //todo: implement custom IUserStore to resolve EF issues
+            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             if (user == null) return NotFound();
-            return View(user);
+            var model = new EditUserViewModel(user);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ApplicationUser user)
+        public async Task<IActionResult> Edit(EditUserViewModel vm)
         {
-            if (!ModelState.IsValid) return View(user);
-            var result = await _userManager.UpdateAsync(user);
-            if (result.Errors != null)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-                return View(user);
-            }
+            if (!ModelState.IsValid) return View(vm);
+            var user = await _userManager.FindByIdAsync(vm.Id);
+            await _userManager.UpdateAsync(vm.Map(user));
             return RedirectToAction("Index");
         }
 
