@@ -11,7 +11,6 @@ namespace BlueTapeCrew.Models.Entities
         public string Author { get; set; }
         public int Id { get; set; }
         public string AboutUs { get; set; }
-        public string TwitterWidgetId { get; set; }
         public string GoogleClientId { get; set; }
         public string GoogleClientSecret { get; set; }
         public string SiteUrl { get; set; }

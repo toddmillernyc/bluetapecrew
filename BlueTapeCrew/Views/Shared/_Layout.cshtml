@@ -86,7 +86,11 @@
                 </div>
                 <div class="col-md-3 col-sm-6 pre-footer-col">
                     <h2 class="margin-bottom-0">Latest Tweets</h2>
-                    <a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="@layoutModel.TwitterWidgetId" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets by @("@" + layoutModel.TwitterHandle)...</a>
+                    <a 
+                        href="@layoutModel.TwitterHandle"
+                        class="twitter-timeline"
+                        data-theme="dark"
+                        data-tweet-limit="2"></a>
                 </div>
                 <div class="col-md-3 col-sm-6 pre-footer-col">
                     <h2>Custom Shirts</h2>
@@ -98,7 +102,7 @@
                 <div class="col-md-6 col-sm-6">
                     <ul class="social-icons">
                         <li><a class="facebook" data-original-title="facebook" href="@layoutModel.FaceBookUrl"></a></li>
-                        <li><a class="twitter" data-original-title="twitter" href="@layoutModel.TwitterUrl"></a></li>
+                        <li><a class="twitter" data-original-title="twitter" href="https://twitter.com/@layoutModel.TwitterHandle"></a></li>
                         <li><a class="linkedin" data-original-title="linkedin" href="@layoutModel.LinkedInUrl"></a></li>
                     </ul>
                 </div>

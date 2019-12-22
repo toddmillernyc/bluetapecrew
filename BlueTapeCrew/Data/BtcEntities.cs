@@ -381,8 +381,6 @@ namespace BlueTapeCrew.Data
                 entity.Property(e => e.TwitterClientSecret).HasMaxLength(255);
 
                 entity.Property(e => e.TwitterUrl).HasMaxLength(255);
-
-                entity.Property(e => e.TwitterWidgetId).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Size>(entity =>
