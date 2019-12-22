@@ -1,4 +1,4 @@
 {
-  "baseUrl":  "https://bluetapecrew.com/test",
+  "baseUrl":  "https://localhost:5001",
   "connectionString": "Data Source=mydbserver;Initial Catalog=btc.test;Integrated Security=True;MultipleActiveResultSets=true"
 }

@@ -1,3 +1,4 @@
+using System;
 using Dapper;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -20,10 +21,18 @@ namespace BlueTapeCrew.EndToEndTests
         private const string Password = "Password123!";
         private const string Email = "bluetapecrew@mailinator.com";
 
+        private static string TestRunId = Guid.NewGuid().ToString().Substring(0, 5);
+
         public AccountTests()
         {
             var configJson = File.ReadAllText("testsettings.json");
             _settings = JsonConvert.DeserializeObject<TestSettings>(configJson);
+        }
+
+        private async Task CreateDatabase()
+        {
+            await using var conn = new SqlConnection(_settings.ConnectionString);
+
         }
 
         [Fact]
@@ -45,7 +54,7 @@ namespace BlueTapeCrew.EndToEndTests
             }
         }
 
-        private static async Task ConfirmEmail(RemoteWebDriver driver)
+        private static async Task ConfirmEmail(IWebDriver driver)
         {
             var confirmEmailLink = await GetConfirmEmailFromDeadLetterDirectory();
             driver.Navigate().GoToUrl(confirmEmailLink);
