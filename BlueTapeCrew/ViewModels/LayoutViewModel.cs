@@ -16,6 +16,7 @@ namespace BlueTapeCrew.ViewModels
         public string CopyrightText { get; set; }
         public string CopyrightUrl { get; set; }
         public string CopyrightLinktext { get; set; }
+        public bool ShowSubscibeForm { get; set; }
         public IList<MenuViewModel> Menu { get; set; } 
     }
 }

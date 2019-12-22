@@ -95,7 +95,8 @@ namespace BlueTapeCrew.Services
                         LinkName = product.LinkName,
                         ItemName = product.ProductName
                     })
-                }).ToListAsync()
+                }).ToListAsync(),
+                ShowSubscibeForm = !string.IsNullOrEmpty(settings.MailChimpListId) && !string.IsNullOrEmpty(settings.MailChimpApiKey)
             };
         }
 

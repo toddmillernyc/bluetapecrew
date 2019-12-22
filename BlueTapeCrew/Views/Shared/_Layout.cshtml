@@ -44,8 +44,14 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6 additional-shop-info">
                         <ul class="list-unstyled list-inline">
-                            <li><i class="fa fa-phone"></i><span>@layoutModel.ContactPhone</span></li>
-                            <li><i class="fa fa-envelope"></i><a href="mailto:@layoutModel.ContactEmail">@layoutModel.ContactEmail</a></li>
+                            @if (!string.IsNullOrEmpty(layoutModel.ContactPhone))
+                            {
+                                <li><i class="fa fa-phone"></i><span>@layoutModel.ContactPhone</span></li>
+                            }
+                            @if (!string.IsNullOrEmpty(layoutModel.ContactEmail))
+                            {
+                                <li><i class="fa fa-envelope"></i><a href="mailto:@layoutModel.ContactEmail">@layoutModel.ContactEmail</a></li>
+                            }
                         </ul>
                     </div>
                     <div class="col-md-6 col-sm-6 additional-nav">
@@ -80,9 +86,12 @@
                 </div>
                 <div class="col-md-3 col-sm-6 pre-footer-col">
                     <h2>Contact Us</h2>
-                    <address class="margin-bottom-40">
-                        Email: <a href="@layoutModel.ContactEmail">@layoutModel.ContactEmail</a><br>
-                    </address>
+                    @if (!string.IsNullOrEmpty(layoutModel.ContactEmail))
+                    {
+                        <address class="margin-bottom-40">
+                            Email: <a href="@layoutModel.ContactEmail">@layoutModel.ContactEmail</a><br>
+                        </address>
+                    }
                 </div>
                 <div class="col-md-3 col-sm-6 pre-footer-col">
                     <h2 class="margin-bottom-0">Latest Tweets</h2>
@@ -101,15 +110,27 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <ul class="social-icons">
-                        <li><a class="facebook" data-original-title="facebook" href="@layoutModel.FaceBookUrl"></a></li>
-                        <li><a class="twitter" data-original-title="twitter" href="https://twitter.com/@layoutModel.TwitterHandle"></a></li>
-                        <li><a class="linkedin" data-original-title="linkedin" href="@layoutModel.LinkedInUrl"></a></li>
+                        @if (!string.IsNullOrEmpty(layoutModel.FaceBookUrl))
+                        {
+                            <li><a class="facebook" data-original-title="facebook" href="@layoutModel.FaceBookUrl"></a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(layoutModel.TwitterHandle))
+                        {
+                            <li><a class="twitter" data-original-title="twitter" href="https://twitter.com/@layoutModel.TwitterHandle"></a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(layoutModel.LinkedInUrl))
+                        {
+                            <li><a class="linkedin" data-original-title="linkedin" href="@layoutModel.LinkedInUrl"></a></li>
+                        }
                     </ul>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                    <div class="pre-footer-subscribe-box pull-right">
-                        <email-subscribe></email-subscribe>
-                    </div>
+                    @if (layoutModel.ShowSubscibeForm)
+                    {
+                        <div class="pre-footer-subscribe-box pull-right">
+                            <email-subscribe></email-subscribe>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -133,6 +154,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
 <script src="https://code.angularjs.org/1.6.7/angular-resource.min.js"></script>
 <script src="~/js/app.js"></script>
-
 </body>
 </html>
