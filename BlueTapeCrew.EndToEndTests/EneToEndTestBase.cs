@@ -8,12 +8,12 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Threading.Tasks;
+using BlueTapeCrew.EndToEndTests.Helpers;
 
 namespace BlueTapeCrew.EndToEndTests
 {
     public class EneToEndTestBase : IDisposable
     {
-        //public readonly TestSettings _settings;
         public const string DeadLetterPath = "C:\\SMTP\\DeadLetter";
         public const string Password = "Password123!";
         public const string Email = "bluetapecrew@mailinator.com";
@@ -33,6 +33,7 @@ namespace BlueTapeCrew.EndToEndTests
             BaseUrl = settings.BaseUrl;
             Driver = new ChromeDriver();
             Helper = new EndToEndTestHelper(_connectionString);
+            Driver.Manage().Window.FullScreen();
         }
 
         public void Dispose()

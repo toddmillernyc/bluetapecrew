@@ -22,7 +22,6 @@ namespace BlueTapeCrew.EndToEndTests
             await Helper.SeedAdminRole(Email);
             LogOffAndLogBackOn();
             AddCategories();
-
         }
 
         private static void AddCategories()
@@ -85,8 +84,9 @@ namespace BlueTapeCrew.EndToEndTests
 
         private static async Task<string> GetConfirmEmailFromDeadLetterDirectory()
         {
-            var filePath = Directory.GetFiles(DeadLetterPath).FirstOrDefault();
-            var deadLetterJson = await File.ReadAllTextAsync(filePath);
+            var directory = new DirectoryInfo(DeadLetterPath);
+            var file = directory.GetFiles().OrderByDescending(x => x.LastWriteTime).First();
+            var deadLetterJson = await File.ReadAllTextAsync(file.FullName);
             var email = JsonConvert.DeserializeObject<DeadLetter>(deadLetterJson);
             return email.TextBody;
         }

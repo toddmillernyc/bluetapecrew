@@ -12,18 +12,23 @@ namespace BlueTapeCrew.Controllers
     public class AccountController : Controller
     {
         private readonly ILoginService _loginService;
-        private readonly IUserService _userService;
         private readonly IUserRegistrationService _userRegistrationService;
-
+        private readonly IUserService _userService;
+        
         public AccountController(
             ILoginService loginService,
-            IUserService userService,
-            IUserRegistrationService userRegistrationService)
+            IUserRegistrationService userRegistrationService,
+            IUserService userService)
         {
             _loginService = loginService;
-            _userService = userService;
             _userRegistrationService = userRegistrationService;
+            _userService = userService;
         }
+        [AllowAnonymous] public ActionResult Register() => View();
+        [AllowAnonymous] public ActionResult ForgotPassword() => View();
+        [AllowAnonymous] public ActionResult ForgotPasswordConfirmation() => View();
+        [AllowAnonymous] public ActionResult ResetPasswordConfirmation() => View();
+        [AllowAnonymous] public ActionResult ResetPassword(string code) => code == null ? View("Error") : View();
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -67,11 +72,6 @@ namespace BlueTapeCrew.Controllers
             return View(model);
         }
 
-        [AllowAnonymous] public ActionResult Register() => View();
-        [AllowAnonymous] public ActionResult ForgotPassword() => View();
-        [AllowAnonymous] public ActionResult ForgotPasswordConfirmation() => View();
-        [AllowAnonymous] public ActionResult ResetPasswordConfirmation() => View();
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -110,12 +110,6 @@ namespace BlueTapeCrew.Controllers
             var sendEmailISuccess = await _userRegistrationService.SendPasswordResetLink(Request, model.Email);
             if (!sendEmailISuccess) ModelState.AddModelError("", Act.SendPasswordRestLinkError);
             return View("ForgotPasswordConfirmation");
-        }
-
-        [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
-        {
-            return code == null ? View("Error") : View();
         }
 
         [HttpPost]

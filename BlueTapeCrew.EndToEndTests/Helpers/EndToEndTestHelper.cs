@@ -1,9 +1,9 @@
-﻿using Dapper;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 
-namespace BlueTapeCrew.EndToEndTests
+namespace BlueTapeCrew.EndToEndTests.Helpers
 {
     public class EndToEndTestHelper
     {

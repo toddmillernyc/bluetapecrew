@@ -85,7 +85,18 @@ namespace BlueTapeCrew.Services
         private async Task<string> GetEncodedPasswordResetToken(ApplicationUser user)
             => EncodeToken(await _userManager.GeneratePasswordResetTokenAsync(user));
 
-        private static string EncodeToken(string token) => WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-        private static string DecodeToken(string encodedToken) => Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(encodedToken));
+        private static string EncodeToken(string token)
+        {
+            var tokenBytes = Encoding.UTF8.GetBytes(token);
+            var encodedToken = WebEncoders.Base64UrlEncode(tokenBytes);
+            return encodedToken;
+        }
+
+        private static string DecodeToken(string encodedToken)
+        {
+            var encodedBytes = WebEncoders.Base64UrlDecode(encodedToken);
+            var decodedToken =  Encoding.UTF8.GetString(encodedBytes);
+            return decodedToken;
+        }
     }
 }
