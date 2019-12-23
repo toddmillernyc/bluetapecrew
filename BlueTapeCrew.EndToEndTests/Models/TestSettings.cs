@@ -1,4 +1,4 @@
-﻿namespace BlueTapeCrew.EndToEndTests
+﻿namespace BlueTapeCrew.EndToEndTests.Models
 {
     public class TestSettings
     {

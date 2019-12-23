@@ -1,9 +1,9 @@
 ﻿@model List<BlueTapeCrew.Areas.Admin.Models.AdminCategoryViewModel>
-
+New Category Name
 @{
     var productId = ViewBag.ProductList;
 }
-<a href="~/Admin/AdminProducts" class="btn btn-sm btn-success">RETURN TO PRODUCT LISTINGS</a>
+<a id="return-to-products-link" asp-area="Admin" asp-controller="AdminProducts" class="btn btn-sm btn-success">RETURN TO PRODUCT LISTINGS</a>
 <div class="row">
     <div class="col-md-6">
         @using (Html.BeginForm())
@@ -12,12 +12,12 @@
                 <tr>
                     <td>
                         <h2>New Category Name</h2>
-                        <input name="categoryName" class="form-control" />
+                        <input id="new-category-name-input" name="categoryName" class="form-control" />
                     </td>
                 </tr>
                 <tr></tr>
                 <tr>
-                    <th><input type="submit" value="Add Category" class="btn btn-info" /></th>
+                    <th><input id="submit-new-category-button" type="submit" value="Add Category" class="btn btn-info" /></th>
                     <td></td>
                 </tr>
             </table>
