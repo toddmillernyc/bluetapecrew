@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BlueTapeCrew.ViewModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.ViewModels;
+using Entities;
 
 namespace BlueTapeCrew.Services.Interfaces
 {

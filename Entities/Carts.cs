@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlueTapeCrew.Models.Entities
+namespace Entities
 {
     [Table("Cart")]
     public class Cart

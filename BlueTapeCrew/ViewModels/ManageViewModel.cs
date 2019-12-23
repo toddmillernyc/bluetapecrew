@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BlueTapeCrew.Models.Entities;
+﻿using Entities;
+using System.Collections.Generic;
 
 namespace BlueTapeCrew.ViewModels
 {

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
+﻿using BlueTapeCrew.Data;
 using BlueTapeCrew.Repositories.Interfaces;
-using BlueTapeCrew.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
+using Entities;
 
 namespace BlueTapeCrew.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
+using Entities;
 
 namespace BlueTapeCrew.Email
 {

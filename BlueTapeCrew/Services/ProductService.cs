@@ -1,5 +1,4 @@
 ﻿using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 
 namespace BlueTapeCrew.Services
 {

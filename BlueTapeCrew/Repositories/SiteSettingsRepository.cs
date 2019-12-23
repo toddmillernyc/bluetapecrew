@@ -1,6 +1,6 @@
 ﻿using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories.Interfaces;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;

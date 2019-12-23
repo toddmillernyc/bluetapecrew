@@ -1,11 +1,11 @@
 ﻿using BlueTapeCrew.Areas.Admin.Models;
 using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {

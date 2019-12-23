@@ -1,6 +1,6 @@
-﻿using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.Repositories.Interfaces;
+﻿using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
+using Entities;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services

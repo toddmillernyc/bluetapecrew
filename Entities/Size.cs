@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlueTapeCrew.Models.Entities
+namespace Entities
 {
     [Table("Sizes")]
     public class Size

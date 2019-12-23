@@ -1,4 +1,5 @@
-﻿using BlueTapeCrew.Models.Entities;
+﻿
+using Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

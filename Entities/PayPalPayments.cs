@@ -1,4 +1,4 @@
-﻿namespace BlueTapeCrew.Models.Entities
+﻿namespace Entities
 {
     public class PayPalPayments
     {

@@ -1,14 +1,12 @@
-﻿using System;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
+using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.Services.Interfaces;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BlueTapeCrew.Controllers
 {

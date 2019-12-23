@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.ViewModels;
+﻿using BlueTapeCrew.ViewModels;
+using System.Threading.Tasks;
+using Entities;
 
 namespace BlueTapeCrew.Services.Interfaces
 {

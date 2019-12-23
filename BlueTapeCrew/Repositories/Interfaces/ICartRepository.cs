@@ -1,6 +1,6 @@
-﻿using BlueTapeCrew.Models.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Entities;
 
 namespace BlueTapeCrew.Repositories.Interfaces
 {

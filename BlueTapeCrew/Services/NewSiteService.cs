@@ -1,5 +1,5 @@
-﻿using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.Services.Interfaces;
+﻿using BlueTapeCrew.Services.Interfaces;
+using Entities;
 
 namespace BlueTapeCrew.Services
 {

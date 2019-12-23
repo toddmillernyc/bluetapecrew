@@ -1,13 +1,13 @@
 ﻿using BlueTapeCrew.Email;
 using BlueTapeCrew.Extensions;
 using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Entities;
 using Microsoft.AspNetCore.Http.Extensions;
 using PayPal;
 

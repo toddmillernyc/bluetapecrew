@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BlueTapeCrew.Models.Entities.Product>
+﻿@model IEnumerable<Entities.Product>
 <h2>Bestsellers</h2>
 @foreach (var item in Model)
 {
@@ -10,6 +10,3 @@
         <div class="price">$@($"{item.Styles.FirstOrDefault().Price:n2}")</div>
     </div>
 }
-
-
-

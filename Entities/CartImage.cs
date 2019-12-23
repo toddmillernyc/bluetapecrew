@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BlueTapeCrew.Models.Entities
+namespace Entities
 {
     public class CartImage
     {

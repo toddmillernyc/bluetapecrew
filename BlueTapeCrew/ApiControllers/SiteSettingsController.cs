@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.Services.Interfaces;
+﻿using BlueTapeCrew.Services.Interfaces;
+using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.ApiControllers
 {

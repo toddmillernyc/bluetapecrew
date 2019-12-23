@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlueTapeCrew.Models.Entities
+namespace Entities
 {
     [Table("SiteSettings")]
     public class SiteSetting

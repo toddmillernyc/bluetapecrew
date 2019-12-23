@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueTapeCrew.EndToEndTests", "BlueTapeCrew.EndToEndTests\BlueTapeCrew.EndToEndTests.csproj", "{38FAB635-2727-4078-B0AB-6D97A87485D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueTapeCrew.EndToEndTests", "BlueTapeCrew.EndToEndTests\BlueTapeCrew.EndToEndTests.csproj", "{38FAB635-2727-4078-B0AB-6D97A87485D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{01017982-6F0E-49BE-BC3E-1B9442E7759B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{38FAB635-2727-4078-B0AB-6D97A87485D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38FAB635-2727-4078-B0AB-6D97A87485D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38FAB635-2727-4078-B0AB-6D97A87485D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01017982-6F0E-49BE-BC3E-1B9442E7759B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01017982-6F0E-49BE-BC3E-1B9442E7759B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01017982-6F0E-49BE-BC3E-1B9442E7759B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01017982-6F0E-49BE-BC3E-1B9442E7759B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

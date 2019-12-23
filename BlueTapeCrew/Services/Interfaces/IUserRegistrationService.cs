@@ -1,7 +1,7 @@
-﻿using BlueTapeCrew.Models.Entities;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using Entities;
 
 namespace BlueTapeCrew.Services.Interfaces
 {

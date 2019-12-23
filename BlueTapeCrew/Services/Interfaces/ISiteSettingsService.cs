@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using BlueTapeCrew.Models.Entities;
+﻿using Entities;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services.Interfaces
 {

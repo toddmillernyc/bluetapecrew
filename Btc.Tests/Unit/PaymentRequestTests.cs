@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
+﻿using BlueTapeCrew.Models;
 using Btc.Tests.Stubs;
+using System.Linq;
+using Entities;
 using Xunit;
 
 namespace Btc.Tests.Unit

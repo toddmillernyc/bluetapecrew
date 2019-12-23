@@ -1,17 +1,16 @@
 using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services;
 using BlueTapeCrew.Services.Interfaces;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using Microsoft.AspNetCore.Identity;
 using IUserRegistrationService = BlueTapeCrew.Services.Interfaces.IUserRegistrationService;
 
 namespace BlueTapeCrew

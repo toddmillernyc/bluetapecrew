@@ -1,11 +1,11 @@
 ﻿using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using Entities;
 
 namespace BlueTapeCrew.Services
 {

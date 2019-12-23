@@ -1,9 +1,9 @@
-﻿using System;
-using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
+﻿using BlueTapeCrew.Data;
 using BlueTapeCrew.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
+using Entities;
 using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace BlueTapeCrew.Services

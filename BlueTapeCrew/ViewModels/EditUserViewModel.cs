@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BlueTapeCrew.Models.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlueTapeCrew.ViewModels
 {

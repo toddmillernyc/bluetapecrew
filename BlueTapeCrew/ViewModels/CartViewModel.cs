@@ -1,7 +1,7 @@
-﻿using BlueTapeCrew.Models.Entities;
+﻿using BlueTapeCrew.Models;
+using Entities;
 using System.Collections.Generic;
 using System.Linq;
-using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.ViewModels
 {

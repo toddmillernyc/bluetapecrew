@@ -1,11 +1,11 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
+﻿using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
+using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {

@@ -1,5 +1,4 @@
 ﻿using BlueTapeCrew.Areas.Admin.Models;
-using BlueTapeCrew.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using BlueTapeCrew.Data;
 using BlueTapeCrew.ViewModels;
+using Entities;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {

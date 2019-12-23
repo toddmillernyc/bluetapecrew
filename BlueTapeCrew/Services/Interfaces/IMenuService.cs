@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using BlueTapeCrew.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Services.Interfaces
 {

@@ -1,15 +1,13 @@
-﻿using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Data;
 using BlueTapeCrew.Services.Interfaces;
-using System;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Data;
-using Image = System.Drawing.Image;
 
 namespace BlueTapeCrew.Services
 {
@@ -54,7 +52,7 @@ namespace BlueTapeCrew.Services
             }
         }
 
-        public async Task<Models.Entities.Image> GetProductImageByName(string name)
+        public async Task<Entities.Image> GetProductImageByName(string name)
         {
             var linkName = name.Split('.')[0];
             var product = await _db.Products.Include(x=>x.Image).Where(x => x.LinkName.Equals(linkName)).FirstOrDefaultAsync();
@@ -62,7 +60,7 @@ namespace BlueTapeCrew.Services
 
         }
 
-        public async Task<Models.Entities.Image> GetImageById(int id)
+        public async Task<Entities.Image> GetImageById(int id)
         {
             return await _db.Images.FindAsync(id);
         }

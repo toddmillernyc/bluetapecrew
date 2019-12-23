@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using BlueTapeCrew.Controllers;
+﻿using BlueTapeCrew.Controllers;
 using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.ViewModels;
 using Moq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Entities;
 using Xunit;
 
 namespace Btc.Tests.Unit

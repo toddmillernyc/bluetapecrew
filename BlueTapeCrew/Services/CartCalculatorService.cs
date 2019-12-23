@@ -1,6 +1,6 @@
 ﻿using BlueTapeCrew.Models;
-using BlueTapeCrew.Models.Entities;
 using BlueTapeCrew.Services.Interfaces;
+using Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-﻿using BlueTapeCrew.Models.Entities;
+﻿using Entities;
 
 namespace BlueTapeCrew.Email
 {

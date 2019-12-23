@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using BlueTapeCrew.Extensions;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
-using MimeKit;
-using System.Threading.Tasks;
-using BlueTapeCrew.Extensions;
 using MailKit.Net.Smtp;
-using Newtonsoft.Json;
+using MimeKit;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {

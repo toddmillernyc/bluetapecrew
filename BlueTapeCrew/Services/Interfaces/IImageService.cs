@@ -1,6 +1,6 @@
-﻿using System.Drawing.Imaging;
+﻿using Entities;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models.Entities;
 
 namespace BlueTapeCrew.Services.Interfaces
 {

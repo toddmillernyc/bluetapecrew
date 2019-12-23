@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using BlueTapeCrew.Models.Entities;
-using BlueTapeCrew.Services;
+﻿using BlueTapeCrew.Services;
 using BlueTapeCrew.Services.Interfaces;
+using Entities;
 using Moq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Btc.Tests.Unit

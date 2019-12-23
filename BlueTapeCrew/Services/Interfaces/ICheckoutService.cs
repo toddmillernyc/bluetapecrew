@@ -1,6 +1,6 @@
-﻿using System;
+﻿using BlueTapeCrew.Models;
+using System;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.Services.Interfaces
 {

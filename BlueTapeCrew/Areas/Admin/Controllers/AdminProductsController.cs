@@ -1,6 +1,7 @@
 ﻿using BlueTapeCrew.Areas.Admin.Models;
 using BlueTapeCrew.Data;
-using BlueTapeCrew.Models.Entities;
+using BlueTapeCrew.Services.Interfaces;
+using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Services.Interfaces;
 using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
