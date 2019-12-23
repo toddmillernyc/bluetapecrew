@@ -60,16 +60,17 @@ namespace BlueTapeCrew
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IEmailSubscriptionService, EmailSubscriptionService>();
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<ILoginService, LoginService>();
+            services.AddTransient<INewSiteService, NewSiteService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPaypalService, PaypalService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ISessionService, SessionService>();
             services.AddTransient<IShippingService, ShippingService>();
             services.AddTransient<ISiteSettingsService, SiteSettingsService>();
+            services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IViewModelService, ViewModelService>();
-            services.AddTransient<INewSiteService, NewSiteService>();
-            services.AddTransient<IUserRegistrationService, UserRegistrationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

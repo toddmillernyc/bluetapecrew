@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using Entities;
+using BlueTapeCrew.ViewModels;
 
 namespace BlueTapeCrew.Services.Interfaces
 {
     public interface IUserRegistrationService
     {
-        Task SendEmailConfirmationLink(HttpRequest request, ApplicationUser user);
-        Task<IdentityResult> ConfirmEmail(string userId, string encodedToken);
+        Task<bool> ResetPassword(ResetPasswordRequest model);
+        Task SendEmailConfirmationLink(HttpRequest request, string username);
+        Task<bool> ConfirmEmail(string userId, string encodedToken);
+        Task<bool> CreateUser(string email, string password);
+        Task<bool> SendPasswordResetLink(HttpRequest request, string email);
     }
 }

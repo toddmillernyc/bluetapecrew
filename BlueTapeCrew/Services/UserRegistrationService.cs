@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using System.Threading.Tasks;
+using BlueTapeCrew.ViewModels;
 
 namespace BlueTapeCrew.Services
 {
@@ -27,9 +28,19 @@ namespace BlueTapeCrew.Services
             _userManager = userManager;
         }
 
-        public async Task SendEmailConfirmationLink(HttpRequest request, ApplicationUser user)
+        public async Task<bool> ResetPassword(ResetPasswordRequest model)
         {
-            var token = await GetEncodedToken(user);
+            var user = await _userManager.FindByNameAsync(model.Email);
+            if (user == null) return false;
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            return result.Succeeded;
+        }
+
+        public async Task SendEmailConfirmationLink(HttpRequest request, string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var token = await GetEncodedEmailConfirmToken(user);
             var callbackUrl = $"{request?.Scheme}://{request?.Host}{request?.PathBase}/Account/ConfirmEmail/{user.Id}?code={token}";
             var settings = await _settings.Get();
             var htmlBody = $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>";
@@ -37,21 +48,44 @@ namespace BlueTapeCrew.Services
             await _emailSender.SendEmail(smtpRequest);
         }
 
-        public async Task<IdentityResult> ConfirmEmail(string userId, string encodedToken)
+        public async Task<bool> SendPasswordResetLink(HttpRequest request, string email)
         {
-            var decodedBytes = WebEncoders.Base64UrlDecode(encodedToken);
-            var code = Encoding.UTF8.GetString(decodedBytes);
-            var user = await _userManager.FindByIdAsync(userId);
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            return result;
+            var user = await _userManager.FindByNameAsync(email);
+            if (user == null) return false;
+
+            var emailIsConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+            if (!emailIsConfirmed) return false;
+
+            var token = GetEncodedPasswordResetToken(user);
+            var callbackUrl = $"{request?.Scheme}://{request?.Host}{request?.PathBase}/Account/ResetPassword/{user.Id}?code={token}";
+            var settings = await _settings.Get();
+            var htmlBody = $"Please reset your password by clicking <a href=\"{callbackUrl}\">here</a>";
+            var smtpRequest = new SmtpRequest(settings, htmlBody, htmlBody, user.UserName, Constants.Account.ResetPasswordEmailSubject);
+            await _emailSender.SendEmail(smtpRequest);
+            return true;
         }
 
-        private async Task<string> GetEncodedToken(ApplicationUser user)
+        public async Task<bool> ConfirmEmail(string userId, string encodedToken)
         {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var tokenBytes = Encoding.UTF8.GetBytes(token);
-            var encodedToken = WebEncoders.Base64UrlEncode(tokenBytes);
-            return encodedToken;
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.ConfirmEmailAsync(user, DecodeToken(encodedToken));
+            return result.Succeeded;
         }
+
+        public async Task<bool> CreateUser(string email, string password)
+        {
+            var user = new ApplicationUser { UserName = email, Email = email };
+            var result = await _userManager.CreateAsync(user, password);
+            return result.Succeeded;
+        }
+
+        private async Task<string> GetEncodedEmailConfirmToken(ApplicationUser user) 
+            => EncodeToken(await _userManager.GenerateEmailConfirmationTokenAsync(user));
+
+        private async Task<string> GetEncodedPasswordResetToken(ApplicationUser user)
+            => EncodeToken(await _userManager.GeneratePasswordResetTokenAsync(user));
+
+        private static string EncodeToken(string token) => WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+        private static string DecodeToken(string encodedToken) => Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(encodedToken));
     }
 }

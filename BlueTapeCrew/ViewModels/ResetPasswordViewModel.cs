@@ -2,7 +2,7 @@
 
 namespace BlueTapeCrew.ViewModels
 {
-    public class ResetPasswordViewModel
+    public class ResetPasswordRequest
     {
         [Required]
         [EmailAddress]

@@ -1,19 +1,12 @@
 ﻿@{
     ViewBag.Title = "Confirm Email";
-    var modelErrors = ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors);
+    
 }
 <div class="main">
     <div class="container">
-        @if (modelErrors.Any())
+        @if (ViewData.ModelState.ErrorCount > 0)
         {
-            <div class="row">
-                <div class="col-md-12">
-                    @foreach (var error in modelErrors)
-                    {
-                        <span class="text-danger">@error.ErrorMessage</span>
-                    }
-                </div>
-            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
         }
         else
         {

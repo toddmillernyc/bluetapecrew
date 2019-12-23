@@ -29,7 +29,7 @@ namespace BlueTapeCrew.EndToEndTests
         {
             Driver.FindElementById("adminLogin").Click();
             Driver.FindElementById("edit-categories-link").Click();
-            foreach (var category in CategoryStubs.Categories)
+            foreach (var category in StringStubs.Categories)
             {
                 Driver.FindElementById("new-category-name-input").SendKeys(category);
                 Driver.FindElementById("submit-new-category-button").Click();

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using BlueTapeCrew.Models;
 using Entities;
 
 namespace BlueTapeCrew.Services
@@ -20,6 +21,18 @@ namespace BlueTapeCrew.Services
             _db = db;
         }
 
+        public async Task<User> Find(string email)
+        {
+            var applicationUser = await _userManager.FindByEmailAsync(email);
+            if (applicationUser == null) return null;
+
+            var user = new User
+            {
+                Email = applicationUser.Email,
+                EmailIsConfirmed = await _userManager.IsEmailConfirmedAsync(applicationUser)
+            };
+            return user;
+        }
 
         public async Task<GuestUser> GetGuestUser(string sessionId)
         {

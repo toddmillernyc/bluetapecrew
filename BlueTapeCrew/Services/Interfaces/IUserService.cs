@@ -1,5 +1,6 @@
 ﻿using BlueTapeCrew.ViewModels;
 using System.Threading.Tasks;
+using BlueTapeCrew.Models;
 using Entities;
 
 namespace BlueTapeCrew.Services.Interfaces
@@ -9,5 +10,6 @@ namespace BlueTapeCrew.Services.Interfaces
         Task<GuestUser> GetGuestUser(string sessionId);
         Task UpdateUser(CheckoutViewModel model);
         Task CreateGuestUser(GuestUser model);
+        Task<User> Find(string email);
     }
 }
