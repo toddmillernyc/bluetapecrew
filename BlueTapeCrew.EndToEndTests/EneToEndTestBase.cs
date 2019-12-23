@@ -15,7 +15,7 @@ namespace BlueTapeCrew.EndToEndTests
     public class EneToEndTestBase : IDisposable
     {
         public const string DeadLetterPath = "C:\\SMTP\\DeadLetter";
-        public const string Password = "Password123!";
+        public string Password = "Password123!";
         public const string Email = "bluetapecrew@mailinator.com";
         public string BaseUrl;
 

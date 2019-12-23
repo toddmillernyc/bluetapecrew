@@ -1,3 +1,4 @@
+using System;
 using BlueTapeCrew.EndToEndTests.Extensions;
 using BlueTapeCrew.EndToEndTests.Models;
 using Newtonsoft.Json;
@@ -19,9 +20,27 @@ namespace BlueTapeCrew.EndToEndTests
             RegisterUser();
             await ConfirmEmailAndLogIn();
             var userId = UpdateAccountInfo();
+            await ResetPassword();
             await Helper.SeedAdminRole(Email);
             LogOffAndLogBackOn();
             AddCategories();
+        }
+
+        private async Task ResetPassword()
+        {
+            Driver.FindElementById("logoff").Click();
+            Driver.FindElementById("loginLink").Click();
+            Driver.FindElementById("forgot-password-link").Click();
+            Driver.FindElementById("Email").SendKeys(Email);
+            Driver.FindElementById("send-reset-password-email-button").Click();
+            var passwordResetLink = await GetConfirmEmailFromDeadLetterDirectory();
+            Driver.Navigate().GoToUrl(passwordResetLink);
+            Password = "NewPassword123!";
+            Driver.FindElementById("Email").SendKeys(Email);
+            Driver.FindElementById("Password").SendKeys(Password);
+            Driver.FindElementById("ConfirmPassword").SendKeys(Password);
+            Driver.FindElementById("reset-password-submit-button").Click();
+            Login();
         }
 
         private static void AddCategories()
@@ -36,9 +55,14 @@ namespace BlueTapeCrew.EndToEndTests
             Driver.FindElementById("return-to-products-link").Click();
         }
 
-        private static void LogOffAndLogBackOn()
+        private void LogOffAndLogBackOn()
         {
             Driver.FindElementById("logoff").Click();
+            Login();
+        }
+
+        private void Login()
+        {
             Driver.FindElementById("loginLink").Click();
             Driver.FindElementById("Email").SendKeys(Email);
             Driver.FindElementById("Password").SendKeys(Password);
@@ -71,7 +95,7 @@ namespace BlueTapeCrew.EndToEndTests
             return id;
         }
 
-        private static async Task ConfirmEmailAndLogIn()
+        private async Task ConfirmEmailAndLogIn()
         {
             var confirmEmailLink = await GetConfirmEmailFromDeadLetterDirectory();
             Driver.Navigate().GoToUrl(confirmEmailLink);

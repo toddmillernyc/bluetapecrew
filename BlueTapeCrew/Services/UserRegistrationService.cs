@@ -32,8 +32,8 @@ namespace BlueTapeCrew.Services
         {
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null) return false;
-
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            var token = DecodeToken(model.Code);
+            var result = await _userManager.ResetPasswordAsync(user, token, model.Password);
             return result.Succeeded;
         }
 
@@ -56,11 +56,12 @@ namespace BlueTapeCrew.Services
             var emailIsConfirmed = await _userManager.IsEmailConfirmedAsync(user);
             if (!emailIsConfirmed) return false;
 
-            var token = GetEncodedPasswordResetToken(user);
+            var token = await GetEncodedPasswordResetToken(user);
             var callbackUrl = $"{request?.Scheme}://{request?.Host}{request?.PathBase}/Account/ResetPassword/{user.Id}?code={token}";
             var settings = await _settings.Get();
             var htmlBody = $"Please reset your password by clicking <a href=\"{callbackUrl}\">here</a>";
-            var smtpRequest = new SmtpRequest(settings, htmlBody, htmlBody, user.UserName, Constants.Account.ResetPasswordEmailSubject);
+            var textBody = callbackUrl;
+            var smtpRequest = new SmtpRequest(settings, htmlBody, textBody, user.UserName, Constants.Account.ResetPasswordEmailSubject);
             await _emailSender.SendEmail(smtpRequest);
             return true;
         }

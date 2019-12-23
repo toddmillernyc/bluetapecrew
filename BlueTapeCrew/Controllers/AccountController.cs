@@ -24,6 +24,7 @@ namespace BlueTapeCrew.Controllers
             _userRegistrationService = userRegistrationService;
             _userService = userService;
         }
+
         [AllowAnonymous] public ActionResult Register() => View();
         [AllowAnonymous] public ActionResult ForgotPassword() => View();
         [AllowAnonymous] public ActionResult ForgotPasswordConfirmation() => View();
