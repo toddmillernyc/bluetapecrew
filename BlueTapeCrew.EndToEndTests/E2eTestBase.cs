@@ -37,9 +37,13 @@ namespace BlueTapeCrew.EndToEndTests
 
             _connectionString = settings.ConnectionString;
             BaseUrl = settings.BaseUrl;
-            Driver = new ChromeDriver();
+            
             Helper = new EndToEndTestHelper(_connectionString);
+            
+            Driver = new ChromeDriver();
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             Driver.Manage().Window.Maximize();
+            
         }
 
         public void Dispose()
@@ -70,7 +74,9 @@ namespace BlueTapeCrew.EndToEndTests
                 "DELETE FROM dbo.Sizes",
                 "DELETE FROM dbo.Products",
                 "DELETE FROM dbo.Images",
-                "DELETE FROM dbo.SiteSettings"
+                "DELETE FROM dbo.SiteSettings",
+                "DELETE FROM dbo.OrderItems",
+                "DELETE FROM dbo.Orders"
             };
             foreach (var query in queries)
             {

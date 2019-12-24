@@ -1,42 +1,35 @@
-using System;
 using BlueTapeCrew.EndToEndTests.Extensions;
 using BlueTapeCrew.EndToEndTests.Models;
 using BlueTapeCrew.EndToEndTests.Stubs;
 using Newtonsoft.Json;
+using OpenQA.Selenium.Interactions;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using Xunit;
 
 namespace BlueTapeCrew.EndToEndTests
 {
     public class FullSiteTest : E2ETestBase
     {
-        readonly Dictionary<string, string> _formDictionary = new Dictionary<string, string>()
+        private readonly Dictionary<string, string> _formDictionary = new Dictionary<string, string>()
         {
-            {"User_FirstName", "John"},
-            {"User_LastName", "Smith"},
-            {"User_PhoneNumber", "555-555-5555"},
-            {"User_Address", "123 Any Street"},
-            {"User_City", "AnyTown"},
-            {"User_State", "NY"},
-            {"User_PostalCode", "10001"}
+            {"User_FirstName", "John"},{"User_LastName", "Smith"},{"User_PhoneNumber", "555-555-5555"},
+            {"User_Address", "123 Any Street"},{"User_City", "AnyTown"},{"User_State", "NY"},{"User_PostalCode", "10001"}
         };
 
         [Fact]
         public async Task LoginTest()
         {
             var tryCount = 0;
-
             while (tryCount < 3)
             {
                 try
                 {
+                    GoHome();
                     RegisterUser();
                     await ConfirmEmailAndLogIn();
                     var userId = UpdateAccountInfo();
@@ -46,52 +39,49 @@ namespace BlueTapeCrew.EndToEndTests
                     Driver.FindElementById("adminLogin").Click();
                     UpdateSiteSettings();
                     AddCategories();
-
-                    foreach (var product in ProductStubs.Products)
-                        AddProduct(product);
-
-                    Driver.ClickId("return-to-site-link");
-
-                    var productIndex = 0;
-                    ProductCardZoomAndOpen(productIndex);
-                    Driver.ClickId("add-to-cart-button");
-                    Driver.Hover("cart-widget");
-                    Driver.ClickId("go-to-checkout-button");
+                    AddProducts();
+                    ViewProductsAndAddToCart();
+                    Checkout();
                     break;
                 }
-                catch(Exception ex)
+                catch
                 {
                     await Cleanup();
                     tryCount++;
-                    var message = ex.Message;
                 }
             }
         }
 
-        private void UpdateSiteSettings()
+        private void Checkout()
         {
-            Driver.FindElementById("paypal-client-id").SendKeys(PaypalSettings.ClientId);
-            Driver.FindElementById("paypal-sandbox-client-id").SendKeys(PaypalSettings.ClientId);
-            Driver.FindElementById("paypal-client-secret").SendKeys(PaypalSettings.ClientSecret);
-            Driver.FindElementById("paypal-sandbox-client-secret").SendKeys(PaypalSettings.ClientSecret);
-            Driver.FindElementById("title").SendKeys("End to End");
-            Driver.FindElementById("keywords").SendKeys("functional testing tests");
-            Driver.FindElementById("description").SendKeys("This is a site  created by an automated, full site end to end test.");
-            Driver.ClickId("save-site-settings-button");
-            var alert = Driver.SwitchTo().Alert();
-            alert.Accept();
-            var top = Driver.FindElementById("edit-categories-link");
-            var actions = new Actions(Driver);
-            actions.MoveToElement(top);
-            actions.Perform();
+            Driver.ClickId("shippingInfo");
+            Driver.ClickId("button-payment-address");
+            Thread.Sleep(1000);
+            Driver.ClickId("button-confirm");
+            Driver.FindElementById("email").SendKeys(PaypalSettings.PaypalBuyer);
+            Driver.ClickId("btnNext");
+            //Thread.Sleep(1000);
+            Driver.FindElementById("password").SendKeys(PaypalSettings.PaypalBuyerPassword);
+            Driver.ClickId("btnLogin");
+            //Thread.Sleep(5000);
+            Driver.ClickId("confirmButtonTop");
+            Driver.ClickId("confirm-order-button");
+            Driver.ClickId("manage-account-header-link");
         }
 
-        private static void ProductCardZoomAndOpen(int index)
+        private static void ViewProductsAndAddToCart()
         {
-            Driver.Hover("product-image-wrapper-0").ClickId($"fancybox-button-{index}");
-            Thread.Sleep(250);
-            Driver.FindElementByClassName("fancybox-close").Click();
-            Driver.ClickId($"product-details-link-{index}");
+            var productIndex = 0;
+            ProductCardZoomAndOpen(productIndex);
+            Driver.ClickId("add-to-cart-button");
+            Driver.Hover("cart-widget");
+            Driver.ClickId("go-to-checkout-button");
+        }
+
+        private static void AddProducts()
+        {
+            foreach (var product in ProductStubs.Products) AddProduct(product);
+            Driver.ClickId("return-to-site-link");
         }
 
         private static void AddProduct(ProductStub stub)
@@ -128,6 +118,32 @@ namespace BlueTapeCrew.EndToEndTests
 
             Driver.FindElementById("additional-image-chooser").SendKeys(imageFilePath);
             Driver.ClickId("upload-additional-image-button");
+        }
+
+        private void UpdateSiteSettings()
+        {
+            Driver.FindElementById("paypal-client-id").SendKeys(PaypalSettings.ClientId);
+            Driver.FindElementById("paypal-sandbox-client-id").SendKeys(PaypalSettings.ClientId);
+            Driver.FindElementById("paypal-client-secret").SendKeys(PaypalSettings.ClientSecret);
+            Driver.FindElementById("paypal-sandbox-client-secret").SendKeys(PaypalSettings.ClientSecret);
+            Driver.FindElementById("title").SendKeys("End to End");
+            Driver.FindElementById("keywords").SendKeys("functional testing tests");
+            Driver.FindElementById("description").SendKeys("This is a site  created by an automated, full site end to end test.");
+            Driver.ClickId("save-site-settings-button");
+            var alert = Driver.SwitchTo().Alert();
+            alert.Accept();
+            var top = Driver.FindElementById("edit-categories-link");
+            var actions = new Actions(Driver);
+            actions.MoveToElement(top);
+            actions.Perform();
+        }
+
+        private static void ProductCardZoomAndOpen(int index)
+        {
+            Driver.Hover("product-image-wrapper-0").ClickId($"fancybox-button-{index}");
+            Thread.Sleep(250);
+            Driver.FindElementByClassName("fancybox-close").Click();
+            Driver.ClickId($"product-details-link-{index}");
         }
 
         private async Task ResetPassword()
@@ -189,7 +205,7 @@ namespace BlueTapeCrew.EndToEndTests
         {
             var confirmEmailLink = await GetConfirmEmailFromDeadLetterDirectory();
             Driver.Navigate().GoToUrl(confirmEmailLink);
-            Thread.Sleep(5);
+            //Thread.Sleep(5);
             Driver.FindElementById("click-here-to-login-link").Click();
             Driver.FindElementById("Email").SendKeys(Email);
             Driver.FindElementById("Password").SendKeys(Password);
@@ -207,13 +223,17 @@ namespace BlueTapeCrew.EndToEndTests
 
         private void RegisterUser()
         {
-            Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElementById("manage-account-header-link").Click();
             Driver.FindElementById("register-account-link").Click();
             Driver.FindElementById("Email").SendKeys(Email);
             Driver.FindElementByName("Password").SendKeys(Password);
             Driver.FindElementByName("ConfirmPassword").SendKeys(Password);
             Driver.FindElementById("register-account-submit-button").Click();
+        }
+
+        private void GoHome()
+        {
+            Driver.Navigate().GoToUrl(BaseUrl);;
         }
     }
 }
