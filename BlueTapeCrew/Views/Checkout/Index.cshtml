@@ -1,9 +1,7 @@
 ﻿@model BlueTapeCrew.ViewModels.CheckoutRequest
 <div class="main">
     <div class="container">
-        @using (Html.BeginForm("Index", "Checkout", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
+        <form asp-action="Index" asp-controller="Checkout" method="post">
             <div class="row margin-bottom-40">
                 <div class="col-md-12 col-sm-12">
                     <h1>Checkout</h1>
@@ -54,6 +52,7 @@
                                             <label for="firstname">
                                                 First Name
                                                 <span class="require">*</span>
+                                                <span asp-validation-for="FirstName" class="text-danger"></span>
                                                 @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "text text-danger" })
                                             </label>
                                             <input class="form-control" id="firstname" name="FirstName" type="text" value="@Model.FirstName">
@@ -169,7 +168,7 @@
                     </div>
                 </div>
             </div>
-        }
+        </form>
     </div>
 </div>
 @section Scripts {

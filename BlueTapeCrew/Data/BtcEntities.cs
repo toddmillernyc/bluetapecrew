@@ -301,9 +301,7 @@ namespace BlueTapeCrew.Data
 
             modelBuilder.Entity<SiteSetting>(entity =>
             {
-                entity.Property(e => e.Author)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.Author).HasMaxLength(100);
 
                 entity.Property(e => e.ContactEmailAddress).HasMaxLength(255);
 

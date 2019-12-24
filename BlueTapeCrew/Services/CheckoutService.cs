@@ -16,9 +16,10 @@ namespace BlueTapeCrew.Services
         private readonly ISessionService _session;
 
         public CheckoutService(
-            ISiteSettingsService siteSettingsService, 
+            ISiteSettingsService siteSettingsService,
             ICartService cartService,
-            IPaypalService paypalService, IUserService userService,
+            IPaypalService paypalService,
+            IUserService userService,
             ISessionService session)
         {
             _siteSettingsService = siteSettingsService;
@@ -41,7 +42,7 @@ namespace BlueTapeCrew.Services
             var settings = await _siteSettingsService.Get();
             var cart = await _cartService.GetCartViewModel(sessionId);
             var invoiceId = DateTime.Now.Ticks;
-            var paymentRequest = new PaymentRequest(requestUri, settings, cart.Items, invoiceId, string.Empty, isSandbox);
+            var paymentRequest = new PaymentRequest(requestUri, settings, cart.Items, invoiceId, isSandbox);
             var redirectUrl = _paypalService.PayWithPaypal(paymentRequest);
             return redirectUrl;
         }

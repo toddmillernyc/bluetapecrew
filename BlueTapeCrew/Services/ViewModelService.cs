@@ -12,15 +12,17 @@ namespace BlueTapeCrew.Services
     public class ViewModelService : IViewModelService, IDisposable
     {
         private readonly BtcEntities _db;
+        private readonly ISiteSettingsService _settings;
 
-        public ViewModelService(BtcEntities db)
+        public ViewModelService(BtcEntities db, ISiteSettingsService settings)
         {
             _db = db;
+            _settings = settings;
         }
 
         public async Task<HomeViewModel> GetHomeViewModel()
         {
-            var settings = await _db.SiteSettings.FirstOrDefaultAsync();
+            var settings = await _settings.Get();
             var catalog = new List<CatalogModel>();
             var categories = await _db.Categories
                                         .Include(category => category.ProductCategories)
@@ -70,7 +72,7 @@ namespace BlueTapeCrew.Services
 
         public async Task<LayoutViewModel> GetLayoutViewModel()
         {
-            var settings = await _db.SiteSettings.FirstOrDefaultAsync();
+            var settings = await _settings.Get();
             if(settings == null) return new LayoutViewModel();
             return new LayoutViewModel
             {

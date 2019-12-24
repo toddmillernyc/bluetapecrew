@@ -15,6 +15,10 @@ namespace BlueTapeCrew.EndToEndTests
     public class E2ETestBase : IDisposable
     {
         public const string DeadLetterPath = "C:\\SMTP\\DeadLetter";
+        private const string PaypalSettingsPath = "C:\\config\\paypalsettings.json";
+
+        public PaypalSettings PaypalSettings;
+
         public string Password = "Password123!";
         public const string Email = "bluetapecrew@mailinator.com";
         public string BaseUrl;
@@ -29,11 +33,13 @@ namespace BlueTapeCrew.EndToEndTests
         {
             var configJson = File.ReadAllText("testsettings.json");
             var settings = JsonConvert.DeserializeObject<TestSettings>(configJson);
+            PaypalSettings = JsonConvert.DeserializeObject<PaypalSettings>(File.ReadAllText(PaypalSettingsPath));
+
             _connectionString = settings.ConnectionString;
             BaseUrl = settings.BaseUrl;
             Driver = new ChromeDriver();
             Helper = new EndToEndTestHelper(_connectionString);
-            Driver.Manage().Window.FullScreen();
+            Driver.Manage().Window.Maximize();
         }
 
         public void Dispose()
@@ -63,7 +69,8 @@ namespace BlueTapeCrew.EndToEndTests
                 "DELETE FROM dbo.Colors",
                 "DELETE FROM dbo.Sizes",
                 "DELETE FROM dbo.Products",
-                "DELETE FROM dbo.Images"
+                "DELETE FROM dbo.Images",
+                "DELETE FROM dbo.SiteSettings"
             };
             foreach (var query in queries)
             {

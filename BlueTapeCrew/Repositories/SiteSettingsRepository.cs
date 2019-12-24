@@ -3,6 +3,7 @@ using BlueTapeCrew.Repositories.Interfaces;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Repositories
@@ -18,7 +19,8 @@ namespace BlueTapeCrew.Repositories
 
         public async Task<SiteSetting> Get()
         {
-            return await _db.SiteSettings.FirstOrDefaultAsync();
+            var entities = await _db.SiteSettings.ToListAsync();
+            return entities?.FirstOrDefault();
         }
 
         public async Task<SiteSetting> Set(SiteSetting siteSetting)
@@ -29,9 +31,18 @@ namespace BlueTapeCrew.Repositories
             return entity;
         }
 
-        public void Dispose()
+        public async Task DeleteAll()
         {
-            _db.Dispose();
+            _db.SiteSettings.RemoveRange(_db.SiteSettings);
+            await _db.SaveChangesAsync();
         }
+
+        public async Task Create(SiteSetting siteSetting)
+        {
+            _db.SiteSettings.Add(siteSetting);
+            await _db.SaveChangesAsync();
+        }
+
+        public void Dispose() => _db.Dispose();
     }
 }

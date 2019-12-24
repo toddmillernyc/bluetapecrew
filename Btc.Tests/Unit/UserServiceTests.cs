@@ -21,7 +21,7 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var userManager = _fixture.GetMockUserManager(new List<ApplicationUser>());
-            var sut = new UserService(userManager.Object, _fixture.GuestUserRepository.Object);
+            var sut = new UserService(userManager.Object, _fixture.GuestUserRepository.Object, _fixture.Mapper.Object);
             
             //act
             var result = await sut.Find(null);

@@ -69,6 +69,7 @@ namespace BlueTapeCrew.Controllers
             if (!ModelState.IsValid) return View(model);
             try
             {
+                //todo, post cart data with model
                 model.Cart = await Cart;
                 model.UserName = User.Identity.Name;
                 model.SessionId = _session.SessionId();

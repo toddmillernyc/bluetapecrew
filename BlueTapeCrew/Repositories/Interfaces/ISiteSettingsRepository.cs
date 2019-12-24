@@ -7,5 +7,7 @@ namespace BlueTapeCrew.Repositories.Interfaces
     {
         Task<SiteSetting> Get();
         Task<SiteSetting> Set(SiteSetting siteSetting);
+        Task DeleteAll();
+        Task Create(SiteSetting siteSetting);
     }
 }

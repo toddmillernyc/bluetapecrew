@@ -1,3 +1,4 @@
+using System;
 using BlueTapeCrew.EndToEndTests.Extensions;
 using BlueTapeCrew.EndToEndTests.Models;
 using BlueTapeCrew.EndToEndTests.Stubs;
@@ -8,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using Xunit;
 
 namespace BlueTapeCrew.EndToEndTests
@@ -30,7 +33,7 @@ namespace BlueTapeCrew.EndToEndTests
         {
             var tryCount = 0;
 
-            while (tryCount < 2)
+            while (tryCount < 3)
             {
                 try
                 {
@@ -40,6 +43,8 @@ namespace BlueTapeCrew.EndToEndTests
                     await ResetPassword();
                     await Helper.SeedAdminRole(Email);
                     LogOffAndLogBackOn();
+                    Driver.FindElementById("adminLogin").Click();
+                    UpdateSiteSettings();
                     AddCategories();
 
                     foreach (var product in ProductStubs.Products)
@@ -54,12 +59,31 @@ namespace BlueTapeCrew.EndToEndTests
                     Driver.ClickId("go-to-checkout-button");
                     break;
                 }
-                catch
+                catch(Exception ex)
                 {
                     await Cleanup();
                     tryCount++;
+                    var message = ex.Message;
                 }
             }
+        }
+
+        private void UpdateSiteSettings()
+        {
+            Driver.FindElementById("paypal-client-id").SendKeys(PaypalSettings.ClientId);
+            Driver.FindElementById("paypal-sandbox-client-id").SendKeys(PaypalSettings.ClientId);
+            Driver.FindElementById("paypal-client-secret").SendKeys(PaypalSettings.ClientSecret);
+            Driver.FindElementById("paypal-sandbox-client-secret").SendKeys(PaypalSettings.ClientSecret);
+            Driver.FindElementById("title").SendKeys("End to End");
+            Driver.FindElementById("keywords").SendKeys("functional testing tests");
+            Driver.FindElementById("description").SendKeys("This is a site  created by an automated, full site end to end test.");
+            Driver.ClickId("save-site-settings-button");
+            var alert = Driver.SwitchTo().Alert();
+            alert.Accept();
+            var top = Driver.FindElementById("edit-categories-link");
+            var actions = new Actions(Driver);
+            actions.MoveToElement(top);
+            actions.Perform();
         }
 
         private static void ProductCardZoomAndOpen(int index)
@@ -123,7 +147,6 @@ namespace BlueTapeCrew.EndToEndTests
 
         private static void AddCategories()
         {
-            Driver.FindElementById("adminLogin").Click();
             Driver.FindElementById("edit-categories-link").Click();
             foreach (var category in StringStubs.Categories)
             {

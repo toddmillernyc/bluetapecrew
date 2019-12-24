@@ -12,13 +12,25 @@ namespace BlueTapeCrew.Models
         private const string SandboxMode = "sandbox";
         private const string LiveMode = "live";
 
-        public PaymentRequest(Uri requestUri, SiteSetting settings, IList<CartView> cart, long invoiceNumber, string accessToken,  bool isSandbox = true)
+        public PaymentRequest(Uri requestUri, SiteSetting settings, IList<CartView> cart, long invoiceNumber, bool isSandbox = true)
         {
             InitApiCredentialsForMode(settings, isSandbox);
             Init(settings, cart);
             ItemList = GetItemListFrom(cart);
             InvoiceNumber = invoiceNumber.ToString();
             ReturnUrl = ($"{requestUri}review").ToLower();
+        }
+
+        private void Init(SiteSetting settings, IEnumerable<CartView> cart)
+        {
+            const decimal tax = 0.00m;
+            var subTotal = CalculateSubTotal(cart);
+            var shipping = CalculateShipping(settings, subTotal);
+            var total = subTotal + tax + shipping;
+
+            Subtotal = subTotal.ToString(MoneyFormat);
+            Total = total.ToString(MoneyFormat);
+            Shipping = shipping.ToString(MoneyFormat);
         }
 
         public string Currency => "USD";
@@ -54,18 +66,6 @@ namespace BlueTapeCrew.Models
                 ClientId = settings.PaypalClientId;
                 ClientSecret = settings.PaypalClientSecret;
             }
-        }
-
-        private void Init(SiteSetting settings, IEnumerable<CartView> cart)
-        {
-            const decimal tax = 0.00m;
-            var subTotal = CalculateSubTotal(cart);
-            var shipping = CalculateShipping(settings, subTotal);
-            var total = subTotal + tax + shipping;
-
-            Subtotal = subTotal.ToString(MoneyFormat);
-            Total = total.ToString(MoneyFormat);
-            Shipping = shipping.ToString(MoneyFormat);
         }
 
         private static decimal CalculateShipping(SiteSetting settings, decimal subtotal)

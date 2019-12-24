@@ -24,7 +24,7 @@
                 <h2>Site</h2>
                 <dl class="dl-horizontal">
                     <dt>Title</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.siteTitle" /></dd>
+                    <dd><input id="title" class="form-control" type="text" ng-model="settings.siteTitle" required /></dd>
                     <dt>Url</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.siteUrl" /></dd>
                     <dt>Logo Url</dt>
@@ -84,9 +84,9 @@
                     <dt>About Us</dt>
                     <dd><textarea class="form-control" ng-model="settings.aboutUs"></textarea></dd>
                     <dt>Description</dt>
-                    <dd><textarea rows="10" class="form-control" ng-model="settings.description"></textarea></dd>
+                    <dd><textarea rows="10" class="form-control" ng-model="settings.description" id="description" required></textarea></dd>
                     <dt>Keywords</dt>
-                    <dd><textarea class="form-control" ng-model="settings.keywords"></textarea></dd>
+                    <dd><textarea class="form-control" ng-model="settings.keywords" id="keywords" required></textarea></dd>
                 </dl>
             </div>
         </div>
@@ -97,9 +97,9 @@
                     <dt>Api User Name</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.paypalApiUsername" /></dd>
                     <dt>Client Id</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.paypalClientId" /></dd>
+                    <dd><input id="paypal-client-id" class="form-control" type="text" ng-model="settings.paypalClientId" /></dd>
                     <dt>Client Secret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.paypalClientSecret" /></dd>
+                    <dd><input id="paypal-client-secret" class="form-control" type="text" ng-model="settings.paypalClientSecret" /></dd>
                 </dl>
 
                 <h2>PayPal SandBox</h2>
@@ -107,9 +107,9 @@
                     <dt>Api User Name</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.paypalSandboxAccount" /></dd>
                     <dt>Sandbox ClientId</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.paypalSandBoxClientId" /></dd>
+                    <dd><input id="paypal-sandbox-client-id" class="form-control" type="text" ng-model="settings.paypalSandBoxClientId" /></dd>
                     <dt>Sanbox Secret</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.paypalSandBoxSecret" /></dd>
+                    <dd><input id="paypal-sandbox-client-secret" class="form-control" type="text" ng-model="settings.paypalSandBoxSecret" /></dd>
                 </dl>
             </div>
             <div class="col-md-6">
@@ -185,7 +185,7 @@
                 </dl>
             </div>
         </div>
-        <button type="button" class="btn btn-success" ng-click="saveSettings(settings)">Save</button>
+        <button type="button" class="btn btn-success" ng-click="saveSettings(settings)" id="save-site-settings-button">Save</button>
     </div>
     @foreach (var item in Model)
     {
