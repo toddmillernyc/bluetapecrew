@@ -60,10 +60,8 @@ namespace BlueTapeCrew.EndToEndTests
             Driver.ClickId("button-confirm");
             Driver.FindElementById("email").SendKeys(PaypalSettings.PaypalBuyer);
             Driver.ClickId("btnNext");
-            //Thread.Sleep(1000);
             Driver.FindElementById("password").SendKeys(PaypalSettings.PaypalBuyerPassword);
             Driver.ClickId("btnLogin");
-            //Thread.Sleep(5000);
             Driver.ClickId("confirmButtonTop");
             Driver.ClickId("confirm-order-button");
             Driver.ClickId("manage-account-header-link");
@@ -205,7 +203,6 @@ namespace BlueTapeCrew.EndToEndTests
         {
             var confirmEmailLink = await GetConfirmEmailFromDeadLetterDirectory();
             Driver.Navigate().GoToUrl(confirmEmailLink);
-            //Thread.Sleep(5);
             Driver.FindElementById("click-here-to-login-link").Click();
             Driver.FindElementById("Email").SendKeys(Email);
             Driver.FindElementById("Password").SendKeys(Password);
