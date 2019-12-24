@@ -1,4 +1,4 @@
-﻿@model BlueTapeCrew.ViewModels.CheckoutViewModel
+﻿@model BlueTapeCrew.ViewModels.CheckoutRequest
 <div class="main">
     <div class="container">
         @using (Html.BeginForm("Index", "Checkout", FormMethod.Post))
@@ -87,8 +87,8 @@
                                             <input type="text" id="state" name="State" class="form-control" value="@Model.State">
                                         </div>
                                         <div class="form-group">
-                                            <label for="zip">Zip <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.Zip, null, new { @class = "text text-danger" })
-                                            <input type="text" id="zip" name="Zip" class="form-control" value="@Model.Zip">
+                                            <label for="postalCode">Postal Code <span class="require">*</span></label>@Html.ValidationMessageFor(x => x.PostalCode, null, new { @class = "text text-danger" })
+                                            <input type="text" id="postalCode" name="PostalCode" class="form-control" value="@Model.PostalCode">
                                         </div>
                                     </div>
                                     <hr>

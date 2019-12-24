@@ -15,5 +15,11 @@
             public const string UnconfirmedEmailMessage = "Please confirm your email before logging in.  The email has been re-sent to your account.";
             public const string UserRegistrationError = "There was an error registering your user account";
         }
+
+        public class Orders
+        {
+            public const string ErrorMessage = "Your order was not placed, there was an issue.  Please contact us.";
+            public const string EmailSubject = "Your BlueTapeCrew.com order";
+        }
     }
 }

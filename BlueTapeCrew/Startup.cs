@@ -1,3 +1,4 @@
+using AutoMapper;
 using BlueTapeCrew.Data;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Repositories.Interfaces;
@@ -22,6 +23,7 @@ namespace BlueTapeCrew
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -44,11 +46,12 @@ namespace BlueTapeCrew
 
         public static void RegisterRepositoryTypes(IServiceCollection services)
         {
-            services.AddTransient<ICategoryProductsRepository, CategoryProductsRepository>();
-            services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<ICartRepository, CartRepository>();
-            services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
+            services.AddTransient<ICategoryProductsRepository, CategoryProductsRepository>();
+            services.AddTransient<IGuestUserRepository, GuestUserRepository>();
+            services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
         }
 
         public static void RegisterServiceTypes(IServiceCollection services)

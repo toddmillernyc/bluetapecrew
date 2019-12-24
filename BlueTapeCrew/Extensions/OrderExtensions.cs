@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using BlueTapeCrew.Models;
+using Entities;
 
 namespace BlueTapeCrew.Extensions
 {
@@ -16,9 +17,9 @@ namespace BlueTapeCrew.Extensions
             order.Phone = user.PhoneNumber;
         }
 
-        public static void UpdateUser(this Order order, ApplicationUser user)
+        public static void UpdateUser(this Order order, User user)
         {
-            order.UserName = user.UserName;
+            order.UserName = user.Email;
             order.Email = user.Email;
             order.FirstName = user.FirstName;
             order.LastName = user.LastName;

@@ -1,9 +1,9 @@
-﻿var getCart = function() {
+﻿var getCart = function () {
     $.get("Cart/Index",
-        function(data) {
+        function (data) {
             $(".top-cart-block").html(data);
             var isRtl = false;
-            $(".scroller").each(function() {
+            $(".scroller").each(function () {
                 var height;
                 if ($(this).attr("data-height")) {
                     height = $(this).attr("data-height");
@@ -24,42 +24,39 @@
             });
         });
 };
-var getPopUp = function(name) {
+var getPopUp = function (name) {
     alert(name);
 };
-var removeItem = function(id) {
+var removeItem = function (id) {
     $.post("Cart/Delete/" + id,
-        function() {
+        function () {
             getCart();
             $(".top-cart-content").show();
         });
 };
 
-var removeFromCart = function(id) {
+var removeFromCart = function (id) {
     $.post("Cart/Delete/" + id,
-        function() {
+        function () {
             document.location.reload(true);
         });
 };
-var removeItemCheckout = function(id) {
+var removeItemCheckout = function (id) {
     $.post("Cart/Delete/" + id,
-        function() {
+        function () {
             document.location.reload(true);
         });
 };
 
-var addItem = function() {
-    $.post("Cart/Post/",
-        { styleId: $("#StyleId").val(), quantity: $("#quantity").val() },
-        function() {
-            $("#quantity").val(1);
-            getCart();
-        });
+var addItem = function () {
+    $.post("api/cart/" + $("#StyleId").val() + "/" + $("#quantity").val(), function () {
+        getCart();
+    });
 };
 
-var getPrice = function(id) {
+var getPrice = function (id) {
     $.get("Products/GetStylePrice/" + id,
-        function(data) {
+        function (data) {
             $("#price").html(data);
         });
 };

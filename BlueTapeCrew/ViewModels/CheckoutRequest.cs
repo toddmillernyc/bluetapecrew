@@ -1,15 +1,16 @@
 ﻿using Entities;
 using System.ComponentModel.DataAnnotations;
+using BlueTapeCrew.Models;
 
 namespace BlueTapeCrew.ViewModels
 {
-    public class CheckoutViewModel
+    public class CheckoutRequest
     {
         public string ReturnUrl { get; }
 
-        public CheckoutViewModel() { }
+        public CheckoutRequest() { }
 
-        public CheckoutViewModel(ApplicationUser user, CartViewModel cart, string returnUrl)
+        public CheckoutRequest(User user, CartViewModel cart, string returnUrl)
         {
             ReturnUrl = returnUrl;
             Cart = cart;
@@ -22,10 +23,10 @@ namespace BlueTapeCrew.ViewModels
             Address = user.Address;
             City = user.City;
             State = user.State;
-            Zip = user.PostalCode;
+            PostalCode = user.PostalCode;
         }
 
-        public CheckoutViewModel(GuestUser user, CartViewModel cart)
+        public CheckoutRequest(GuestUser user, CartViewModel cart)
         {
             Cart = cart;
             if (user == null) return;
@@ -37,7 +38,7 @@ namespace BlueTapeCrew.ViewModels
             Address = user.Address;
             City = user.City;
             State = user.State;
-            Zip = user.PostalCode;
+            PostalCode = user.PostalCode;
         }
 
         public string UserName { get; set; }
@@ -63,7 +64,7 @@ namespace BlueTapeCrew.ViewModels
         public string State { get; set; }
 
         [Required]
-        public string Zip { get; set; }
+        public string PostalCode { get; set; }
 
         [StringLength(20, ErrorMessage = "Phone cannot be longer than 40 characters.")]
         [Required(ErrorMessage = "Phone Number is required")]

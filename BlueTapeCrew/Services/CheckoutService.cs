@@ -1,8 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using BlueTapeCrew.Models;
+﻿using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
+using BlueTapeCrew.ViewModels;
 using PayPal;
+using System;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {
@@ -11,15 +12,28 @@ namespace BlueTapeCrew.Services
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly ICartService _cartService;
         private readonly IPaypalService _paypalService;
+        private readonly IUserService _userService;
+        private readonly ISessionService _session;
 
         public CheckoutService(
             ISiteSettingsService siteSettingsService, 
             ICartService cartService,
-            IPaypalService paypalService)
+            IPaypalService paypalService, IUserService userService,
+            ISessionService session)
         {
             _siteSettingsService = siteSettingsService;
             _cartService = cartService;
             _paypalService = paypalService;
+            _userService = userService;
+            _session = session;
+        }
+
+        public async Task<CheckoutRequest> CreateCheckoutRequest(string username, string returnUrl)
+        {
+            var user = await _userService.Find(username);
+            var cart = await _cartService.GetCartViewModel(_session.SessionId());
+            var model = new CheckoutRequest(user, cart, returnUrl);
+            return model;
         }
 
         public async Task<string> Start(string sessionId, Uri requestUri, bool isSandbox)

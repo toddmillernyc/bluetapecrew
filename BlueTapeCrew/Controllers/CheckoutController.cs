@@ -1,23 +1,22 @@
-﻿using BlueTapeCrew.Email;
+﻿using AutoMapper;
+using BlueTapeCrew.Email;
 using BlueTapeCrew.Extensions;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 using Entities;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using PayPal;
+using System;
+using System.Threading.Tasks;
+using OrderMsg = BlueTapeCrew.Models.Constants.Orders;
 
 namespace BlueTapeCrew.Controllers
 {
     [RequireHttps]
     public class CheckoutController : Controller
     {
-        private const string OrderErrorMessage = "Your order was not placed, there was an issue.  Please contact us.";
-        private const string OrderEmailSubject = "Your BlueTapeCrew.com order";
 
         private readonly bool _isSandbox;
 
@@ -27,8 +26,8 @@ namespace BlueTapeCrew.Controllers
         private readonly IOrderService _orderService;
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IUserService _userService;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISessionService _session;
+        private readonly IMapper _mapper;
 
         public CheckoutController(
             ICartService cartService,
@@ -37,8 +36,8 @@ namespace BlueTapeCrew.Controllers
             IOrderService orderService,
             ISiteSettingsService siteSettingsService,
             IUserService userService,
-            UserManager<ApplicationUser> userManager,
-            ISessionService session)
+            ISessionService session,
+            IMapper mapper)
         {
             _cartService = cartService;
             _checkoutService = checkoutService;
@@ -46,56 +45,40 @@ namespace BlueTapeCrew.Controllers
             _orderService = orderService;
             _siteSettingsService = siteSettingsService;
             _userService = userService;
-            _userManager = userManager;
             _session = session;
+            _mapper = mapper;
 #if DEBUG
             _isSandbox = true;
 #endif
         }
 
         [HttpGet]
-        public async Task<ViewResult> Index()
+        public async Task<IActionResult> Index()
         {
-            var cart = await Cart;
-            if (cart.IsEmpty) return View("EmptyCart");
-            var userName = User.Identity?.Name ?? string.Empty;
-            var user = await GetUserBy(userName);
             var returnUrl = HttpContext.Request.Path.ToString();
-            var model = new CheckoutViewModel(user, cart, returnUrl);
-            return View(model);
+            var checkoutModel = await _checkoutService.CreateCheckoutRequest(User.Identity.Name, returnUrl);
+            return checkoutModel.Cart.IsEmpty
+                ? View("EmptyCart")
+                : View(checkoutModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(CheckoutViewModel model)
+        public async Task<ActionResult> Index(CheckoutRequest model)
         {
-            if (!ModelState.IsValid)
-            {
-                model.Cart = await Cart;
-                return View(model);
-            }
+            if (!ModelState.IsValid) return View(model);
             try
             {
+                model.Cart = await Cart;
                 model.UserName = User.Identity.Name;
                 model.SessionId = _session.SessionId();
-                if(User.Identity.IsAuthenticated)
+                if (User.Identity.IsAuthenticated)
                 {
                     await _userService.UpdateUser(model);
                 }
                 else
                 {
-                    var guestUser = new GuestUser
-                    {
-                        SessionId = model.SessionId,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Address = model.Address,
-                        City = model.City,
-                        State = model.State,
-                        PostalCode = model.Zip,
-                        PhoneNumber = model.Phone,
-                        Email = model.Email,
-                    };
+                    var guestUser = _mapper.Map<GuestUser>(model);
                     TryValidateModel(guestUser);
                     if (!ModelState.IsValid) return View(model);
                     await _userService.CreateGuestUser(guestUser);
@@ -124,8 +107,8 @@ namespace BlueTapeCrew.Controllers
             ViewBag.PayerId = payerId;
             ViewBag.PaymentId = paymentId;
             var model = User.Identity.IsAuthenticated
-                ? new CheckoutViewModel(await GetUserBy(User.Identity.Name), await Cart, HttpContext.Request.Path.ToString())
-                : new CheckoutViewModel(await GuestUser, await Cart);
+                ? new CheckoutRequest(await _userService.Find(User.Identity.Name), await Cart, HttpContext.Request.Path.ToString())
+                : new CheckoutRequest(await GuestUser, await Cart);
             return View(model);
         }
 
@@ -150,7 +133,7 @@ namespace BlueTapeCrew.Controllers
         {
             var order = new Order { IpAddress = Request.Host.Host, SessionId = _session.SessionId() };
             if (User.Identity.IsAuthenticated)
-                order.UpdateUser(await GetUserBy(User.Identity.Name));
+                order.UpdateUser(await _userService.Find(User.Identity.Name));
             else
                 order.UpdateUser(await GuestUser);
             return order;
@@ -166,7 +149,7 @@ namespace BlueTapeCrew.Controllers
 
         public async Task<ActionResult> OrderError()
         {
-            ViewBag.Message = OrderErrorMessage;
+            ModelState.AddModelError(string.Empty, OrderMsg.ErrorMessage);
             return View(await Cart);
         }
 
@@ -177,19 +160,10 @@ namespace BlueTapeCrew.Controllers
             var settings = await _siteSettingsService.Get();
             var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, User.Identity.IsAuthenticated);
             var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
-            return new SmtpRequest(settings, htmlBody, textBody, order.Email, OrderEmailSubject);
+            return new SmtpRequest(settings, htmlBody, textBody, order.Email, OrderMsg.EmailSubject);
         }
 
-        private async Task<ApplicationUser> GetUserBy(string name)
-        {
-            if (string.IsNullOrEmpty(name)) return null;
-            return await _userManager.FindByNameAsync(name);
-        }
         private Task<GuestUser> GuestUser => _userService.GetGuestUser(_session.SessionId());
-
-        protected override void Dispose(bool disposing)
-        {
-            _userManager?.Dispose();
-        }
+        protected override void Dispose(bool disposing) { }
     }
 }

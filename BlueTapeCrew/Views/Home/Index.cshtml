@@ -16,19 +16,22 @@
                     <div class="owl-carousel owl-carousel-home">
                         @foreach (var item in category.Products)
                         {
+                            var i = 0;
                             <div>
                                 <div class="product-item">
-                                    <div class="pi-img-wrapper">
+                                    <div class="pi-img-wrapper" id="product-image-wrapper-@i">
                                         <img class="lazyOwl img-responsive" data-src="@item.ImgSource" src="@item.ImgSource" alt="@item.Name">
                                         <div>
-                                            <a href="~/images/@(item.LinkName).jpg" class="btn btn-default fancybox-button"><i style="color: white" class="fa fa-expand"></i></a>
+                                            <a href="~/images/@(item.LinkName).jpg" class="btn btn-default fancybox-button" id="fancybox-button-@i">
+                                                <i style="color: white" class="fa fa-expand"></i>
+                                            </a>
                                         </div>
                                     </div>
                                     <h3>
                                         <a href="~/products/@item.LinkName">@item.LinkName</a>
                                     </h3>
                                     <div class="pi-price">$@item.Price</div>
-                                    <a href="products/@item.LinkName" class="btn btn-default add2cart">Details</a>
+                                    <a href="products/@item.LinkName" class="btn btn-default add2cart" id='product-details-link-@i'>Details</a>
                                 </div>
                             </div>
                         }

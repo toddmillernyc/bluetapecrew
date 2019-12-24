@@ -1,10 +1,11 @@
 ﻿using BlueTapeCrew.Controllers;
 using BlueTapeCrew.Models;
 using BlueTapeCrew.ViewModels;
+using Entities;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Entities;
 using Xunit;
 
 namespace Btc.Tests.Unit
@@ -34,8 +35,8 @@ namespace Btc.Tests.Unit
                     _fixture.OrderService.Object,
                     _fixture.SiteSettingsService.Object,
                     _fixture.UserService.Object,
-                    userManager.Object,
-                    _fixture.SessionService.Object
+                    _fixture.SessionService.Object,
+                    _fixture.Mapper.Object
             );
         }
 
@@ -50,9 +51,10 @@ namespace Btc.Tests.Unit
 
             //act
             var response = await sut.Index();
+            var viewResult = (ViewResult) response;
 
             //assert
-            Assert.Equal("EmptyCart", response.ViewName);
+            Assert.Equal("EmptyCart", viewResult.ViewName);
         }
     }
 }

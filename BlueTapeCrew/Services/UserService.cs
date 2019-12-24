@@ -1,69 +1,54 @@
-﻿using BlueTapeCrew.Data;
+﻿using BlueTapeCrew.Models;
+using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
+using Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models;
-using Entities;
+using AutoMapper;
 
 namespace BlueTapeCrew.Services
 {
     public class UserService : IUserService, IDisposable
     {
-        private readonly BtcEntities _db;
+        private readonly IGuestUserRepository _guestUsers;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public UserService(UserManager<ApplicationUser> userManager, BtcEntities db)
+        public UserService(
+            UserManager<ApplicationUser> userManager,
+            IGuestUserRepository guestUsers, IMapper mapper)
         {
             _userManager = userManager;
-            _db = db;
+            _guestUsers = guestUsers;
+            _mapper = mapper;
         }
 
         public async Task<User> Find(string email)
         {
+            if (string.IsNullOrEmpty(email)) return null;
             var applicationUser = await _userManager.FindByEmailAsync(email);
             if (applicationUser == null) return null;
-
-            var user = new User
-            {
-                Email = applicationUser.Email,
-                EmailIsConfirmed = await _userManager.IsEmailConfirmedAsync(applicationUser)
-            };
+            var user = _mapper.Map<User>(applicationUser);
+            user.EmailIsConfirmed = await _userManager.IsEmailConfirmedAsync(applicationUser);
             return user;
         }
 
-        public async Task<GuestUser> GetGuestUser(string sessionId)
+        public async Task<GuestUser> GetGuestUser(string sessionId) => await _guestUsers.FindBy(sessionId);
+
+        public async Task UpdateUser(CheckoutRequest model)
         {
-            return await _db.GuestUsers.FirstOrDefaultAsync(x => x.SessionId.Equals(sessionId));
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null) throw new Exception("user not found");
+            user = _mapper.Map<ApplicationUser>(model);
+            await _userManager.UpdateAsync(user);
         }
 
-        //TODO: try to give checkoutviewmodel a user object rather than flat
-        public async Task UpdateUser(CheckoutViewModel model)
-        {
-            var dbUser = await _userManager.FindByNameAsync(model.UserName);
-            if (dbUser == null) throw new Exception("user not found");
-            dbUser.FirstName = model.FirstName;
-            dbUser.LastName = model.LastName;
-            dbUser.Address = model.Address;
-            dbUser.City = model.City;
-            dbUser.State = model.State;
-            dbUser.PostalCode = model.Zip;
-            dbUser.PhoneNumber = model.Phone;
-            dbUser.Email = model.Email;
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task CreateGuestUser(GuestUser model)
-        {
-            _db.GuestUsers.Add(model);
-            await _db.SaveChangesAsync();
-        }
+        public async Task CreateGuestUser(GuestUser model) => await _guestUsers.Create(model);
 
         public void Dispose()
         {
-            _db?.Dispose();
             _userManager?.Dispose();
         }
     }

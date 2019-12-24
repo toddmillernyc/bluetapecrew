@@ -23,9 +23,6 @@ namespace BlueTapeCrew.Controllers
 
         public async Task<PartialViewResult> Index() => PartialView(await Cart);
 
-        [HttpPost]
-        public async Task Post(int styleId,int quantity) => await _cartService.AddOrUpdate(_session.SessionId(), styleId, quantity);
-
         public async Task Delete(int id) => await _cartService.DecrementCartItem(id);
     }
 }

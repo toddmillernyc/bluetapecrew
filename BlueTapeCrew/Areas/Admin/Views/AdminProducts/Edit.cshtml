@@ -118,7 +118,7 @@
                                 <td>@Html.DropDownList("ColorId")</td>
                                 <td>@Html.DropDownList("SizeId")</td>
                                 <td><input type="text" name="Price" /></td>
-                                <td><button type="submit" class="btn bg-blue-dark">Add Style</button></td>
+                                <td><button type="submit" class="btn bg-blue-dark" id="add-style-submit-button">Add Style</button></td>
                             </form>
                         </tr>
                     </tbody>
@@ -158,7 +158,7 @@
                                         <td><input type="text" name="size" /></td>
                                         <td>
                                             <input type="hidden" name="productId" value="@Model.Product.Id" />
-                                            <button type="submit" class="btn btn-success">Add Size</button>
+                                            <button type="submit" class="btn btn-success" id="add-size-submit-button">Add Size</button>
                                         </td>
                                     </tr>
                                 </form>
@@ -201,7 +201,7 @@
                                             <input type="hidden" value="@Model.Product.Id" name="productId" />
                                             <input type="text" name="newColor" />
                                         </td>
-                                        <td><button type="submit" class="btn purple-medium">Add Color</button></td>
+                                        <td><button type="submit" class="btn purple-medium" id="submit-add-color-button">Add Color</button></td>
                                     </tr>
                                 </form>
 
@@ -239,9 +239,9 @@
                 <h3>Add New Image</h3>
                 <form action="AddAdditionalImage" id="additonalImageForm" enctype="multipart/form-data">
                     @Html.AntiForgeryToken()
-                    <input type="file" name="file" />
+                    <input type="file" name="file" id="additional-image-chooser" />
                     <input type="hidden" name="productId" value="@Model.Product.Id" />
-                    <input type="submit" value="Upload" class="btn btn-default" />
+                    <input type="submit" value="Upload" class="btn btn-default" id="upload-additional-image-button" />
                 </form>
             </div>
             <hr />

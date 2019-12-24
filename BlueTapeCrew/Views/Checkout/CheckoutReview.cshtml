@@ -1,4 +1,4 @@
-﻿@model BlueTapeCrew.ViewModels.CheckoutViewModel
+﻿@model BlueTapeCrew.ViewModels.CheckoutRequest
 <div class="main">
     <div class="container">
         <h1>Order Review</h1>
@@ -35,7 +35,7 @@
                 @Model.Email<br />
                 <br />
                 @Model.Address<br />
-                @Model.City, @Model.State @Model.Zip
+                @Model.City, @Model.State @Model.PostalCode
                 <hr />
                 <h1>Order Total</h1>
                 Subtotal: @Html.DisplayFor(x=>x.Cart.Totals.SubTotal)<br />

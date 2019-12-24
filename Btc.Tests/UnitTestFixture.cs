@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
 using BlueTapeCrew.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using System.Collections.Generic;
+using BlueTapeCrew.Repositories.Interfaces;
 using Xunit;
 
 namespace Btc.Tests
@@ -19,6 +21,8 @@ namespace Btc.Tests
         public Mock<ISiteSettingsService> SiteSettingsService = new Mock<ISiteSettingsService>();
         public Mock<IUserService> UserService = new Mock<IUserService>();
         public Mock<ISessionService> SessionService = new Mock<ISessionService>();
+        public Mock<IMapper> Mapper = new Mock<IMapper>();
+        public Mock<IGuestUserRepository> GuestUserRepository = new Mock<IGuestUserRepository>();
 
         public Mock<UserManager<TUser>> GetMockUserManager<TUser>(List<TUser> ls) where TUser : class
         {

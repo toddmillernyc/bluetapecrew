@@ -12,7 +12,7 @@ using BlueTapeCrew.EndToEndTests.Helpers;
 
 namespace BlueTapeCrew.EndToEndTests
 {
-    public class EneToEndTestBase : IDisposable
+    public class E2ETestBase : IDisposable
     {
         public const string DeadLetterPath = "C:\\SMTP\\DeadLetter";
         public string Password = "Password123!";
@@ -25,7 +25,7 @@ namespace BlueTapeCrew.EndToEndTests
         private static string TestRunId = Guid.NewGuid().ToString().Substring(0, 5);
         private static string _connectionString;
 
-        public EneToEndTestBase()
+        public E2ETestBase()
         {
             var configJson = File.ReadAllText("testsettings.json");
             var settings = JsonConvert.DeserializeObject<TestSettings>(configJson);
@@ -38,23 +38,32 @@ namespace BlueTapeCrew.EndToEndTests
 
         public void Dispose()
         {
-            Cleanup(_connectionString);
+            Cleanup();
             Driver.Close();
             Driver.Dispose();
         }
 
 
-        private static async Task Cleanup(string connectionString)
+        protected async Task Cleanup()
         {
-            await using var conn = new SqlConnection(connectionString);
+            await using var conn = new SqlConnection(_connectionString);
 
             //deletes
             var queries = new List<string>()
             {
+                "DELETE FROM dbo.Cart",
+                "DELETE FROM dbo.Styles",
+                "DELETE FROM dbo.ProductCategories",
+                "DELETE FROM dbo.ProductImages",
                 "DELETE FROM dbo.AspNetUsers",
                 "DELETE FROM dbo.AspNetUserRoles",
                 "DELETE FROM dbo.AspNetRoles",
-                "DELETE FROM dbo.Categories"
+                "DELETE FROM dbo.ProductCategories",
+                "DELETE FROM dbo.Categories",
+                "DELETE FROM dbo.Colors",
+                "DELETE FROM dbo.Sizes",
+                "DELETE FROM dbo.Products",
+                "DELETE FROM dbo.Images"
             };
             foreach (var query in queries)
             {
