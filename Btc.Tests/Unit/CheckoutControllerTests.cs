@@ -31,9 +31,7 @@ namespace Btc.Tests.Unit
             return new CheckoutController(
                     _fixture.CartService.Object,
                     _fixture.CheckoutService.Object,
-                    _fixture.EmailService.Object,
                     _fixture.OrderService.Object,
-                    _fixture.SiteSettingsService.Object,
                     _fixture.UserService.Object,
                     _fixture.SessionService.Object,
                     _fixture.Mapper.Object

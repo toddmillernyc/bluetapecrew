@@ -34,7 +34,7 @@ namespace BlueTapeCrew.Email
             return html;
         }
 
-        public static string GetOrderConfirmationTextBody(Order order, bool isAuthenticated)
+        public static string GetOrderConfirmationTextBody(Order order, bool isGuestUser)
         {
             var message = "Your BlueTapeCrew.com order has been placed.\r\n\r\n Shipping Info:\r\n\r\n";
             message += order.FirstName + " " + order.LastName + "\r\n";
@@ -57,7 +57,7 @@ namespace BlueTapeCrew.Email
             message += "Shipping: " + order.Shipping;
             message += "Total: " + order.Total;
             message += "\r\n\r\n";
-            if (isAuthenticated)
+            if (isGuestUser)
                 message += "Check your order status at https://bluetapecrew.com";
             else
                 message += "email info@bluetapecrew.com for order status.";

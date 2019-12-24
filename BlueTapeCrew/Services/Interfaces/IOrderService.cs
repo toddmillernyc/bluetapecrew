@@ -7,6 +7,6 @@ namespace BlueTapeCrew.Services.Interfaces
     public interface IOrderService
     {
         Task<int> Create(Order order, CartViewModel cart);
-        Task<Order> GetOrder(int id);
+        Task<Order> SendConfirmationEmail(int orderId);
     }
 }

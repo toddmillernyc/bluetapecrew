@@ -1,4 +1,6 @@
 ﻿using BlueTapeCrew.Data;
+using BlueTapeCrew.Email;
+using BlueTapeCrew.Models;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
 using Entities;
@@ -6,16 +8,26 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static BlueTapeCrew.Models.Constants;
 
 namespace BlueTapeCrew.Services
 {
     public class OrderService : IOrderService, IDisposable
     {
         private readonly BtcEntities _db;
+        private readonly ISiteSettingsService _siteSettingsService;
+        private readonly IUserService _users;
+        private readonly IEmailService _emailService;
 
-        public OrderService(BtcEntities db)
+        public OrderService(BtcEntities db,
+            ISiteSettingsService siteSettingsService,
+            IUserService users,
+            IEmailService emailService)
         {
             _db = db;
+            _siteSettingsService = siteSettingsService;
+            _users = users;
+            _emailService = emailService;
         }
 
         public async Task<int> Create(Order order, CartViewModel cart)
@@ -38,9 +50,22 @@ namespace BlueTapeCrew.Services
             return order.Id;
         }
 
-        public async Task<Order> GetOrder(int id)
+        public async Task<Order> SendConfirmationEmail(int orderId)
         {
-            return await _db.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(x => x.Id == id);
+            var order = await _db.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(x => x.Id == orderId);
+            var emailRequest = await GetSmtpRequest(order);
+            await _emailService.SendEmail(emailRequest);
+            return order;
+        }
+
+        private async Task<SmtpRequest> GetSmtpRequest(Order order)
+        {
+            var settings = await _siteSettingsService.Get();
+            var user = await _users.Find(order.Email);
+
+            var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, user != null);
+            var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
+            return new SmtpRequest(settings, htmlBody, textBody, order.Email, Orders.EmailSubject);
         }
 
         public void Dispose()
