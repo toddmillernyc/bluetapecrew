@@ -98,9 +98,16 @@ namespace BlueTapeCrew.Controllers
             ViewBag.PaymentId = paymentId;
 
             var cart = await _cartService.GetCartViewModel(_session.SessionId());
-            var model = User.Identity.IsAuthenticated
-                    ? new CheckoutRequest(await _userService.Find(User.Identity.Name), cart, HttpContext.Request.Path.ToString())
-                    : new CheckoutRequest(await _userService.GetGuestUser(_session.SessionId()), cart);
+            CheckoutRequest model;
+            if (User.Identity.IsAuthenticated)
+            {
+                model = new CheckoutRequest(await _userService.Find(User.Identity.Name), cart, HttpContext.Request.Path.ToString());
+            }
+            else
+            {
+                var guestUser = await _userService.GetGuestUser(_session.SessionId());
+                model = new CheckoutRequest(guestUser, cart);
+            }
             return View(model);
         }
 

@@ -23,7 +23,7 @@
                                             <p>Checkout Options:</p>
                                             <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
                                             <div class="h3">@Html.ActionLink("Login/Register", "Login", "Account", new { Model.ReturnUrl }, null)</div>
-                                            <button class="btn btn-info" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#payment-address-content">Continue with guest checkout</button>
+                                            <button id="guest-checkout-button" class="btn btn-info" type="button" data-toggle="collapse" data-parent="#checkout-page" data-target="#payment-address-content">Continue with guest checkout</button>
                                         </div>
                                     }
                                     else

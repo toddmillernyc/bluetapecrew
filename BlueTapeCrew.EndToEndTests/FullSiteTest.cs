@@ -42,6 +42,7 @@ namespace BlueTapeCrew.EndToEndTests
                     AddProducts();
                     ViewProductsAndAddToCart();
                     Checkout();
+                    GuestCheckout();
                     break;
                 }
                 catch
@@ -50,6 +51,30 @@ namespace BlueTapeCrew.EndToEndTests
                     tryCount++;
                 }
             }
+        }
+
+        private void GuestCheckout()
+        {
+            Driver.ClickId("logoff");
+            Driver.ClickId("product-details-link-0");
+            Driver.ClickId("add-to-cart-button");
+            Driver.ClickId("cart-header-link");
+            Driver.ClickId("cart-checkout-link");
+            Driver.ClickId("guest-checkout-button");
+            Driver.FindElementById("firstname").SendKeys("Guest");
+            Driver.FindElementById("lastname").SendKeys("User");
+            Driver.FindElementById("email").SendKeys("btguestuser@mailinator.com");
+            Driver.FindElementById("telephone").SendKeys("212-222-3333");
+            Driver.FindElementById("address").SendKeys("120 1st Ave.");
+            Driver.FindElementById("city").SendKeys("Manhattan");
+            Driver.FindElementById("state").SendKeys("NY");
+            Driver.FindElementByName("PostalCode").SendKeys("10021");
+            Driver.FindElementById("button-payment-address").Click();
+            Thread.Sleep(1000);
+            Driver.ClickId("button-confirm");
+            Driver.ClickId("confirmButtonTop");
+            Driver.ClickId("confirm-order-button");
+            Driver.ClickId("manage-account-header-link");
         }
 
         private void Checkout()

@@ -41,7 +41,7 @@ namespace BlueTapeCrew.EndToEndTests
             Helper = new EndToEndTestHelper(_connectionString);
             
             Driver = new ChromeDriver();
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             Driver.Manage().Window.Maximize();
             
         }

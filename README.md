@@ -10,9 +10,7 @@ I was far less experienced when I initially pushed this to production and have b
 
 ## Features
   - Front end based on [KeenThemes] Metronic Store Template
-
   - Paypal integration
-
   - Mobile Repsonsive
   - Client Accessable Admin
   - Built in Image Handling

@@ -32,11 +32,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Data\SQL\" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
 
