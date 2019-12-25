@@ -11,15 +11,7 @@ namespace BlueTapeCrew.ApiControllers
     public class MenuController : ControllerBase
     {
         private readonly IMenuService _menuService;
-
-        public MenuController(IMenuService menuService)
-        {
-            _menuService = menuService;
-        }
-
-        public async Task<IEnumerable<MenuCategory>> Get()
-        {
-            return await _menuService.Get();
-        }
+        public MenuController(IMenuService menuService) { _menuService = menuService; }
+        public async Task<IEnumerable<MenuCategory>> Get() => await _menuService.Get();
     }
 }

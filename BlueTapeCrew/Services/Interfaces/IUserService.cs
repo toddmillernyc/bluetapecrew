@@ -8,7 +8,7 @@ namespace BlueTapeCrew.Services.Interfaces
     public interface IUserService
     {
         Task<GuestUser> GetGuestUser(string sessionId);
-        Task UpdateUser(CheckoutRequest model);
+        Task<bool> UpdateUser(CheckoutRequest model);
         Task CreateGuestUser(GuestUser model);
         Task<User> Find(string email);
     }

@@ -1,6 +1,7 @@
 ﻿using BlueTapeCrew.ViewModels;
-using System.Threading.Tasks;
 using Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services.Interfaces
 {
@@ -8,5 +9,6 @@ namespace BlueTapeCrew.Services.Interfaces
     {
         Task<int> Create(Order order, CartViewModel cart);
         Task<Order> SendConfirmationEmail(int orderId);
+        Task<IEnumerable<Order>> GetBy(string userName);
     }
 }

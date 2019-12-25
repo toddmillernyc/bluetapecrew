@@ -37,12 +37,19 @@ namespace BlueTapeCrew.Services
 
         public async Task<GuestUser> GetGuestUser(string sessionId) => await _guestUsers.FindBy(sessionId);
 
-        public async Task UpdateUser(CheckoutRequest model)
+        public async Task<bool> UpdateUser(CheckoutRequest model)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null) throw new Exception("user not found");
-            user = _mapper.Map<ApplicationUser>(model);
-            await _userManager.UpdateAsync(user);
+            user.City = model.City;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PostalCode = model.PostalCode;
+            user.State = model.State;
+            user.Address = model.Address;
+            user.PhoneNumber = model.Phone;
+            var result = await _userManager.UpdateAsync(user);
+            return result.Succeeded;
         }
 
         public async Task CreateGuestUser(GuestUser model) => await _guestUsers.Create(model);

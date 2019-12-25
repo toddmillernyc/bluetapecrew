@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using BlueTapeCrew.Services.Interfaces;
+﻿using BlueTapeCrew.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.ApiControllers
 {

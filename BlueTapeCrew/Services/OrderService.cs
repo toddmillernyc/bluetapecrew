@@ -6,6 +6,7 @@ using BlueTapeCrew.ViewModels;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static BlueTapeCrew.Models.Constants;
@@ -62,15 +63,18 @@ namespace BlueTapeCrew.Services
         {
             var settings = await _siteSettingsService.Get();
             var user = await _users.Find(order.Email);
-
             var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, user != null);
             var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
             return new SmtpRequest(settings, htmlBody, textBody, order.Email, Orders.EmailSubject);
         }
 
-        public void Dispose()
-        {
-            _db?.Dispose();
-        }
+        public async Task<IEnumerable<Order>> GetBy(string userName) 
+            => await _db.Orders
+                .Include(x => x.OrderItems)
+                .Where(x => x.UserName == userName)
+                .OrderByDescending(x => x.DateCreated)
+                .ToListAsync();
+
+        public void Dispose() => _db?.Dispose();
     }
 }

@@ -17,15 +17,18 @@ namespace BlueTapeCrew.Services
         private readonly IEmailService _emailSender;
         private readonly ISiteSettingsService _settings;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public UserRegistrationService(
             IEmailService emailSender,
             ISiteSettingsService settings,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _emailSender = emailSender;
             _settings = settings;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<bool> ResetPassword(ResetPasswordRequest model)
@@ -77,6 +80,27 @@ namespace BlueTapeCrew.Services
         {
             var user = new ApplicationUser { UserName = email, Email = email };
             var result = await _userManager.CreateAsync(user, password);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> ChangePassword(string userName, string oldPassword, string newPassword)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null) return false;
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            return result.Succeeded;
+        }
+
+        public async Task SignInBy(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            await _signInManager.SignInAsync(user, false);
+        }
+
+        public async Task<bool> SetPassword(string username, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(username);
+            var result = await _userManager.AddPasswordAsync(user, password);
             return result.Succeeded;
         }
 
