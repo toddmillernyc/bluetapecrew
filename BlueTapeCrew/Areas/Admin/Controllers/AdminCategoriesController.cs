@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Threading.Tasks;
+using BlueTapeCrew.Services.Interfaces;
 using Entities;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
@@ -14,32 +15,30 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
     public class AdminCategoriesController : Controller
     {
         private readonly BtcEntities _db;
+        private readonly ICategoryService _categoryService;
 
-        public AdminCategoriesController(BtcEntities db)
+        public AdminCategoriesController(
+            BtcEntities db,
+            ICategoryService categoryService)
         {
             _db = db;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
-        {
-            var model = await _db.Categories.FindAsync(id);
-            return View(model);
-        }
+        public async Task<IActionResult> Edit(int id) => View(await _categoryService.Find(id));
+
 
         [HttpPost]
-        public ActionResult Edit(Category category)
+        public async Task<IActionResult> Edit(Category category)
         {
-            var existingCategory = _db.Categories.Find(category.Id);
-            if (existingCategory != null) existingCategory.CategoryName = category.CategoryName;
-            _db.SaveChanges();
+            await _categoryService.ChangeName(category.Id, category.CategoryName);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var categories =
-            _db.Categories.OrderBy(category => category.CategoryName)
+            var categories = (await _categoryService.GetAll())
             .Select(category => new AdminCategoryViewModel
             {
                 Id = category.Id,

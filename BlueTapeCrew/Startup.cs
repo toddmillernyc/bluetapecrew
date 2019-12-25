@@ -48,6 +48,7 @@ namespace BlueTapeCrew
         {
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<ICategoryProductsRepository, CategoryProductsRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IGuestUserRepository, GuestUserRepository>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IProductRepository, ProductRepository>();
@@ -58,6 +59,7 @@ namespace BlueTapeCrew
         {
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<ICartCalculatorService, CartCalculatorService>();
+            services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ICheckoutService, CheckoutService>();
             services.AddTransient<ICookieService, CookieService>();
             services.AddTransient<IEmailService, EmailService>();
