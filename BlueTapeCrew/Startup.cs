@@ -68,7 +68,6 @@ namespace BlueTapeCrew
             services.AddTransient<IEmailSubscriptionService, EmailSubscriptionService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ILoginService, LoginService>();
-            services.AddTransient<INewSiteService, NewSiteService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPaypalService, PaypalService>();
             services.AddTransient<IProductService, ProductService>();
