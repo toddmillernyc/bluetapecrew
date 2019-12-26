@@ -1,4 +1,6 @@
-﻿using BlueTapeCrew.Repositories.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
 using Entities;
@@ -44,6 +46,11 @@ namespace BlueTapeCrew.Services
         public async Task<string> GetStylePrice(int id) => $"{(await _styleRepository.Find(id)).Price:n2}";
 
         public async Task<Image> GetImageBySlug(string slug) => (await _productRepository.FindBySlugIncludeImage(slug)).Image;
+        public async Task<IDictionary<int, string>> GetProductNames()
+        {
+            var products = await _productRepository.GetAll();
+            return products.ToDictionary(x => x.Id, x => x.ProductName);
+        }
 
         public Task Delete(int id) => _productRepository.Delete(id);
 

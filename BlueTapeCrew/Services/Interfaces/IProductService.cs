@@ -1,5 +1,6 @@
 ﻿using BlueTapeCrew.ViewModels;
 using Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services.Interfaces
@@ -11,5 +12,6 @@ namespace BlueTapeCrew.Services.Interfaces
         Task<string> GetStylePrice(int id);
         Task Delete(int id);
         Task<Image> GetImageBySlug(string slug);
+        Task<IDictionary<int, string>> GetProductNames();
     }
 }

@@ -21,6 +21,8 @@ namespace BlueTapeCrew.Repositories
                                                                                         .AsNoTracking()
                                                                                         .ToListAsync();
 
+        public async Task<IEnumerable<Product>> GetAll() => await _db.Products.OrderBy(x=>x.ProductName).AsNoTracking().ToListAsync();
+
         public Task<Product> FindBySlugIncludeAll(string slug) => _db.Products
                                                             .Include(p => p.Styles)
                                                             .ThenInclude(s => s.Color)

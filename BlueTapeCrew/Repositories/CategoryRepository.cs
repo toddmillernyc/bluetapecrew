@@ -26,6 +26,12 @@ namespace BlueTapeCrew.Repositories
         }
 
         public async Task<IEnumerable<Category>> GetAll() => await _db.Categories.ToListAsync();
+        public async Task Create(Category category)
+        {
+            _db.Categories.Add(category);
+            await _db.SaveChangesAsync();
+        }
+
         public Task<List<Category>> GetAllWithProducts() =>  _db.Categories
                                                                 .Include(x => x.ProductCategories)
                                                                 .ThenInclude(x => x.Product)
@@ -46,5 +52,14 @@ namespace BlueTapeCrew.Repositories
                                                                                     .ThenInclude(product => product.Styles)
                                                                                     .OrderByDescending(category => category.ProductCategories.Count)
                                                                                     .ToListAsync();
+
+        public async Task Delete(int id)
+        {
+            var category = await _db.Categories.FindAsync(id);
+            var products = category.ProductCategories.ToList();
+            foreach (var product in products) category.ProductCategories.Remove(product);
+            _db.Categories.Remove(category);
+            await _db.SaveChangesAsync();
+        }
     }
 }

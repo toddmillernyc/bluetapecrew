@@ -52,6 +52,7 @@ namespace BlueTapeCrew
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductCategoriesRepository, ProductCategoriesRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
             services.AddTransient<IStyleRepository, StyleRepository>();

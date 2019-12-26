@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BlueTapeCrew.Repositories.Interfaces;
+﻿using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
 using Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {
@@ -17,6 +17,9 @@ namespace BlueTapeCrew.Services
         }
 
         public async Task<Category> Find(int id) => await _categoryRepository.Find(id);
+        public async Task<IEnumerable<Category>> GetAll() => (await _categoryRepository.GetAll()).OrderBy(x => x.CategoryName);
+        public Task Delete(int id) => _categoryRepository.Delete(id);
+        public Task Create(Category category) => _categoryRepository.Create(category);
 
         public async Task ChangeName(int categoryId, string name)
         {
@@ -25,7 +28,11 @@ namespace BlueTapeCrew.Services
             await _categoryRepository.Update(category);
         }
 
-        public async Task<IEnumerable<Category>> GetAll() =>
-            (await _categoryRepository.GetAll()).OrderBy(x => x.CategoryName);
+        public async Task TogglePublish(int id)
+        {
+            var category = await _categoryRepository.Find(id);
+            category.Published = !category.Published;
+            await _categoryRepository.Update(category);
+        }
     }
 }

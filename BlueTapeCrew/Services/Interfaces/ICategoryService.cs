@@ -9,5 +9,8 @@ namespace BlueTapeCrew.Services.Interfaces
         Task<Category> Find(int id);
         Task ChangeName(int categoryId, string name);
         Task<IEnumerable<Category>> GetAll();
+        Task Delete(int id);
+        Task Create(Category category);
+        Task TogglePublish(int id);
     }
 }
