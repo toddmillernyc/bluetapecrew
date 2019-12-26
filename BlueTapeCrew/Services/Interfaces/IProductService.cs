@@ -10,5 +10,6 @@ namespace BlueTapeCrew.Services.Interfaces
         Task<string> AddReview(Review review);
         Task<string> GetStylePrice(int id);
         Task Delete(int id);
+        Task<Image> GetImageBySlug(string slug);
     }
 }

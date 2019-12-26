@@ -27,7 +27,7 @@ namespace BlueTapeCrew.Services
 
         public async Task<ProductViewModel> GetProductViewModel(string name)
         {
-            var product = await _productRepository.FindBySlug(name);
+            var product = await _productRepository.FindBySlugIncludeAll(name);
             var styleViews = await _styleRepository.GetByProductId(product.Id);
             var bestSellers = await _productRepository.GetProductsWithStylesAndImage(3);
             var categories = await _categoryRepository.GetAllPublishedWithProducts();
@@ -42,6 +42,8 @@ namespace BlueTapeCrew.Services
         }
 
         public async Task<string> GetStylePrice(int id) => $"{(await _styleRepository.Find(id)).Price:n2}";
+
+        public async Task<Image> GetImageBySlug(string slug) => (await _productRepository.FindBySlugIncludeImage(slug)).Image;
 
         public Task Delete(int id) => _productRepository.Delete(id);
 

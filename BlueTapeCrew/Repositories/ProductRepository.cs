@@ -21,7 +21,7 @@ namespace BlueTapeCrew.Repositories
                                                                                         .AsNoTracking()
                                                                                         .ToListAsync();
 
-        public Task<Product> FindBySlug(string slug) => _db.Products
+        public Task<Product> FindBySlugIncludeAll(string slug) => _db.Products
                                                             .Include(p => p.Styles)
                                                             .ThenInclude(s => s.Color)
                                                             .Include(p => p.Styles)
@@ -34,6 +34,10 @@ namespace BlueTapeCrew.Repositories
                                                             .Include(p => p.Reviews)
                                                             .AsNoTracking()
                                                             .FirstOrDefaultAsync(p => p.LinkName == slug);
+
+        public Task<Product> FindBySlugIncludeImage(string slug) => _db.Products
+                                                                    .Include(p => p.Image)
+                                                                    .FirstOrDefaultAsync(p => p.LinkName == slug);
 
         public async Task<string> GetSlug(int productId) => (await _db.Products.FindAsync(productId)).LinkName;
 
