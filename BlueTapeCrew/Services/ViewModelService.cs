@@ -1,22 +1,24 @@
-﻿using BlueTapeCrew.Data;
+﻿using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
-using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Services
 {
-    public class ViewModelService : IViewModelService, IDisposable
+    public class ViewModelService : IViewModelService
     {
-        private readonly BtcEntities _db;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly ISiteSettingsService _settings;
+        
 
-        public ViewModelService(BtcEntities db, ISiteSettingsService settings)
+        public ViewModelService(
+            ICategoryRepository categoryRepository,
+            ISiteSettingsService settings
+            )
         {
-            _db = db;
+            _categoryRepository = categoryRepository;
             _settings = settings;
         }
 
@@ -24,12 +26,7 @@ namespace BlueTapeCrew.Services
         {
             var settings = await _settings.Get();
             var catalog = new List<CatalogModel>();
-            var categories = await _db.Categories
-                                        .Include(category => category.ProductCategories)
-                                        .ThenInclude(productCategory => productCategory.Product)
-                                        .ThenInclude(product => product.Styles)
-                                        .OrderByDescending(category => category.ProductCategories.Count)
-                                        .ToListAsync();
+            var categories = await _categoryRepository.GetAllPublishedWithProductsAndStyles();
 
             foreach (var category in categories)
             {
@@ -58,7 +55,8 @@ namespace BlueTapeCrew.Services
 
         public async Task<IEnumerable<MenuViewModel>> GetSidebarViewModel()
         {
-            return await _db.Categories.Where(x => x.Published).OrderBy(x => x.CategoryName).Select(item => new MenuViewModel
+            var categories = await _categoryRepository.GetAllPublishedWithProducts();
+            return categories.Select(item => new MenuViewModel
             {
                 Id = item.Id,
                 MenuName = item.CategoryName,
@@ -67,13 +65,15 @@ namespace BlueTapeCrew.Services
                     LinkName = product.LinkName,
                     ItemName = product.ProductName
                 })
-            }).ToListAsync();
+            });
         }
 
         public async Task<LayoutViewModel> GetLayoutViewModel()
         {
             var settings = await _settings.Get();
             if(settings == null) return new LayoutViewModel();
+            var categories = await _categoryRepository.GetAllPublishedWithProducts();
+
             return new LayoutViewModel
             {
                 ContactEmail = settings.ContactEmailAddress,
@@ -88,7 +88,7 @@ namespace BlueTapeCrew.Services
                 CopyrightLinktext = settings.CopyrightLinktext,
                 CopyrightText = settings.CopyrightText,
                 CopyrightUrl = settings.CopyrightUrl,
-                Menu = await _db.Categories.Where(x => x.Published).OrderBy(x => x.CategoryName).Select(item => new MenuViewModel
+                Menu = categories.Select(item => new MenuViewModel
                 {
                     Id = item.Id,
                     MenuName = item.CategoryName,
@@ -97,14 +97,9 @@ namespace BlueTapeCrew.Services
                         LinkName = product.LinkName,
                         ItemName = product.ProductName
                     })
-                }).ToListAsync(),
+                }).ToList(),
                 ShowSubscibeForm = !string.IsNullOrEmpty(settings.MailChimpListId) && !string.IsNullOrEmpty(settings.MailChimpApiKey)
             };
-        }
-
-        public void Dispose()
-        {
-            _db.Dispose();
         }
     }
 }

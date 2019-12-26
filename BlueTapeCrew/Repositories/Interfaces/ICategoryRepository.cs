@@ -11,5 +11,6 @@ namespace BlueTapeCrew.Repositories.Interfaces
         Task<IEnumerable<Category>> GetAll();
         Task<List<Category>> GetAllWithProducts();
         Task<List<Category>> GetAllPublishedWithProducts();
+        Task<List<Category>> GetAllPublishedWithProductsAndStyles();
     }
 }

@@ -39,5 +39,12 @@ namespace BlueTapeCrew.Repositories
                                                                         .ThenInclude(x => x.Product)
                                                                         .ThenInclude(x => x.ProductCategories)
                                                                         .ToListAsync();
+
+        public Task<List<Category>> GetAllPublishedWithProductsAndStyles() => _db.Categories
+                                                                                    .Include(category => category.ProductCategories)
+                                                                                    .ThenInclude(productCategory => productCategory.Product)
+                                                                                    .ThenInclude(product => product.Styles)
+                                                                                    .OrderByDescending(category => category.ProductCategories.Count)
+                                                                                    .ToListAsync();
     }
 }
