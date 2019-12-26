@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using IUserRegistrationService = BlueTapeCrew.Services.Interfaces.IUserRegistrationService;
 
 namespace BlueTapeCrew
 {
@@ -51,6 +50,7 @@ namespace BlueTapeCrew
             services.AddTransient<IGuestUserRepository, GuestUserRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
             services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
