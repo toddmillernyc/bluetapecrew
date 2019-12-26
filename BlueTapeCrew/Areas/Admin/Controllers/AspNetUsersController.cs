@@ -1,13 +1,12 @@
 ﻿using BlueTapeCrew.Areas.Admin.Models;
+using BlueTapeCrew.ViewModels;
+using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using BlueTapeCrew.Data;
-using BlueTapeCrew.ViewModels;
-using Entities;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
@@ -16,12 +15,10 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
     public class AspNetUsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly BtcEntities _db;
 
-        public AspNetUsersController(UserManager<ApplicationUser> userManager, BtcEntities db)
+        public AspNetUsersController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _db = db;
         }
 
         public async Task<IActionResult> Index()
@@ -85,8 +82,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null) return BadRequest("User Id null");
-            //todo: implement custom IUserStore to resolve EF issues
-            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null) return NotFound();
             var model = new EditUserViewModel(user);
             return View(model);
