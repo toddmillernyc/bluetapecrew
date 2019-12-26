@@ -47,12 +47,13 @@ namespace BlueTapeCrew
         public static void RegisterRepositoryTypes(IServiceCollection services)
         {
             services.AddTransient<ICartRepository, CartRepository>();
-            services.AddTransient<ICategoryProductsRepository, CategoryProductsRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IGuestUserRepository, GuestUserRepository>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
+            services.AddTransient<IStyleRepository, StyleRepository>();
         }
 
         public static void RegisterServiceTypes(IServiceCollection services)

@@ -9,5 +9,7 @@ namespace BlueTapeCrew.Repositories.Interfaces
         Task<Category> Find(int id);
         Task Update(Category category);
         Task<IEnumerable<Category>> GetAll();
+        Task<List<Category>> GetAllWithProducts();
+        Task<List<Category>> GetAllPublishedWithProducts();
     }
 }

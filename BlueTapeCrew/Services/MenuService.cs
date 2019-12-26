@@ -9,26 +9,27 @@ namespace BlueTapeCrew.Services
 {
     public class MenuService : IMenuService
     {
-        private readonly ICategoryProductsRepository _categoryProductsRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public MenuService(ICategoryProductsRepository categoryProductsRepository)
+        public MenuService(ICategoryRepository categoryRepository)
         {
-            _categoryProductsRepository = categoryProductsRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<IEnumerable<MenuCategory>> Get()
         {
-            var categories = await _categoryProductsRepository.Get();
-            return categories.Select(category => 
-                new MenuCategory 
-                {
-                    Name = category.CategoryName,
-                    Products = category.ProductCategories
-                                .Select(x=>x.Product)
-                                .OrderBy(x=>x.LinkName)
-                                .ToDictionary(x => x.LinkName, x => x.ProductName)
-                })
-                .OrderBy(x=>x.Name);
+            var categories = await _categoryRepository.GetAllWithProducts();
+            return categories
+                .Select(category =>
+                    new MenuCategory
+                    {
+                        Name = category.CategoryName,
+                        Products = category.ProductCategories
+                            .Select(x => x.Product)
+                            .OrderBy(x => x.LinkName)
+                            .ToDictionary(x => x.LinkName, x => x.ProductName)
+                    })
+                .OrderBy(x => x.Name);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BlueTapeCrew.Data;
 using BlueTapeCrew.Repositories.Interfaces;
@@ -25,5 +26,18 @@ namespace BlueTapeCrew.Repositories
         }
 
         public async Task<IEnumerable<Category>> GetAll() => await _db.Categories.ToListAsync();
+        public Task<List<Category>> GetAllWithProducts() =>  _db.Categories
+                                                                .Include(x => x.ProductCategories)
+                                                                .ThenInclude(x => x.Product)
+                                                                .ThenInclude(x => x.ProductCategories)
+                                                                .ToListAsync();
+
+        public Task<List<Category>> GetAllPublishedWithProducts() => _db.Categories
+                                                                        .Where(x=>x.Published)
+                                                                        .OrderBy(x=>x.CategoryName)
+                                                                        .Include(x => x.ProductCategories)
+                                                                        .ThenInclude(x => x.Product)
+                                                                        .ThenInclude(x => x.ProductCategories)
+                                                                        .ToListAsync();
     }
 }

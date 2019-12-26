@@ -1,7 +1,8 @@
 ﻿using BlueTapeCrew.Services.Interfaces;
-using System.Threading.Tasks;
+using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -37,19 +38,8 @@ namespace BlueTapeCrew.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Route("addreview")]
-        public async Task<ActionResult> AddReview(int productId, string name, string email, string review, decimal rating)
-        {
-            return RedirectToAction("Details", new { name = await _productService.AddReview(productId, name, email, review, rating) });
-        }
+        public async Task<ActionResult> AddReview(Review review) => RedirectToAction("Details", new { name = await _productService.AddReview(review) });
 
-        public async Task<PartialViewResult> _BestSellers()
-        {
-            return PartialView(await _productService.GetBestSellers());
-        }
-
-        public async Task<string> GetStylePrice(int id)
-        {
-            return await _productService.GetStylePrice(id);
-        }
+        public async Task<string> GetStylePrice(int id) => await _productService.GetStylePrice(id);
     }
 }

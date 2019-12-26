@@ -1,14 +1,18 @@
-﻿namespace BlueTapeCrew.ViewModels
+﻿using System.Linq;
+using BlueTapeCrew.Extensions;
+using Entities;
+
+namespace BlueTapeCrew.ViewModels
 {
     public class BestSellerViewModel
     {
-        public BestSellerViewModel(int id, string name, string linkName, string imgSource, string price)
+        public BestSellerViewModel(Product product)
         {
-            Id = id;
-            Name = name;
-            LinkName = linkName;
-            ImgSource = imgSource;
-            Price = price;
+            Id = product.Id;
+            Name = product.ProductName;
+            LinkName = product.LinkName;
+            ImgSource = product.Image.ToHtmlImageSource();
+            Price = $"{product.Styles?.FirstOrDefault()?.Price:n2}";
         }
 
         public int Id { get; set; }
