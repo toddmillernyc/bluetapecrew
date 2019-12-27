@@ -12,5 +12,10 @@ namespace BlueTapeCrew.Repositories.Interfaces
         Task<string> GetSlug(int productId);
         Task Delete(int id);
         Task<IList<Product>> GetProductsWithStylesAndImage(int take);
+        Task Create(Product product);
+        Task<Product> Find(int id);
+        Task<IEnumerable<Product>> GetAllIncludeAll();
+        Task Update(Product product);
+        Task<Product> FindIncludeAll(int id);
     }
 }

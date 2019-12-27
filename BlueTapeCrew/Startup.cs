@@ -47,14 +47,17 @@ namespace BlueTapeCrew
         {
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IColorRepository, ColorRepository>();
             services.AddTransient<IGuestUserRepository, GuestUserRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IProductCategoriesRepository, ProductCategoriesRepository>();
+            services.AddTransient<IProductImageRepository, ProductImageRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
+            services.AddTransient<ISizeRepository, SizeRepository>();
             services.AddTransient<IStyleRepository, StyleRepository>();
         }
 
@@ -75,6 +78,7 @@ namespace BlueTapeCrew
             services.AddTransient<ISessionService, SessionService>();
             services.AddTransient<IShippingService, ShippingService>();
             services.AddTransient<ISiteSettingsService, SiteSettingsService>();
+            services.AddTransient<IStyleService, StyleService>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IViewModelService, ViewModelService>();

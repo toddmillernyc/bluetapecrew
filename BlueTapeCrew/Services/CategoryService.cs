@@ -10,10 +10,14 @@ namespace BlueTapeCrew.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductCategoriesRepository _productCategoriesRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(
+            ICategoryRepository categoryRepository,
+            IProductCategoriesRepository productCategoriesRepository)
         {
             _categoryRepository = categoryRepository;
+            _productCategoriesRepository = productCategoriesRepository;
         }
 
         public async Task<Category> Find(int id) => await _categoryRepository.Find(id);
@@ -34,5 +38,7 @@ namespace BlueTapeCrew.Services
             category.Published = !category.Published;
             await _categoryRepository.Update(category);
         }
+
+        public Task AddProductCategory(ProductCategory productCategory) => _productCategoriesRepository.Create(productCategory);
     }
 }

@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace BlueTapeCrew.Services
 {
@@ -13,11 +14,51 @@ namespace BlueTapeCrew.Services
         private readonly IProductService _productService;
         private readonly IImageRepository _imageRepository;
 
-        public ImageService(IProductService productService, IImageRepository imageRepository)
+        public ImageService(IProductService productService,
+            IImageRepository imageRepository)
         {
             _productService = productService;
             _imageRepository = imageRepository;
         }
+
+        public async Task<Entities.Image> SaveImage(IFormFile file)
+        {
+            await using var target = new MemoryStream();
+            await file.CopyToAsync(target);
+
+            var data = target.ToArray();
+            var fileName = file.FileName;
+            var c = 0;
+            while (true)
+            {
+                if (!await _imageRepository.ImageExists(fileName)) break;
+                c++;
+                var tokens = file.FileName.Split('.');
+                fileName = tokens[0] + "(" + c + ")." + tokens[^1];
+            }
+
+            var image = new Entities.Image
+            {
+                Name = fileName,
+                ImageData = data,
+                MimeType = file.ContentType
+            };
+
+            var ext = file.FileName.Split('.')[1];
+            if (ext.Equals("jpg") || ext.Equals("jpeg"))
+            {
+                image.MimeType = "image/jpeg";
+            }
+            else if (ext.Equals("png"))
+            {
+                image.MimeType = "image/png";
+            }
+
+            await _imageRepository.Create(image);
+            return image;
+        }
+
+        public Task Delete(int id) => _imageRepository.Delete(id);
 
         public async Task<byte[]> ResizeImage(byte[] imageData, int width, int height, ImageFormat format)
         {

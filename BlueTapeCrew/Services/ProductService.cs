@@ -14,18 +14,34 @@ namespace BlueTapeCrew.Services
         private readonly IStyleRepository _styleRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IReviewRepository _reviewRepository;
+        private readonly IProductImageRepository _productImageRepository;
 
         public ProductService(
             IProductRepository productRepository,
             IStyleRepository styleRepository,
             ICategoryRepository categoryRepository,
-            IReviewRepository reviewRepository)
+            IReviewRepository reviewRepository,
+            IProductImageRepository productImageRepository)
         {
             _productRepository = productRepository;
             _styleRepository = styleRepository;
             _categoryRepository = categoryRepository;
             _reviewRepository = reviewRepository;
+            _productImageRepository = productImageRepository;
         }
+
+        public async Task AddImageToProduct(int productId, int imageId)
+        {
+            var productImage = new ProductImage {ProductId = productId, ImageId = imageId};
+            await _productImageRepository.Create(productImage);
+        }
+
+        public async Task Create(Product product) => await _productRepository.Create(product);
+        public Task<Product> Find(int id) => _productRepository.Find(id);
+        public Task<IEnumerable<Product>> GetAllIncludeAll() => _productRepository.GetAllIncludeAll();
+        public Task Update(Product product) => _productRepository.Update(product);
+        public Task<Product> FindIncludeAll(int id) => _productRepository.FindIncludeAll(id);
+        public Task Delete(int id) => _productRepository.Delete(id);
 
         public async Task<ProductViewModel> GetProductViewModel(string name)
         {
@@ -46,13 +62,11 @@ namespace BlueTapeCrew.Services
         public async Task<string> GetStylePrice(int id) => $"{(await _styleRepository.Find(id)).Price:n2}";
 
         public async Task<Image> GetImageBySlug(string slug) => (await _productRepository.FindBySlugIncludeImage(slug)).Image;
+
         public async Task<IDictionary<int, string>> GetProductNames()
         {
             var products = await _productRepository.GetAll();
             return products.ToDictionary(x => x.Id, x => x.ProductName);
         }
-
-        public Task Delete(int id) => _productRepository.Delete(id);
-
     }
 }

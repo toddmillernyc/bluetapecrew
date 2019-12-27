@@ -26,5 +26,22 @@ namespace BlueTapeCrew.Repositories
                 .ToListAsync();
 
         public async Task<Style> Find(int id) => await _db.Styles.FindAsync(id);
+
+        public async Task Delete(int id)
+        {
+            var style = await _db.Styles.FindAsync(id);
+            var carts = await _db.Carts.Where(x => x.StyleId.Equals(id)).ToListAsync();
+            _db.Carts.RemoveRange(carts);
+            _db.Styles.Remove(style);
+            await _db.SaveChangesAsync();
+        }
+
+
+
+        public async Task Create(Style style)
+        {
+            _db.Styles.Add(style);
+            await _db.SaveChangesAsync();
+        }
     }
 }

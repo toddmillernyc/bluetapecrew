@@ -8,5 +8,7 @@ namespace BlueTapeCrew.Repositories.Interfaces
     {
         Task<List<StyleView>> GetByProductId(int id);
         Task<Style> Find(int id);
+        Task Delete(int id);
+        Task Create(Style style);
     }
 }

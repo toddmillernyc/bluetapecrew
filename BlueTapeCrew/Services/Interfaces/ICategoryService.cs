@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Entities;
 
 namespace BlueTapeCrew.Services.Interfaces
 {
@@ -12,5 +12,6 @@ namespace BlueTapeCrew.Services.Interfaces
         Task Delete(int id);
         Task Create(Category category);
         Task TogglePublish(int id);
+        Task AddProductCategory(ProductCategory productCategory);
     }
 }

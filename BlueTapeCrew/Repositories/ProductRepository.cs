@@ -21,6 +21,49 @@ namespace BlueTapeCrew.Repositories
                                                                                         .AsNoTracking()
                                                                                         .ToListAsync();
 
+        public async Task Create(Product product)
+        {
+            _db.Products.Add(product);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<Product> Find(int id) => await _db.Products.FindAsync(id);
+
+        public async Task<IEnumerable<Product>> GetAllIncludeAll() => await _db.Products
+                                                                                .Include(p => p.Styles)
+                                                                                .ThenInclude(s => s.Color)
+                                                                                .Include(p => p.Styles)
+                                                                                .ThenInclude(s => s.Size)
+                                                                                .Include(p => p.ProductCategories)
+                                                                                .ThenInclude(pc => pc.Category)
+                                                                                .Include(p => p.Image)
+                                                                                .Include(p => p.ProductImages)
+                                                                                .ThenInclude(pi => pi.Image)
+                                                                                .Include(p => p.Reviews)
+                                                                                .AsNoTracking()
+                                                                                .ToListAsync();
+
+        public async Task Update(Product product)
+        {
+            _db.Entry(product).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<Product> FindIncludeAll(int id) => await  _db.Products
+                                                                                .Include(p => p.Styles)
+                                                                                .ThenInclude(s => s.Color)
+                                                                                .Include(p => p.Styles)
+                                                                                .ThenInclude(s => s.Size)
+                                                                                .Include(p => p.ProductCategories)
+                                                                                .ThenInclude(pc => pc.Category)
+                                                                                .Include(p => p.Image)
+                                                                                .Include(p => p.ProductImages)
+                                                                                .ThenInclude(pi => pi.Image)
+                                                                                .Include(p => p.Reviews)
+                                                                                .AsNoTracking()
+                                                                                .FirstOrDefaultAsync(x=>x.Id == id);
+
+
         public async Task<IEnumerable<Product>> GetAll() => await _db.Products.OrderBy(x=>x.ProductName).AsNoTracking().ToListAsync();
 
         public Task<Product> FindBySlugIncludeAll(string slug) => _db.Products

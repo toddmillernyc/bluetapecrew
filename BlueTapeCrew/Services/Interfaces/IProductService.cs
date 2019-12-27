@@ -13,5 +13,11 @@ namespace BlueTapeCrew.Services.Interfaces
         Task Delete(int id);
         Task<Image> GetImageBySlug(string slug);
         Task<IDictionary<int, string>> GetProductNames();
+        Task AddImageToProduct(int productId, int imageId);
+        Task Create(Product product);
+        Task<Product> Find(int id);
+        Task<IEnumerable<Product>> GetAllIncludeAll();
+        Task Update(Product product);
+        Task<Product> FindIncludeAll(int id);
     }
 }
