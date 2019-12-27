@@ -84,7 +84,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var categories =
-                (await _categoryService.GetAll()).OrderBy(category => category.CategoryName)
+                (await _categoryService.GetAllWithProducts()).OrderBy(category => category.CategoryName)
                     .Select(category => new AdminCategoryViewModel
                     {
                         Id = category.Id,
@@ -117,9 +117,10 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _productService.Create(product);
+                
                 var image = await _imageService.SaveImage(file);
                 product.ImageId = image.Id;
+                await _productService.Create(product);
                 await _categoryService.AddProductCategory(new ProductCategory { CategoryId  = categoryId, ProductId = product.Id});
                 return RedirectToAction("Edit", "AdminProducts", new { id = product.Id });
             }

@@ -21,7 +21,7 @@ namespace BlueTapeCrew.Services
         }
 
         public async Task<Category> Find(int id) => await _categoryRepository.Find(id);
-        public async Task<IEnumerable<Category>> GetAll() => (await _categoryRepository.GetAll()).OrderBy(x => x.CategoryName);
+        public async Task<IEnumerable<Category>> GetAll() => (await _categoryRepository.GetAllWithProducts()).OrderBy(x => x.CategoryName);
         public Task Delete(int id) => _categoryRepository.Delete(id);
         public Task Create(Category category) => _categoryRepository.Create(category);
 
@@ -40,5 +40,6 @@ namespace BlueTapeCrew.Services
         }
 
         public Task AddProductCategory(ProductCategory productCategory) => _productCategoriesRepository.Create(productCategory);
+        public async Task<IEnumerable<Category>> GetAllWithProducts() => await _categoryRepository.GetAllWithProducts();
     }
 }

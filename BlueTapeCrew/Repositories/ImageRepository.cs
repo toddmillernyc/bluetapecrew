@@ -17,7 +17,7 @@ namespace BlueTapeCrew.Repositories
             _db.Images.Add(image);
             await _db.SaveChangesAsync();
         }
-        public Task<bool> ImageExists(string name) => _db.Images.AnyAsync(x => x.Name == name);
+        public bool ImageExists(string name) => _db.Images.Any(x => x.Name == name);
 
         public async Task Delete(int id)
         {

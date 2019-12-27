@@ -13,5 +13,6 @@ namespace BlueTapeCrew.Services.Interfaces
         Task Create(Category category);
         Task TogglePublish(int id);
         Task AddProductCategory(ProductCategory productCategory);
+        Task<IEnumerable<Category>> GetAllWithProducts();
     }
 }

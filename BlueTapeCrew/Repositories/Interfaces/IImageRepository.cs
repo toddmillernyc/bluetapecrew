@@ -7,7 +7,7 @@ namespace BlueTapeCrew.Repositories.Interfaces
     {
         Task<Image> Find(int id);
         Task Create(Image image);
-        Task<bool> ImageExists(string name);
+        bool ImageExists(string name);
         Task Delete(int id);
     }
 }

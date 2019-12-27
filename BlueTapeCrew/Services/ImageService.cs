@@ -31,7 +31,7 @@ namespace BlueTapeCrew.Services
             var c = 0;
             while (true)
             {
-                if (!await _imageRepository.ImageExists(fileName)) break;
+                if (!_imageRepository.ImageExists(fileName)) break;
                 c++;
                 var tokens = file.FileName.Split('.');
                 fileName = tokens[0] + "(" + c + ")." + tokens[^1];
