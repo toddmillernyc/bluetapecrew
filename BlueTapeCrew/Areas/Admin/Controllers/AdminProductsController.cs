@@ -150,11 +150,11 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             ViewBag.ColorId = new SelectList(colors, "Id", "ColorText");
             ViewBag.SizeId = new SelectList(sizes, "Id", "SizeText");
 
-            var products = await _productService.GetAllIncludeAll();
+            var products = await _productService.FindIncludeAll(id);
             var model = new EditProductViewModel
             {
-                Product = products.FirstOrDefault(),
-                Colors = colors?.OrderBy(x => x.ColorText),
+                Product = await _productService.FindIncludeAll(id),
+            Colors = colors?.OrderBy(x => x.ColorText),
                 Sizes = sizes?.OrderBy(x => x.SizeOrder)
             };
 
