@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueTapeCrew.EndToEndTests", "BlueTapeCrew.EndToEndTests\BlueTapeCrew.EndToEndTests.csproj", "{38FAB635-2727-4078-B0AB-6D97A87485D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{01017982-6F0E-49BE-BC3E-1B9442E7759B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{01017982-6F0E-49BE-BC3E-1B9442E7759B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C14A985C-1F57-4965-8576-7CB5E6BAEE58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
