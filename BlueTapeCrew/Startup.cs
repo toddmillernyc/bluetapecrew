@@ -1,5 +1,6 @@
 using AutoMapper;
 using BlueTapeCrew.Data;
+using BlueTapeCrew.Identity;
 using BlueTapeCrew.Repositories;
 using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services;
@@ -29,11 +30,14 @@ namespace BlueTapeCrew
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            var defaultConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<BtcEntities>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<BtcEntities>(options => options.UseSqlServer(defaultConnectionString));
+            services.AddDbContext<IdentityEntities>(options => options.UseSqlServer(defaultConnectionString));
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<BtcEntities>();
+                .AddEntityFrameworkStores<IdentityEntities>();
             services.AddControllersWithViews();
             services.ConfigureApplicationCookie(options =>
             {

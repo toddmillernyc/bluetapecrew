@@ -1,11 +1,9 @@
-﻿
-using Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlueTapeCrew.Data
 {
-    public partial class BtcEntities : IdentityDbContext<ApplicationUser>
+    public partial class BtcEntities : DbContext
     {
         public BtcEntities() { }
         public BtcEntities(DbContextOptions<BtcEntities> options) : base(options) { }
