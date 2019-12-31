@@ -1,11 +1,6 @@
 using AutoMapper;
-using BlueTapeCrew.Data;
 using BlueTapeCrew.Identity;
-using BlueTapeCrew.Repositories;
-using BlueTapeCrew.Repositories.Interfaces;
 using BlueTapeCrew.Services;
-using BlueTapeCrew.Services.Interfaces;
-using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repositories;
+using Repositories.Entities;
+using Repositories.Interfaces;
+using Services;
+using Services.Interfaces;
 
 namespace BlueTapeCrew
 {
@@ -75,7 +75,6 @@ namespace BlueTapeCrew
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IEmailSubscriptionService, EmailSubscriptionService>();
             services.AddTransient<IImageService, ImageService>();
-            services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPaypalService, PaypalService>();
             services.AddTransient<IProductService, ProductService>();

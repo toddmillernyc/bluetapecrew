@@ -1,28 +1,27 @@
-﻿using BlueTapeCrew.Models;
-using BlueTapeCrew.Repositories.Interfaces;
-using BlueTapeCrew.Services.Interfaces;
-using BlueTapeCrew.ViewModels;
-using Entities;
+﻿using AutoMapper;
+using BlueTapeCrew.Identity;
 using Microsoft.AspNetCore.Identity;
+using Services.Interfaces;
+using Services.Models;
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
 
 namespace BlueTapeCrew.Services
 {
     public class UserService : IUserService, IDisposable
     {
-        private readonly IGuestUserRepository _guestUsers;
+        
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IGuestUserService _guestUserService;
 
         public UserService(
             UserManager<ApplicationUser> userManager,
-            IGuestUserRepository guestUsers, IMapper mapper)
+            IMapper mapper, IGuestUserService guestUserService)
         {
             _userManager = userManager;
-            _guestUsers = guestUsers;
             _mapper = mapper;
+            _guestUserService = guestUserService;
         }
 
         public async Task<User> Find(string email)
@@ -35,7 +34,7 @@ namespace BlueTapeCrew.Services
             return user;
         }
 
-        public async Task<GuestUser> GetGuestUser(string sessionId) => await _guestUsers.FindBy(sessionId);
+        public Task<GuestUser> GetGuestUser(string sessionId) => _guestUserService.FindBy(sessionId);
 
         public async Task<bool> UpdateUser(CheckoutRequest model)
         {
@@ -52,11 +51,8 @@ namespace BlueTapeCrew.Services
             return result.Succeeded;
         }
 
-        public async Task CreateGuestUser(GuestUser model) => await _guestUsers.Create(model);
+        public Task CreateGuestUser(GuestUser model) => _guestUserService.Create(model);
 
-        public void Dispose()
-        {
-            _userManager?.Dispose();
-        }
+        public void Dispose() => _userManager?.Dispose();
     }
 }

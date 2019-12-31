@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using BlueTapeCrew.Extensions;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Services.Interfaces;
-using BlueTapeCrew.ViewModels;
-using Entities;
+using BlueTapeCrew.Services;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using PayPal;
+using Services.Interfaces;
+using Services.Models;
 using System;
 using System.Threading.Tasks;
-using OrderMsg = BlueTapeCrew.Models.Constants.Orders;
+using OrderMsg = Services.Models.Constants.Orders;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -47,7 +46,9 @@ namespace BlueTapeCrew.Controllers
         public async Task<IActionResult> Index()
         {
             var returnUrl = HttpContext.Request.Path.ToString();
-            var checkoutModel = await _checkoutService.CreateCheckoutRequest(User.Identity.Name, returnUrl);
+            var user = await _userService.Find(User.Identity.Name);
+            var sessionId = _session.SessionId();
+            var checkoutModel = await _checkoutService.CreateCheckoutRequest(user, sessionId, returnUrl);
             return checkoutModel.Cart.IsEmpty ? View("EmptyCart") : View(checkoutModel);
         }
 
@@ -135,9 +136,14 @@ namespace BlueTapeCrew.Controllers
         {
             var order = new Order { IpAddress = Request.Host.Host, SessionId = _session.SessionId() };
             if (User.Identity.IsAuthenticated)
-                order.UpdateUser(await _userService.Find(User.Identity.Name));
+            {
+                var user = await _userService.Find(User.Identity.Name);
+                order.UpdateUser(user);
+            }
             else
+            {
                 order.UpdateUser(await _userService.GetGuestUser(_session.SessionId()));
+            }
             return order;
         }
 

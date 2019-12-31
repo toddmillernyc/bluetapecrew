@@ -1,5 +1,4 @@
-﻿using BlueTapeCrew.Models;
-using Entities;
+﻿using Services.Models;
 using System.Collections.Generic;
 
 namespace BlueTapeCrew.ViewModels

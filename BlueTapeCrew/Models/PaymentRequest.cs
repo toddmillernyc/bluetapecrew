@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Entities;
 using PayPal.Api;
+using Services.Models;
 
 namespace BlueTapeCrew.Models
 {

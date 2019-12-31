@@ -1,11 +1,11 @@
 ﻿using BlueTapeCrew;
-using BlueTapeCrew.Data;
 using Btc.Tests.Stubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
+using Entities;
 using Xunit;
 
 namespace Btc.Tests

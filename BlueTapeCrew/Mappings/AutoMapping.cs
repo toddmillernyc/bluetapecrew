@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.ViewModels;
-using Entities;
+using BlueTapeCrew.Areas.Admin.Models;
+using BlueTapeCrew.Extensions;
+using BlueTapeCrew.Identity;
+using Microsoft.AspNetCore.Http;
+using Services.Models;
+using System.Linq;
 
 namespace BlueTapeCrew.Mappings
 {
@@ -32,7 +35,24 @@ namespace BlueTapeCrew.Mappings
                 .ForMember(x => x.State, opt => opt.MapFrom(s => s.State))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(s => s.UserName))
                 .ForAllOtherMembers(x => x.Ignore());
-            CreateMap<CheckoutRequest, GuestUser>();
+
+            CreateMap<IFormFile, SaveImageRequest>()
+                .ForMember(x => x.ImageData, opt => opt.MapFrom(s => s.ToBytes()))
+                .ForMember(x => x.FileName, opt => opt.MapFrom(s => s.FileName))
+                .ForMember(x => x.ContentType, opt => opt.MapFrom(s => s.ContentType));
+
+            CreateMap<Category, AdminCategoryViewModel>()
+                .ForMember(x => x.Products, opt => opt
+                    .MapFrom(s => s.ProductCategories
+                                   .Select(x => x.Product)
+                                   .OrderBy(product => product.ProductName)
+                                   .Select(product => new AdminProductViewModel
+                                   {
+                                       Description = product.Description,
+                                       Id = product.Id,
+                                       ImageId = product.ImageId,
+                                       Name = product.ProductName
+                                   })));
         }
     }
 }

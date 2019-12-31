@@ -1,7 +1,8 @@
-﻿using BlueTapeCrew.Services.Interfaces;
-using BlueTapeCrew.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using BlueTapeCrew.Services;
+using Services.Interfaces;
+using Services.Models;
 
 namespace BlueTapeCrew.Controllers
 {

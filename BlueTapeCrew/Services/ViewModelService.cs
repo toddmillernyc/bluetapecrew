@@ -1,36 +1,41 @@
-﻿using BlueTapeCrew.Repositories.Interfaces;
-using BlueTapeCrew.Services.Interfaces;
-using BlueTapeCrew.ViewModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlueTapeCrew.ViewModels;
+using Repositories.Interfaces;
+using Services.Interfaces;
+using Services.Models;
 
 namespace BlueTapeCrew.Services
 {
     public class ViewModelService : IViewModelService
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryService _categoryService;
         private readonly ISiteSettingsService _settings;
-        
+        private readonly IStyleService _styleService;
+        private readonly IProductService _productService;
 
         public ViewModelService(
-            ICategoryRepository categoryRepository,
-            ISiteSettingsService settings
-            )
+            ICategoryService categoryService,
+            ISiteSettingsService settings,
+            IStyleService styleService,
+            IProductService productService)
         {
-            _categoryRepository = categoryRepository;
             _settings = settings;
+            _styleService = styleService;
+            _productService = productService;
+            _categoryService = categoryService;
         }
 
         public async Task<HomeViewModel> GetHomeViewModel()
         {
             var settings = await _settings.Get();
             var catalog = new List<CatalogModel>();
-            var categories = await _categoryRepository.GetAllPublishedWithProductsAndStyles();
+            var categories = await _categoryService.GetAllPublishedWithProductsAndStyles();
 
             foreach (var category in categories)
             {
-                var catalogModel = new CatalogModel(category.CategoryName);
+                var catalogModel = new CatalogModel(category.Name);
                 var categoryProducts = category.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName);
                 foreach (var product in categoryProducts)
                 {
@@ -38,9 +43,9 @@ namespace BlueTapeCrew.Services
                     {
                         Id = product.Id,
                         Name = product.ProductName,
-                        LinkName = product.LinkName,
+                        Slug = product.Slug,
                         Price = $"{product.Styles?.FirstOrDefault()?.Price:n2}",
-                        ImgSource = "images/" + product.LinkName + ".jpg"
+                        ImgSource = "images/" + product.Slug + ".jpg"
                     });
                 }
                 catalog.Add(catalogModel);
@@ -55,14 +60,14 @@ namespace BlueTapeCrew.Services
 
         public async Task<IEnumerable<MenuViewModel>> GetSidebarViewModel()
         {
-            var categories = await _categoryRepository.GetAllPublishedWithProducts();
+            var categories = await _categoryService.GetAllPublishedWithProducts();
             return categories.Select(item => new MenuViewModel
             {
                 Id = item.Id,
-                MenuName = item.CategoryName,
-                Items = item.ProductCategories.Select(x=>x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
+                Name = item.Name,
+                Items = item.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                 {
-                    LinkName = product.LinkName,
+                    LinkName = product.Slug,
                     ItemName = product.ProductName
                 })
             });
@@ -71,8 +76,8 @@ namespace BlueTapeCrew.Services
         public async Task<LayoutViewModel> GetLayoutViewModel()
         {
             var settings = await _settings.Get();
-            if(settings == null) return new LayoutViewModel();
-            var categories = await _categoryRepository.GetAllPublishedWithProducts();
+            if (settings == null) return new LayoutViewModel();
+            var categories = await _categoryService.GetAllPublishedWithProducts();
 
             return new LayoutViewModel
             {
@@ -91,15 +96,24 @@ namespace BlueTapeCrew.Services
                 Menu = categories.Select(item => new MenuViewModel
                 {
                     Id = item.Id,
-                    MenuName = item.CategoryName,
-                    Items = item.ProductCategories.Select(x=>x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
+                    Name = item.Name,
+                    Items = item.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                     {
-                        LinkName = product.LinkName,
+                        LinkName = product.Slug,
                         ItemName = product.ProductName
                     })
                 }).ToList(),
                 ShowSubscibeForm = !string.IsNullOrEmpty(settings.MailChimpListId) && !string.IsNullOrEmpty(settings.MailChimpApiKey)
             };
+        }
+
+        public async Task<ProductViewModel> GetProductViewModel(string name)
+        {
+            var product = await _productService.FindBySlugIncludeAll(name);
+            var styleViews = await _styleService.GetByProductId(product.Id);
+            var bestSellers = await _productService.GetProductsWithStylesAndImage(3);
+            var categories = await _categoryService.GetAllPublishedWithProducts();
+            return new ProductViewModel(product, styleViews, bestSellers, categories);
         }
     }
 }

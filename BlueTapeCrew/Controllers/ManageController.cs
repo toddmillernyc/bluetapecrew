@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
-using BlueTapeCrew.Services.Interfaces;
 using BlueTapeCrew.ViewModels;
-using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using BlueTapeCrew.Identity;
+using BlueTapeCrew.Services;
+using Services.Interfaces;
+using Services.Models;
 
 namespace BlueTapeCrew.Controllers
 {

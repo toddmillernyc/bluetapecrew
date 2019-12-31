@@ -1,10 +1,10 @@
-﻿using BlueTapeCrew.Areas.Admin.Models;
-using BlueTapeCrew.Repositories.Interfaces;
-using BlueTapeCrew.Services.Interfaces;
-using Entities;
+﻿using AutoMapper;
+using BlueTapeCrew.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Services.Interfaces;
+using Services.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,16 +16,16 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
-        private readonly IProductCategoriesRepository _productCategoriesRepository;
+        private readonly IMapper _mapper;
 
         public AdminCategoriesController(
             ICategoryService categoryService,
             IProductService productService,
-            IProductCategoriesRepository productCategoriesRepository)
+            IMapper mapper)
         {
             _categoryService = categoryService;
             _productService = productService;
-            _productCategoriesRepository = productCategoriesRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -35,30 +35,16 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Category category)
         {
-            await _categoryService.ChangeName(category.Id, category.CategoryName);
+            await _categoryService.ChangeName(category.Id, category.Name);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Index()
         {
-            var categories = (await _categoryService.GetAll())
-            .Select(category => new AdminCategoryViewModel
-            {
-                Id = category.Id,
-                Name = category.CategoryName,
-                ImageId = category.ImageId,
-                Published = category.Published,
-                Products = category.ProductCategories.Select(x=>x.Product).OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
-                {
-                    Description = product.Description,
-                    Id = product.Id,
-                    ImageId = product.ImageId,
-                    Name = product.ProductName
-                }).ToList()
-            }).ToList();
-
+            var categories = await _categoryService.GetAllWithProducts();
+            var viewModel = categories.Select(category => _mapper.Map<AdminCategoryViewModel>(category));
             ViewBag.ProductId = new SelectList(await _productService.GetProductNames(), "Key", "Value");
-            return View(categories);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -70,7 +56,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string categoryName)
         {
-            await _categoryService.Create(new Category {CategoryName = categoryName});
+            await _categoryService.Create(new Category {Name = categoryName});
             return RedirectToAction("Index");
         }
 
@@ -84,14 +70,14 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProductToCategory(int productId, int categoryId)
         {
-            await _productCategoriesRepository.Create(new ProductCategory {ProductId = productId, CategoryId = categoryId});
+            await _categoryService.AddProductCategory(new ProductCategory {ProductId = productId, CategoryId = categoryId});
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<IActionResult> RemoveProductFromCategory(int productId, int categoryId)
         {
-            await _productCategoriesRepository.Delete(new ProductCategory {CategoryId = categoryId, ProductId = productId});
+            await _categoryService.DeleteProductCategory(new ProductCategory {CategoryId = categoryId, ProductId = productId});
             return RedirectToAction("Index");
         }
 

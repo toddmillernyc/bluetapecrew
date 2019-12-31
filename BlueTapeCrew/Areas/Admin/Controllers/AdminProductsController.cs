@@ -1,13 +1,14 @@
 ﻿using BlueTapeCrew.Areas.Admin.Models;
-using BlueTapeCrew.Services.Interfaces;
-using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
+using Services.Interfaces;
+using Services.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace BlueTapeCrew.Areas.Admin.Controllers
 {
@@ -20,26 +21,30 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         private readonly ISiteSettingsService _siteSettingsService;
         private readonly IStyleService _styleService;
         private readonly ICategoryService _categoryService;
-        
+        private readonly IMapper _mapper;
+
         public AdminProductsController(
             IProductService productService,
             IImageService imageService,
             ISiteSettingsService siteSettingsService,
             IStyleService styleService,
-            ICategoryService categoryService)
+            ICategoryService categoryService,
+            IMapper mapper)
         {
             _productService = productService;
             _imageService = imageService;
             _siteSettingsService = siteSettingsService;
             _styleService = styleService;
             _categoryService = categoryService;
+            _mapper = mapper;
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> AddAdditionalImage(int productId, IFormFile file)
         {
-            var image = await _imageService.SaveImage(file);
+            var saveImageRequest = _mapper.Map<SaveImageRequest>(file);
+            var image = await _imageService.SaveImage(saveImageRequest);
             await _productService.AddImageToProduct(productId, image.Id);
             return Ok(image.Id);
         }
@@ -84,11 +89,11 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var categories =
-                (await _categoryService.GetAllWithProducts()).OrderBy(category => category.CategoryName)
+                (await _categoryService.GetAllWithProducts()).OrderBy(category => category.Name)
                     .Select(category => new AdminCategoryViewModel
                     {
                         Id = category.Id,
-                        Name = category.CategoryName,
+                        Name = category.Name,
                         ImageId = category.ImageId,
                         Products = category.ProductCategories.Select(x => x.Product).OrderBy(product => product.ProductName).Select(product => new AdminProductViewModel
                         {
@@ -105,7 +110,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         [Route("Admin/AdminProducts/Create")]
         public async Task<IActionResult> Create()
         {
-            var categories = await _categoryService.GetAll();
+            var categories = await _categoryService.GetAllWithProducts();
             ViewBag.CategoryId = new SelectList(categories, "Id", "CategoryName", null);
             return View();
         }
@@ -117,15 +122,15 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                var image = await _imageService.SaveImage(file);
+                var saveImageRequest = _mapper.Map<SaveImageRequest>(file);
+                var image = await _imageService.SaveImage(saveImageRequest);
                 product.ImageId = image.Id;
                 await _productService.Create(product);
                 await _categoryService.AddProductCategory(new ProductCategory { CategoryId  = categoryId, ProductId = product.Id});
                 return RedirectToAction("Edit", "AdminProducts", new { id = product.Id });
             }
 
-            var categories = await _categoryService.GetAll();
+            var categories = await _categoryService.GetAllWithProducts();
             ViewBag.CategoryId = new SelectList(categories, "Id", "CategoryName", product.ProductCategories.FirstOrDefault()?.CategoryId);
             return View(product);
         }
@@ -135,7 +140,8 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<int> SaveProductImage(int productId, IFormFile file)
         {
             var product = await _productService.Find(productId);
-            var image = await _imageService.SaveImage(file);
+            var saveImageRequest = _mapper.Map<SaveImageRequest>(file);
+            var image = await _imageService.SaveImage(saveImageRequest);
             if (product.Image != null) await _imageService.Delete(image.Id);
             await _productService.AddImageToProduct(productId, image.Id);
             return image.Id;
@@ -174,13 +180,15 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             if (product.ImageId > 0)
             {
                 var oldImageId = product.ImageId;
-                var image = await _imageService.SaveImage(file);
+                var saveImageRequest = _mapper.Map<SaveImageRequest>(product.Image);
+                var image = await _imageService.SaveImage(saveImageRequest);
                 product.ImageId = image.Id;
                 await _imageService.Delete((int) oldImageId);
             }
             else
             {
-                var image = await _imageService.SaveImage(file);
+                var saveImageRequest = _mapper.Map<SaveImageRequest>(file);
+                var image = await _imageService.SaveImage(saveImageRequest);
                 product.ImageId = image.Id;
             }
             await _productService.Update(product);

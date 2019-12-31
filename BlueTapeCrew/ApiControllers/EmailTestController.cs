@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BlueTapeCrew.Email;
-using BlueTapeCrew.Services.Interfaces;
+using BlueTapeCrew.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.Helpers;
+using Services.Interfaces;
+using Services.Models;
 
 namespace BlueTapeCrew.ApiControllers
 {

@@ -1,10 +1,9 @@
-﻿using BlueTapeCrew.Models;
-using BlueTapeCrew.Services.Interfaces;
-using BlueTapeCrew.ViewModels;
-using Entities;
+﻿using BlueTapeCrew.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Services.Interfaces;
+using Services.Models;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -104,7 +103,7 @@ namespace BlueTapeCrew.Services
             return result.Succeeded;
         }
 
-        private async Task<string> GetEncodedEmailConfirmToken(ApplicationUser user) 
+        private async Task<string> GetEncodedEmailConfirmToken(ApplicationUser user)
             => EncodeToken(await _userManager.GenerateEmailConfirmationTokenAsync(user));
 
         private async Task<string> GetEncodedPasswordResetToken(ApplicationUser user)
@@ -120,7 +119,7 @@ namespace BlueTapeCrew.Services
         private static string DecodeToken(string encodedToken)
         {
             var encodedBytes = WebEncoders.Base64UrlDecode(encodedToken);
-            var decodedToken =  Encoding.UTF8.GetString(encodedBytes);
+            var decodedToken = Encoding.UTF8.GetString(encodedBytes);
             return decodedToken;
         }
     }

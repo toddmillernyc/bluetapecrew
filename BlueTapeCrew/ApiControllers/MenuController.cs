@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
+using Services.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BlueTapeCrew.ApiControllers
 {

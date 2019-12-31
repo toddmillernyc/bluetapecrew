@@ -1,8 +1,8 @@
 ﻿using BlueTapeCrew.Extensions;
-using BlueTapeCrew.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
 
 namespace BlueTapeCrew.Controllers
 {

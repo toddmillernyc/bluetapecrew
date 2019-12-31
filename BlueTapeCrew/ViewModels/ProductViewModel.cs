@@ -1,26 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BlueTapeCrew.Extensions;
-using Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Services.Models;
 
 namespace BlueTapeCrew.ViewModels
 {
     public class ProductViewModel
     {
-        public ProductViewModel(Product product, IList<StyleView> styleViews, IEnumerable<Product> bestSellers, IEnumerable<Category> categories)
+        public ProductViewModel(Product product, IEnumerable<StyleView> styleViews, IEnumerable<Product> bestSellers, IEnumerable<Category> categories)
         {
             Id = product.Id;
             AdditionalImages = product.ProductImages.Select(x => x.Image).Select(image => image.ToHtmlImageSource());
             AverageReview = product.Reviews.Any() ? product.Reviews.Average(x => x.Rating) : 0;
             BestSellers = bestSellers.Select(p => new BestSellerViewModel(p));
-            Category = product.ProductCategories?.FirstOrDefault()?.Category.CategoryName;
+            Category = product.ProductCategories?.FirstOrDefault()?.Category.Name;
             Description = product.Description;
             ImgSource = product.Image.ToHtmlImageSource();
             Menu = categories.Select(cat => new MenuViewModel
             {
                 Id = cat.Id,
-                MenuName = cat.CategoryName,
+                Name = cat.Name,
                 Items = cat.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName).Select(menuItem =>
                     new MenuItemViewModel
                     {

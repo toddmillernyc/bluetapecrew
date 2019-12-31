@@ -1,9 +1,12 @@
-﻿using BlueTapeCrew.Services.Interfaces;
+﻿using BlueTapeCrew.Identity;
+using BlueTapeCrew.Services;
 using BlueTapeCrew.ViewModels;
 using Microsoft.AspNetCore.Authorization;
- using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Services.Models;
 using System.Threading.Tasks;
-using Act = BlueTapeCrew.Models.Constants.Account;
+using Act = Services.Models.Constants.Account;
 
 namespace BlueTapeCrew.Controllers
 {
@@ -11,18 +14,19 @@ namespace BlueTapeCrew.Controllers
     [RequireHttps]
     public class AccountController : Controller
     {
-        private readonly ILoginService _loginService;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserRegistrationService _userRegistrationService;
-        private readonly IUserService _userService;
-        
+
         public AccountController(
-            ILoginService loginService,
+            
             IUserRegistrationService userRegistrationService,
-            IUserService userService)
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager)
         {
-            _loginService = loginService;
             _userRegistrationService = userRegistrationService;
-            _userService = userService;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [AllowAnonymous] public ActionResult Register() => View();
@@ -44,8 +48,7 @@ namespace BlueTapeCrew.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid) return View(model);
-            var user = await _userService.Find(model.Email);
-            
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 ModelState.AddModelError("", Act.LoginFailMessage);
@@ -53,14 +56,15 @@ namespace BlueTapeCrew.Controllers
             }
             
             //if user's email is not confirmed, resend link and return view with error
-            if (!user.EmailIsConfirmed)
+            if (!user.EmailConfirmed)
             {
                 await _userRegistrationService.SendEmailConfirmationLink(Request, model.Email);
                 ModelState.AddModelError("", Act.UnconfirmedEmailMessage);
                 return View(model);
             }
 
-            var loginResult = await _loginService.Login(model.Email, model.Password);
+            //var loginResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false);
+            var loginResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
             if (loginResult.Succeeded)
             {
                 if (string.IsNullOrEmpty(returnUrl) || returnUrl.Contains("confirmemail"))
@@ -129,7 +133,7 @@ namespace BlueTapeCrew.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
-            await _loginService.Logout();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 

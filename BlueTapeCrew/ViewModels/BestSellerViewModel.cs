@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using BlueTapeCrew.Extensions;
-using Entities;
+﻿using BlueTapeCrew.Extensions;
+using Services.Models;
+using System.Linq;
 
 namespace BlueTapeCrew.ViewModels
 {

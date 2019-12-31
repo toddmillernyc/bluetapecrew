@@ -1,14 +1,14 @@
-﻿@model Entities.Category
+﻿@model Services.Models.Category
 
 @{
-    ViewBag.Title = "Edit " + Model.CategoryName;
+    ViewBag.Title = "Edit " + Model.Name;
 }
 
-<h2>Edit @Model.CategoryName Category</h2>
+<h2>Edit @Model.Name Category</h2>
 <form method="post" asp-area="Admin" asp-controller="AdminCategories" asp-action="Edit">
     @Html.HiddenFor(x=>x.Id)
-    <div class="col-md-2">@Html.DisplayNameFor(x => x.CategoryName)</div>
-    <div class="col-md-2">@Html.EditorFor(x => x.CategoryName)</div>
+    <div class="col-md-2">@Html.DisplayNameFor(x => x.Name)</div>
+    <div class="col-md-2">@Html.EditorFor(x => x.Name)</div>
     <input type="submit" value="Save" class="btn btn-default btn-xs" />
     @Html.ActionLink("Cancel", "Index",null,new {@class="btn btn-xs btn-default"})
 </form>

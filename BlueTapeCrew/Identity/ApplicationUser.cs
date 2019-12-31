@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 
-namespace Entities
+namespace BlueTapeCrew.Identity
 {
     public class ApplicationUser : IdentityUser
     {

@@ -1,5 +1,4 @@
-﻿using BlueTapeCrew.Models;
-using Entities;
+﻿using Services.Models;
 
 namespace BlueTapeCrew.Extensions
 {

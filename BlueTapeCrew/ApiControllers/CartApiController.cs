@@ -1,6 +1,7 @@
-﻿using BlueTapeCrew.Services.Interfaces;
+﻿using BlueTapeCrew.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+using Services.Interfaces;
+using Services.Models;
 using System.Threading.Tasks;
 
 namespace BlueTapeCrew.ApiControllers
@@ -12,7 +13,9 @@ namespace BlueTapeCrew.ApiControllers
         private readonly ICartService _cartService;
         private readonly ISessionService _session;
 
-        public CartApiController(ICartService cartService, ISessionService session)
+        public CartApiController(
+            ICartService cartService,
+            ISessionService session)
         {
             _cartService = cartService;
             _session = session;
@@ -22,7 +25,12 @@ namespace BlueTapeCrew.ApiControllers
         [Route("{styleId}/{quantity}")]
         public async Task<IActionResult> Post(int styleId, int quantity)
         {
-            await _cartService.AddOrUpdate(_session.SessionId(), styleId, quantity);
+            await _cartService.AddOrUpdate(new Cart
+            {
+                SessionId = _session.SessionId(),
+                StyleId = styleId,
+                Quantity = quantity
+            });
             return Ok();
         }
     }

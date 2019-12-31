@@ -28,12 +28,12 @@
                     @foreach (var item in Model.Menu)
                     {
                         var classVar = "";
-                        if (item.MenuName.Equals(Model.Category))
+                        if (item.Name.Equals(Model.Category))
                         {
                             classVar = "open";
                         }
                         <li class="list-group-item clearfix sidebar-products @classVar" onclick="sideMenuClick()">
-                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;"><i class="fa fa-angle-right"></i> @Html.DisplayFor(modelItem => item.MenuName)</a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;"><i class="fa fa-angle-right"></i> @Html.DisplayFor(modelItem => item.Name)</a>
                             <ul class="dropdown-menu">
                                 @foreach (var itm in item.Items)
                                 {
