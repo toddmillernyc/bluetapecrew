@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace BlueTapeCrew.Mappings
 {
-    public class AutoMapping : Profile
+    public class WebMappings : Profile
     {
-        public AutoMapping()
+        public WebMappings()
         {
             CreateMap<ApplicationUser, User>();
             CreateMap<CheckoutRequest, ApplicationUser>()

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Repositories.Entities;
 using Repositories.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -16,11 +15,7 @@ namespace Repositories
             _db = db;
         }
 
-        public async Task<SiteSetting> Get()
-        {
-            var entities = await _db.SiteSettings.ToListAsync();
-            return entities?.FirstOrDefault();
-        }
+        public Task<SiteSetting> Get() => _db.SiteSettings.FirstOrDefaultAsync();
 
         public async Task<SiteSetting> Set(SiteSetting siteSetting)
         {

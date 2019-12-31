@@ -16,7 +16,7 @@ namespace Repositories.Entities
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<PayPalPayments> PayPalPayments { get; set; }
+        public virtual DbSet<PayPalPayment> PayPalPayments { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -208,7 +208,7 @@ namespace Repositories.Entities
                 entity.Property(e => e.Zip).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<PayPalPayments>(entity =>
+            modelBuilder.Entity<PayPalPayment>(entity =>
             {
                 entity.Property(e => e.Amt)
                     .HasColumnName("amt")

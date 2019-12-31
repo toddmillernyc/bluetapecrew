@@ -1,30 +1,30 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 using Entity = Repositories.Entities;
 using Model = Services.Models;
 
 namespace Services.Mappings
 {
-    public class AutoMapping : Profile
+    public class ServiceMappings : Profile
     {
-        public AutoMapping()
+        public ServiceMappings()
         {
             // Entity -> Model
+            CreateMap<Entity.CartImage, Model.CartImage>();
+            CreateMap<Entity.Cart, Model.Cart>();
+            CreateMap<Entity.CartView, Model.CartView>();
             CreateMap<Entity.Category, Model.Category>();
+            CreateMap<Entity.Color, Model.Color>();
+            CreateMap<Entity.GuestUser, Model.GuestUser>();
             CreateMap<Entity.Image, Model.Image>();
             CreateMap<Entity.Order, Model.Order>();
+            CreateMap<Entity.OrderItem, Model.OrderItem>();
             CreateMap<Entity.Product, Model.Product>();
+            CreateMap<Entity.ProductCategory, Model.ProductCategory>();
+            CreateMap<Entity.ProductImage, Model.ProductImage>();
+            CreateMap<Entity.Review, Model.Review>();
             CreateMap<Entity.SiteSetting, Model.SiteSetting>();
-            CreateMap<Entity.GuestUser, Model.GuestUser>();
-
-            // Entity -> Model Collections
-            CreateMap<List<Entity.CartView>, List<Model.CartView>>();
-            CreateMap<IEnumerable<Entity.Category>, IEnumerable<Model.Category>>();
-            CreateMap<IEnumerable<Entity.Color>, IEnumerable<Model.Color>>();
-            CreateMap<IEnumerable<Entity.Order>, IEnumerable<Model.Order>>();
-            CreateMap<IEnumerable<Entity.Product>, IEnumerable<Model.Product>>();
-            CreateMap<IEnumerable<Entity.Size>, IEnumerable<Model.Size>>();
-            CreateMap<IEnumerable<Entity.StyleView>, IEnumerable<Model.StyleView>>();
+            CreateMap<Entity.Style, Model.Style>();
+            CreateMap<Entity.StyleView, Model.StyleView>();
 
             // Model -> Entity
             CreateMap<Model.Cart, Entity.Cart>();

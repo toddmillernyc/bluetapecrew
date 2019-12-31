@@ -8,11 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Repositories;
 using Repositories.Entities;
-using Repositories.Interfaces;
-using Services;
-using Services.Interfaces;
+using Services.Extensions;
+using Services.Mappings;
+using System.Reflection;
 
 namespace BlueTapeCrew
 {
@@ -23,6 +22,7 @@ namespace BlueTapeCrew
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(ServiceMappings)));
             services.AddAutoMapper(typeof(Startup));
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
@@ -38,50 +38,18 @@ namespace BlueTapeCrew
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<IdentityEntities>();
+
             services.AddControllersWithViews();
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Account/Login";
-            });
-            RegisterRepositoryTypes(services);
-            RegisterServiceTypes(services);
+            services.ConfigureApplicationCookie(options =>{  options.LoginPath = "/Account/Login"; });
+
+            services.AddServiceLayer();
+            RegisterWebServices(services);
         }
 
-        public static void RegisterRepositoryTypes(IServiceCollection services)
+        public static void RegisterWebServices(IServiceCollection services)
         {
-            services.AddTransient<ICartRepository, CartRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IColorRepository, ColorRepository>();
-            services.AddTransient<IGuestUserRepository, GuestUserRepository>();
-            services.AddTransient<IImageRepository, ImageRepository>();
-            services.AddTransient<IMenuService, MenuService>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IProductCategoriesRepository, ProductCategoriesRepository>();
-            services.AddTransient<IProductImageRepository, ProductImageRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IReviewRepository, ReviewRepository>();
-            services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
-            services.AddTransient<ISizeRepository, SizeRepository>();
-            services.AddTransient<IStyleRepository, StyleRepository>();
-        }
-
-        public static void RegisterServiceTypes(IServiceCollection services)
-        {
-            services.AddTransient<ICartService, CartService>();
-            services.AddTransient<ICartCalculatorService, CartCalculatorService>();
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<ICheckoutService, CheckoutService>();
             services.AddTransient<ICookieService, CookieService>();
-            services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IEmailSubscriptionService, EmailSubscriptionService>();
-            services.AddTransient<IImageService, ImageService>();
-            services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IPaypalService, PaypalService>();
-            services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ISessionService, SessionService>();
-            services.AddTransient<IShippingService, ShippingService>();
-            services.AddTransient<ISiteSettingsService, SiteSettingsService>();
-            services.AddTransient<IStyleService, StyleService>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IViewModelService, ViewModelService>();

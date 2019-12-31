@@ -45,12 +45,16 @@ namespace Repositories
                                                                         .ThenInclude(x => x.ProductCategories)
                                                                         .ToListAsync();
 
-        public async Task<IEnumerable<Category>> GetAllPublishedWithProductsAndStyles() => await _db.Categories
-                                                                                    .Include(category => category.ProductCategories)
-                                                                                    .ThenInclude(productCategory => productCategory.Product)
-                                                                                    .ThenInclude(product => product.Styles)
-                                                                                    .OrderByDescending(category => category.ProductCategories.Count)
-                                                                                    .ToListAsync();
+        public async Task<IEnumerable<Category>> GetAllPublishedWithProductsAndStyles()
+        {
+            var categories = await _db.Categories
+                .Include(category => category.ProductCategories)
+                .ThenInclude(productCategory => productCategory.Product)
+                .ThenInclude(product => product.Styles)
+                .OrderByDescending(category => category.ProductCategories.Count)
+                .ToListAsync();
+            return categories;
+        }
 
         public async Task Delete(int id)
         {
