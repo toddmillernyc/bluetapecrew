@@ -22,7 +22,11 @@ namespace Repositories
             return await _db.CartViews.Where(x => x.CartId == cartId).OrderByDescending(x => x.Id).ToListAsync();
         }
 
-        public Task<Cart> GetBy(string cartId, int styleId) => _db.Carts.FirstOrDefaultAsync(x => x.CartId == cartId && x.StyleId == styleId);
+        public async Task<Cart> GetBy(string cartId, int styleId)
+        {
+            var cart = await _db.Carts.FirstOrDefaultAsync(x => x.SessionId == cartId && x.StyleId == styleId);
+            return cart;
+        }
 
         public async Task Add(Cart cart)
         {
@@ -49,7 +53,7 @@ namespace Repositories
 
         public async Task DeleteCart(string cartId)
         {
-            var cartItems = _db.Carts.Where(x => x.CartId == cartId);
+            var cartItems = _db.Carts.Where(x => x.SessionId == cartId);
             _db.Carts.RemoveRange(cartItems);
             await _db.SaveChangesAsync();
         }

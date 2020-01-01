@@ -49,9 +49,13 @@ var removeItemCheckout = function (id) {
 };
 
 var addItem = function () {
-    $.post("api/cart/" + $("#StyleId").val() + "/" + $("#quantity").val(), function () {
-        getCart();
-    });
+    $.post("api/cart/" + $("#StyleId").val() + "/" + $("#quantity").val())
+        .done(function() {
+            getCart();
+        })
+        .fail(function(error) {
+            console.error(error.responseText);
+        });
 };
 
 var getPrice = function (id) {

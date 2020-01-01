@@ -23,6 +23,7 @@ namespace Services.Mappings
             CreateMap<Entity.ProductImage, Model.ProductImage>();
             CreateMap<Entity.Review, Model.Review>();
             CreateMap<Entity.SiteSetting, Model.SiteSetting>();
+            CreateMap<Entity.Size, Model.Size>();
             CreateMap<Entity.Style, Model.Style>();
             CreateMap<Entity.StyleView, Model.StyleView>();
 

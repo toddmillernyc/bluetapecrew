@@ -18,8 +18,9 @@ namespace BlueTapeCrew.Services
         public string SessionId()
         {
             var sessionId = _httpContextAccessor.HttpContext.Session.Get<string>(SessionIdKey);
-            if (string.IsNullOrEmpty(sessionId))
-                _httpContextAccessor.HttpContext.Session.Set(SessionIdKey, Guid.NewGuid().ToSessionIdString());
+            if (!string.IsNullOrEmpty(sessionId)) return sessionId;
+
+            _httpContextAccessor.HttpContext.Session.Set(SessionIdKey, Guid.NewGuid().ToSessionIdString());
             sessionId = _httpContextAccessor.HttpContext.Session.Get<string>(SessionIdKey);
             return sessionId;
         }

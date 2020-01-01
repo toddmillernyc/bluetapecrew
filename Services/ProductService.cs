@@ -45,6 +45,8 @@ namespace Services
         {
             var entity = _mapper.Map<Product, Entity.Product>(product);
             await _productRepository.Create(entity);
+            product.Id = entity.Id;
+
         }
 
         public async Task<Product> Find(int id)

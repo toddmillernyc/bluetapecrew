@@ -1,11 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repositories.Entities
 {
+    [Table("Cart")]
     public class Cart
     {
         public int Id { get; set; }
-        public string CartId { get; set; }
+
+        [Column("CartId")] //todo: change in database
+        public string SessionId { get; set; }
         public int StyleId { get; set; }
         public int Count { get; set; }
         public DateTime DateCreated { get; set; }

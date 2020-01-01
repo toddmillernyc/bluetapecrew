@@ -111,7 +111,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
             var categories = await _categoryService.GetAllWithProducts();
-            ViewBag.CategoryId = new SelectList(categories, "Id", "CategoryName", null);
+            ViewBag.CategoryId = new SelectList(categories, "Id", "Name", null);
             return View();
         }
 

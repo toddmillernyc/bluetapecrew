@@ -24,8 +24,9 @@ namespace BlueTapeCrew.EndToEndTests
         [Fact]
         public async Task LoginTest()
         {
+            var maxTry = 3;
             var tryCount = 0;
-            while (tryCount < 3)
+            while (tryCount < maxTry)
             {
                 try
                 {
@@ -50,6 +51,7 @@ namespace BlueTapeCrew.EndToEndTests
                     await Cleanup();
                     tryCount++;
                 }
+                Assert.NotEqual(tryCount, maxTry);
             }
         }
 

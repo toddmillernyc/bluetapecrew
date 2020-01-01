@@ -1,8 +1,10 @@
-﻿using BlueTapeCrew.Services;
+﻿using System;
+using BlueTapeCrew.Services;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Models;
 using System.Threading.Tasks;
+using BlueTapeCrew.Extensions;
 
 namespace BlueTapeCrew.ApiControllers
 {
@@ -25,13 +27,20 @@ namespace BlueTapeCrew.ApiControllers
         [Route("{styleId}/{quantity}")]
         public async Task<IActionResult> Post(int styleId, int quantity)
         {
-            await _cartService.AddOrUpdate(new Cart
+            try
             {
-                SessionId = _session.SessionId(),
-                StyleId = styleId,
-                Quantity = quantity
-            });
-            return Ok();
+                await _cartService.AddOrUpdate(new Cart
+                {
+                    SessionId = _session.SessionId(),
+                    StyleId = styleId,
+                    Quantity = quantity
+                });
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToInnerExceptionMessage());
+            }
         }
     }
 }

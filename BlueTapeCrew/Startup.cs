@@ -1,5 +1,7 @@
+using System.Reflection;
 using AutoMapper;
 using BlueTapeCrew.Identity;
+using BlueTapeCrew.Mappings;
 using BlueTapeCrew.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,8 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repositories.Entities;
 using Services.Extensions;
-using Services.Mappings;
-using System.Reflection;
 
 namespace BlueTapeCrew
 {
@@ -19,11 +19,9 @@ namespace BlueTapeCrew
     {
         public Startup(IConfiguration configuration) { Configuration = configuration; }
         public IConfiguration Configuration { get; }
-
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(ServiceMappings)));
-            services.AddAutoMapper(typeof(Startup));
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -42,8 +40,15 @@ namespace BlueTapeCrew
             services.AddControllersWithViews();
             services.ConfigureApplicationCookie(options =>{  options.LoginPath = "/Account/Login"; });
 
-            services.AddServiceLayer();
+            //configure service layer middleware returns AutoMapper mappings
+            //haven't found a great way to add mappings from multiple assemblies yet
+            //todo: find a more elegant way to do this
+            var serviceMappings = services.AddServiceLayer();
+            var webMappings = Assembly.GetAssembly(typeof(WebMappings));
+            services.AddAutoMapper(webMappings, serviceMappings);
+
             RegisterWebServices(services);
+
         }
 
         public static void RegisterWebServices(IServiceCollection services)

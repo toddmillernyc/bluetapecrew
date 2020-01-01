@@ -1,22 +1,22 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Repositories.Extensions;
 using Services.Interfaces;
 using Services.Mappings;
 using System.Reflection;
-using Repositories.Extensions;
 
 namespace Services.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddServiceLayer(this IServiceCollection services)
+        public static Assembly AddServiceLayer(this IServiceCollection services)
         {
             services.UseRepositoryLayer();
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(ServiceMappings)));
-            return RegisterTypes(services);
+            RegisterTypes(services);
+            var autoMapperAssembly = Assembly.GetAssembly(typeof(ServiceMappings));
+            return autoMapperAssembly;
         }
 
-        private static IServiceCollection RegisterTypes(IServiceCollection services)
+        private static void RegisterTypes(IServiceCollection services)
         {
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<ICartCalculatorService, CartCalculatorService>();
@@ -33,7 +33,6 @@ namespace Services.Extensions
             services.AddTransient<IShippingService, ShippingService>();
             services.AddTransient<ISiteSettingsService, SiteSettingsService>();
             services.AddTransient<IStyleService, StyleService>();
-            return services;
         }
     }
 }

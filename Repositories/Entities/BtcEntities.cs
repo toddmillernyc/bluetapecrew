@@ -34,11 +34,11 @@ namespace Repositories.Entities
 
             modelBuilder.Entity<Cart>(entity =>
             {
-                entity.HasIndex(e => new { e.CartId, e.StyleId })
+                entity.HasIndex(e => new { e.SessionId, e.StyleId })
                     .HasName("UQ_Cart_CartId_StyleId")
                     .IsUnique();
 
-                entity.Property(e => e.CartId)
+                entity.Property(e => e.SessionId)
                     .IsRequired()
                     .HasMaxLength(68)
                     .IsUnicode(false);
