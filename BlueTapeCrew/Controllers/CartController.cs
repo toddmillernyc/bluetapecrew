@@ -11,7 +11,9 @@ namespace BlueTapeCrew.Controllers
         private readonly ICartService _cartService;
         private readonly ISessionService _session;
 
-        public CartController(ICartService cartService, ISessionService session)
+        public CartController(
+        ICartService cartService,
+            ISessionService session)
         {
             _cartService = cartService;
             _session = session;
