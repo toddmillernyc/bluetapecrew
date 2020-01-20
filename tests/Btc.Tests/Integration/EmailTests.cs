@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BlueTapeCrew.Email;
-using BlueTapeCrew.Models;
-using BlueTapeCrew.Services.Interfaces;
 using Btc.Tests.Stubs;
+using Services.Helpers;
+using Services.Interfaces;
+using Services.Models;
 using Xunit;
 
 namespace Btc.Tests.Integration
@@ -27,8 +27,8 @@ namespace Btc.Tests.Integration
                 var sut = _fixture.Resolve<IEmailService>();
                 var testAddress = Guid.NewGuid().ToString().Substring(0, 5) + "@mailinator.com";
                 var order = OrderStubs.Orders(testAddress).FirstOrDefault();
-                var textBody = EmailTemplates.GetOrderConfirmationTextBody(order, true);
-                var htmlBody = EmailTemplates.GetOrderConfirmationHtmlBody(order);
+                var textBody = EmailHelper.GetOrderConfirmationTextBody(order, true);
+                var htmlBody = EmailHelper.GetOrderConfirmationHtmlBody(order);
                 var request = new SmtpRequest(settings, htmlBody, textBody, order.Email, "BlueTapeCrew.com Email Integration Test");
 
                 //act

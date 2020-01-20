@@ -1,6 +1,6 @@
-﻿using BlueTapeCrew.Models;
-using BlueTapeCrew.Services.Interfaces;
-using Btc.Tests.Stubs;
+﻿using Btc.Tests.Stubs;
+using Services.Interfaces;
+using Services.Models;
 using System.Threading.Tasks;
 using Xunit;
 

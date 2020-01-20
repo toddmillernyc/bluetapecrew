@@ -1,8 +1,8 @@
-﻿using BlueTapeCrew.Models;
-using Btc.Tests.Stubs;
+﻿using Btc.Tests.Stubs;
 using System.Linq;
-using Entities;
+using Services.Models;
 using Xunit;
+using PaymentRequest = BlueTapeCrew.Models.PaymentRequest;
 
 namespace Btc.Tests.Unit
 {

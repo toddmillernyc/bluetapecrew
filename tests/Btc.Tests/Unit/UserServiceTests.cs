@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using BlueTapeCrew.Identity;
 using BlueTapeCrew.Services;
-using Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Btc.Tests.Unit
@@ -21,7 +21,7 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var userManager = _fixture.GetMockUserManager(new List<ApplicationUser>());
-            var sut = new UserService(userManager.Object, _fixture.GuestUserRepository.Object, _fixture.Mapper.Object);
+            var sut = new UserService(userManager.Object, _fixture.Mapper.Object , _fixture.GuestUserService.Object);
             
             //act
             var result = await sut.Find(null);

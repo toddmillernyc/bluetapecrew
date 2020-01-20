@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using Services.Models;
 using System.Collections.Generic;
 
 namespace Btc.Tests.Stubs

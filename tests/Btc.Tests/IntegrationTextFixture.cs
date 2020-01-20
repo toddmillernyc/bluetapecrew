@@ -5,7 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
-using Entities;
+using System.Reflection;
+using AutoMapper;
+using BlueTapeCrew.Mappings;
+using Repositories.Entities;
+using Services.Extensions;
 using Xunit;
 
 namespace Btc.Tests
@@ -41,9 +45,9 @@ namespace Btc.Tests
                     options.UseSqlServer(config.GetConnectionString("DefaultConnection")))
                 .AddEntityFrameworkSqlServer();
 
-            Startup.RegisterRepositoryTypes(serviceCollection);
-            Startup.RegisterServiceTypes(serviceCollection);
-
+            var serviceMappings = serviceCollection.AddServiceLayer();
+            var webMappings = Assembly.GetAssembly(typeof(WebMappings));
+            serviceCollection.AddAutoMapper(webMappings, serviceMappings);
             Services = serviceCollection.BuildServiceProvider();
         }
 

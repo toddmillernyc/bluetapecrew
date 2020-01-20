@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Tests", "tests\Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueTapeCrew.EndToEndTests", "tests\BlueTapeCrew.EndToEndTests\BlueTapeCrew.EndToEndTests.csproj", "{4362F173-8CD4-40CE-BA5B-AA35C04381A8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Btc.Tests", "tests\Btc.Tests\Btc.Tests.csproj", "{F47AD5AF-DB73-4F2C-9E00-1D08C889BD17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{4362F173-8CD4-40CE-BA5B-AA35C04381A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4362F173-8CD4-40CE-BA5B-AA35C04381A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4362F173-8CD4-40CE-BA5B-AA35C04381A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F47AD5AF-DB73-4F2C-9E00-1D08C889BD17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F47AD5AF-DB73-4F2C-9E00-1D08C889BD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F47AD5AF-DB73-4F2C-9E00-1D08C889BD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F47AD5AF-DB73-4F2C-9E00-1D08C889BD17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{6DE88D98-0B4D-43E6-B012-CF42BA20504D} = {2D48C712-F854-4207-9110-896908D3BE20}
 		{D440D56C-7496-4EE9-B16A-C5710F8F4457} = {2D48C712-F854-4207-9110-896908D3BE20}
 		{4362F173-8CD4-40CE-BA5B-AA35C04381A8} = {2D48C712-F854-4207-9110-896908D3BE20}
+		{F47AD5AF-DB73-4F2C-9E00-1D08C889BD17} = {2D48C712-F854-4207-9110-896908D3BE20}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B46A7C2E-552C-4489-AB60-468C798CA303}
