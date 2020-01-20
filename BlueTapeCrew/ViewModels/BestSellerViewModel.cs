@@ -10,7 +10,7 @@ namespace BlueTapeCrew.ViewModels
         {
             Id = product.Id;
             Name = product.ProductName;
-            LinkName = product.LinkName;
+            LinkName = product.Slug;
             ImgSource = product.Image.ToHtmlImageSource();
             Price = $"{product.Styles?.FirstOrDefault()?.Price:n2}";
         }

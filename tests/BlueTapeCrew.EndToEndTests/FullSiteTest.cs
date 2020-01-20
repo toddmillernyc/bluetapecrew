@@ -24,35 +24,28 @@ namespace BlueTapeCrew.EndToEndTests
         [Fact]
         public async Task LoginTest()
         {
-            var maxTry = 3;
-            var tryCount = 0;
-            while (tryCount < maxTry)
+            try
             {
-                try
-                {
-                    GoHome();
-                    RegisterUser();
-                    await ConfirmEmailAndLogIn();
-                    var userId = UpdateAccountInfo();
-                    await ResetPassword();
-                    await Helper.SeedAdminRole(Email);
-                    LogOffAndLogBackOn();
-                    Driver.FindElementById("adminLogin").Click();
-                    UpdateSiteSettings();
-                    AddCategories();
-                    AddProducts();
-                    ViewProductsAndAddToCart();
-                    Checkout();
-                    GuestCheckout();
-                    break;
-                }
-                catch
-                {
-                    await Cleanup();
-                    tryCount++;
-                }
-                Assert.NotEqual(tryCount, maxTry);
+                GoHome();
+                RegisterUser();
+                await ConfirmEmailAndLogIn();
+                var userId = UpdateAccountInfo();
+                await ResetPassword();
+                await Helper.SeedAdminRole(Email);
+                LogOffAndLogBackOn();
+                Driver.FindElementById("adminLogin").Click();
+                UpdateSiteSettings();
+                AddCategories();
+                AddProducts();
+                ViewProductsAndAddToCart();
+                Checkout();
+                GuestCheckout();
             }
+            finally
+            {
+                await Cleanup();
+            }
+
         }
 
         private void GuestCheckout()
@@ -155,8 +148,10 @@ namespace BlueTapeCrew.EndToEndTests
             Driver.FindElementById("keywords").SendKeys("functional testing tests");
             Driver.FindElementById("description").SendKeys("This is a site  created by an automated, full site end to end test.");
             Driver.ClickId("save-site-settings-button");
+            Thread.Sleep(1000);
             var alert = Driver.SwitchTo().Alert();
             alert.Accept();
+            Thread.Sleep(1000);
             var top = Driver.FindElementById("edit-categories-link");
             var actions = new Actions(Driver);
             actions.MoveToElement(top);
