@@ -6,6 +6,7 @@ namespace Services.Interfaces
 {
     public interface ICategoryService
     {
+        Task<IEnumerable<Category>> GetAll();
         Task<Category> Find(int id);
         Task ChangeName(int categoryId, string name);
         Task Delete(int id);

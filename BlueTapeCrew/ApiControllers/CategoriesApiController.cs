@@ -17,7 +17,8 @@ namespace BlueTapeCrew.ApiControllers
 
         public async  Task<IActionResult> Get()
         {
-            var model = await _categoryService.GetAllWithProducts();
+            var model = await _categoryService.GetAll();
+            
             return Ok(model);
         }
     }

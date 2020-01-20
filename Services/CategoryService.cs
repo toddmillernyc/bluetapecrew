@@ -24,6 +24,13 @@ namespace Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<Category>> GetAll()
+        {
+            var categoryEntities = await _categoryRepository.GetAll();
+            var model = _mapper.Map<IEnumerable<Category>>(categoryEntities);
+            return model;
+        }
+
         public async Task<Category> Find(int id)
         {
             var entity = await _categoryRepository.Find(id);
