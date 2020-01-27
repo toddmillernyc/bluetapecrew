@@ -34,36 +34,42 @@ namespace Services
 
         public Payment GetPayment(PaymentRequest paymentRequest)
         {
-            return new Payment
+            var details = new Details
+            {
+                tax = paymentRequest.Tax,
+                shipping = paymentRequest.Shipping,
+                subtotal = paymentRequest.Subtotal
+            };
+
+            var amount = new Amount
+            {
+                currency = paymentRequest.Currency,
+                total = paymentRequest.Total.ToString(CultureInfo.InvariantCulture),
+                details = details
+            };
+
+            var transaction = new Transaction
+            {
+                description = paymentRequest.PaymentDescription,
+                invoice_number = paymentRequest.InvoiceNumber,
+                amount = amount,
+                item_list = paymentRequest.ItemList
+            };
+
+            var redirectUrls = new RedirectUrls
+            {
+                cancel_url = paymentRequest.ReturnUrl + "?cancel=true",
+                return_url = paymentRequest.ReturnUrl
+            };
+
+            var payment = new Payment
             {
                 intent = paymentRequest.Intent,
                 payer = new Payer { payment_method = paymentRequest.PaymentMethod },
-                transactions = new List<Transaction>
-                {
-                    new Transaction
-                    {
-                        description = paymentRequest.PaymentDescription,
-                        invoice_number = paymentRequest.InvoiceNumber,
-                        amount = new Amount
-                        {
-                            currency = paymentRequest.Currency,
-                            total = paymentRequest.Total.ToString(CultureInfo.InvariantCulture),
-                            details = new Details
-                            {
-                                tax = paymentRequest.Tax,
-                                shipping = paymentRequest.Shipping,
-                                subtotal = paymentRequest.Subtotal
-                            }
-                        },
-                        item_list = paymentRequest.ItemList
-                    }
-                },
-                redirect_urls = new RedirectUrls
-                {
-                    cancel_url = paymentRequest.ReturnUrl + "?cancel=true",
-                    return_url = paymentRequest.ReturnUrl
-                }
+                transactions = new List<Transaction> { transaction },
+                redirect_urls = redirectUrls
             };
+            return payment;
         }
 
         public string PayWithPaypal(PaymentRequest paymentRequest)

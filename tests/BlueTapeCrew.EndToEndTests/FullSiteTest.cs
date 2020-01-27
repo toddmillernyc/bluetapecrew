@@ -106,7 +106,7 @@ namespace BlueTapeCrew.EndToEndTests
         {
             Driver.ClickId("create-new-product-link");
             Driver.FindElementById("ProductName").SendKeys(stub.Name);
-            Driver.FindElementById("LinkName").SendKeys(stub.Slug);
+            Driver.FindElementById("Slug").SendKeys(stub.Slug);
             Driver.FindElementById("Description").SendKeys(stub.Description);
             Driver.SelectDropdownText("CategoryId", stub.Category);
 

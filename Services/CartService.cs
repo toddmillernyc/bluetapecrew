@@ -38,7 +38,8 @@ namespace Services
             var cartItemEntities = await _cartRepository.GetBy(sessionId);
             var model = _mapper.Map<List<CartView>>(cartItemEntities);
             var totals = await _cartCalculatorService.CalculateCartTotals(model);
-            return new CartViewModel(model, totals);
+            var vm = new CartViewModel(model, totals);
+            return vm;
         }
 
         public async Task AddOrUpdate(Cart cart)
@@ -54,6 +55,7 @@ namespace Services
             {
                 var entity = _mapper.Map<Entity.Cart>(cart);
                 entity.DateCreated = DateTime.Now;
+                entity.Count = 1;
                 await _cartRepository.Add(entity);
             }
         }
