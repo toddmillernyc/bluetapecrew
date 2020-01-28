@@ -3,6 +3,8 @@ using BlueTapeCrew.EndToEndTests.Models;
 using BlueTapeCrew.EndToEndTests.Stubs;
 using Newtonsoft.Json;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -15,6 +17,7 @@ namespace BlueTapeCrew.EndToEndTests
 {
     public class FullSiteTest : E2ETestBase
     {
+        private const int WaitSeconds = 10;
         private readonly Dictionary<string, string> _formDictionary = new Dictionary<string, string>()
         {
             {"User_FirstName", "John"},{"User_LastName", "Smith"},{"User_PhoneNumber", "555-555-5555"},
@@ -26,6 +29,7 @@ namespace BlueTapeCrew.EndToEndTests
         {
             try
             {
+                Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(WaitSeconds);
                 GoHome();
                 RegisterUser();
                 await ConfirmEmailAndLogIn();
@@ -48,7 +52,23 @@ namespace BlueTapeCrew.EndToEndTests
 
         }
 
-        private void GuestCheckout()
+        private void Checkout()
+        {
+            Driver.ClickId("shippingInfo");
+            Driver.ClickId("button-payment-address");
+            Driver.ClickId("button-confirm");
+            Driver.FindElementById("email").SendKeys(PaypalSettings.PaypalBuyer);
+            Driver.ClickId("btnNext");
+            Driver.FindElementById("password").SendKeys(PaypalSettings.PaypalBuyerPassword);
+            Driver.ClickId("btnLogin");
+            Thread.Sleep(3000);
+            Driver.ClickId("payment-submit-btn");
+            Thread.Sleep(4000);
+            Driver.ClickId("confirm-order-button");  //site
+            Driver.ClickId("manage-account-header-link");
+        }
+
+        private static void GuestCheckout()
         {
             Driver.ClickId("logoff");
             Driver.ClickId("product-details-link-0");
@@ -67,25 +87,14 @@ namespace BlueTapeCrew.EndToEndTests
             Driver.FindElementById("button-payment-address").Click();
             Thread.Sleep(1000);
             Driver.ClickId("button-confirm");
-            Driver.ClickId("confirmButtonTop");
+            Thread.Sleep(3000);
+            Driver.ClickId("payment-submit-btn");
+            Thread.Sleep(4000);
             Driver.ClickId("confirm-order-button");
             Driver.ClickId("manage-account-header-link");
         }
 
-        private void Checkout()
-        {
-            Driver.ClickId("shippingInfo");
-            Driver.ClickId("button-payment-address");
-            Thread.Sleep(1000);
-            Driver.ClickId("button-confirm");
-            Driver.FindElementById("email").SendKeys(PaypalSettings.PaypalBuyer);
-            Driver.ClickId("btnNext");
-            Driver.FindElementById("password").SendKeys(PaypalSettings.PaypalBuyerPassword);
-            Driver.ClickId("btnLogin");
-            Driver.ClickId("confirmButtonTop");
-            Driver.ClickId("confirm-order-button");
-            Driver.ClickId("manage-account-header-link");
-        }
+
 
         private static void ViewProductsAndAddToCart()
         {
@@ -99,6 +108,7 @@ namespace BlueTapeCrew.EndToEndTests
         private static void AddProducts()
         {
             foreach (var product in ProductStubs.Products) AddProduct(product);
+            Thread.Sleep(100);
             Driver.ClickId("return-to-site-link");
         }
 
@@ -148,10 +158,12 @@ namespace BlueTapeCrew.EndToEndTests
             Driver.FindElementById("keywords").SendKeys("functional testing tests");
             Driver.FindElementById("description").SendKeys("This is a site  created by an automated, full site end to end test.");
             Driver.ClickId("save-site-settings-button");
-            Thread.Sleep(1000);
+
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(1));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.AlertIsPresent());
             var alert = Driver.SwitchTo().Alert();
             alert.Accept();
-            Thread.Sleep(1000);
+
             var top = Driver.FindElementById("edit-categories-link");
             var actions = new Actions(Driver);
             actions.MoveToElement(top);

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 
 namespace BlueTapeCrew.EndToEndTests.Extensions
 {
@@ -19,6 +18,7 @@ namespace BlueTapeCrew.EndToEndTests.Extensions
 
         public static IWebDriver ClickId(this IWebDriver driver, string id)
         {
+            var isPresent = driver.FindElement(By.Id(id));
             driver.FindElement(By.Id(id)).Click();
             return driver;
         }

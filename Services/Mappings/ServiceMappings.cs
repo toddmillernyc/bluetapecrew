@@ -33,6 +33,7 @@ namespace Services.Mappings
             CreateMap<Model.Color, Entity.Color>();
             CreateMap<Model.GuestUser, Entity.GuestUser>();
             CreateMap<Model.Order, Entity.Order>();
+            CreateMap<Model.OrderItem, Entity.OrderItem>();
             CreateMap<Model.Product, Entity.Product>();
             CreateMap<Model.ProductCategory, Entity.ProductCategory>();
             CreateMap<Model.ProductImage, Entity.ProductImage>();
