@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using BlueTapeCrew.Services;
+using Microsoft.AspNetCore.Identity;
 using Moq;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System.Collections.Generic;
-using BlueTapeCrew.Services;
-using Microsoft.AspNetCore.Identity;
 using Xunit;
 
 namespace Btc.Tests
