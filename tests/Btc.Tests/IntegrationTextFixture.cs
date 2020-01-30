@@ -1,15 +1,14 @@
-﻿using BlueTapeCrew;
+﻿using AutoMapper;
+using BlueTapeCrew.Mappings;
 using Btc.Tests.Stubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repositories.Entities;
+using Services.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Reflection;
-using AutoMapper;
-using BlueTapeCrew.Mappings;
-using Repositories.Entities;
-using Services.Extensions;
 using Xunit;
 
 namespace Btc.Tests
