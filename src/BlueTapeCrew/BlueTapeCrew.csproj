@@ -33,7 +33,7 @@
 
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="npm run-script build" />
+    <Exec Command="npx webpack --mode development" />
   </Target>
 
 </Project>

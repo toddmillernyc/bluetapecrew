@@ -11,6 +11,7 @@
 *.sln.docstates
 .idea/
 appsettings.Development.json
+src/BlueTapeCrew/wwwroot/bundle.js
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
