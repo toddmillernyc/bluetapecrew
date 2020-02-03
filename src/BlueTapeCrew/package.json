@@ -5,7 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "bootstrap": "3.3.7",
+    "font-awesome": "^4.7.0",
     "jquery": "2.2.4",
+    "jquery-uniform": "^2.2.2",
     "owl-carousel": "1.0.0"
   },
   "devDependencies": {
