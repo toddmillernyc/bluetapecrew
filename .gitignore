@@ -12,6 +12,7 @@
 .idea/
 appsettings.Development.json
 src/BlueTapeCrew/wwwroot/bundle.js
+src/BlueTapeCrew/wwwroot/fonts/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
