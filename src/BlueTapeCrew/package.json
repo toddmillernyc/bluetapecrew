@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "angular": "^1.6.7",
+    "angular-resource": "^1.6.7",
     "bootstrap": "3.3.7",
     "font-awesome": "^4.7.0",
     "jquery": "2.2.4",
