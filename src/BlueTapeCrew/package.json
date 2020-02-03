@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "bootstrap": "3.3.7",
-    "jquery": "2.2.4"
+    "jquery": "2.2.4",
+    "owl-carousel": "1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
