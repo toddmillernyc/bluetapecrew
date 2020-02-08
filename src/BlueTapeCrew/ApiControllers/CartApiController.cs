@@ -23,6 +23,13 @@ namespace BlueTapeCrew.ApiControllers
             _session = session;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var viewmodel = await _cartService.GetCartViewModel(_session.SessionId());
+            return Ok(viewmodel);
+        }
+
         [HttpPost]
         [Route("{styleId}/{quantity}")]
         public async Task<IActionResult> Post(int styleId, int quantity)

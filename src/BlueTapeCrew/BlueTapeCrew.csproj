@@ -8,6 +8,20 @@
     <Version>2.0.0</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="ClientApp\js\admin\demo.js" />
+    <Content Include="ClientApp\js\admin\edit-product.js" />
+    <Content Include="ClientApp\js\admin\index.js" />
+    <Content Include="ClientApp\js\admin\layout.js" />
+    <Content Include="ClientApp\js\admin\metronic.js" />
+    <Content Include="ClientApp\js\admin\quick-sidebar.js" />
+    <Content Include="ClientApp\js\admin\tasks.js" />
+    <Content Include="ClientApp\js\app.js" />
+    <Content Include="ClientApp\js\cart.js" />
+    <Content Include="ClientApp\js\index.js" />
+    <Content Include="ClientApp\js\layout.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />

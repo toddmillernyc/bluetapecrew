@@ -20,12 +20,8 @@ namespace BlueTapeCrew.Controllers
         }
 
         private Task<CartViewModel> Cart => _cartService.GetCartViewModel(_session.SessionId());
-
         [Route("cart")]
         public async Task<ActionResult> Details() => View(await Cart);
-
-        public async Task<PartialViewResult> Index() => PartialView(await Cart);
-
         public async Task Delete(int id) => await _cartService.DecrementCartItem(id);
     }
 }
