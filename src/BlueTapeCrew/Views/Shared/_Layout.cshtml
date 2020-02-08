@@ -5,7 +5,7 @@
     var layoutModel = await ViewModelService.GetLayoutViewModel();
 }
 <!DOCTYPE html>
-<html lang="en" ng-app="btcApp">
+<html lang="en">
 <head>
     <base href="~/">
     <meta charset="utf-8">
@@ -18,7 +18,6 @@
     <meta content="@layoutModel.CopyrightLinktext" name="author">
     <meta property="og:site_name" content="@layoutModel.SiteTitle">
     @RenderSection("OpenGraph", false)
-
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
     <link href="~/Content/OwlCarousel/owl.carousel.css" rel="stylesheet" />
@@ -61,7 +60,7 @@
             </div>
         </div>
     </div>
-<div class="header">
+    <div class="header">
         <div class="container">
             <a class="site-logo" href="~/"><img src="img/logo.png" alt="Metronic Shop UI"></a>
             <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
@@ -93,7 +92,7 @@
             </div>
         </div>
     </div>
-@RenderBody()
+    @RenderBody()
     <div class="pre-footer">
         <div class="container">
             <div class="row">
@@ -144,7 +143,13 @@
                     @if (layoutModel.ShowSubscibeForm)
                     {
                         <div class="pre-footer-subscribe-box pull-right">
-                            <email-subscribe></email-subscribe>
+                            <h2>Newsletter</h2>
+                            <div class="input-group">
+                                <input type="text" placeholder="youremail@mail.com" class="form-control" id="subscriber-email">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" onclick="subscribe()">Subscribe</button>
+                                </span>
+                            </div>
                         </div>
                     }
                 </div>
@@ -167,8 +172,21 @@
     </div>
     @RenderSection("Scripts", false)
     <div id="product-pop-up" style="display: none; width: 700px;"></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
-    <script src="https://code.angularjs.org/1.6.7/angular-resource.min.js"></script>
-    <script src="~/js/app.js"></script>
+    <script>
+        function subscribe() {
+            const subscriberEmail = document.getElementById("subscriber-email");
+            if (subscriberEmail.value) {
+                fetch(`api/subscribe?emailAddress=${subscriberEmail.value}`, { method: 'POST' })
+                    .then((response) => {
+                        if (response.ok) {
+                            alert("Thank you for subscribing");
+                        } else {
+                            alert("There was an error subscribing");
+                        }
+                        subscriberEmail.value = "";
+                    });
+            }
+        }
+    </script>
 </body>
 </html>
