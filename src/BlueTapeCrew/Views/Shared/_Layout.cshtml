@@ -32,7 +32,6 @@
     <link href="~/css/style-responsive.css" rel="stylesheet" />
     <link href="~/css/blue.css" rel="stylesheet" />
     <link href="~/css/custom.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 <body class="ecommerce">
     <div class="pre-header">
@@ -170,8 +169,9 @@
             </div>
         </div>
     </div>
-    @RenderSection("Scripts", false)
     <div id="product-pop-up" style="display: none; width: 700px;"></div>
+    <script src="~/bundle.js"></script>
+    @RenderSection("Scripts", false)
     <script>
         function subscribe() {
             const subscriberEmail = document.getElementById("subscriber-email");

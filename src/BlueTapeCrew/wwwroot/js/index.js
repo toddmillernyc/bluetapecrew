@@ -8,5 +8,3 @@ import 'jquery.rateit/scripts/rateit.css';
 $ = window.$ = window.jQuery = require('jquery');
 require('fancybox')($);
 require('owl-carousel/owl-carousel/owl.carousel.js');
-require('angular');
-require('angular-resource');
