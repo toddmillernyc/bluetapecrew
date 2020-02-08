@@ -29,7 +29,7 @@
         ]
     },
     entry: {
-        app: './wwwroot/js/index.js'
+        app: './js/index.js'
     },
     output: {
         filename: 'bundle.js',
