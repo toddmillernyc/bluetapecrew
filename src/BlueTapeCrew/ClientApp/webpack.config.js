@@ -1,4 +1,6 @@
-﻿module.exports = {
+﻿var path = require('path');
+
+module.exports = {
     module: {
         rules: [
             {
@@ -29,10 +31,10 @@
         ]
     },
     entry: {
-        app: './js/index.js'
+        app: './src/index.js'
     },
     output: {
-        filename: 'bundle.js',
-        path: '../wwwroot'
+        path: path.resolve(__dirname, "../wwwroot/"),
+        filename: "bundle.js"
     }
 };

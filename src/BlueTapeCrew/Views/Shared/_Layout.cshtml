@@ -19,20 +19,6 @@
     <meta content="@layoutModel.CopyrightLinktext" name="author">
     <meta property="og:site_name" content="@layoutModel.SiteTitle">
     @RenderSection("OpenGraph", false)
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
-    <link href="~/Content/OwlCarousel/owl.carousel.css" rel="stylesheet" />
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/Content/Themes/uniformjs/default/css/uniform.default.css" rel="stylesheet" />
-    <link href="~/Content/rateit.css" rel="stylesheet" />
-    <link href="~/Content/css/googleFontsOne.css" rel="stylesheet" />
-    <link href="~/Content/css/googleFontsTwo.css" rel="stylesheet" />
-    <link href="~/css/components.css" rel="stylesheet" />
-    <link href="~/css/style-shop.css" rel="stylesheet" />
-    <link href="~/css/style.css" rel="stylesheet" />
-    <link href="~/css/style-responsive.css" rel="stylesheet" />
-    <link href="~/css/blue.css" rel="stylesheet" />
-    <link href="~/css/custom.css" rel="stylesheet" />
 </head>
 <body class="ecommerce">
     <div class="pre-header">
@@ -164,12 +150,11 @@
             </div>
         </div>
     </div>
-    <script src="~/bundle.js"></script>
     <div id="product-pop-up" style="display: none; width: 700px;"></div>
-    <script src="~/Scripts/back-to-top.js"></script>
-    <script src="~/Scripts/bootstrap-touchspin/bootstrap.touchspin.js"></script>
-    <script src="js/layout.js"></script>
-    <script src="js/app.js" type="module"></script>
+    <script src="~/bundle.js"></script>
+    @*<script src="~/Scripts/bootstrap-touchspin/bootstrap.touchspin.js"></script>*@
+    @*<script src="layout.js"></script>*@
+    <script src="app.js" type="module"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>

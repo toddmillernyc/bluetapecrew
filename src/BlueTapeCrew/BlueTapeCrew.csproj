@@ -9,17 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="ClientApp\js\admin\demo.js" />
-    <Content Include="ClientApp\js\admin\edit-product.js" />
-    <Content Include="ClientApp\js\admin\index.js" />
-    <Content Include="ClientApp\js\admin\layout.js" />
-    <Content Include="ClientApp\js\admin\metronic.js" />
-    <Content Include="ClientApp\js\admin\quick-sidebar.js" />
-    <Content Include="ClientApp\js\admin\tasks.js" />
-    <Content Include="ClientApp\js\app.js" />
-    <Content Include="ClientApp\js\cart.js" />
-    <Content Include="ClientApp\js\index.js" />
-    <Content Include="ClientApp\js\layout.js" />
+    <Compile Remove="ClientApp\img\**" />
+    <Compile Remove="ClientApp\src\admin\**" />
+    <Content Remove="ClientApp\img\**" />
+    <Content Remove="ClientApp\src\admin\**" />
+    <EmbeddedResource Remove="ClientApp\img\**" />
+    <EmbeddedResource Remove="ClientApp\src\admin\**" />
+    <None Remove="ClientApp\img\**" />
+    <None Remove="ClientApp\src\admin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\assets\css\googleFontsOne.css" />
+    <Content Include="ClientApp\assets\css\googleFontsTwo.css" />
+    <Content Include="ClientApp\src\cart.js" />
+    <Content Include="ClientApp\src\index.js" />
   </ItemGroup>
 
 
@@ -43,6 +47,23 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\app.js" />
+    <None Include="wwwroot\js\admin\demo.js" />
+    <None Include="wwwroot\js\admin\edit-product.js" />
+    <None Include="wwwroot\js\admin\index.js" />
+    <None Include="wwwroot\js\admin\layout.js" />
+    <None Include="wwwroot\js\admin\metronic.js" />
+    <None Include="wwwroot\js\admin\quick-sidebar.js" />
+    <None Include="wwwroot\js\admin\tasks.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Content\css\" />
   </ItemGroup>
 
 </Project>
