@@ -1,4 +1,5 @@
 ﻿var path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     module: {
@@ -18,14 +19,14 @@ module.exports = {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'file-loader',
                 options: {
-                    name: '../wwwroot/fonts/[name].[ext]'
+                    name: 'fonts/[name].[ext]'
                 }
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
                 loader: 'file-loader',
                 options: {
-                    name: '../wwwroot/img/[name].[ext]'
+                    name: 'img/[name].[ext]'
                 }
             }
         ]
@@ -33,8 +34,11 @@ module.exports = {
     entry: {
         app: './src/index.js'
     },
+    plugins: [
+        new CleanWebpackPlugin()
+    ],
     output: {
-        path: path.resolve(__dirname, "../wwwroot/"),
-        filename: "bundle.js"
+        path: path.resolve(__dirname, '../wwwroot/'),
+        filename: 'bundle.js'
     }
 };

@@ -13,6 +13,7 @@ import '../assets/theme/corporate/css/style-responsive.css';
 import '../assets/theme/corporate/css/themes/blue.css';
 import './index.css';
 
+import { App } from './app';
 import { Cart } from './cart';
 
 $ = window.$ = window.jQuery = require('jquery');
