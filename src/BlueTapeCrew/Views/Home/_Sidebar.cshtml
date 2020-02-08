@@ -6,7 +6,7 @@
         <ul class="dropdown-menu">
             @foreach (var itm in item.Items)
             {
-                <li><a href="@Url.Action("Details", "Products", new {@name = itm.LinkName})" class="product-link" id="@itm.LinkName"><i class="fa fa-angle-right"></i> @itm.ItemName </a></li>
+                <li><a href="@Url.Action("Details", "Products", new {name = itm.Slug})" class="product-link" id="@itm.Slug"><i class="fa fa-angle-right"></i> @itm.ItemName </a></li>
             }
         </ul>
     </li>

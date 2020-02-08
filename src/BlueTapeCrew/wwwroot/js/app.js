@@ -1,21 +1,4 @@
 ﻿angular.module("btcApp", ["ngResource"])
-
-    .directive("headerMenu", function ($resource) {
-
-        var api = $resource("api/menu");
-        return {
-            scope: {},
-            templateUrl: "js/templates/header-menu.html",
-            replace: true,
-            link: function(scope) {
-                scope.vm = {};
-                api.query(function(data) {
-                    scope.vm.categories = data;
-                });
-            }
-        };
-    })
-
     .directive("emailSubscribe", function ($resource) {
         return {
             scope: {},

@@ -26,7 +26,7 @@ namespace BlueTapeCrew.ViewModels
                     {
                         Id = menuItem.Id,
                         ItemName = menuItem.ProductName,
-                        LinkName = menuItem.Slug,
+                        Slug = menuItem.Slug,
                     })
             });
             Name = product.ProductName;
