@@ -33,6 +33,6 @@
     },
     output: {
         filename: 'bundle.js',
-        path: __dirname + '../wwwroot'
+        path: '../wwwroot'
     }
 };
