@@ -31,14 +31,4 @@
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="wwwroot\img\" />
-  </ItemGroup>
-
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="npx webpack --mode development" />
-  </Target>
-
 </Project>

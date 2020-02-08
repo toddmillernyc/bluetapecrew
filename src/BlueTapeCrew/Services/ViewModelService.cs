@@ -66,7 +66,7 @@ namespace BlueTapeCrew.Services
                 Name = item.Name,
                 Items = item.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                 {
-                    LinkName = product.Slug,
+                    Slug = product.Slug,
                     ItemName = product.ProductName
                 })
             });
@@ -77,8 +77,7 @@ namespace BlueTapeCrew.Services
             var settings = await _settings.Get();
             if (settings == null) return new LayoutViewModel();
             var categories = await _categoryService.GetAllPublishedWithProducts();
-
-            return new LayoutViewModel
+            var viewModel = new LayoutViewModel
             {
                 ContactEmail = settings.ContactEmailAddress,
                 ContactPhone = settings.ContactPhoneNumber,
@@ -98,12 +97,13 @@ namespace BlueTapeCrew.Services
                     Name = item.Name,
                     Items = item.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                     {
-                        LinkName = product.Slug,
+                        Slug = product.Slug,
                         ItemName = product.ProductName
                     })
                 }).ToList(),
                 ShowSubscibeForm = !string.IsNullOrEmpty(settings.MailChimpListId) && !string.IsNullOrEmpty(settings.MailChimpApiKey)
             };
+            return viewModel;
         }
 
         public async Task<ProductViewModel> GetProductViewModel(string name)
