@@ -1,5 +1,6 @@
 ﻿var path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
     module: {
@@ -42,7 +43,8 @@ module.exports = {
         app: './src/index.js'
     },
     plugins: [
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new LiveReloadPlugin()
     ],
     output: {
         path: path.resolve(__dirname, '../wwwroot/'),
