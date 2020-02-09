@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿
+
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +21,17 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Category>> Get() => await _db.Categories.ToListAsync();
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                return Ok(await _db.Categories.ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         
         // GET: api/Categories/5
         [HttpGet("{id}", Name = "Get")]
