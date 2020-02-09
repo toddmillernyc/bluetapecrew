@@ -93,7 +93,7 @@ namespace Services.Models
                     quantity = item.Quantity.ToString(),
                     sku = item.Id.ToString(),
                     description = item.Description,
-                    url = $"https://bluetapecrew.com/products/{item.LinkName}",
+                    url = $"https://bluetapecrew.com/products/{item.Slug}",
                     tax = 0.ToString(MoneyFormat)
                 });
             }

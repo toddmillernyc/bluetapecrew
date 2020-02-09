@@ -18,7 +18,7 @@ namespace Btc.Tests.Stubs
                     Id = 1371,
                     CartId = "kvqjdu0heqtii04ype0egjzb",
                     StyleId = 1032,
-                    LinkName = "nyc-chomper",
+                    Slug = "nyc-chomper",
                     ColorText = "Heather Grey",
                     ImageData = new byte[0],
                     ProductId = 23,

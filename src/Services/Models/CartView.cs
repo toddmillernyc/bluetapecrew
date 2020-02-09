@@ -7,7 +7,7 @@
         public int Quantity { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public string LinkName { get; set; }
+        public string Slug { get; set; }
         public decimal Price { get; set; }
         public int StyleId { get; set; }
         public string ColorText { get; set; }

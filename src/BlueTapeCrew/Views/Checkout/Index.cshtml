@@ -124,10 +124,10 @@
                                                     {
                                                         <tr>
                                                             <td class="checkout-image">
-                                                                <a href="products/@item.LinkName"><img src="images/@item.LinkName" alt="@item.ProductName"></a>
+                                                                <a href="products/@item.Slug"><img src="images/@item.Slug" alt="@item.ProductName"></a>
                                                             </td>
                                                             <td class="checkout-description">
-                                                                <h3>@Html.ActionLink(item.ProductName, @item.LinkName, "Products")</h3>
+                                                                <h3>@Html.ActionLink(item.ProductName, item.Slug, "Products")</h3>
                                                                 <p>@item.StyleText</p>
                                                             </td>
                                                             <td class="checkout-model">@item.StyleId</td>

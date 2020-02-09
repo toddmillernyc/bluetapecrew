@@ -14,14 +14,14 @@
                     foreach (var item in Model.Items)
                     {
                         <li>
-                            <a href="@Url.Action(item.LinkName, "Products")" class="productLink">
+                            <a href="@Url.Action(item.Slug, "Products")" class="productLink">
                                 @if (item.ImageData != null)
                                 {
                                     <img src="data:image/bmp;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ProductName @item.StyleText">
                                 }
                             </a>
                             <span class="cart-content-count">x @item.Quantity</span>
-                            <strong>@Html.ActionLink(item.ProductName, "Details", "Products", new { @name = item.LinkName }, null)</strong>
+                            <strong>@Html.ActionLink(item.ProductName, "Details", "Products", new { name = item.Slug }, null)</strong>
                             <em>@Html.DisplayFor(modelItem => item.SubTotal)</em>
                             <button type="button" class="del-goods" onclick="vm.cart.remove(@item.Id)">&nbsp;</button>
                             <br />

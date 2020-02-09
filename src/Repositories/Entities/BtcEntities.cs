@@ -78,7 +78,7 @@ namespace Repositories.Entities
                     .IsRequired()
                     .HasMaxLength(25);
 
-                entity.Property(e => e.LinkName).HasMaxLength(255);
+                entity.Property(e => e.Slug).HasMaxLength(255);
 
                 entity.Property(e => e.Price).HasColumnType("smallmoney");
 
