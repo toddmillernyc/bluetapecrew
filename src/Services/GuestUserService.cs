@@ -3,7 +3,6 @@ using Repositories.Interfaces;
 using Services.Interfaces;
 using Services.Models;
 using System.Threading.Tasks;
-using Entity = Repositories.Entities;
 
 namespace Services
 {
@@ -28,7 +27,7 @@ namespace Services
 
         public async Task Create(GuestUser user)
         {
-            var entity = _mapper.Map<Entity.GuestUser>(user);
+            var entity = _mapper.Map<Entities.GuestUser>(user);
             await _guestUserRepository.Create(entity);
         }
     }

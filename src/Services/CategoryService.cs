@@ -4,7 +4,6 @@ using Services.Interfaces;
 using Services.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Entity = Repositories.Entities;
 
 namespace Services
 {
@@ -42,7 +41,7 @@ namespace Services
 
         public Task Create(Category category)
         {
-            var entity = _mapper.Map<Entity.Category>(category);
+            var entity = _mapper.Map<Entities.Category>(category);
             return _categoryRepository.Create(entity);
         }
 
@@ -62,7 +61,7 @@ namespace Services
 
         public Task AddProductCategory(ProductCategory productCategory)
         {
-            var entity = _mapper.Map<Entity.ProductCategory>(productCategory);
+            var entity = _mapper.Map<Entities.ProductCategory>(productCategory);
             return _productCategoriesRepository.Create(entity);
         }
 
@@ -75,7 +74,7 @@ namespace Services
 
         public Task DeleteProductCategory(ProductCategory productCategory)
         {
-            var entity = _mapper.Map<Entity.ProductCategory>(productCategory);
+            var entity = _mapper.Map<Entities.ProductCategory>(productCategory);
             return _productCategoriesRepository.Delete(entity);
         }
 

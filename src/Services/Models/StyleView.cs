@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Services.Models
+﻿namespace Services.Models
 {
     public class StyleView
     {

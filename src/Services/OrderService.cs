@@ -8,7 +8,6 @@ using Services.Helpers;
 using Services.Interfaces;
 using Services.Models;
 using Orders = Services.Models.Constants.Orders;
-using Entity = Repositories.Entities;
 
 namespace Services
 {
@@ -45,7 +44,7 @@ namespace Services
 
             }).ToList();
             order.DateCreated = DateTime.Now;
-            var entity = _mapper.Map<Entity.Order>(order);
+            var entity = _mapper.Map<Entities.Order>(order);
             await _orderRepository.Create(entity);
             return entity.Id;
         }

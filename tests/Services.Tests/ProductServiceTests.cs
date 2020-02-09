@@ -4,8 +4,6 @@ using Moq;
 using Repositories.Interfaces;
 using Services.Models;
 using Xunit;
-using Entity = Repositories.Entities;
-
 namespace Services.Tests
 {
     public class ProductServiceTests
@@ -16,7 +14,7 @@ namespace Services.Tests
             //arrange
             const int expectedProductId = 1;
             var mockMapper = new Mock<IMapper>();
-            mockMapper.Setup(x => x.Map<Product, Entity.Product>(It.IsAny<Product>())).Returns(new Entity.Product
+            mockMapper.Setup(x => x.Map<Product, Entities.Product>(It.IsAny<Product>())).Returns(new Entities.Product
             {
                 Id = expectedProductId
             });

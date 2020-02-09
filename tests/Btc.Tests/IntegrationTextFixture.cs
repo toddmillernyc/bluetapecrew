@@ -4,11 +4,11 @@ using Btc.Tests.Stubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Repositories.Entities;
 using Services.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Reflection;
+using Entities;
 using Xunit;
 
 namespace Btc.Tests

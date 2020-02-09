@@ -5,7 +5,6 @@ using Services.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Entity = Repositories.Entities;
 
 namespace Services
 {
@@ -37,13 +36,13 @@ namespace Services
         public async Task AddImageToProduct(int productId, int imageId)
         {
             var model = new ProductImage {ProductId = productId, ImageId = imageId};
-            var entity = _mapper.Map<Entity.ProductImage>(model);
+            var entity = _mapper.Map<Entities.ProductImage>(model);
             await _productImageRepository.Create(entity);
         }
 
         public async Task Create(Product product)
         {
-            var entity = _mapper.Map<Product, Entity.Product>(product);
+            var entity = _mapper.Map<Product, Entities.Product>(product);
             await _productRepository.Create(entity);
             product.Id = entity.Id;
 
@@ -64,7 +63,7 @@ namespace Services
 
         public Task Update(Product product)
         {
-            var entity = _mapper.Map<Entity.Product>(product);
+            var entity = _mapper.Map<Entities.Product>(product);
             return _productRepository.Update(entity);
         }
 
@@ -92,7 +91,7 @@ namespace Services
         //todo: keep users from adding multiple reviews
         public async Task<string> AddReview(Review review)
         {
-            var entity = _mapper.Map<Entity.Review>(review);
+            var entity = _mapper.Map<Entities.Review>(review);
             await _reviewRepository.Create(entity);
             return await _productRepository.GetSlug(review.ProductId);
         }

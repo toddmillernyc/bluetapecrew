@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Helpers;
 using Services.Interfaces;
-using Services.Models;
 
 namespace BlueTapeCrew.ApiControllers
 {

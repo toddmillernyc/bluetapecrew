@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Repositories.Entities;
+using Entities;
 using Repositories.Interfaces;
 
 namespace Repositories
