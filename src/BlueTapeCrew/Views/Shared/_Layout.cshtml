@@ -19,6 +19,7 @@
     <meta content="@layoutModel.CopyrightLinktext" name="author">
     <meta property="og:site_name" content="@layoutModel.SiteTitle">
     @RenderSection("OpenGraph", false)
+    <script src="~/bundle.js"></script>
 </head>
 <body class="ecommerce">
     <div class="pre-header">
@@ -144,14 +145,13 @@
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <ul class="list-unstyled list-inline pull-right">
-                        <li><img src="~/Content/img/payments/PayPal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
+                        <li><img src="img/paypal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
     <div id="product-pop-up" style="display: none; width: 700px;"></div>
-    <script src="~/bundle.js"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>

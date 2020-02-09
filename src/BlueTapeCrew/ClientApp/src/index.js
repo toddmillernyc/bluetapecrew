@@ -1,4 +1,6 @@
-﻿import 'bootstrap/dist/css/bootstrap.css';
+﻿import '../assets/favicon.ico';
+
+import 'bootstrap/dist/css/bootstrap.css';
 import 'fancybox/dist/css/jquery.fancybox.css';
 import 'owl-carousel/owl-carousel/owl.carousel.css';
 import 'font-awesome/css/font-awesome.css';
@@ -13,23 +15,33 @@ import '../assets/theme/corporate/css/style-responsive.css';
 import '../assets/theme/corporate/css/themes/blue.css';
 import './index.css';
 
-import { App } from './app';
-import { Cart } from './cart';
+import '../assets/theme/corporate/img/up.png';
+import '../assets/images/logo.png';
+import '../assets/images/paypal.jpg';
+
+import { App } from './modules/app';
+import { Cart } from './modules/cart';
+
+
+window.vm = {
+    cart: Cart
+};
 
 $ = window.$ = window.jQuery = require('jquery');
-window.Cart = Cart;
-
 require('fancybox')($);
 require('jquery-slimscroll/jquery.slimscroll.js');
 require('owl-carousel/owl-carousel/owl.carousel.js');
 require('../assets/theme/corporate/scripts/back-to-top.js');
 require('bootstrap-touchspin');
 //require('../assets/theme/corporate/scripts/layout.js');
-Cart.get();
-var layout = new Layout();
-layout.initTouchspin();
-layout.init();
-layout.initTwitter();
+
+$(document).ready(function() {
+    Cart.get();
+    var layout = new Layout();
+    layout.initTouchspin();
+    layout.init();
+    layout.initTwitter();
+});
 
 function Layout() {
 

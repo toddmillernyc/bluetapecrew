@@ -1129,8 +1129,8 @@
     <Content Include="ClientApp\assets\css\googleFontsOne.css" />
     <Content Include="ClientApp\assets\css\googleFontsTwo.css" />
     <Content Include="ClientApp\assets\favicon.ico" />
-    <Content Include="ClientApp\src\app.js" />
-    <Content Include="ClientApp\src\cart.js" />
+    <Content Include="ClientApp\src\modules\app.js" />
+    <Content Include="ClientApp\src\modules\cart.js" />
     <Content Include="ClientApp\src\index.js" />
   </ItemGroup>
 

@@ -1,14 +1,6 @@
 ﻿export class Cart {
 
     static get() {
-        //fetch('cart/index').then((response) => {
-        //    return response.text();
-        //})
-        //    .then((cartHtml) => {
-        //        console.log(cartHtml);
-        //    document.getElementsByClassName('top-cart-block')[0].innerHTML = cartHtml;
-        //    });
-
         fetch('api/cart')
             .then(response => response.json())
             .then(vm => {

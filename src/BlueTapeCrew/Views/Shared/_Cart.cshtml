@@ -23,7 +23,7 @@
                             <span class="cart-content-count">x @item.Quantity</span>
                             <strong>@Html.ActionLink(item.ProductName, "Details", "Products", new { @name = item.LinkName }, null)</strong>
                             <em>@Html.DisplayFor(modelItem => item.SubTotal)</em>
-                            <button type="button" class="del-goods" onclick="Cart.remove(@item.Id)">&nbsp;</button>
+                            <button type="button" class="del-goods" onclick="vm.cart.remove(@item.Id)">&nbsp;</button>
                             <br />
                             @Html.DisplayFor(modelItem => item.StyleText)
                         </li>
