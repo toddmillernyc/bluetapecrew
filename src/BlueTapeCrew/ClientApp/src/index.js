@@ -34,13 +34,9 @@ require('jquery.rateit');
 require('../assets/theme/corporate/scripts/back-to-top.js');
 
 
-
 window.vm = {
     cart: Cart
 };
-
-
-//require('../assets/theme/corporate/scripts/layout.js');
 
 $(document).ready(function () {
     
@@ -48,11 +44,9 @@ $(document).ready(function () {
     var layout = new Layout();
     layout.init();
     layout.initTwitter();
-    layout.initTouchspin();
-
-    //product page layout
     layout.initOWL();
-    layout.initImageZoom();
+    Layout.initImageZoom();
+    layout.initTouchspin();
     layout.initUniform();
 });
 
