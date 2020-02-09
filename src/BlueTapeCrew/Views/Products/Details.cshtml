@@ -93,7 +93,7 @@
                             <div class="product-page-options">
                                 <div class="pull-left">
                                     <label class="control-label">Size / Color:</label>
-                                    @Html.DropDownList("StyleId", null, new { @class = "form-control input-sm", @id = "StyleId", @onchange = "getPrice($(this).val())" })
+                                    @Html.DropDownList("StyleId", null, new { @class = "form-control input-sm", id = "StyleId", onchange = "vm.getPrice($(this).val())" })
                                 </div>
                             </div>
 

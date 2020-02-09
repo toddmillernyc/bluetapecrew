@@ -35,13 +35,14 @@ require('../assets/theme/corporate/scripts/back-to-top.js');
 
 
 window.vm = {
-    cart: Cart
+    cart: Cart,
+    getPrice: App.getPrice
 };
 
 $(document).ready(function () {
     
     Cart.get();
-    var layout = new Layout();
+    const layout = new Layout();
     layout.init();
     layout.initTwitter();
     layout.initOWL();
@@ -49,7 +50,7 @@ $(document).ready(function () {
     layout.initTouchspin();
     layout.initUniform();
 
-    $(".owl-carousel-home").owlCarousel({
+    $('.owl-carousel-home').owlCarousel({
         pagination: false,
         navigation: true,
         items: 5,
