@@ -27,7 +27,7 @@ module.exports = {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'file-loader',
                 options: {
-                    name: 'fonts/[name].[ext]'
+                    name: './fonts/[name].[ext]'
                 }
             },
             {
@@ -47,7 +47,7 @@ module.exports = {
         new LiveReloadPlugin()
     ],
     output: {
-        path: path.resolve(__dirname, '../wwwroot/'),
+        path: path.resolve(__dirname, '../wwwroot/admin/'),
         filename: 'bundle.js'
     }
 };

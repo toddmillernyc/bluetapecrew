@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Repositories.Entities;
 
 namespace Repositories.Interfaces
 {
     public interface ISiteSettingsRepository
     {
-        Task<SiteSetting> Get();
+        Task<IEnumerable<SiteSetting>> GetAll();
         Task<SiteSetting> Set(SiteSetting siteSetting);
-        Task DeleteAll();
         Task Create(SiteSetting siteSetting);
     }
 }

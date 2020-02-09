@@ -2,6 +2,7 @@
 using Repositories.Entities;
 using Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Repositories
@@ -15,7 +16,11 @@ namespace Repositories
             _db = db;
         }
 
-        public Task<SiteSetting> Get() => _db.SiteSettings.FirstOrDefaultAsync();
+        public async Task<IEnumerable<SiteSetting>> GetAll()
+        {
+            var siteSettings = await _db.SiteSettings.ToListAsync();
+            return siteSettings;
+        }
 
         public async Task<SiteSetting> Set(SiteSetting siteSetting)
         {
@@ -23,12 +28,6 @@ namespace Repositories
             _db.Entry(entity).CurrentValues.SetValues(siteSetting);
             await _db.SaveChangesAsync();
             return entity;
-        }
-
-        public async Task DeleteAll()
-        {
-            _db.SiteSettings.RemoveRange(_db.SiteSettings);
-            await _db.SaveChangesAsync();
         }
 
         public async Task Create(SiteSetting siteSetting)
