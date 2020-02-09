@@ -45,7 +45,7 @@ $(document).ready(function () {
     layout.init();
     layout.initTwitter();
     layout.initOWL();
-    Layout.initImageZoom();
+    layout.initImageZoom();
     layout.initTouchspin();
     layout.initUniform();
 
