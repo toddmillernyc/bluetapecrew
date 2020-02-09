@@ -27,8 +27,6 @@ namespace Admin
             //{
             //    configuration.RootPath = "ClientApp/build";
             //});
-            var defaultConnectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<BtcEntities>(options => options.UseSqlServer(defaultConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
