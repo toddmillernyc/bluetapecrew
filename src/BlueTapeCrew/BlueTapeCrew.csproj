@@ -1160,6 +1160,7 @@
 
   <ItemGroup>
     <Folder Include="AdminClientApp\Content\css\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
