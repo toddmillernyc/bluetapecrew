@@ -22,25 +22,38 @@ import '../assets/images/paypal.jpg';
 import { App } from './modules/app';
 import { Cart } from './modules/cart';
 
+$ = window.$ = window.jQuery = require('jquery');
+require('bootstrap/dist/js/bootstrap');
+require('fancybox')($);
+require('jquery-slimscroll/jquery.slimscroll.js');
+require('owl-carousel/owl-carousel/owl.carousel.js');
+require('jquery-zoom/jquery.zoom.js');
+require('bootstrap-touchspin');
+require('jquery-uniform');
+require('jquery.rateit');
+require('../assets/theme/corporate/scripts/back-to-top.js');
+
+
 
 window.vm = {
     cart: Cart
 };
 
-$ = window.$ = window.jQuery = require('jquery');
-require('fancybox')($);
-require('jquery-slimscroll/jquery.slimscroll.js');
-require('owl-carousel/owl-carousel/owl.carousel.js');
-require('../assets/theme/corporate/scripts/back-to-top.js');
-require('bootstrap-touchspin');
+
 //require('../assets/theme/corporate/scripts/layout.js');
 
-$(document).ready(function() {
+$(document).ready(function () {
+    
     Cart.get();
     var layout = new Layout();
-    layout.initTouchspin();
     layout.init();
     layout.initTwitter();
+    layout.initTouchspin();
+
+    //product page layout
+    layout.initOWL();
+    layout.initImageZoom();
+    layout.initUniform();
 });
 
 function Layout() {
