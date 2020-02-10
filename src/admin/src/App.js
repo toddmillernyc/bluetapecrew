@@ -1,38 +1,37 @@
-import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import HomePage from './components/HomePage';
+import React from 'react';
 import CategoriesPage from './components/CategoriesPage';
+import HomePage from './components/HomePage';
+import { BrowserRouter as Router,  Switch,  Route } from "react-router-dom";
+import { Container, Navbar, Nav } from 'react-bootstrap';
 
 function App() {
   return (
+    
     <Router>
-            <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/categories">Categories</Link>
-          </li>
-        </ul>
-        <hr />
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/categories">
-            <CategoriesPage />
-          </Route>
-        </Switch>
-      </div>
+
+      <Container>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/categories">Categories</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route path="/categories">
+          <CategoriesPage />
+        </Route>
+      </Switch>
+      </Container>
     </Router>
   );
 }
-
 export default App;
