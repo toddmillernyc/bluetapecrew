@@ -23,7 +23,7 @@
   "dependencies": {
     "angular": "1.7.7",
     "angular-resource": "^1.7.9",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "bootstrap-switch": "3.3.2",
     "daterangepicker": "2.1.26",
     "fullcalendar": "3.9.0",
