@@ -1,16 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import React from 'react';
-import CategoriesPage from './components/CategoriesPage';
+import CategoriesPage from './containers/CategoriesPage';
 import HomePage from './components/HomePage';
 import { BrowserRouter as Router,  Switch,  Route } from "react-router-dom";
 import { Container, Navbar, Nav } from 'react-bootstrap';
 
-function App() {
-  return (
-    
-    <Router>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCheck, faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
 
+
+function App() {
+  library.add(faCheck)
+  library.add(faPencilAlt)
+  library.add(faTimes)
+  return (
+    <Router>
       <Container>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
