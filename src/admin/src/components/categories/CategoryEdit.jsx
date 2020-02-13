@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Switch from "react-switch";
 
 const CategoryEdit = ({ id, imageId, name, isPublished, onCancelEditClick, onPublishChange, onNameChange, onSave }) => (
@@ -39,6 +38,7 @@ CategoryEdit.propTypes = {
     isPublished: PropTypes.bool.isRequired,
     onCancelEditClick: PropTypes.func.isRequired,
     onPublishChange: PropTypes.func.isRequired,
-    onNameChange: PropTypes.func.isRequired
+    onNameChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired
 }
 export default CategoryEdit

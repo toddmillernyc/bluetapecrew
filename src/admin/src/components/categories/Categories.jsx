@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import Category from './Category'
 import { Table } from 'react-bootstrap';
 
-const Categories = ({ categories }) =>
-
+const Categories = ({ categories, saveCategory }) =>
         <div>
             <h1>Categories</h1>
             <Table striped bordered hover>
@@ -20,7 +19,10 @@ const Categories = ({ categories }) =>
                 <tbody>
                     {
                         categories.map(category => (
-                            <Category key={category.id} {...category} />
+                            <Category 
+                                key={category.id}
+                                {...category}
+                                onSaveCategory={saveCategory} />
                         ))
                     }
                 </tbody>
@@ -36,7 +38,8 @@ Categories.propTypes = {
             name: PropTypes.string.isRequired,
             published: PropTypes.bool.isRequired,
         }).isRequired,
-    ).isRequired
+    ).isRequired,
+    saveCategory: PropTypes.func.isRequired
 }
 
 export default Categories

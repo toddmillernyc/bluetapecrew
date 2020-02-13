@@ -7,6 +7,7 @@ export default class CategoriesPage extends React.Component {
     this.state = {
       categories: []
     };
+    this.saveCategory = this.saveCategory.bind(this)
   }
 
   async componentDidMount() {
@@ -14,7 +15,23 @@ export default class CategoriesPage extends React.Component {
     this.setState({ categories: await response.json()})
   }
 
+  saveCategory(category) {
+    let updatedCategories = []
+    this.state.categories.forEach(stateCategory => {
+      if(stateCategory.id === category.id) {
+        updatedCategories.push(category)
+      }
+      else {
+        updatedCategories.push(stateCategory)
+      }
+    })
+    this.setState({ categories: updatedCategories })
+  }
+
   render() {
-    return React.createElement(Categories, { categories: this.state.categories });
+    return React.createElement(Categories, { 
+      categories: this.state.categories,
+      saveCategory: this.saveCategory
+    });
   }
 }

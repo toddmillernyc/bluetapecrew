@@ -30,6 +30,12 @@ class Category extends React.Component {
     handlePublishChange() { this.setState({ isPublished: !this.state.isPublished }) }
     handleSave() {
         this.setState({ isEditMode: false }) 
+        this.props.onSaveCategory({
+            id: this.props.id,
+            name: this.state.name,
+            published: this.state.published,
+            imageId: this.props.imageId
+        });
     }
 
     render() {
@@ -60,6 +66,7 @@ Category.propTypes = {
     id: PropTypes.number.isRequired,
     imageId: PropTypes.number,
     name: PropTypes.string.isRequired,
-    published: PropTypes.bool.isRequired
+    published: PropTypes.bool.isRequired,
+    onSaveCategory: PropTypes.func.isRequired
 }
 export default Category
