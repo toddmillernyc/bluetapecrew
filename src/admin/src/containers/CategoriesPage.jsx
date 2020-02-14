@@ -15,7 +15,16 @@ export default class CategoriesPage extends React.Component {
     this.setState({ categories: await response.json()})
   }
 
-  saveCategory(category) {
+  async saveCategory(category) {
+    const response = await fetch('https://api/categories', 
+    {
+      method: 'PUT',
+      body: JSON.stringify(category),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    
     let updatedCategories = []
     this.state.categories.forEach(stateCategory => {
       if(stateCategory.id === category.id) {

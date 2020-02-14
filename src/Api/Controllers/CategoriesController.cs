@@ -46,10 +46,19 @@ namespace Api.Controllers
         {
         }
 
-        // PUT: api/Categories/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] Category category)
         {
+            try
+            {
+                _db.Entry(category).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message + "\n" + ex.StackTrace);
+            }
         }
 
         // DELETE: api/ApiWithActions/5

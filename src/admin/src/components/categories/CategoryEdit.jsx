@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button } from 'react-bootstrap';
 import Switch from "react-switch";
 
-const CategoryEdit = ({ id, imageId, name, isPublished, onCancelEditClick, onPublishChange, onNameChange, onSave }) => (
+const CategoryEdit = ({ id, imageId, name, published, onCancelEditClick, onPublishChange, onNameChange, onSave }) => (
     <tr className="row">
         <td className="col">{id}</td>
         <td className="col">{imageId}</td>
@@ -19,7 +19,7 @@ const CategoryEdit = ({ id, imageId, name, isPublished, onCancelEditClick, onPub
                 height={21}
                 width={42}
                 onChange={onPublishChange} 
-                checked={isPublished} />
+                checked={published} />
         </td>
         <td className="col">
             <Button size="sm" title="Save Category" variant="success" className="mr-2" onClick={onSave}>Save</Button>
@@ -35,7 +35,7 @@ CategoryEdit.propTypes = {
     id: PropTypes.number.isRequired,
     imageId: PropTypes.number,
     name: PropTypes.string.isRequired,
-    isPublished: PropTypes.bool.isRequired,
+    published: PropTypes.bool.isRequired,
     onCancelEditClick: PropTypes.func.isRequired,
     onPublishChange: PropTypes.func.isRequired,
     onNameChange: PropTypes.func.isRequired,

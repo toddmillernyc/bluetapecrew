@@ -8,7 +8,7 @@ class Category extends React.Component {
         super(props)
         this.state = {
             isEditMode: false,
-            isPublished: props.published,
+            published: props.published,
             name: props.name
         }
         this.handleCancelEditClick = this.handleCancelEditClick.bind(this);
@@ -21,13 +21,15 @@ class Category extends React.Component {
     handleCancelEditClick() { 
         this.setState({
             isEditMode: false,
-            isPublished: this.props.published,
+            published: this.props.published,
             name: this.props.name
         }) 
     }
     handleEditClick() { this.setState({ isEditMode: true }) }
     handleNameChange(event) { this.setState({ name: event.target.value })}
-    handlePublishChange() { this.setState({ isPublished: !this.state.isPublished }) }
+    handlePublishChange() { 
+        this.setState({ published: !this.state.published }) 
+    }
     handleSave() {
         this.setState({ isEditMode: false }) 
         this.props.onSaveCategory({
@@ -46,7 +48,7 @@ class Category extends React.Component {
                     id={this.props.id}
                     imageId={this.props.imageId}
                     name={this.state.name}
-                    isPublished={this.state.isPublished}
+                    published={this.state.published}
                     onPublishChange={this.handlePublishChange}
                     onCancelEditClick={this.handleCancelEditClick}
                     onNameChange={this.handleNameChange}

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import Category from './Category'
 import { Table } from 'react-bootstrap';
 
-const Categories = ({ categories, saveCategory }) =>
+const Categories = ({ categories, saveCategory }) => 
+    categories
+        ?
         <div>
             <h1>Categories</h1>
             <Table striped bordered hover>
@@ -19,7 +21,7 @@ const Categories = ({ categories, saveCategory }) =>
                 <tbody>
                     {
                         categories.map(category => (
-                            <Category 
+                            <Category
                                 key={category.id}
                                 {...category}
                                 onSaveCategory={saveCategory} />
@@ -28,6 +30,9 @@ const Categories = ({ categories, saveCategory }) =>
                 </tbody>
             </Table>
         </div>
+        : <div></div>
+
+
 
 
 Categories.propTypes = {
