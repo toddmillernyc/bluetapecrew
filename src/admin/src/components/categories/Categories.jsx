@@ -1,18 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Category from './Category'
-import { Table } from 'react-bootstrap';
+import { Button, Col, Row, Table } from 'react-bootstrap';
 
-const Categories = ({ categories, saveCategory }) => 
+const Categories = ({ categories, saveCategory }) =>
     categories
         ?
         <div>
-            <h1>Categories</h1>
+            <Row>
+                <Col>
+                    <h1>Categories</h1>
+                </Col>
+                <Col>
+                    <Button size="sm" className="float-right" variant="success">New Category</Button>
+                </Col>
+            </Row>
             <Table striped bordered hover>
                 <thead>
                     <tr className="row">
-                        <th className="col">Id</th>
-                        <th className="col">ImageId</th>
+                        {/* <th className="col">Id</th>
+                        <th className="col">ImageId</th> */}
                         <th className="col">Name</th>
                         <th className="col">Published</th>
                         <th className="col">Actions</th>

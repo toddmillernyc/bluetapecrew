@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const CategoryView = ({ id, imageId, name, published, onEditClick }) => (
     <tr className="row">
-        <td className="col">{id}</td>
-        <td className="col">{imageId}</td>
+        {/* <td className="col">{id}</td>
+        <td className="col">{imageId}</td> */}
         <td className="col">{name}</td>
         <td className="col">{
         published 
@@ -23,7 +23,7 @@ const CategoryView = ({ id, imageId, name, published, onEditClick }) => (
                 name="edit-button"
                 size="sm"
                 title="Edit Category">
-                <FontAwesomeIcon icon="pencil-alt" size="xs" />
+                <FontAwesomeIcon icon="pencil-alt" size="xs" /> Edit
             </Button>
         </td>
     </tr>
