@@ -1,67 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import CategoryView from './CategoryView'
 import CategoryEdit from './CategoryEdit'
 
-class Category extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            isEditMode: false,
-            published: props.published,
-            name: props.name
-        }
-        this.handleCancelEditClick = this.handleCancelEditClick.bind(this);
-        this.handleEditClick = this.handleEditClick.bind(this);
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handlePublishChange = this.handlePublishChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
+const Category = ({ id, imageId, name }) => {
+    const [isEditMode, setIsEditMode] = useState(false)
+    const [name, setName] = useState("")
+    const [published, setPublished] = useState(false)
+
+    function handleCancelEditClick() { 
+        setIsEditMode(false)
+        setPublished(published)
+        setName(name)
     }
 
-    handleCancelEditClick() { 
-        this.setState({
-            isEditMode: false,
-            published: this.props.published,
-            name: this.props.name
-        }) 
-    }
-    handleEditClick() { this.setState({ isEditMode: true }) }
-    handleNameChange(event) { this.setState({ name: event.target.value })}
-    handlePublishChange() { 
-        this.setState({ published: !this.state.published }) 
-    }
-    handleSave() {
-        this.setState({ isEditMode: false }) 
+    function handleSave() {
+        setIsEditMode(false)
         this.props.onSaveCategory({
-            id: this.props.id,
-            name: this.state.name,
-            published: this.state.published,
-            imageId: this.props.imageId
-        });
+            id: id,
+            name: name,
+            published: published,
+            imageId: imageId
+        })
     }
 
-    render() {
-        return (
-            this.state.isEditMode
-                ?
-                <CategoryEdit
-                    id={this.props.id}
-                    imageId={this.props.imageId}
-                    name={this.state.name}
-                    published={this.state.published}
-                    onPublishChange={this.handlePublishChange}
-                    onCancelEditClick={this.handleCancelEditClick}
-                    onNameChange={this.handleNameChange}
-                    onSave={this.handleSave}>
-                </CategoryEdit>
-                :
-                <CategoryView
-                    {...this.props}
-                    onPublishChange={this.handlePublishChange}
-                    onEditClick={this.handleEditClick}>
-                </CategoryView>
-        )
-    }
+    return (
+            isEditMode
+            ?
+            <CategoryEdit
+                id={id}
+                imageId={imageId}
+                name={name}
+                published={published}
+                onPublishChange={() => setPublished(!published)}
+                onCancelEditClick={handleCancelEditClick}
+                onNameChange={(event) => setName(event.target.value )}
+                onSave={handleSave}>
+            </CategoryEdit>
+            :
+            <CategoryView
+                {...this.props}
+                onPublishChange={() => setPublished(!published)}
+                onEditClick={() => setIsEditMode(true) }>
+            </CategoryView>
+    )
 }
 
 Category.propTypes = {

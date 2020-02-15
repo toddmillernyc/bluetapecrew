@@ -1,19 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import React from 'react';
-import CategoriesPage from './containers/CategoriesPage';
 import HomePage from './components/HomePage';
 import { BrowserRouter as Router,  Switch,  Route } from "react-router-dom";
 import { Container, Navbar, Nav } from 'react-bootstrap';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheck, faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faPencilAlt, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
+import Categories from './components/categories/Categories';
 
 
 function App() {
   library.add(faCheck)
   library.add(faPencilAlt)
+  library.add(faPlus)
   library.add(faTimes)
+  
   return (
     <Router>
       <Container>
@@ -32,7 +34,7 @@ function App() {
           <HomePage />
         </Route>
         <Route path="/categories">
-          <CategoriesPage />
+          <Categories />
         </Route>
       </Switch>
       </Container>

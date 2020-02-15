@@ -34,17 +34,26 @@ namespace Api.Controllers
             }
         }
         
-        // GET: api/Categories/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Categories
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Category category)
         {
+            try
+            {
+                _db.Categories.Add(category);
+                await _db.SaveChangesAsync();
+                return Ok(category);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message + "\n" + ex.StackTrace);
+            }
         }
 
         [HttpPut]
@@ -54,7 +63,7 @@ namespace Api.Controllers
             {
                 _db.Entry(category).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
-                return Ok();
+                return NoContent();
             }
             catch(Exception ex)
             {
@@ -62,7 +71,6 @@ namespace Api.Controllers
             }
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

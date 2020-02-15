@@ -8,13 +8,10 @@ const CategoryView = ({ id, imageId, name, published, onEditClick }) => (
         {/* <td className="col">{id}</td>
         <td className="col">{imageId}</td> */}
         <td className="col">{name}</td>
-        <td className="col">{
-        published 
-        ? 
-        <FontAwesomeIcon icon="check" size="xs" />
-        : 
-        <FontAwesomeIcon icon="times" size="xs" />
-        }
+        <td className="col">
+            <FontAwesomeIcon 
+                size="xs"
+                icon={ published ? "check" : "times" } />
         </td>
         <td className="col">
             <Button
@@ -22,8 +19,9 @@ const CategoryView = ({ id, imageId, name, published, onEditClick }) => (
                 onClick={onEditClick}
                 name="edit-button"
                 size="sm"
+                variant="info"
                 title="Edit Category">
-                <FontAwesomeIcon icon="pencil-alt" size="xs" /> Edit
+                <FontAwesomeIcon icon="pencil-alt" size="xs" />
             </Button>
         </td>
     </tr>
