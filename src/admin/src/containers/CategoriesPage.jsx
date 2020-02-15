@@ -8,15 +8,16 @@ export default class CategoriesPage extends React.Component {
       categories: []
     };
     this.saveCategory = this.saveCategory.bind(this)
+    this.baseUrl = "https://localhost:44320"
   }
 
   async componentDidMount() {
-    const response = await fetch('https://api/categories')
+    const response = await fetch(`${this.baseUrl}/categories`)
     this.setState({ categories: await response.json()})
   }
 
   async saveCategory(category) {
-    const response = await fetch('https://api/categories', 
+    const response = await fetch(`${this.baseUrl}/categories`, 
     {
       method: 'PUT',
       body: JSON.stringify(category),

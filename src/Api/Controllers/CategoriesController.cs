@@ -1,7 +1,7 @@
 ﻿
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,8 @@ namespace Api.Controllers
         {
             try
             {
-                return Ok(await _db.Categories.ToListAsync());
+                var categories = await _db.Categories.ToListAsync();
+                return Ok(categories.OrderBy(x=>x.Name));
             }
             catch (Exception ex)
             {
