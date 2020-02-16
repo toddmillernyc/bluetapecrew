@@ -49,7 +49,9 @@ const CategoryRow = ({ id, name, published, handleSave }) => {
                 checked={publishedValue}
                 onChange={()=> setPublishedValue(!publishedValue) }>
               </Switch>
-            : <FontAwesomeIcon className={ publishedValue ? "text-success" : "text-danger" } icon={ publishedValue ? "check" : "times" } />
+            : <FontAwesomeIcon 
+                className={ publishedValue ? "text-success" : "text-danger" }
+                icon={ publishedValue ? "check" : "times" } />
           }
       </td>
       <td>

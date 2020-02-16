@@ -1,4 +1,4 @@
-const baseUrl = "https://localhost:5001"
+const baseUrl = "https://api.toddmiller.nyc"
 
 export async function getCategories() {
     let response = await fetch(`${baseUrl}/categories`)
