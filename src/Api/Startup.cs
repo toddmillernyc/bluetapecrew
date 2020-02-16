@@ -16,8 +16,6 @@ namespace Api
             Configuration = configuration;
         }
 
-        readonly string CorsPolicy = "CorsPolicy";
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -25,13 +23,12 @@ namespace Api
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
+                options.AddPolicy("ReactDev",
                     builder => builder.WithOrigins("https://localhost:3000")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-
 
             var defaultConnectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BtcEntities>(options => options.UseSqlServer(defaultConnectionString));
@@ -41,8 +38,6 @@ namespace Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -54,11 +49,11 @@ namespace Api
 
             app.UseAuthorization();
 
-            app.UseCors(CorsPolicy);
+            app.UseCors("ReactDev");
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers().RequireCors(CorsPolicy);
+                endpoints.MapControllers();
             });
         }
     }

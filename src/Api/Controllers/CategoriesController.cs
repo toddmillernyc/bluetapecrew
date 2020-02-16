@@ -72,8 +72,19 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
+                var category = await _db.Categories.FindAsync(id);
+                _db.Categories.Remove(category);
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message + "\n" + ex.StackTrace);
+            }
         }
     }
 }

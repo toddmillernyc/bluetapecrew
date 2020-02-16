@@ -1,4 +1,4 @@
-const baseUrl = "https://api.toddmiller.nyc"
+const baseUrl = "https://localhost:44320"
 
 export async function getCategories() {
     let response = await fetch(`${baseUrl}/categories`)
@@ -16,7 +16,7 @@ export async function saveCategory(category) {
     })
   }
 
-  export async function  newCategory(category) {
+  export async function  createCategory(category) {
     await fetch(`${baseUrl}/categories`, 
     {
       method: 'POST',

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, Row, Table } from 'react-bootstrap'
+import { Col,  Row, Table } from 'react-bootstrap'
 import { getCategories } from '../api/categoriesApi'
 import CategoryRow from './CategoryRow'
-import { saveCategory } from '../api/categoriesApi'
-import Swtich from 'react-switch'
+import { createCategory, saveCategory } from '../api/categoriesApi'
+import AddCategoryWidget from './AddCategoryWidget'
 
 export default function CategoriesGrid() {
   const [categories, setCategories] = useState([])
-  const [addCategory, setAddCategory] = useState(true)
 
   useEffect(() => {
     getCategories().then((categories) => {
@@ -27,6 +26,13 @@ export default function CategoriesGrid() {
     ))
   }
 
+  function handleCreate(newCategory) {
+    console.log(newCategory)
+    createCategory(newCategory).then(() => {
+      setCategories([newCategory].concat(categories))
+    })
+  }
+
   return (
     <>
       <Row>
@@ -34,23 +40,7 @@ export default function CategoriesGrid() {
           <h1>Categories</h1>
         </Col>
         <Col>
-          {
-            addCategory
-              ? <Form inline>
-                <Form.Group controlId="formGroupEmail" size="sm">
-                  <Form.Control type="text" placeholder="Category" />
-
-                </Form.Group>
-              </Form>
-              : <Button
-                size="sm"
-                variant="outline-success"
-                className="float-right"
-                onClick={() => { setAddCategory(!addCategory) }}>
-                Add Category
-            </Button>
-          }
-
+          <AddCategoryWidget onCreate={handleCreate}></AddCategoryWidget>
         </Col>
       </Row>
       <Table>
