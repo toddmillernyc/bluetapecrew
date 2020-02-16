@@ -17,7 +17,6 @@ export default function CategoriesGrid() {
     saveCategory(updateCategory).then(() => {
       updateCategoriesState(updateCategory)
     })
-    
   }
 
   function updateCategoriesState(updateCategory) {
