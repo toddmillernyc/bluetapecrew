@@ -1,4 +1,4 @@
-const baseUrl = "https://localhost:44320"
+const baseUrl = "https://localhost:5001"
 
 export async function getCategories() {
     let response = await fetch(`${baseUrl}/categories`)
@@ -6,7 +6,6 @@ export async function getCategories() {
 }
 
 export async function saveCategory(category) {
-    console.log(category)
     await fetch(`${baseUrl}/categories`, 
     {
       method: 'PUT',

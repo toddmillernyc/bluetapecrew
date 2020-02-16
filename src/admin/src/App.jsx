@@ -7,8 +7,7 @@ import { Container, Navbar, Nav } from 'react-bootstrap';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCheck, faPencilAlt, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
-import Categories from './components/categories/Categories';
-
+import CategoriesGrid from './components/CategoriesGrid'
 
 function App() {
   library.add(faCheck)
@@ -34,7 +33,7 @@ function App() {
           <HomePage />
         </Route>
         <Route path="/categories">
-          <Categories />
+          <CategoriesGrid />
         </Route>
       </Switch>
       </Container>
