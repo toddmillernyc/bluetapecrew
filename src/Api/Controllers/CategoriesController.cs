@@ -76,6 +76,8 @@ namespace Api.Controllers
         {
             try
             {
+                var productCategories = _db.ProductCategories.Where(x => x.CategoryId == id);
+                _db.ProductCategories.RemoveRange(productCategories);
                 var category = await _db.Categories.FindAsync(id);
                 _db.Categories.Remove(category);
                 await _db.SaveChangesAsync();

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col,  Row, Table } from 'react-bootstrap'
 import { getCategories } from '../api/categoriesApi'
 import CategoryRow from './CategoryRow'
-import { createCategory, saveCategory } from '../api/categoriesApi'
+import { createCategory, deleteCategory, saveCategory } from '../api/categoriesApi'
 import AddCategoryWidget from './AddCategoryWidget'
 
 export default function CategoriesGrid() {
@@ -27,9 +27,17 @@ export default function CategoriesGrid() {
   }
 
   function handleCreate(newCategory) {
-    console.log(newCategory)
-    createCategory(newCategory).then(() => {
-      setCategories([newCategory].concat(categories))
+    createCategory(newCategory).then((returnCategory) => {
+      setCategories([returnCategory].concat(categories))
+    })
+  }
+
+  function handleDelete(category) {
+    deleteCategory(category).then(() => {
+      const newCategories = []
+      categories.map((c) => {
+        if(c.id !== category.id) newCategories.push(c)})
+      setCategories(newCategories)
     })
   }
 
@@ -56,7 +64,8 @@ export default function CategoriesGrid() {
             <CategoryRow
               key={category.id}
               {...category}
-              handleSave={handleSave}>
+              handleSave={handleSave}
+              handleDelete={handleDelete}>
             </CategoryRow>
           ))}
         </tbody>

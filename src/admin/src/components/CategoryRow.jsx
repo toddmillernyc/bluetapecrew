@@ -4,7 +4,7 @@ import Switch from 'react-switch'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types';
 
-const CategoryRow = ({ id, name, published, handleSave }) => {
+const CategoryRow = ({ id, name, published, handleSave, handleDelete }) => {
   
   const [edit, setEdit] = useState(false)
   const [nameValue, setNameValue] = useState(name)
@@ -29,6 +29,14 @@ const CategoryRow = ({ id, name, published, handleSave }) => {
   
   function handleNameChange(event) {
     setNameValue(event.target.value)
+  }
+
+  function onDeleteClick() {
+    var txt;
+    var confirmDelete = window.confirm(`Are you sure you want to delete the ${name} category?`);
+    if (confirmDelete) {
+      handleDelete({id})
+    }
   }
 
   return (
@@ -61,6 +69,9 @@ const CategoryRow = ({ id, name, published, handleSave }) => {
               <Button className="mr-2" size="sm" variant="outline-success" onClick={onSaveClick}>
                 Save
               </Button>
+              <Button size="sm" variant="outline-danger" className="mr-2" onClick={onDeleteClick}>
+                Delete
+              </Button>
               <Button size="sm" variant="outline-secondary" onClick={handleCancel}>
                 Cancel
               </Button>
@@ -78,7 +89,8 @@ CategoryRow.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   published: PropTypes.bool.isRequired,
-  handleSave: PropTypes.func.isRequired
+  handleSave: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 }
 
 export default CategoryRow

@@ -1,4 +1,4 @@
-const baseUrl = "https://localhost:44320"
+const baseUrl = "https://localhost:44372"
 
 export async function getCategories() {
     let response = await fetch(`${baseUrl}/categories`)
@@ -17,7 +17,7 @@ export async function saveCategory(category) {
   }
 
   export async function  createCategory(category) {
-    await fetch(`${baseUrl}/categories`, 
+    var result = await fetch(`${baseUrl}/categories`, 
     {
       method: 'POST',
       body: JSON.stringify(category),
@@ -25,4 +25,9 @@ export async function saveCategory(category) {
         'Content-Type': 'application/json',
       }
     })
+    return await result.json()
+  }
+
+  export async function  deleteCategory(category) {
+    await fetch(`${baseUrl}/categories/${category.id}`, { method: 'DELETE' })
   }
