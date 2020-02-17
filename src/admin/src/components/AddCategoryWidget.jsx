@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import Switch from 'react-switch'
+import PropTypes from 'prop-types';
 
 const CategoryWidget = ({ onCreate }) => {
 
@@ -19,10 +20,6 @@ const CategoryWidget = ({ onCreate }) => {
     onCreate({ name, published })
   }
 
-  function handleInputChange(event) {
-    setName(event.target.value)
-  }
-
   return (
     <>
       {
@@ -35,7 +32,7 @@ const CategoryWidget = ({ onCreate }) => {
                   placeholder="Name"
                   className="mr-4"
                   size="sm"
-                  onChange={handleInputChange}/>
+                  onChange={(event)=>setName(event.target.value)}/>
                 <Form.Label className="badge badge-secondary mr-2">Publish: </Form.Label>
                 <Switch
                   checked={published}
@@ -65,6 +62,10 @@ const CategoryWidget = ({ onCreate }) => {
       }
     </>
   )
+}
+
+CategoryWidget.propTypes = {
+  onCreate: PropTypes.func.isRequired
 }
 
 export default CategoryWidget

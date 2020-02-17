@@ -14,34 +14,27 @@ export default function CategoriesGrid() {
     })
   }, []);
 
-  function handleSave(updateCategory) {
-    saveCategory(updateCategory).then(() => {
-      updateCategoriesState(updateCategory)
-    })
-  }
-
-  function updateCategoriesState(updateCategory) {
+  async function handleSave(updateCategory) {
+    await saveCategory(updateCategory)
     setCategories(categories.map((category) =>
       updateCategory.id === category.id ? updateCategory : category
     ))
   }
 
-  function handleCreate(newCategory) {
-    createCategory(newCategory).then((returnCategory) => {
-      setCategories([returnCategory].concat(categories))
-    })
+  async function handleCreate(newCategory) {
+    const returnCategory = await createCategory(newCategory)
+    setCategories([returnCategory].concat(categories))
   }
 
-  function handleDelete(category) {
-    deleteCategory(category).then((error) => {
-      if(error) alert(error)
-      else {
-        const newCategories = []
-        categories.map((c) => {
-          if(c.id !== category.id) newCategories.push(c)})
-        setCategories(newCategories)
-      }
-    })
+  async function handleDelete(category) {
+    const error = await deleteCategory(category)
+    if(error) alert(error)
+    else {
+      const newCategories = []
+      categories.forEach((c) => {
+        if(c.id !== category.id) newCategories.push(c)})
+      setCategories(newCategories)
+    }
   }
 
   return (

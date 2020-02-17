@@ -27,43 +27,33 @@ const CategoryRow = ({ id, name, published, handleSave, handleDelete }) => {
     })
   }
   
-  function handleNameChange(event) {
-    setNameValue(event.target.value)
-  }
-
   function onDeleteClick() {
-    var confirmDelete = window.confirm(`Are you sure you want to delete the ${name} category?`);
-    if (confirmDelete) {
+    if(window.confirm(`Are you sure you want to delete the ${name} category?`))
       handleDelete({id})
-    }
   }
 
   return (
     <tr>
-      <td>
-          {
-            edit
-            ? <input defaultValue={nameValue} onChange={handleNameChange} />
-            : nameValue
-          }
+      
+      <td>{edit
+            ? <input 
+                defaultValue={nameValue}
+                onChange={(event)=>setNameValue(event.target.value)} />
+            : nameValue}
       </td>
-      <td>
-          {
-            edit
+      <td>{edit
             ? <Switch 
                 height={21}
                 width={42}
                 checked={publishedValue}
-                onChange={()=> setPublishedValue(!publishedValue) }>
+                onChange={()=>setPublishedValue(!publishedValue)}>
               </Switch>
             : <FontAwesomeIcon 
                 className={ publishedValue ? "text-success" : "text-danger" }
-                icon={ publishedValue ? "check" : "times" } />
-          }
+                icon={ publishedValue ? "check" : "times" } />}
       </td>
       <td>
-        {
-          edit
+        {edit
           ? <div className="float-right">
               <Button className="mr-2" size="sm" variant="outline-success" onClick={onSaveClick}>
                 Save
@@ -77,8 +67,7 @@ const CategoryRow = ({ id, name, published, handleSave, handleDelete }) => {
             </div>
           : <Button size="sm" variant="outline-info" onClick={toggleEdit} className="float-right">
               Edit
-            </Button>
-        }
+            </Button>}
       </td>
     </tr>
   )
