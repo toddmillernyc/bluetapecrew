@@ -23,7 +23,7 @@ namespace Api
             services.AddCors(options =>
             {
                 options.AddPolicy("ReactDev",
-                    builder => builder.WithOrigins("https://localhost:3000")
+                    builder => builder.WithOrigins("https://localhost:3000", "https://8672b.csb.app")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());

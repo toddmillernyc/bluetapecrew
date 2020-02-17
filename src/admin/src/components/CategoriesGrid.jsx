@@ -33,11 +33,14 @@ export default function CategoriesGrid() {
   }
 
   function handleDelete(category) {
-    deleteCategory(category).then(() => {
-      const newCategories = []
-      categories.map((c) => {
-        if(c.id !== category.id) newCategories.push(c)})
-      setCategories(newCategories)
+    deleteCategory(category).then((error) => {
+      if(error) alert(error)
+      else {
+        const newCategories = []
+        categories.map((c) => {
+          if(c.id !== category.id) newCategories.push(c)})
+        setCategories(newCategories)
+      }
     })
   }
 

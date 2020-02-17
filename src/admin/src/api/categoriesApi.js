@@ -1,4 +1,4 @@
-const baseUrl = "https://localhost:44372"
+const baseUrl = "https://api.toddmiller.nyc"
 
 export async function getCategories() {
     let response = await fetch(`${baseUrl}/categories`)
@@ -29,5 +29,7 @@ export async function saveCategory(category) {
   }
 
   export async function  deleteCategory(category) {
-    await fetch(`${baseUrl}/categories/${category.id}`, { method: 'DELETE' })
+    const response = await fetch(`${baseUrl}/categories/${category.id}`, { method: 'DELETE' })
+    if(response.status === 200) return
+    return JSON.stringify(await response.text())
   }

@@ -32,7 +32,6 @@ const CategoryRow = ({ id, name, published, handleSave, handleDelete }) => {
   }
 
   function onDeleteClick() {
-    var txt;
     var confirmDelete = window.confirm(`Are you sure you want to delete the ${name} category?`);
     if (confirmDelete) {
       handleDelete({id})

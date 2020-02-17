@@ -76,9 +76,14 @@ namespace Api.Controllers
         {
             try
             {
-                var productCategories = _db.ProductCategories.Where(x => x.CategoryId == id);
-                _db.ProductCategories.RemoveRange(productCategories);
                 var category = await _db.Categories.FindAsync(id);
+                var productCategories = _db.ProductCategories.Where(x => x.CategoryId == id);
+                var products = productCategories.Select(x => x.Product);
+
+                if(products.Any())
+                    return BadRequest($"Cannot delete category {category.Name}, it contains {products.Count()} product(s).");
+
+                _db.ProductCategories.RemoveRange(productCategories);
                 _db.Categories.Remove(category);
                 await _db.SaveChangesAsync();
                 return Ok();
