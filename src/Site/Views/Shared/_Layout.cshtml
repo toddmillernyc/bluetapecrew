@@ -54,7 +54,7 @@
         <div class="container">
             <a class="site-logo" href="~/"><img src="img/logo.png" alt="Metronic Shop UI"></a>
             <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
-            @Html.Partial("_Cart", new CartViewModel())
+            @await Html.PartialAsync("_Cart", new CartViewModel())
             <div class="header-navigation">
                 <ul>
                     @if (layoutModel.Menu != null)
