@@ -199,9 +199,9 @@ namespace EndToEnd
             Driver.FindElementById("state").SendKeys("NY");
             Driver.FindElementByName("PostalCode").SendKeys("10021");
             Driver.FindElementById("button-payment-address").Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(4000);
             Driver.ClickId("button-confirm");
-            Thread.Sleep(3000);
+            Thread.Sleep(4000);
             Driver.ClickId("payment-submit-btn");
             Thread.Sleep(4000);
             Driver.ClickId("confirm-order-button");

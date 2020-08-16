@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Dapper;
 using EndToEnd.Helpers;
@@ -35,10 +36,25 @@ namespace EndToEnd
             var configuration = new ConfigurationBuilder().AddJsonFile(SettingsFile).Build();
             _logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
             TestSettings = configuration.Get<TestSettings>();
+            Task.Run(VerifySiteRunning).Wait();
             PaypalSettings = JsonConvert.DeserializeObject<PaypalSettings>(File.ReadAllText(TestSettings.PaypalSettingsPath));
             Helper = new EndToEndTestHelper(TestSettings.ConnectionString, _logger);
             InitDriver();
             InitDirectories();
+        }
+
+        public static async Task VerifySiteRunning()
+        {
+            try
+            {
+                await new HttpClient().GetAsync(TestSettings.BaseUrl);
+            }
+            catch
+            {
+                var errorMessage = $"Target site not running: {TestSettings.BaseUrl}";
+                _logger.Error(errorMessage);
+                throw new Exception(errorMessage);
+            }
         }
 
         private static void InitDirectories()
