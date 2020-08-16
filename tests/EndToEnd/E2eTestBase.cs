@@ -17,6 +17,12 @@ namespace EndToEnd
     public class E2ETestBase : IDisposable
     {
         private const string SettingsFile = "testsettings.json";
+        public readonly Dictionary<string, string> _formDictionary = new Dictionary<string, string>()
+        {
+            {"User_FirstName", "John"},{"User_LastName", "Smith"},{"User_PhoneNumber", "555-555-5555"},
+            {"User_Address", "123 Any Street"},{"User_City", "AnyTown"},{"User_State", "NY"},{"User_PostalCode", "10001"}
+        };
+
         public PaypalSettings PaypalSettings;
         public static RemoteWebDriver Driver;
         public static EndToEndTestHelper Helper;
@@ -32,9 +38,15 @@ namespace EndToEnd
             PaypalSettings = JsonConvert.DeserializeObject<PaypalSettings>(File.ReadAllText(TestSettings.PaypalSettingsPath));
             Helper = new EndToEndTestHelper(TestSettings.ConnectionString, _logger);
             InitDriver();
+            InitDirectories();
         }
 
-        private void InitDriver()
+        private static void InitDirectories()
+        {
+            Directory.CreateDirectory(TestSettings.DeadLetterPath);
+        }
+
+        private static void InitDriver()
         {
             Driver = new ChromeDriver();
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(TestSettings.ImplicitWait);

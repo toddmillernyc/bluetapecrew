@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EndToEnd.Extensions;
@@ -12,13 +11,6 @@ namespace EndToEnd
 {
     public class FullSiteTest : E2ETestBase
     {
-        private const int WaitSeconds = 10;
-        private readonly Dictionary<string, string> _formDictionary = new Dictionary<string, string>()
-        {
-            {"User_FirstName", "John"},{"User_LastName", "Smith"},{"User_PhoneNumber", "555-555-5555"},
-            {"User_Address", "123 Any Street"},{"User_City", "AnyTown"},{"User_State", "NY"},{"User_PostalCode", "10001"}
-        };
-
         [Fact]
         public async Task LoginTest()
         {
@@ -43,6 +35,7 @@ namespace EndToEnd
             catch (Exception ex)
             {
                 _logger.Error(ex, "End To End Test Exception");
+                throw;
             }
             finally
             {
@@ -181,7 +174,7 @@ namespace EndToEnd
             Driver.ClickId("btnNext");
             Driver.FindElementById("password").SendKeys(PaypalSettings.PaypalBuyerPassword);
             Driver.ClickId("btnLogin");
-            Thread.Sleep(3000);
+            Thread.Sleep(5000);
             Driver.ClickId("payment-submit-btn");
             Thread.Sleep(4000);
             Driver.ClickId("confirm-order-button");  //site

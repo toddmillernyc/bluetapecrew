@@ -7,7 +7,7 @@
   "emailPassword": "\"Password123\";",
   "implicitWait": 10,
   "serilog": {
-    "using": [ "Serilog.Sinks.File" ],
+    "using": [ "Serilog.Sinks.Debug", "Serilog.Sinks.File" ],
     "minimumLevel": "Debug",
     "writeTo": [
       {
@@ -19,24 +19,6 @@
       }
     ],
     "enrich": [ "FromLogContext", "WithMachineName", "WithThreadId" ],
-    "destructure": [
-      {
-        "name": "With",
-        "args": { "policy": "Sample.CustomPolicy, Sample" }
-      },
-      {
-        "name": "ToMaximumDepth",
-        "args": { "maximumDestructuringDepth": 4 }
-      },
-      {
-        "name": "ToMaximumStringLength",
-        "args": { "maximumStringLength": 100 }
-      },
-      {
-        "name": "ToMaximumCollectionCount",
-        "args": { "maximumCollectionCount": 10 }
-      }
-    ],
     "properties": {
       "application": "Sample"
     }

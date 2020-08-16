@@ -11,7 +11,7 @@ namespace Services
 {
     public class EmailService : IEmailService
     {
-        private const string DeadLetterDir = "C:\\SMTP\\DeadLetter";
+        private const string DeadLetterDir = "C:\\logs\\btc\\SMTP\\DeadLetter";
 
         public async Task SendEmail(SmtpRequest request)
         {
