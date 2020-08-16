@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Entities;
 using Repositories.Interfaces;
@@ -17,10 +17,14 @@ namespace Repositories
 
         public async Task Create(Color color)
         {
-            _db.Colors.Add(color);
+            await _db.Colors.AddAsync(color);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Color>> Get() => await _db.Colors.ToListAsync();
+        public async Task<IEnumerable<Color>> Get()
+        {
+            var coloEntities = await _db.Colors.ToListAsync();
+            return coloEntities;
+        }
     }
 }
