@@ -14,7 +14,7 @@
         "name": "File",
         "args": {
           "path": "c:/logs/btc/end-to-end.txt",
-          "rollingInterval": "Minute"
+          "rollingInterval": "Hour"
         }
       }
     ],
