@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
 using Services.Models;
-using Site;
 using Site.Controllers;
 using Site.Identity;
 using Unit.Fixtures;
