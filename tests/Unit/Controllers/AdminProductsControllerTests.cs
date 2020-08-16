@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Services.Models;
 using Site.Areas.Admin.Controllers;
+using Unit.Fixtures;
 using Xunit;
 
 namespace Unit.Controllers

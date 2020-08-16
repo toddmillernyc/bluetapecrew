@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using PayPal;
@@ -22,6 +23,7 @@ namespace Site.Controllers
         private readonly IOrderService _orderService;
         private readonly IUserService _userService;
         private readonly ISessionService _session;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CheckoutController(
             ICartService cartService,
@@ -29,7 +31,8 @@ namespace Site.Controllers
             IOrderService orderService,
             IUserService userService,
             ISessionService session,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
             _cartService = cartService;
             _checkoutService = checkoutService;
@@ -37,6 +40,7 @@ namespace Site.Controllers
             _userService = userService;
             _session = session;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
 #if DEBUG
             _isSandbox = true;
 #endif
@@ -45,8 +49,9 @@ namespace Site.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var returnUrl = HttpContext.Request.Path.ToString();
-            var user = await _userService.Find(User.Identity.Name);
+            var httpContext = _httpContextAccessor.HttpContext;
+            var returnUrl = httpContext.Request.Path.ToString();
+            var user = await _userService.Find(httpContext.User.Identity.Name);
             var sessionId = _session.SessionId();
             var checkoutModel = await _checkoutService.CreateCheckoutRequest(user, sessionId, returnUrl);
             return checkoutModel.Cart.IsEmpty ? View("EmptyCart") : View(checkoutModel);

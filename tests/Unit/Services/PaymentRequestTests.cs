@@ -103,7 +103,7 @@ namespace Unit.Services
             var actual = sut.ReturnUrl;
 
             //asserts
-            Assert.Equal("https://bluetapecrew.com/checkoutreview", actual);
+            Assert.Equal("https://bluetapecrew.com/checkout/review", actual);
         }
     }
 }

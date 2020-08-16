@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Site.Identity;
 using Site.Services;
+using Unit.Fixtures;
 using Xunit;
 
 namespace Unit.Services

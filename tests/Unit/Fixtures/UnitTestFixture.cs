@@ -9,7 +9,7 @@ using Services.Models;
 using Site.Services;
 using Xunit;
 
-namespace Unit
+namespace Unit.Fixtures
 {
     [CollectionDefinition("UnitTest")]
     public class DatabaseCollection : ICollectionFixture<UnitTestFixture> { }
@@ -31,6 +31,7 @@ namespace Unit
         public Mock<IUserService> UserService = new Mock<IUserService>();
         public Mock<ISessionService> SessionService = new Mock<ISessionService>();
         public Mock<IGuestUserRepository> GuestUserRepository = new Mock<IGuestUserRepository>();
+        public Mock<IHttpContextAccessor> HttpContextAccessor = new Mock<IHttpContextAccessor>();
 
         public UnitTestFixture()
         {
