@@ -83,14 +83,20 @@ namespace Site.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
-            var userCreateSuccess = await _userRegistrationService.CreateUser(model.Email, model.Password);
-            if (userCreateSuccess)
+            var identityResult = await _userRegistrationService.CreateUser(model.Email, model.Password);
+            if (identityResult.Succeeded)
             {
                 await _userRegistrationService.SendEmailConfirmationLink(Request, model.Email);
                 ViewBag.Message = Act.EmailConfirmationLinkSentMessage;
                 return View("Info");
             }
-            ModelState.AddModelError("", Act.UserRegistrationError);
+            else
+            {
+                foreach (var identityResultError in identityResult.Errors)
+                {
+                    ModelState.AddModelError(identityResultError.Code, identityResultError.Description);
+                }
+            }
             return View(model);
         }
 

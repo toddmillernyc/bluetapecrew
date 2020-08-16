@@ -75,11 +75,11 @@ namespace Site.Services
             return result.Succeeded;
         }
 
-        public async Task<bool> CreateUser(string email, string password)
+        public async Task<IdentityResult> CreateUser(string email, string password)
         {
             var user = new ApplicationUser { UserName = email, Email = email };
             var result = await _userManager.CreateAsync(user, password);
-            return result.Succeeded;
+            return result;
         }
 
         public async Task<bool> ChangePassword(string userName, string oldPassword, string newPassword)

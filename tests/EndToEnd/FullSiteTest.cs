@@ -29,6 +29,7 @@ namespace EndToEnd
         {
             try
             {
+                await Cleanup();
                 Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(WaitSeconds);
                 GoHome();
                 RegisterUser();
