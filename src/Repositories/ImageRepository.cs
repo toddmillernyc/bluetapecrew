@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities;
@@ -13,7 +13,7 @@ namespace Repositories
         public async Task<Image> Find(int id) => await _db.Images.FindAsync(id);
         public async Task Create(Image image)
         {
-            _db.Images.Add(image);
+            await _db.Images.AddAsync(image);
             await _db.SaveChangesAsync();
         }
         public bool ImageExists(string name) => _db.Images.Any(x => x.Name == name);

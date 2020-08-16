@@ -57,21 +57,25 @@
             @Html.Partial("_Cart", new CartViewModel())
             <div class="header-navigation">
                 <ul>
-                    @foreach (var menu in layoutModel.Menu)
+                    @if (layoutModel.Menu != null)
                     {
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                                @menu.Name
-                            </a>
+                        foreach (var menu in layoutModel.Menu)
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                    @menu.Name
+                                </a>
 
-                            <ul class="dropdown-menu">
-                                @foreach (var item in menu.Items)
-                                {
-                                    <li><a href="products/@item.Slug">@item.ItemName</a></li>
-                                }
-                            </ul>
-                        </li>
+                                <ul class="dropdown-menu">
+                                    @foreach (var item in menu.Items)
+                                    {
+                                        <li><a href="products/@item.Slug">@item.ItemName</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
                     }
+
                 </ul>
             </div>
         </div>

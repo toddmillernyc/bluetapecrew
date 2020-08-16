@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities;
@@ -17,7 +17,7 @@ namespace Repositories
 
         public async Task Create(Order order)
         {
-            _db.Orders.Add(order);
+            await _db.Orders.AddAsync(order);
             await _db.SaveChangesAsync();
         }
 
