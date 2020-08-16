@@ -6,44 +6,39 @@ using System.Threading.Tasks;
 using Dapper;
 using EndToEnd.Helpers;
 using EndToEnd.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using Serilog;
 
 namespace EndToEnd
 {
     public class E2ETestBase : IDisposable
     {
-        public const string DeadLetterPath = "C:\\SMTP\\DeadLetter";
-        private const string PaypalSettingsPath = "C:\\config\\paypalsettings.json";
-
+        private const string SettingsFile = "testsettings.json";
         public PaypalSettings PaypalSettings;
-
-        public string Password = "Password123!";
-        public const string Email = "bluetapecrew@mailinator.com";
-        public string BaseUrl;
-
         public static RemoteWebDriver Driver;
         public static EndToEndTestHelper Helper;
-
+        public static ILogger _logger;
         private static string TestRunId = Guid.NewGuid().ToString().Substring(0, 5);
-        private static string _connectionString;
+        public static TestSettings TestSettings;
 
         public E2ETestBase()
         {
-            var configJson = File.ReadAllText("testsettings.json");
-            var settings = JsonConvert.DeserializeObject<TestSettings>(configJson);
-            PaypalSettings = JsonConvert.DeserializeObject<PaypalSettings>(File.ReadAllText(PaypalSettingsPath));
+            var configuration = new ConfigurationBuilder().AddJsonFile(SettingsFile).Build();
+            _logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
+            TestSettings = configuration.Get<TestSettings>();
+            PaypalSettings = JsonConvert.DeserializeObject<PaypalSettings>(File.ReadAllText(TestSettings.PaypalSettingsPath));
+            Helper = new EndToEndTestHelper(TestSettings.ConnectionString);
+            InitDriver();
+        }
 
-            _connectionString = settings.ConnectionString;
-            BaseUrl = settings.BaseUrl;
-            
-            Helper = new EndToEndTestHelper(_connectionString);
-            
+        private void InitDriver()
+        {
             Driver = new ChromeDriver();
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(TestSettings.ImplicitWait);
             Driver.Manage().Window.Maximize();
-            
         }
 
         public void Dispose()
@@ -56,7 +51,7 @@ namespace EndToEnd
 
         protected async Task Cleanup()
         {
-            await using var conn = new SqlConnection(_connectionString);
+            await using var conn = new SqlConnection(TestSettings.ConnectionString);
 
             //deletes
             var queries = new List<string>()
@@ -85,7 +80,7 @@ namespace EndToEnd
 
 
             //erase dead letter files
-            var di = new DirectoryInfo(DeadLetterPath);
+            var di = new DirectoryInfo(TestSettings.DeadLetterPath);
             foreach (var file in di.GetFiles()) { file.Delete(); }
         }
     }

@@ -29,14 +29,12 @@ namespace EndToEnd
         {
             try
             {
-                await Cleanup();
-                Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(WaitSeconds);
                 GoHome();
                 RegisterUser();
                 await ConfirmEmailAndLogIn();
                 var userId = UpdateAccountInfo();
                 await ResetPassword();
-                await Helper.SeedAdminRole(Email);
+                await Helper.SeedAdminRole(TestSettings.Email);
                 LogOffAndLogBackOn();
                 Driver.FindElementById("adminLogin").Click();
                 UpdateSiteSettings();
@@ -45,6 +43,10 @@ namespace EndToEnd
                 ViewProductsAndAddToCart();
                 Checkout();
                 GuestCheckout();
+            }
+            catch (Exception ex)
+            {
+
             }
             finally
             {
@@ -182,14 +184,14 @@ namespace EndToEnd
         private async Task ResetPassword()
         {
             Driver.ClickId("logoff").ClickId("loginLink").ClickId("forgot-password-link");
-            Driver.FindElementById("Email").SendKeys(Email);
+            Driver.FindElementById("Email").SendKeys(TestSettings.Email);
             Driver.ClickId("send-reset-password-email-button");
             var passwordResetLink = await GetConfirmEmailFromDeadLetterDirectory();
             Driver.Navigate().GoToUrl(passwordResetLink);
-            Password = "NewPassword123!";
-            Driver.FindElementById("Email").SendKeys(Email);
-            Driver.FindElementById("Password").SendKeys(Password);
-            Driver.FindElementById("ConfirmPassword").SendKeys(Password);
+            TestSettings.EmailPassword = "NewPassword123!";
+            Driver.FindElementById("Email").SendKeys(TestSettings.Email);
+            Driver.FindElementById("Password").SendKeys(TestSettings.EmailPassword);
+            Driver.FindElementById("ConfirmPassword").SendKeys(TestSettings.EmailPassword);
             Driver.ClickId("reset-password-submit-button");
             Login();
         }
@@ -214,8 +216,8 @@ namespace EndToEnd
         private void Login()
         {
             Driver.FindElementById("loginLink").Click();
-            Driver.FindElementById("Email").SendKeys(Email);
-            Driver.FindElementById("Password").SendKeys(Password);
+            Driver.FindElementById("Email").SendKeys(TestSettings.Email);
+            Driver.FindElementById("Password").SendKeys(TestSettings.EmailPassword);
             Driver.FindElementById("submitLogin").Click();
         }
 
@@ -239,14 +241,14 @@ namespace EndToEnd
             var confirmEmailLink = await GetConfirmEmailFromDeadLetterDirectory();
             Driver.Navigate().GoToUrl(confirmEmailLink);
             Driver.FindElementById("click-here-to-login-link").Click();
-            Driver.FindElementById("Email").SendKeys(Email);
-            Driver.FindElementById("Password").SendKeys(Password);
+            Driver.FindElementById("Email").SendKeys(TestSettings.Email);
+            Driver.FindElementById("Password").SendKeys(TestSettings.EmailPassword);
             Driver.FindElementById("submitLogin").Click();
         }
 
         private static async Task<string> GetConfirmEmailFromDeadLetterDirectory()
         {
-            var directory = new DirectoryInfo(DeadLetterPath);
+            var directory = new DirectoryInfo(TestSettings.DeadLetterPath);
             var file = directory.GetFiles().OrderByDescending(x => x.LastWriteTime).First();
             var deadLetterJson = await File.ReadAllTextAsync(file.FullName);
             var email = JsonConvert.DeserializeObject<DeadLetter>(deadLetterJson);
@@ -257,15 +259,15 @@ namespace EndToEnd
         {
             Driver.FindElementById("manage-account-header-link").Click();
             Driver.FindElementById("register-account-link").Click();
-            Driver.FindElementById("Email").SendKeys(Email);
-            Driver.FindElementByName("Password").SendKeys(Password);
-            Driver.FindElementByName("ConfirmPassword").SendKeys(Password);
+            Driver.FindElementById("Email").SendKeys(TestSettings.Email);
+            Driver.FindElementByName("Password").SendKeys(TestSettings.EmailPassword);
+            Driver.FindElementByName("ConfirmPassword").SendKeys(TestSettings.EmailPassword);
             Driver.FindElementById("register-account-submit-button").Click();
         }
 
         private void GoHome()
         {
-            Driver.Navigate().GoToUrl(BaseUrl);;
+            Driver.Navigate().GoToUrl(TestSettings.BaseUrl);;
         }
     }
 }

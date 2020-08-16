@@ -1,4 +1,44 @@
 {
-  "baseUrl":  "https://localhost:5001",
-  "connectionString": "Data Source=mydbserver;Initial Catalog=btc.test;Integrated Security=True;MultipleActiveResultSets=true"
+  "baseUrl": "https://localhost:5001",
+  "connectionString": "Data Source=mydbserver;Initial Catalog=btc.test;Integrated Security=True;MultipleActiveResultSets=true",
+  "deadLetterPath": "C:\\logs\\btc\\SMTP\\DeadLetter",
+  "paypalSettingsPath": "C:\\config\\paypalsettings.json",
+  "email": "bluetapecrew@mailinator.com",
+  "emailPassword": "\"Password123\";",
+  "implicitWait": 10,
+  "serilog": {
+    "using": [ "Serilog.Sinks.File" ],
+    "minimumLevel": "Debug",
+    "writeTo": [
+      {
+        "name": "File",
+        "args": {
+          "path": "c:/logs/btc/end-to-end.txt",
+          "rollingInterval": "Minute"
+        }
+      }
+    ],
+    "enrich": [ "FromLogContext", "WithMachineName", "WithThreadId" ],
+    "destructure": [
+      {
+        "name": "With",
+        "args": { "policy": "Sample.CustomPolicy, Sample" }
+      },
+      {
+        "name": "ToMaximumDepth",
+        "args": { "maximumDestructuringDepth": 4 }
+      },
+      {
+        "name": "ToMaximumStringLength",
+        "args": { "maximumStringLength": 100 }
+      },
+      {
+        "name": "ToMaximumCollectionCount",
+        "args": { "maximumCollectionCount": 10 }
+      }
+    ],
+    "properties": {
+      "application": "Sample"
+    }
+  }
 }
