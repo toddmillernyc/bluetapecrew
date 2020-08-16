@@ -30,7 +30,7 @@ namespace EndToEnd
             _logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
             TestSettings = configuration.Get<TestSettings>();
             PaypalSettings = JsonConvert.DeserializeObject<PaypalSettings>(File.ReadAllText(TestSettings.PaypalSettingsPath));
-            Helper = new EndToEndTestHelper(TestSettings.ConnectionString);
+            Helper = new EndToEndTestHelper(TestSettings.ConnectionString, _logger);
             InitDriver();
         }
 
