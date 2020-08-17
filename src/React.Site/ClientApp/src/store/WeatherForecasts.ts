@@ -66,7 +66,7 @@ export const reducer: Reducer<WeatherForecastsState> = (state: WeatherForecastsS
         return unloadedState;
     }
 
-    const action = incomingAction as KnownAction;
+    const action = ((incomingAction) as any) as KnownAction;
     switch (action.type) {
         case 'REQUEST_WEATHER_FORECASTS':
             return {
