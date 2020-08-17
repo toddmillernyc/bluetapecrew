@@ -5,7 +5,7 @@
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",
     "@types/fancybox": "^3.5.2",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "bootstrap-touchspin": "^3.1.1",
     "connected-react-router": "6.5.2",
     "font-awesome": "^4.7.0",
