@@ -13,15 +13,12 @@ class PreHeader extends React.PureComponent<LayoutModelProps> {
         this.ensureDataFetched();
     }
 
-    public componentDidUpdate() {
-        this.ensureDataFetched();
-    }
-
     private ensureDataFetched() {
         this.props.requestLayoutModel();
     }
 
     public render() {
+        const contactEmail = this.props.layoutModel.contactEmail;
         return (
             <React.Fragment>
                 <div className="pre-header">
@@ -35,7 +32,7 @@ class PreHeader extends React.PureComponent<LayoutModelProps> {
                                     }
                                     {
                                         this.props.layoutModel.contactEmail
-                                            && <li><i className="fa fa-envelope"></i><a href="mailto:@layoutModel.ContactEmail">{this.props.layoutModel.contactEmail}</a></li>
+                                        && <li><i className="fa fa-envelope"></i><a href="{contactEmail}">{contactEmail}</a></li>
                                     }
                                 </ul>
                             </div>

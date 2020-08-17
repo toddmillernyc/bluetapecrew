@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reducer = exports.actionCreators = void 0;
-// ----------------
-// ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
-// They don't directly mutate state, but they can have external side-effects (such as loading data).
+// ACTION CREATORS 
 exports.actionCreators = {
     requestLayoutModel: function () { return function (dispatch, getState) {
-        // Only load data if it's something we don't already have (and are not already loading)
         var appState = getState();
-        if (appState && appState.layoutModel) {
+        if (appState
+            && appState.layoutModel
+            && !appState.layoutModel.isLoading
+            && !appState.layoutModel.layoutModel.contactEmail) {
             fetch("layout")
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
@@ -18,12 +18,12 @@ exports.actionCreators = {
         }
     }; }
 };
-// ----------------
-// REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
+// REDUCER 
 var unloadedState = { layoutModel: { contactEmail: '', contactPhone: '' }, isLoading: false };
 exports.reducer = function (state, incomingAction) {
-    if (state === undefined)
+    if (state === undefined) {
         return unloadedState;
+    }
     var action = (incomingAction);
     switch (action.type) {
         case 'REQUEST_LAYOUT_MODEL':
@@ -33,7 +33,7 @@ exports.reducer = function (state, incomingAction) {
             };
         case 'RECEIVE_LAYOUT_MODEL':
             return {
-                layoutModel: state.layoutModel,
+                layoutModel: action.layoutModel,
                 isLoading: true
             };
         default:

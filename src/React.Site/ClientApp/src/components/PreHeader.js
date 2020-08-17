@@ -24,13 +24,11 @@ var PreHeader = /** @class */ (function (_super) {
     PreHeader.prototype.componentDidMount = function () {
         this.ensureDataFetched();
     };
-    PreHeader.prototype.componentDidUpdate = function () {
-        this.ensureDataFetched();
-    };
     PreHeader.prototype.ensureDataFetched = function () {
         this.props.requestLayoutModel();
     };
     PreHeader.prototype.render = function () {
+        var contactEmail = this.props.layoutModel.contactEmail;
         return (React.createElement(React.Fragment, null,
             React.createElement("div", { className: "pre-header" },
                 React.createElement("div", { className: "container" },
@@ -44,7 +42,7 @@ var PreHeader = /** @class */ (function (_super) {
                                 this.props.layoutModel.contactEmail
                                     && React.createElement("li", null,
                                         React.createElement("i", { className: "fa fa-envelope" }),
-                                        React.createElement("a", { href: "mailto:@layoutModel.ContactEmail" }, this.props.layoutModel.contactEmail)))),
+                                        React.createElement("a", { href: "{contactEmail}" }, contactEmail)))),
                         React.createElement("div", { className: "col-md-6 col-sm-6 additional-nav" },
                             React.createElement("ul", { className: "list-unstyled list-inline pull-right" },
                                 React.createElement("li", null,
