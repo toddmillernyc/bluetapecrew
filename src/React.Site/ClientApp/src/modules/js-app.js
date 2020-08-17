@@ -1,8 +1,15 @@
 ﻿export class JsApp {
+
+    constructor($) {
+        this.$ = $
+    }
+
+    $
+
     static getPrice(id) {
-        $.get(`Products/GetStylePrice/${id}`,
+        this.$.get(`Products/GetStylePrice/${id}`,
             function (data) {
-                $('#price').html(data);
+                this.$('#price').html(data);
             });
     }
 

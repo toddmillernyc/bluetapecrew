@@ -15,13 +15,13 @@ export class ThemeLayout {
         this.handleTheme()
         this.handleInit()
         this.handleResponsiveOnResize()
-        this.handleFancybox($)
+        this.handleFancybox(this.$)
         this.handleDifInits()
-        this.handleSidebarMenu($)
+        this.handleSidebarMenu(this.$)
         this.handleAccordions()
         this.handleMenu()
-        this.handleScrollers($)
-        this.handleSubMenuExt($)
+        this.handleScrollers(this.$)
+        this.handleSubMenuExt(this.$)
         this.handleMobiToggler()
     }
 
@@ -79,7 +79,7 @@ export class ThemeLayout {
     }
 
     initImageZoom() {
-        this.$('.product-main-image').zoom({ url: $('.product-main-image img').attr('data-BigImgSrc') });
+        this.$('.product-main-image').zoom({ url: this.$('.product-main-image img').attr('data-BigImgSrc') });
     }
 
     initTouchspin() {
@@ -87,8 +87,8 @@ export class ThemeLayout {
             buttondown_class: 'btn quantity-down',
             buttonup_class: 'btn quantity-up'
         })
-        $('.quantity-down').html("<i class='fa fa-angle-down'></i>")
-        $('.quantity-up').html("<i class='fa fa-angle-up'></i>")
+        this.$('.quantity-down').html("<i class='fa fa-angle-down'></i>")
+        this.$('.quantity-up').html("<i class='fa fa-angle-up'></i>")
     }
 
     initUniform() {
@@ -109,39 +109,39 @@ export class ThemeLayout {
     }
 
     handleTheme() {
-        var panel = $('.color-panel')
+        var panel = this.$('.color-panel')
 
         var setColor = (color: string) => {
-            $('#style-color').attr('href', `../../assets/corporate/css/themes/${color}.css`)
-            $('.corporate .site-logo img').attr('src', `../../assets/corporate/img/logos/logo-corp-${color}.png`)
-            $('.ecommerce .site-logo img').attr('src', `../../assets/corporate/img/logos/logo-shop-${color}.png`)
+            this.$('#style-color').attr('href', `../../assets/corporate/css/themes/${color}.css`)
+            this.$('.corporate .site-logo img').attr('src', `../../assets/corporate/img/logos/logo-corp-${color}.png`)
+            this.$('.ecommerce .site-logo img').attr('src', `../../assets/corporate/img/logos/logo-shop-${color}.png`)
         }
 
-        $('.icon-color', panel).click(() => {
-            $('.color-mode').show()
-            $('.icon-color-close').show()
+        this.$('.icon-color', panel).click(() => {
+            this.$('.color-mode').show()
+            this.$('.icon-color-close').show()
         })
 
-        $('.icon-color-close', panel).click(() => {
-            $('.color-mode').hide()
-            $('.icon-color-close').hide()
+        this.$('.icon-color-close', panel).click(() => {
+            this.$('.color-mode').hide()
+            this.$('.icon-color-close').hide()
         })
 
-        $('li', panel).click(() => {
+        this.$('li', panel).click(() => {
             const self = this.$(this)
             const color = self.attr('data-style')
             setColor(color)
-            $('.inline li', panel).removeClass('current')
+            this.$('.inline li', panel).removeClass('current')
             self.addClass('current')
         })
     }
 
     handleInit = () => {
         if (!!navigator.userAgent.match(/MSIE 10.0/)) {
-            jQuery('html').addClass('ie10') // detect IE10 version
+            this.jQuery('html').addClass('ie10') // detect IE10 version
         }
         if (!!navigator.userAgent.match(/MSIE 11.0/)) {
-            jQuery('html').addClass('ie11') // detect IE11 version
+            this.jQuery('html').addClass('ie11') // detect IE11 version
         }
     }
 
@@ -158,7 +158,7 @@ export class ThemeLayout {
         }
 
         var resize: NodeJS.Timeout
-        $(window).resize(() => {
+        this.$(window).resize(() => {
             if (resize) {
                 clearTimeout(resize)
             }
@@ -191,8 +191,8 @@ export class ThemeLayout {
     }
 
     handleDifInits() {
-        $('.header .navbar-toggle span:nth-child(2)').addClass('short-icon-bar')
-        $('.header .navbar-toggle span:nth-child(4)').addClass('short-icon-bar')
+        this.$('.header .navbar-toggle span:nth-child(2)').addClass('short-icon-bar')
+        this.$('.header .navbar-toggle span:nth-child(4)').addClass('short-icon-bar')
     }
 
     handleSidebarMenu($: any) {
@@ -212,8 +212,8 @@ export class ThemeLayout {
     }
 
     handleAccordions() {
-        jQuery('body').on('shown.bs.collapse', '.accordion.scrollable', (e: any) => {
-            this.scrollTo($(e.target), -100, $)
+        this.jQuery('body').on('shown.bs.collapse', '.accordion.scrollable', (e: any) => {
+            this.scrollTo(this.$(e.target), -100, this.$)
         })
     }
 
@@ -226,18 +226,18 @@ export class ThemeLayout {
             pos = pos + (offSet ? offSet : -1 * el.height())
         }
 
-        jQuery('html,body').animate({
+        this.jQuery('html,body').animate({
             scrollTop: pos
         }, 'slow')
     }
 
     handleMenu() {
-        $('.header .navbar-toggle').click(() => {
-            if ($('.header .navbar-collapse').hasClass('open')) {
-                $('.header .navbar-collapse').slideDown(300)
+        this.$('.header .navbar-toggle').click(() => {
+            if (this.$('.header .navbar-collapse').hasClass('open')) {
+                this.$('.header .navbar-collapse').slideDown(300)
                     .removeClass('open')
             } else {
-                $('.header .navbar-collapse').slideDown(300)
+                this.$('.header .navbar-collapse').slideDown(300)
                     .addClass('open')
             }
         })
@@ -278,10 +278,10 @@ export class ThemeLayout {
     }
 
     handleMobiToggler() {
-        $('.mobi-toggler').on('click', event => {
+        this.$('.mobi-toggler').on('click', (event: any) => {
             event.preventDefault();//the default action of the event will not be triggered
-            $('.header').toggleClass('menuOpened')
-            $('.header').find('.header-navigation').toggle(300)
+            this.$('.header').toggleClass('menuOpened')
+            this.$('.header').find('.header-navigation').toggle(300)
         })
     }
 }

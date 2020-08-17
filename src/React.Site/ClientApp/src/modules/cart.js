@@ -1,5 +1,11 @@
 ﻿export class Cart {
 
+    constructor($) {
+        this.$ = $
+    }
+
+    $
+
     static get() {
         fetch('api/cart')
             .then(response => response.json())
@@ -69,7 +75,7 @@
             .then(
                 () => {
                     if (refresh) {
-                        location.reload();
+                        window.location.reload();
                     } else {
                         Cart.get();
                     }
@@ -77,7 +83,7 @@
     }
 
     static add() {
-        $.post(`api/cart/${$('#StyleId').val()}/${$('#quantity').val()}`)
+        this.$.post(`api/cart/${this.$('#StyleId').val()}/${this.$('#quantity').val()}`)
             .done(function () {
                 Cart.get();
             })
