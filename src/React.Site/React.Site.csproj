@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\Header.tsx" />
     <None Remove="ClientApp\src\components\PreHeader.tsx" />
   </ItemGroup>
 
@@ -29,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\components\Header.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\components\PreHeader.tsx" />
   </ItemGroup>
 

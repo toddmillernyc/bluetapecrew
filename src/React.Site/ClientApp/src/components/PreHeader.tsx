@@ -1,24 +1,22 @@
-﻿import * as React from 'react';
-import { connect } from 'react-redux';
-import { ApplicationState } from '../store';
-import * as LayoutModelStore from '../store/LayoutModel';
+﻿import * as React from 'react'
+import { connect } from 'react-redux'
+import { ApplicationState } from '../store'
+import * as LayoutModelStore from '../store/LayoutModel'
 
 type LayoutModelProps =
     LayoutModelStore.LayoutModelState
-    & typeof LayoutModelStore.actionCreators;
+    & typeof LayoutModelStore.actionCreators
 
 class PreHeader extends React.PureComponent<LayoutModelProps> {
 
     public componentDidMount() {
-        this.ensureDataFetched();
-    }
-
-    private ensureDataFetched() {
-        this.props.requestLayoutModel();
+        this.props.requestLayoutModel()
     }
 
     public render() {
-        const contactEmail = this.props.layoutModel.contactEmail;
+        const contactEmail = this.props.layoutModel.contactEmail
+        const contactPhone = this.props.layoutModel.contactPhone
+
         return (
             <React.Fragment>
                 <div className="pre-header">
@@ -26,13 +24,8 @@ class PreHeader extends React.PureComponent<LayoutModelProps> {
                         <div className="row">
                             <div className="col-md-6 col-sm-6 additional-shop-info">
                                 <ul className="list-unstyled list-inline">
-                                    {
-                                        this.props.layoutModel.contactPhone
-                                            && <li><i className="fa fa-phone"></i><span>{this.props.layoutModel.contactPhone}</span></li>
-                                    }
-                                    {
-                                        this.props.layoutModel.contactEmail
-                                        && <li><i className="fa fa-envelope"></i><a href="{contactEmail}">{contactEmail}</a></li>
+                                    {contactPhone && <li><i className="fa fa-phone"></i><span>{contactPhone}</span></li>}
+                                    {contactEmail && <li><i className="fa fa-envelope"></i><a href="{contactEmail}">{contactEmail}</a></li>
                                     }
                                 </ul>
                             </div>
@@ -54,4 +47,4 @@ class PreHeader extends React.PureComponent<LayoutModelProps> {
 export default connect(
     (state: ApplicationState) => state.layoutModel,
     LayoutModelStore.actionCreators
-)(PreHeader as any);
+)(PreHeader as any)

@@ -1,7 +1,6 @@
 import { Action, Reducer } from 'redux';
 import { AppThunkAction } from './';
 
-
 //STATE
 export interface LayoutModelState {
     layoutModel: LayoutModel,
