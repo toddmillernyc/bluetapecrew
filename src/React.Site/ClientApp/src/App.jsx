@@ -1,7 +1,33 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'fancybox/dist/css/jquery.fancybox.css'
+import './theme/css/googleFontsOne.css'
+import './theme/css/googleFontsTwo.css'
+import 'owl-carousel/owl-carousel/owl.carousel.css'
+import 'font-awesome/css/font-awesome.css'
+import 'jquery-uniform/themes/default/css/uniform.default.css'
+import 'jquery.rateit/scripts/rateit.css'
+import './theme/css/components.css'
+import './theme/css/style-shop.css'
+import './theme/css/style.css'
+import './theme/css/style-responsive.css'
+import './theme/css/blue.css'
+import './theme/images/up.png'
+import './theme/images/logo.png'
+import './theme/images/paypal.jpg'
 
 function App() {
+    const [vm, setVm] = useState({})
+
+    useEffect(() => {
+        async function getLayoutViewModel() {
+            const response = await fetch('layout')
+            const json = await response.json()
+            console.log(json)
+            setVm(json)
+        }
+        getLayoutViewModel()
+    }, []);
 
     const productPopupStyle = {
         display: 'none',
@@ -20,7 +46,8 @@ function App() {
                         <div className="row">
                             <div className="col-md-6 col-sm-6 additional-shop-info">
                                 <ul className="list-unstyled list-inline">
-
+                                    {/* <li><i class="fa fa-phone"></i><span>{this.state.vm.contactPhone}</span></li>
+                                     <li><i class="fa fa-envelope"></i><a href="mailto:@layoutModel.ContactEmail">@layoutModel.ContactEmail</a></li> */}
                                 </ul>
                             </div>
                             <div className="col-md-6 col-sm-6 additional-nav">

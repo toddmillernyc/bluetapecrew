@@ -1,0 +1,25 @@
+.paypalButton {
+    border: none;
+    background: transparent;
+    background-image: url("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif");
+    text-indent: -9999px;
+    width: 145px;
+    height: 42px;
+}
+
+.validation-summary-errors {
+    color: red;
+}
+
+button.del-goods {
+    border: none;
+    outline: none;
+}
+
+input.form-control {
+    width: 50%;
+}
+
+.site-logo {
+    margin-right: 3%;
+}
