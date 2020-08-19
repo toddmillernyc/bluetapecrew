@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { ThemeLayout } from './theme/ThemeLayout'
+import { Layout } from './theme/Layout'
+import { Cart } from './theme/Cart'
+import { PreHeader } from './features/layout/PreHeader'
+import { Header } from './features/layout/Header'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'fancybox/dist/css/jquery.fancybox.css'
 import './theme/css/googleFontsOne.css'
@@ -7,6 +13,7 @@ import 'owl-carousel/owl-carousel/owl.carousel.css'
 import 'font-awesome/css/font-awesome.css'
 import 'jquery-uniform/themes/default/css/uniform.default.css'
 import 'jquery.rateit/scripts/rateit.css'
+
 import './theme/css/components.css'
 import './theme/css/style-shop.css'
 import './theme/css/style.css'
@@ -20,12 +27,32 @@ function App() {
     const [vm, setVm] = useState({})
 
     useEffect(() => {
+
         async function getLayoutViewModel() {
             const response = await fetch('layout')
             const json = await response.json()
-            console.log(json)
             setVm(json)
         }
+
+        window.vm = {
+            cart: Cart,
+            getPrice: Layout.getPrice
+        }
+
+        var $ = require('jquery')
+        window.jQuery = $
+
+        $(() => {
+            Cart.get();
+            const layout = new ThemeLayout($);
+            //layout.init();
+            layout.initTwitter();
+            //layout.initOWL($);
+            //layout.initImageZoom();
+            //layout.initTouchspin();
+            //layout.initUniform();
+        });
+
         getLayoutViewModel()
     }, []);
 
@@ -41,57 +68,8 @@ function App() {
     return (
         <div className="App">
             <div className="ecommerce">
-                <div className="pre-header">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-6 col-sm-6 additional-shop-info">
-                                <ul className="list-unstyled list-inline">
-                                    {/* <li><i class="fa fa-phone"></i><span>{this.state.vm.contactPhone}</span></li>
-                                     <li><i class="fa fa-envelope"></i><a href="mailto:@layoutModel.ContactEmail">@layoutModel.ContactEmail</a></li> */}
-                                </ul>
-                            </div>
-                            <div className="col-md-6 col-sm-6 additional-nav">
-                                <ul className="list-unstyled list-inline pull-right">
-                                    <li>
-                                        <a asp-controller="Manage" asp-action="Index" id="manage-account-header-link" href="https://google.com">My Account</a>
-                                    </li>
-                                    <li>
-                                        <a href="~/cart" id="cart-header-link">Shopping Cart</a>
-                                    </li>
-                                    <p>login-partial</p>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="header">
-                    <div className="container">
-                        <a className="site-logo" href="~/">
-                            <img src="img/logo.png" alt="[INSERT SITE NAME]" />
-                        </a>
-                        <a href="https://www.google.com" className="mobi-toggler">
-                            <i className="fa fa-bars"></i>
-                        </a>
-                        <p>CART</p>
-                        <div className="header-navigation">
-                            <ul>
-
-                                <li className="dropdown">
-                                    <a className="dropdown-toggle" data-toggle="dropdown" data-target="#" href="https://www.google.com">
-
-                                    </a>
-
-                                    <ul className="dropdown-menu">
-
-
-                                    </ul>
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <PreHeader {...vm}></PreHeader>
+                <Header {...vm}></Header>
                 <p>Body</p>
                 <div className="pre-footer">
                     <div className="container">

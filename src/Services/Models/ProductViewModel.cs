@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Services.Models;
-using Site.Extensions;
+using Services.Extensions;
 
-namespace Site.ViewModels
+namespace Services.Models
 {
     public class ProductViewModel
     {
@@ -39,7 +37,7 @@ namespace Site.ViewModels
                 Name = review.Name,
                 Rating = review.Rating
             });
-            StyleId = new SelectList(styleViews, "Id", "StyleText", styleViews.FirstOrDefault());
+            Styles = styleViews.ToDictionary(x => x.Id, x => x.StyleText);
         }
 
         public int Id { get; set; }
@@ -54,6 +52,6 @@ namespace Site.ViewModels
         public string LinkName { get; set; }
         public string Price { get; set; }
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
-        public SelectList StyleId { get; set; }
+        public Dictionary<int, string> Styles { get; set; }
     }
 }

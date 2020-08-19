@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Services.Models;
+using Services.Interfaces;
 
 namespace React.Site.Controllers
 {
@@ -12,14 +8,14 @@ namespace React.Site.Controllers
     [Route("[controller]")]
     public class LayoutController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+        private readonly IViewModelService _viewModelService;
+
+        public LayoutController(IViewModelService viewModelService)
         {
-            return Ok(new LayoutViewModel
-            {
-                ContactEmail = "info@bluetapecrew.com",
-                ContactPhone = "555-555-5555"
-            });
+            _viewModelService = viewModelService;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()=> Ok(await _viewModelService.GetLayoutViewModel());
     }
 }

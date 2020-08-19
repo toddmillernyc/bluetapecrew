@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Services.Models;
-using Site.ViewModels;
 
-namespace Site.Services
+namespace Services.Interfaces
 {
     public interface IViewModelService
     {

@@ -1,6 +1,6 @@
 ﻿using Services.Models;
 
-namespace Site.Extensions
+namespace Services.Extensions
 {
     public static class ImageExtensions
     {

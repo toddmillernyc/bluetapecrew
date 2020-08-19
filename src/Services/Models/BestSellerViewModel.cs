@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using Services.Extensions;
-using Services.Models;
-using Site.Extensions;
 
-namespace Site.ViewModels
+namespace Services.Models
 {
     public class BestSellerViewModel
     {

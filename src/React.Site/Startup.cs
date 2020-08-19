@@ -1,9 +1,15 @@
+using AutoMapper;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Services;
+using Services.Extensions;
+using Services.Interfaces;
 
 namespace React.Site
 {
@@ -19,13 +25,15 @@ namespace React.Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var defaultConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<BtcEntities>(options => options.UseSqlServer(defaultConnectionString));
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            services.AddServiceLayer();
+            var serviceMappings = services.AddServiceLayer();
+            services.AddAutoMapper(serviceMappings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

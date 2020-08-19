@@ -3,9 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Services.Interfaces;
 using Services.Models;
-using Site.ViewModels;
 
-namespace Site.Services
+namespace Services
 {
     public class ViewModelService : IViewModelService
     {

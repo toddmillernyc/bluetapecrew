@@ -33,6 +33,7 @@ namespace Services.Extensions
             services.AddTransient<IShippingService, ShippingService>();
             services.AddTransient<ISiteSettingsService, SiteSettingsService>();
             services.AddTransient<IStyleService, StyleService>();
+            services.AddTransient<IViewModelService, ViewModelService>();
         }
     }
 }

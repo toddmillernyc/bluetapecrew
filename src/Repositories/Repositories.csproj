@@ -5,13 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.7" />
+    <Compile Remove="Entities\**" />
+    <EmbeddedResource Remove="Entities\**" />
+    <None Remove="Entities\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.7" />
   </ItemGroup>
 
   <ItemGroup>
