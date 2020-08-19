@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const PreHeader = (vm) => {
     return (
@@ -13,20 +14,9 @@ export const PreHeader = (vm) => {
                     </div>
                     <div className="col-md-6 col-sm-6 additional-nav">
                         <ul className="list-unstyled list-inline pull-right">
-                            <li>
-                                <a
-                                    asp-controller="Manage"
-                                    asp-action="Index"
-                                    id="manage-account-header-link"
-                                    href="https://google.com"
-                                >
-                                    My Account
-                                </a>
-                            </li>
-                            <li>
-                                <a href="~/cart" id="cart-header-link">Shopping Cart</a>
-                            </li>
-                            <li><a>Login</a></li>
+                            <li><Link to="/account">My Account</Link></li>
+                            <li><Link to="/cart" id="cart-header-link">Shopping Cart</Link></li>
+                            <li><Link to="/login">Login</Link></li>
                         </ul>
                     </div>
                 </div>

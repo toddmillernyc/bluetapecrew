@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import logo from '../../theme/images/logo.png'
 import { Cart } from './Cart'
+import { Link } from 'react-router-dom';
 
 export const Header = (vm) => {
     return (
@@ -20,7 +21,10 @@ export const Header = (vm) => {
 
                                 <ul className="dropdown-menu">
                                     {menu.items.map(item => {
-                                        return <li key={item.slug}><a href="products/{item.slug}">{item.itemName}</a></li>
+                                        return <li key={item.slug}>
+                                            <Link to="/product">{item.itemName}</Link>
+                                            {/* <a href="products/{item.slug}">{item.itemName}</a> */}
+                                            </li>
                                     })}
                                 </ul>
 

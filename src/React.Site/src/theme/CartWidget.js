@@ -1,4 +1,4 @@
-﻿export class Cart {
+﻿export class CartWidget {
 
     constructor($) {
         this.$ = $
@@ -77,7 +77,7 @@
                     if (refresh) {
                         window.location.reload();
                     } else {
-                        Cart.get();
+                        CartWidget.get();
                     }
                 });
     }
@@ -85,7 +85,7 @@
     static add() {
         this.$.post(`api/cart/${this.$('#StyleId').val()}/${this.$('#quantity').val()}`)
             .done(function () {
-                Cart.get();
+                CartWidget.get();
             })
             .fail(function (error) {
                 console.error(error.responseText);
