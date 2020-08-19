@@ -31,8 +31,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration", "tests\Integr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FD9E36F6-46F5-421C-A083-677876177979}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "React.Site", "src\React.Site\React.Site.csproj", "{5DB69301-C404-4774-A5F4-E25C90A6C449}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,10 +73,6 @@ Global
 		{50FC7567-3B08-4736-A6F1-CD887FC3FFA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FC7567-3B08-4736-A6F1-CD887FC3FFA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FC7567-3B08-4736-A6F1-CD887FC3FFA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DB69301-C404-4774-A5F4-E25C90A6C449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DB69301-C404-4774-A5F4-E25C90A6C449}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DB69301-C404-4774-A5F4-E25C90A6C449}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DB69301-C404-4774-A5F4-E25C90A6C449}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

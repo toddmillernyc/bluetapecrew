@@ -6,7 +6,7 @@ import { PreHeader } from './features/layout/PreHeader'
 import { Header } from './features/layout/Header'
 
 import 'bootstrap/dist/css/bootstrap.css'
-import 'fancybox/dist/css/jquery.fancybox.css'
+import 'jquery.fancybox/source/jquery.fancybox.css'
 import './theme/css/googleFontsOne.css'
 import './theme/css/googleFontsTwo.css'
 import 'owl-carousel/owl-carousel/owl.carousel.css'
@@ -29,7 +29,7 @@ function App() {
     useEffect(() => {
 
         async function getLayoutViewModel() {
-            const response = await fetch('layout')
+            const response = await fetch('https://localhost:5001/layout')
             const json = await response.json()
             setVm(json)
         }
@@ -107,7 +107,7 @@ function App() {
                                     <li><a className="twitter" data-original-title="twitter" href="https://twitter.com/@layoutModel.TwitterHandle"> </a></li>
 
                                     <li><a className="linkedin" data-original-title="linkedin" href="@layoutModel.LinkedInUrl"> </a></li>
-                                              }
+                                              
                                           </ul>
                             </div>
                             <div className="col-md-6 col-sm-6">

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
-namespace React.Site.Controllers
+namespace Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -16,6 +16,10 @@ namespace React.Site.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()=> Ok(await _viewModelService.GetLayoutViewModel());
+        public async Task<IActionResult> Get()
+        {
+            var vm = await _viewModelService.GetLayoutViewModel();
+            return Ok(vm);
+        }
     }
 }
