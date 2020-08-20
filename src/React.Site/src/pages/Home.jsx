@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import 'owlcarousel/owl-carousel/owl.carousel.css'
 
 export default (props) => {
 
@@ -7,18 +8,38 @@ export default (props) => {
 
     useEffect(() => {
 
-        async function getCatalogAndInitOwl() {
+        async function init() {
+            setBaseUrl('https://localhost:5001/')
             const response = await fetch('https://localhost:5001/catalog')
             const json = await response.json()
             setCatagories(json)
             initOWL()
+            //init image zoon
+            //window.jQuery('.product-main-image').zoom({ url: window.jQuery('.product-main-image img').attr('data-BigImgSrc') });
         }
-        setBaseUrl('https://localhost:5001/')
-        getCatalogAndInitOwl()
+        
+        init()
     }, []);
 
     function initOWL() {
-    window.jQuery('.owl-carousel-home').owlCarousel({
+        window.jQuery('.owl-carousel6-brands').owlCarousel({
+            pagination: false,
+            navigation: true,
+            items: 6,
+            addClassActive: true,
+            itemsCustom: [
+                [0, 1],
+                [320, 1],
+                [480, 2],
+                [700, 3],
+                [975, 5],
+                [1200, 6],
+                [1400, 6],
+                [1600, 6]
+            ]
+        })
+
+        window.jQuery('.owl-carousel-home').owlCarousel({
             pagination: false,
             navigation: true,
             items: 5,

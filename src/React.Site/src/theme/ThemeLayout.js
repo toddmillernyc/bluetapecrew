@@ -10,18 +10,18 @@ export class ThemeLayout {
     responsiveHandlers = []
     responsive = true
 
-    init($) {
+    init() {
         this.handleTheme()
         this.handleInit()
         this.handleResponsiveOnResize()
-        this.handleFancybox(this.jQuery)
+        this.handleFancybox()
         this.handleDifInits()
-        this.handleSidebarMenu(this.$)
+        this.handleSidebarMenu(window.jQuery)
         this.handleAccordions()
         this.handleMenu()
-        this.handleScrollers(this.$)
-        this.handleSubMenuExt(this.$)
-        this.handleMobiToggler(this.$)
+        //this.handleScrollers()
+        this.handleSubMenuExt(window.jQuery)
+        this.handleMobiToggler(window.jQuery)
     }
 
     initTwitter() {
@@ -35,50 +35,6 @@ export class ThemeLayout {
                 if (parentNode != null) parentNode.insertBefore(js, fjs);
             }
         })(document, 'script', 'twitter-wjs');
-    }
-
-    initOWL($) {
-        window.jQuery('.owl-carousel6-brands').owlCarousel({
-            pagination: false,
-            navigation: true,
-            items: 6,
-            addClassActive: true,
-            itemsCustom: [
-                [0, 1],
-                [320, 1],
-                [480, 2],
-                [700, 3],
-                [975, 5],
-                [1200, 6],
-                [1400, 6],
-                [1600, 6]
-            ]
-        })
-
-        $('.owl-carousel-home').owlCarousel({
-            pagination: false,
-            navigation: true,
-            items: 5,
-            lazyLoad: true,
-            addClassActive: true,
-            itemsCustom: [
-                [0, 1],
-                [320, 1],
-                [480, 2],
-                [660, 2],
-                [700, 3],
-                [768, 3],
-                [992, 4],
-                [1024, 4],
-                [1200, 5],
-                [1400, 5],
-                [1600, 5]
-            ]
-        });
-    }
-
-    initImageZoom() {
-        this.$('.product-main-image').zoom({ url: this.$('.product-main-image img').attr('data-BigImgSrc') });
     }
 
     initTouchspin() {
@@ -168,7 +124,7 @@ export class ThemeLayout {
     }
 
     handleFancybox(jQuery) {
-        if (!jQuery.hasOwnProperty('fancybox')) {
+        if (!window.jQuery.hasOwnProperty('fancybox')) {
             return
         }
 
@@ -242,27 +198,32 @@ export class ThemeLayout {
         })
     }
 
-    handleScrollers($) {
-        $('.scroller').each(() => {
-            var self = $(this)
-            var height
-            if (self.attr('data-height')) {
-                height = $(this).attr('data-height')
-            } else {
-                height = $(this).css('height')
-            }
-            self.slimScroll({
-                allowPageScroll: true, // allow page scroll when the element scroll is ended
-                size: '7px',
-                color: ($(this).attr('data-handle-color') ? $(this).attr('data-handle-color') : '#bbb'),
-                railColor: ($(this).attr('data-rail-color') ? $(this).attr('data-rail-color') : '#eaeaea'),
-                position: 'right',
-                height: height,
-                alwaysVisible: (self.attr('data-always-visible') === '1'),
-                railVisible: (self.attr('data-rail-visible') === '1'),
-                disableFadeOut: true
+    handleScrollers() {
+        var scrollers = window.jQuery('.scroller')
+        console.log(scrollers)
+        if(scrollers.length > 0){
+            scrollers.each(() => {
+                var self = window.jQuery(this)
+                var height
+                if (self.attr('data-height')) {
+                    height = self.attr('data-height')
+                } else {
+                    height = self.css('height')
+                }
+                self.slimScroll({
+                    allowPageScroll: true, // allow page scroll when the element scroll is ended
+                    size: '7px',
+                    color: (self.attr('data-handle-color') ? self.attr('data-handle-color') : '#bbb'),
+                    railColor: (self.attr('data-rail-color') ? self.attr('data-rail-color') : '#eaeaea'),
+                    position: 'right',
+                    height: height,
+                    alwaysVisible: (self.attr('data-always-visible') === '1'),
+                    railVisible: (self.attr('data-rail-visible') === '1'),
+                    disableFadeOut: true
+                })
             })
-        })
+        }
+
     }
 
     handleSubMenuExt($) {

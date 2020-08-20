@@ -9,20 +9,6 @@ import { Footer } from './features/layout/Footer'
 import { Account, Cart, Home, Login, Product } from './pages'
 import { Route, Switch } from 'react-router-dom';
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'jquery.fancybox/source/jquery.fancybox.css'
-import './theme/css/googleFontsOne.css'
-import './theme/css/googleFontsTwo.css'
-// import 'owl-carousel/owl-carousel/owl.carousel.css'
-import 'font-awesome/css/font-awesome.css'
-import 'jquery-uniform/themes/default/css/uniform.default.css'
-import 'jquery.rateit/scripts/rateit.css'
-
-import './theme/css/components.css'
-import './theme/css/style-shop.css'
-import './theme/css/style.css'
-import './theme/css/style-responsive.css'
-import './theme/css/blue.css'
 import './theme/images/up.png'
 import './theme/images/paypal.jpg'
 
@@ -42,19 +28,15 @@ function App() {
             getPrice: Layout.getPrice
         }
 
-        // var $ = require('jquery')
-        // window.jQuery = $
-
-        // $(() => {
-        //     CartWidget.get();
-        //     //const layout = new ThemeLayout($);
-        //     //layout.init();
-        //     //layout.initTwitter();
-        //     //layout.initOWL($);
-        //     //layout.initImageZoom();
-        //     //layout.initTouchspin();
-        //     //layout.initUniform();
-        // });
+        window.jQuery(() => {
+            CartWidget.get();
+            const layout = new ThemeLayout(window.jQuery);
+            layout.init();
+            layout.initTwitter();
+            //layout.initOWL(window.jQuery);
+            //layout.initTouchspin();
+            layout.initUniform();
+        });
 
         getLayoutViewModel()
     }, []);
