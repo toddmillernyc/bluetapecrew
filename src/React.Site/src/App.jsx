@@ -6,14 +6,14 @@ import { CartWidget } from './theme/CartWidget'
 import { PreHeader } from './features/layout/PreHeader'
 import { Header } from './features/layout/Header'
 import { Footer } from './features/layout/Footer'
-import { Account, Cart, Login, Product } from './pages'
+import { Account, Cart, Home, Login, Product } from './pages'
 import { Route, Switch } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'jquery.fancybox/source/jquery.fancybox.css'
 import './theme/css/googleFontsOne.css'
 import './theme/css/googleFontsTwo.css'
-import 'owl-carousel/owl-carousel/owl.carousel.css'
+// import 'owl-carousel/owl-carousel/owl.carousel.css'
 import 'font-awesome/css/font-awesome.css'
 import 'jquery-uniform/themes/default/css/uniform.default.css'
 import 'jquery.rateit/scripts/rateit.css'
@@ -30,7 +30,7 @@ function App() {
     const [vm, setVm] = useState({})
 
     useEffect(() => {
-
+        
         async function getLayoutViewModel() {
             const response = await fetch('https://localhost:5001/layout')
             const json = await response.json()
@@ -42,19 +42,19 @@ function App() {
             getPrice: Layout.getPrice
         }
 
-        var $ = require('jquery')
-        window.jQuery = $
+        // var $ = require('jquery')
+        // window.jQuery = $
 
-        $(() => {
-            CartWidget.get();
-            const layout = new ThemeLayout($);
-            //layout.init();
-            layout.initTwitter();
-            //layout.initOWL($);
-            //layout.initImageZoom();
-            //layout.initTouchspin();
-            //layout.initUniform();
-        });
+        // $(() => {
+        //     CartWidget.get();
+        //     //const layout = new ThemeLayout($);
+        //     //layout.init();
+        //     //layout.initTwitter();
+        //     //layout.initOWL($);
+        //     //layout.initImageZoom();
+        //     //layout.initTouchspin();
+        //     //layout.initUniform();
+        // });
 
         getLayoutViewModel()
     }, []);
@@ -69,6 +69,7 @@ function App() {
                 <PreHeader {...vm}></PreHeader>
                 <Header {...vm}></Header>
                 <Switch>
+                    <Route exact path="/" component={Home} />)} />
                     <Route path="/account" component={Account} />
                     <Route path="/cart" component={Cart} />
                     <Route path="/login" component={Login} />

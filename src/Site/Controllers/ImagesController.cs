@@ -1,6 +1,7 @@
 ﻿using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Services.Extensions;
 using Services.Interfaces;
 using Site.Extensions;
 

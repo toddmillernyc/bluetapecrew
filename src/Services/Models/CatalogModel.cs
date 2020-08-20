@@ -10,6 +10,6 @@ namespace Services.Models
         }
 
         public string CategoryName { get; set; }
-        public IList<ProductsAzViewModel> Products { get; set; } = new List<ProductsAzViewModel>();
+        public IList<ProductCard> Products { get; set; } = new List<ProductCard>();
     }
 }

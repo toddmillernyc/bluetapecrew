@@ -1,7 +1,6 @@
 ﻿using System.IO;
-using Site.ActionResults;
 
-namespace Site.Extensions
+namespace Api
 {
     public static class ByteArrayExtensions
     {

@@ -6,6 +6,6 @@ namespace Services.Models
     {
         public string SiteTitle { get; set; }
         public string Description { get; set; }
-        public IList<CatalogModel> Catalog { get; set; }
+        public IEnumerable<CatalogModel> Catalog { get; set; }
     }
 }

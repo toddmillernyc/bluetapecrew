@@ -8,6 +8,7 @@ namespace Services
 {
     public class ViewModelService : IViewModelService
     {
+        private readonly ICatalogService _catalogService;
         private readonly ICategoryService _categoryService;
         private readonly ISiteSettingsService _settings;
         private readonly IStyleService _styleService;
@@ -17,40 +18,22 @@ namespace Services
             ICategoryService categoryService,
             ISiteSettingsService settings,
             IStyleService styleService,
-            IProductService productService)
+            IProductService productService,
+            ICatalogService catalogService)
         {
             _settings = settings;
             _styleService = styleService;
             _productService = productService;
+            _catalogService = catalogService;
             _categoryService = categoryService;
         }
 
         public async Task<HomeViewModel> GetHomeViewModel()
         {
             var settings = await _settings.Get();
-            var catalog = new List<CatalogModel>();
-            var categories = await _categoryService.GetAllPublishedWithProductsAndStyles();
-
-            foreach (var category in categories)
-            {
-                var catalogModel = new CatalogModel(category.Name);
-                var categoryProducts = category.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName);
-                foreach (var product in categoryProducts)
-                {
-                    catalogModel.Products.Add(new ProductsAzViewModel
-                    {
-                        Id = product.Id,
-                        Name = product.ProductName,
-                        Slug = product.Slug,
-                        Price = $"{product.Styles?.FirstOrDefault()?.Price:n2}",
-                        ImgSource = "images/" + product.Slug + ".jpg"
-                    });
-                }
-                catalog.Add(catalogModel);
-            }
             return (new HomeViewModel
             {
-                Catalog = catalog,
+                Catalog = await _catalogService.GetCatalog(),
                 SiteTitle = settings?.SiteTitle ?? "NEW SITE",
                 Description = settings?.Description ?? "NEW SITE DESCRIPTION"
             });

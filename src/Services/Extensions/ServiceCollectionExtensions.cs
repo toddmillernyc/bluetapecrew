@@ -20,6 +20,7 @@ namespace Services.Extensions
         {
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<ICartCalculatorService, CartCalculatorService>();
+            services.AddTransient<ICatalogService, CatalogService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ICheckoutService, CheckoutService>();
             services.AddTransient<IEmailService, EmailService>();
