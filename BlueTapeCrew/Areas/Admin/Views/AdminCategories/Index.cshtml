@@ -73,7 +73,7 @@
                 <td>
                     @Html.ActionLink("Edit " + item.Name, "Edit", new { @id = item.Id }, new { @class = "btn btn-warning btn-xs" })<br />
                     @Html.ActionLink("Delete Category", "Delete", new { @id = item.Id }, new { @class = "btn btn-danger btn-xs" })
-                    <form method="post" action="admincategories/PublishCategory">
+                    <form method="post" action="admin/admincategories/PublishCategory">
                         <input type="hidden" name="id" value="@item.Id" />
                         @if (item.Published)
                         {

@@ -37,7 +37,8 @@ namespace BlueTapeCrew
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<IdentityEntities>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                    .AddRazorRuntimeCompilation();
             services.ConfigureApplicationCookie(options =>{  options.LoginPath = "/Account/Login"; });
 
             //configure service layer middleware returns AutoMapper mappings
