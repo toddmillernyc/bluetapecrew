@@ -24,6 +24,7 @@ namespace Services
                     new MenuCategory
                     {
                         Name = category.Name,
+                        IsPublished =  category.Published,
                         Products = category.ProductCategories
                             .Select(x => x.Product)
                             .OrderBy(x => x.Slug)
