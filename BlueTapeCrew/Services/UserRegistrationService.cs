@@ -32,7 +32,7 @@ namespace BlueTapeCrew.Services
 
         public async Task<bool> ResetPassword(ResetPasswordRequest model)
         {
-            var user = await _userManager.FindByNameAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null) return false;
             var token = DecodeToken(model.Code);
             var result = await _userManager.ResetPasswordAsync(user, token, model.Password);
@@ -41,7 +41,7 @@ namespace BlueTapeCrew.Services
 
         public async Task SendEmailConfirmationLink(HttpRequest request, string username)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByEmailAsync(username);
             var token = await GetEncodedEmailConfirmToken(user);
             var callbackUrl = $"{request?.Scheme}://{request?.Host}{request?.PathBase}/Account/ConfirmEmail/{user.Id}?code={token}";
             var settings = await _settings.Get();
@@ -52,7 +52,7 @@ namespace BlueTapeCrew.Services
 
         public async Task<bool> SendPasswordResetLink(HttpRequest request, string email)
         {
-            var user = await _userManager.FindByNameAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return false;
 
             var emailIsConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -84,7 +84,7 @@ namespace BlueTapeCrew.Services
 
         public async Task<bool> ChangePassword(string userName, string oldPassword, string newPassword)
         {
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByEmailAsync(userName);
             if (user == null) return false;
             var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
             return result.Succeeded;
@@ -92,7 +92,7 @@ namespace BlueTapeCrew.Services
 
         public async Task SignInBy(string username)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByEmailAsync(username);
             await _signInManager.SignInAsync(user, false);
         }
 
