@@ -48,6 +48,7 @@ namespace Repositories
         public async Task<IEnumerable<Category>> GetAllPublishedWithProductsAndStyles()
         {
             var categories = await _db.Categories
+                .Where(x=>x.Published)
                 .Include(category => category.ProductCategories)
                 .ThenInclude(productCategory => productCategory.Product)
                 .ThenInclude(product => product.Styles)
