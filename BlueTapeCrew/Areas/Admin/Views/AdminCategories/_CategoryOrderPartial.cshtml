@@ -4,7 +4,7 @@
     .not-published { background-color: lightgray }
 </style>
 <div class="row">
-    <div class="col-xs-3">
+    <div class="col-xs-12 col-sm-4">
         <h4 id="order-heading">Drag Categories to Order</h4>
         <ul id="category-positions" class="list-group">
             @foreach (var category in Model.AdminCategories.OrderBy(x=>x.Position))
