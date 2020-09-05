@@ -15,5 +15,6 @@
         public string StyleText { get; set; }
         public decimal? SubTotal { get; set; }
         public byte[] ImageData { get; set; }
+        public int ImageId { get; set; }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlueTapeCrew.ApiControllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/categories")]
     public class CategoriesApiController : ControllerBase

@@ -20,17 +20,17 @@ namespace Services
         {
             var categories = await _categoryRepository.GetAllWithProducts();
             return categories
+                .OrderBy(X => X.Position)
                 .Select(category =>
                     new MenuCategory
                     {
                         Name = category.Name,
-                        IsPublished =  category.Published,
+                        IsPublished = category.Published,
                         Products = category.ProductCategories
                             .Select(x => x.Product)
                             .OrderBy(x => x.Slug)
                             .ToDictionary(x => x.Slug, x => x.ProductName)
-                    })
-                .OrderBy(x => x.Name);
+                    });
         }
     }
 }

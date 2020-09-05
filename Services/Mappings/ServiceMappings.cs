@@ -28,6 +28,7 @@ namespace Services.Mappings
             CreateMap<Entity.StyleView, Model.StyleView>();
 
             // Model -> Entity
+            CreateMap<Entity.CartImage, Model.CartImage>();
             CreateMap<Model.Cart, Entity.Cart>();
             CreateMap<Model.Category, Entity.Category>();
             CreateMap<Model.Color, Entity.Color>();
