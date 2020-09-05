@@ -8,7 +8,7 @@
 }
 <div class="main">
     <div class="container">
-        @foreach (var category in Model.Catalog)
+        @foreach (var category in Model.Catalog.OrderBy(x=>x.Position))
         {
             <div class="row margin-bottom-40" id="allProducts">
                 <div class="col-md-12 sale-product">

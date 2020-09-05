@@ -34,7 +34,7 @@ namespace BlueTapeCrew.Services
 
             foreach (var category in categories)
             {
-                var catalogModel = new CatalogModel(category.Name);
+                var catalogModel = new CatalogModel(category.Name, category.Position);
                 var categoryProducts = category.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName);
                 foreach (var product in categoryProducts)
                 {

@@ -27,6 +27,7 @@ namespace Repositories
         public async Task<IEnumerable<Category>> GetAll() => await _db.Categories.ToListAsync();
         public async Task Create(Category category)
         {
+            category.Position = _db.Categories.Max(x => x.Position) + 1;
             _db.Categories.Add(category);
             await _db.SaveChangesAsync();
         }
@@ -52,7 +53,7 @@ namespace Repositories
                 .Include(category => category.ProductCategories)
                 .ThenInclude(productCategory => productCategory.Product)
                 .ThenInclude(product => product.Styles)
-                .OrderByDescending(category => category.ProductCategories.Count)
+                .OrderBy(x=>x.Position)
                 .ToListAsync();
             return categories;
         }

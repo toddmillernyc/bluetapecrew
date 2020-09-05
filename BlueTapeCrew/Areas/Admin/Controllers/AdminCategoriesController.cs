@@ -44,7 +44,7 @@ namespace BlueTapeCrew.Areas.Admin.Controllers
             var categories = await _categoryService.GetAllWithProducts();
             var viewModel = categories.Select(category => _mapper.Map<AdminCategoryViewModel>(category));
             ViewBag.ProductId = new SelectList(await _productService.GetProductNames(), "Key", "Value");
-            return View(viewModel);
+            return View(new AdminCategoryPageViewModel(viewModel));
         }
 
         public async Task<IActionResult> Delete(int id)

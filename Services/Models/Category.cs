@@ -9,6 +9,7 @@ namespace Services.Models
         public int? ImageId { get; set; }
         public bool Published { get; set; }
         public Image Image { get; set; }
+        public int Position { get; set; }
         public IEnumerable<ProductCategory> ProductCategories { get; set; }
     }
 }

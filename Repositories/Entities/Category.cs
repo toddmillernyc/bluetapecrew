@@ -19,6 +19,8 @@ namespace Repositories.Entities
         public int? ImageId { get; set; }
         public bool Published { get; set; }
 
+        public int Position { get; set; }
+
         public virtual Image Image { get; set; }
         public virtual ICollection<ProductCategory> ProductCategories { get; set; }
     }

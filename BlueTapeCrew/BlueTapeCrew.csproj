@@ -32,4 +32,9 @@
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\NewFolder\" />
+  </ItemGroup>
+
 </Project>
