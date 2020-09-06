@@ -5,7 +5,7 @@
             .then(response => response.json())
             .then(vm => {
                 document.getElementById('cart-count').textContent = vm.totals.count;
-                document.getElementById('cart-total').textContent = vm.totals.total;
+                document.getElementById('cart-total').textContent = enforceTwoDecimalPlaces(vm.totals.total);
 
                 const cart = document.getElementById('cart-items');
                 cart.innerHTML = '';
@@ -19,7 +19,7 @@
                     li.appendChild(getProductLink(item));
 
                     const em = document.createElement('em');
-                    em.textContent = item.price;
+                    em.textContent = enforceTwoDecimalPlaces(item.subTotal);
                     li.appendChild(em);
                     li.appendChild(getRemoveButton(item));
                     li.appendChild(document.createElement('br'));
@@ -29,10 +29,16 @@
                 }
             });
 
+        function enforceTwoDecimalPlaces(amt) {
+            const tokens = amt.toString().split('.');
+            if (tokens.length === 1) return `${amt}.00`;
+            if (tokens.length === 2) {
+                if (tokens[1].length === 1) return `${amt}0`;
+            }
+            return amt;
+        }
+
         function getImageLink(item) {
-            console.log({
-                msg: "hello"
-            });
             const a = document.createElement('a');
             a.href = item.productLink;
             const img = new Image();
