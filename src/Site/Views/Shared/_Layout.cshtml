@@ -1,0 +1,158 @@
+﻿@using Site.Services
+@inject IViewModelService ViewModelService
+
+@{
+    var layoutModel = await ViewModelService.GetLayoutViewModel();
+}
+<!DOCTYPE html>
+<html lang="en" ng-app="btcApp">
+<head>
+    <base href="~/">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="~/favicon.ico">
+    <title>@layoutModel.SiteTitle</title>
+    <meta content="width=device-width, initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="@layoutModel.Description" name="description">
+    <meta content="@layoutModel.Keywords" name="keywords">
+    <meta content="@layoutModel.CopyrightLinktext" name="author">
+    <meta property="og:site_name" content="@layoutModel.SiteTitle">
+    @RenderSection("OpenGraph", false)
+
+    <!-- Begin CSS-->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/Content/OwlCarousel/owl.carousel.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Themes/uniformjs/default/css/uniform.default.css" rel="stylesheet" />
+    <link href="~/Content/rateit.css" rel="stylesheet" />
+    <link href="~/Content/css/components.css" rel="stylesheet" />
+    <link href="~/Content/css/googleFontsOne.css" rel="stylesheet" />
+    <link href="~/Content/css/googleFontsTwo.css" rel="stylesheet" />
+    <link href="~/Content/css/site.css" rel="stylesheet" />
+    <link href="~/Content/css/style-responsive.css" rel="stylesheet" />
+    <link href="~/Content/css/style-shop.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <!-- End CSS-->
+    @*todo: upgrade jquery*@
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+<body class="ecommerce">
+    <div class="header">
+        <div class="pre-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 additional-shop-info">
+                        <ul class="list-unstyled list-inline">
+                            @if (!string.IsNullOrEmpty(layoutModel.ContactPhone))
+                            {
+                                <li><i class="fa fa-phone"></i><span>@layoutModel.ContactPhone</span></li>
+                            }
+                            @if (!string.IsNullOrEmpty(layoutModel.ContactEmail))
+                            {
+                                <li><i class="fa fa-envelope"></i><a href="mailto:@layoutModel.ContactEmail">@layoutModel.ContactEmail</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-sm-6 additional-nav">
+                        <ul class="list-unstyled list-inline pull-right">
+                            <li><a asp-controller="Manage" asp-action="Index" id="manage-account-header-link">My Account</a></li>
+                            <li><a href="~/cart" id="cart-header-link">Shopping Cart</a></li>
+                            <partial name="_LoginPartial" />
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <a class="site-logo" href="@Url.Action("Index", "Home")"><img src="~/Content/logo.png" alt="@layoutModel.SiteTitle"></a>
+            <div class="top-cart-block" id="cart-widget">
+                <div class="top-cart-info">
+                    <a href="javascript:void(0);" class="top-cart-info-count">@ViewBag.CartCount items</a>
+                    <a href="javascript:void(0);" class="top-cart-info-value">$@ViewBag.CartTotal</a>
+                </div>
+                <a href="javascript:;"><i class="fa fa-shopping-cart"></i></a>
+            </div>
+            <header-menu></header-menu>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="pre-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2>About us</h2>
+                    <p>@layoutModel.AboutUs</p>
+                </div>
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2>Contact Us</h2>
+                    @if (!string.IsNullOrEmpty(layoutModel.ContactEmail))
+                    {
+                        <address class="margin-bottom-40">
+                            Email: <a href="@layoutModel.ContactEmail">@layoutModel.ContactEmail</a><br>
+                        </address>
+                    }
+                </div>
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2 class="margin-bottom-0">Latest Tweets</h2>
+                    <a 
+                        href="@layoutModel.TwitterHandle"
+                        class="twitter-timeline"
+                        data-theme="dark"
+                        data-tweet-limit="2"></a>
+                </div>
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2>Custom Shirts</h2>
+                    <p>Contact us about custom shirt oders.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <ul class="social-icons">
+                        @if (!string.IsNullOrEmpty(layoutModel.FaceBookUrl))
+                        {
+                            <li><a class="facebook" data-original-title="facebook" href="@layoutModel.FaceBookUrl"></a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(layoutModel.TwitterHandle))
+                        {
+                            <li><a class="twitter" data-original-title="twitter" href="https://twitter.com/@layoutModel.TwitterHandle"></a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(layoutModel.LinkedInUrl))
+                        {
+                            <li><a class="linkedin" data-original-title="linkedin" href="@layoutModel.LinkedInUrl"></a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    @if (layoutModel.ShowSubscibeForm)
+                    {
+                        <div class="pre-footer-subscribe-box pull-right">
+                            <email-subscribe></email-subscribe>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 padding-top-10">
+                    &copy; @DateTime.Now.Year - @layoutModel.SiteTitle | @layoutModel.CopyrightText <a href="@layoutModel.CopyrightUrl">@layoutModel.CopyrightLinktext</a>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <ul class="list-unstyled list-inline pull-right">
+                        <li><img src="~/Content/img/payments/PayPal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("Scripts", false)
+    <div id="product-pop-up" style="display: none; width: 700px;"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.6.7/angular-resource.min.js"></script>
+<script src="~/js/app.js"></script>
+</body>
+</html>

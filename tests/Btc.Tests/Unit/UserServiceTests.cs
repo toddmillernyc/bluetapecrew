@@ -1,7 +1,7 @@
-﻿using BlueTapeCrew.Identity;
-using BlueTapeCrew.Services;
+﻿using Site.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Site.Identity;
 using Xunit;
 
 namespace Btc.Tests.Unit

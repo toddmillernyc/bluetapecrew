@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using BlueTapeCrew.Controllers;
-using BlueTapeCrew.Services;
 using Moq;
+using Site.Controllers;
+using Site.Services;
 using Xunit;
 
 namespace Web.Tests.Controllers

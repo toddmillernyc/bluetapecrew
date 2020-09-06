@@ -1,8 +1,9 @@
-﻿using BlueTapeCrew.Areas.Admin.Controllers;
+﻿using Site.Areas.Admin.Controllers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Services.Models;
 using Xunit;
+using Site.Areas.Admin.Controllers;
 
 namespace Web.Tests.Controllers
 {

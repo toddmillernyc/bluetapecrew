@@ -1,16 +1,14 @@
-﻿using BlueTapeCrew;
-using Btc.Tests.Stubs;
-using Microsoft.EntityFrameworkCore;
+﻿using Btc.Tests.Stubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 using System.Reflection;
 using AutoMapper;
-using BlueTapeCrew.Mappings;
-using Castle.Core.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Entities;
 using Services.Extensions;
+using Site.Mappings;
 using Xunit;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 

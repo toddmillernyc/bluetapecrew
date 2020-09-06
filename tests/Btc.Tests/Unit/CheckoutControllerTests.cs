@@ -1,10 +1,10 @@
-﻿using BlueTapeCrew.Controllers;
-using Moq;
+﻿using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlueTapeCrew.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Models;
+using Site.Controllers;
+using Site.Identity;
 using Xunit;
 
 namespace Btc.Tests.Unit

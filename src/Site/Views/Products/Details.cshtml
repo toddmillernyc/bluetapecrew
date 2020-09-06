@@ -1,0 +1,199 @@
+﻿@model Site.ViewModels.ProductViewModel
+@section OpenGraph{
+    <meta property="og:title" content="@Model.Name">
+    <meta property="og:description" content="@Model.Description">
+    <meta property="og:type" content="product">
+    <meta property="og:image" content="https://bluetapecrew.com/images/@(Model.LinkName).jpg">
+    <meta property="og:url" content="https://bluetapecrew.com/products/@Model.LinkName">
+}
+<script>
+    function sideMenuClick() {
+        if ($(this).hasClass('open')) {
+            $(this).addClass('open');
+        }
+    }
+</script>
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="~/">BlueTapeCrew</a></li>
+            <li><a href="~/">Products</a></li>
+            <li><a href="~/">@Model.Category</a></li>
+            <li href="~/" class="active">@Model.Name</li>
+        </ul>
+        <div class="row margin-bottom-40">
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-5 hidden-xs hidden-sm">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    @foreach (var item in Model.Menu)
+                    {
+                        var classVar = "";
+                        if (item.Name.Equals(Model.Category))
+                        {
+                            classVar = "open";
+                        }
+                        <li class="list-group-item clearfix sidebar-products @classVar" onclick="sideMenuClick()">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;"><i class="fa fa-angle-right"></i> @Html.DisplayFor(modelItem => item.Name)</a>
+                            <ul class="dropdown-menu">
+                                @foreach (var itm in item.Items)
+                                {
+                                    <li><a href="@Url.Action("Details", "Products", new {@name = itm.LinkName})" class="product-link" id="@itm.LinkName"><i class="fa fa-angle-right"></i> @itm.ItemName </a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                <div class="sidebar-products clearfix">
+                    <h2>Bestsellers</h2>
+                    @foreach (var item in Model.BestSellers)
+                    {
+                        <div class="item">
+                            <a href="~/products/@item.LinkName"><img src="@item.ImgSource" alt="@item.Name"></a>
+                            <h3>
+                                <a href="~/products/@item.LinkName">@item.Name</a>
+                            </h3>
+                            <div class="price">$@item.Price</div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- END SIDEBAR -->
+            <div class="col-md-9 col-xs-12" id="productWrapper">
+                <div class="product-page">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="product-main-image hidden-xs">
+                                <img src="@Model.ImgSource"
+                                     alt="@Model.Name" class="img-responsive"
+                                     data-bigimgsrc="@Model.ImgSource">
+                            </div>
+                            <img class="col-xs-12 hidden-sm hidden-md hidden-lg" src="@Model.ImgSource" />
+                            <div class="product-other-images">
+                                @foreach (var item in Model.AdditionalImages)
+                                {
+                                    <a href="@item" class="fancybox-button" rel="photos-lib">
+                                        <img alt="@Model.Name" src="@item">
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <h1>@Html.DisplayFor(x => x.Name)</h1>
+                            <div class="price-availability-block clearfix">
+                                <div class="price">
+                                    <strong><span>$</span><span id="price">@Model.Price</span></strong>
+                                </div>
+                                <div class="availability">
+                                    Availability: <strong>In Stock</strong>
+                                </div>
+                            </div>
+                            <div class="description">
+                                <p>@Html.DisplayFor(x => x.Description)</p>
+                            </div>
+                            <div class="product-page-options">
+                                <div class="pull-left">
+                                    <label class="control-label">Size / Color:</label>
+                                    @Html.DropDownList("StyleId", null, new { @class = "form-control input-sm", @id = "StyleId", @onchange = "getPrice($(this).val())" })
+                                </div>
+                            </div>
+
+                            <div class="product-page-cart">
+                                <div class="product-quantity">
+                                    <input id="quantity" type="text" min="1" value="1" readonly class="form-control input-sm">
+                                </div>
+                                <button class="btn btn-info" type="button" onclick="addItem()" id="add-to-cart-button">Add to cart</button>
+                            </div>
+                            <div class="review">
+                                <input type="range" value="@Model.AverageReview" step="0.25" id="backing4">
+                                <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false" data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5" data-rateit-readonly="true">
+                                </div>
+                                <span>@Model.Reviews.Count() reviews</span>
+                            </div>
+                            <ul class="social-icons">
+                                <li><a class="facebook" data-original-title="facebook" href="http://www.facebook.com/sharer/sharer.php?u=https://bluetapecrew.com/products/@(Model.LinkName)" title="Share on Facebook"></a></li>
+                                <li><a href="https://twitter.com/share" class="twitter" data-url="https://bluetapecrew.com/products/@Model.LinkName" data-text="BlueTapeCrew" data-via="bluetapecrew" data-count="none" title="Share on Twitter">Tweet</a></li>
+                                <li><a class="tumblr" data-original-title="tumblr" href="http://tumblr.com/widgets/share/tool?canonicalUrl=https://bluetapecrew.com/products/@(Model.Id)"></a></li>
+                            </ul>
+                        </div>
+                        <div class="product-page-content">
+                            <ul id="myTab" class="nav nav-tabs">
+                                <li class="active"><a href="#Reviews" data-toggle="tab">Reviews (@Model.Reviews.Count())</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade in active" id="Reviews">
+                                    @if (!Model.Reviews.Any())
+                                    {
+                                        <h3>There are no reviews for this product</h3>
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model.Reviews)
+                                        {
+                                            <div class="review-item clearfix">
+                                                <div class="review-item-submitted">
+                                                    <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+                                                    <em>@Html.DisplayFor(modelItem => item.Date)</em>
+                                                    <div class="rateit" data-rateit-value="@Html.DisplayFor(modelItem => item.Rating)" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                                                </div>
+                                                <div class="review-item-content">
+                                                    <p>@Html.DisplayFor(modelItem => item.Content)</p>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <form class="reviews-form" asp-action="AddReview" method="post" >
+                                            <input type="hidden" value="@Model.Id" name="ProductId" />
+                                            <h2>Write a review</h2>
+                                            <div class="form-group">
+                                                <label for="name">Name <span class="require">*</span></label>
+                                                <input type="text" class="form-control" id="name" name="name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email (will not be displayed)</label>
+                                                <input type="text" class="form-control" id="email" name="email">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="review">Review <span class="require">*</span></label>
+                                                <textarea class="form-control" rows="8" id="review" name="reviewText"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Rating</label>
+                                                <input type="range" value="5" step="0.25" id="backing5" name="rating">
+                                                <div class="rateit" data-rateit-backingfld="#backing5" data-rateit-resetable="false" data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
+                                                </div>
+                                            </div>
+                                            <div class="padding-top-20">
+                                                <input type="submit" class="btn btn-primary" value="Send" />
+                                            </div>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <h4>
+                                            Please @Html.ActionLink("login", "Login", "Account")
+                                            or @Html.ActionLink("register", "Register", "Account")
+                                            to leave a review
+                                        </h4>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <partial name="_BlueTapeJs" />
+    <script>
+        Layout.initOWL();
+        Layout.initImageZoom();
+        Layout.initTouchspin();
+        Layout.initUniform();
+    </script>
+}
+

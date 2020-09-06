@@ -3,8 +3,8 @@ using Moq;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System.Collections.Generic;
-using BlueTapeCrew.Services;
 using Microsoft.AspNetCore.Identity;
+using Site.Services;
 using Xunit;
 
 namespace Btc.Tests

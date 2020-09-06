@@ -2,7 +2,6 @@
 using System.Linq;
 using Services.Models;
 using Xunit;
-using PaymentRequest = BlueTapeCrew.Models.PaymentRequest;
 
 namespace Btc.Tests.Unit
 {
