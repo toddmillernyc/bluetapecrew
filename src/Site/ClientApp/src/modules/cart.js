@@ -11,7 +11,7 @@
                 cart.innerHTML = '';
 
                 for (let item of vm.items) {
-                    item.productLink = `products/${item.slug}`;
+                    item.productLink = `products/${item.linkName}`;
 
                     const li = document.createElement('li');
                     li.appendChild(getImageLink(item));

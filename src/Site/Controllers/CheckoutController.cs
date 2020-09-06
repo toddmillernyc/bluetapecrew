@@ -1,16 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Site.Extensions;
+using Site.Services;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using PayPal;
 using Services.Interfaces;
 using Services.Models;
-using Site.Extensions;
-using Site.Services;
+using System;
+using System.Threading.Tasks;
 using OrderMsg = Services.Models.Constants.Orders;
 
-namespace Site.Controllers
+namespace BlueTapeCrew.Controllers
 {
     [RequireHttps]
     public class CheckoutController : Controller
@@ -120,7 +120,7 @@ namespace Site.Controllers
             {
                 //todo: send cart data with order
                 ViewBag.PaymentConfirmation = await _checkoutService.Complete(completePaymentRequest, _isSandbox);
-                
+
                 var cart = await _cartService.GetCartViewModel(_session.SessionId());
                 var orderId = await _orderService.Create(await GetOrderModel(), cart);
                 await _cartService.EmptyCart(_session.SessionId());

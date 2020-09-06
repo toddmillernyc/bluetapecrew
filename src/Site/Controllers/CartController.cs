@@ -12,7 +12,7 @@ namespace Site.Controllers
         private readonly ISessionService _session;
 
         public CartController(
-        ICartService cartService,
+            ICartService cartService,
             ISessionService session)
         {
             _cartService = cartService;
@@ -20,12 +20,8 @@ namespace Site.Controllers
         }
 
         private Task<CartViewModel> Cart => _cartService.GetCartViewModel(_session.SessionId());
-
         [Route("cart")]
         public async Task<ActionResult> Details() => View(await Cart);
-
-        public async Task<PartialViewResult> Index() => PartialView(await Cart);
-
         public async Task Delete(int id) => await _cartService.DecrementCartItem(id);
     }
 }
