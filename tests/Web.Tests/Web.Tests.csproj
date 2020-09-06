@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BlueTapeCrew\BlueTapeCrew.csproj" />
+    <ProjectReference Include="..\..\src\BlueTapeCrew\BlueTapeCrew.csproj" />
   </ItemGroup>
 
 </Project>

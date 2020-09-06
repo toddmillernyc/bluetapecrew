@@ -8,9 +8,11 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using AutoMapper;
 using BlueTapeCrew.Mappings;
+using Castle.Core.Configuration;
 using Repositories.Entities;
 using Services.Extensions;
 using Xunit;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Btc.Tests
 {
