@@ -30,10 +30,18 @@
             });
 
         function getImageLink(item) {
+            console.log({
+                msg: "hello"
+            });
             const a = document.createElement('a');
             a.href = item.productLink;
             const img = new Image();
-            img.src = `data:image/bmp;base64,${item.imageData}`;
+            if (item.imageData) {
+                img.src = `data:image/bmp;base64,${item.imageData}`;
+            } else {
+                img.src = `images/productthumb/${item.imageId}`;
+                img.style.maxWidth = '37px';
+            }
             a.appendChild(img);
             return a;
         }

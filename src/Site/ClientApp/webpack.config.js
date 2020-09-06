@@ -1,6 +1,6 @@
 ﻿var path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const LiveReloadPlugin = require('webpack-livereload-plugin');
+var LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
     module: {
@@ -44,10 +44,16 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new LiveReloadPlugin()
+        new LiveReloadPlugin({
+            protocol: 'https'
+        })
     ],
     output: {
         path: path.resolve(__dirname, '../wwwroot/'),
         filename: 'bundle.js'
+    },
+    watchOptions: {
+        aggregateTimeout: 200,
+        poll: 1000
     }
 };

@@ -1,0 +1,25 @@
+﻿@model Services.Models.CartViewModel
+
+<div class="top-cart-block" id="cart-widget">
+    <div class="top-cart-info">
+        <a href="javascript:void(0);" class="top-cart-info-count"><span id="cart-count"></span> items</a>
+        <a href="javascript:void(0);" class="top-cart-info-value">$ <span id="cart-total"></span></a>
+    </div>
+    <i class="fa fa-shopping-cart"></i>
+    <div class="top-cart-content-wrapper">
+        <div class="top-cart-content">
+            <ul class="scroller" style="height: 250px;" id="cart-items"></ul>
+            <div class="text-right">
+                @if (Model.Items != null)
+                {
+                    <a href="~/cart" class="btn btn-default">View Cart</a>
+                    <a href="~/checkout" class="btn btn-info" id="go-to-checkout-button">Checkout</a>
+                }
+                else
+                {
+                    <p>Your cart is empty.  Add some stuff.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

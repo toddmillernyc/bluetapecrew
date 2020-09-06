@@ -34,7 +34,7 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\NewFolder\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
