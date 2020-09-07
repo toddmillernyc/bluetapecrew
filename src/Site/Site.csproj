@@ -8,6 +8,10 @@
     <Version>2.0.0</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="ClientApp\assets\images\favicon.ico" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
@@ -36,7 +40,6 @@
   <ItemGroup>
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Checkout\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

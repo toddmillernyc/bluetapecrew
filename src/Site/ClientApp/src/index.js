@@ -1,4 +1,4 @@
-﻿import '../assets/favicon.ico';
+﻿import '../assets/images/favicon.ico';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'fancybox/dist/css/jquery.fancybox.css';
 import 'font-awesome/css/font-awesome.css';
