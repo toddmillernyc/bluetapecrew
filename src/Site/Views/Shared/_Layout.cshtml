@@ -20,7 +20,7 @@
     <meta content="@layoutModel.CopyrightLinktext" name="author">
     <meta property="og:site_name" content="@layoutModel.SiteTitle">
     @RenderSection("OpenGraph", false)
-    <script src="~/shop/bundle.js"></script>
+    <script src="~/shop/app.bundle.js"></script>
     <environment include="Development">
         <script src="http://localhost:35729/livereload.js"></script>
     </environment>
@@ -156,6 +156,6 @@
         </div>
     </div>
     <div id="product-pop-up" style="display: none; width: 700px;"></div>
-    @RenderSection("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

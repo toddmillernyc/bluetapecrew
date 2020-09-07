@@ -3,6 +3,24 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 var LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
+    entry: {
+        app: './src/index.js',
+        home: './src/pages/home.js'
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new LiveReloadPlugin({
+            protocol: 'https'
+        })
+    ],
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, '../wwwroot/shop')
+    },
+    watchOptions: {
+        aggregateTimeout: 200,
+        poll: 1000
+    },
     module: {
         rules: [
             {
@@ -40,22 +58,5 @@ module.exports = {
                 }
             }
         ]
-    },
-    entry: {
-        app: './src/index.js'
-    },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new LiveReloadPlugin({
-            protocol: 'https'
-        })
-    ],
-    output: {
-        path: path.resolve(__dirname, '../wwwroot/shop'),
-        filename: 'bundle.js'
-    },
-    watchOptions: {
-        aggregateTimeout: 200,
-        poll: 1000
     }
 };
