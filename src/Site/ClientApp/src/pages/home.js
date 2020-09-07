@@ -2,6 +2,10 @@
 require('owl-carousel/owl-carousel/owl.carousel.js');
 
 $(document).ready(function () {
+    initCarousel();
+});
+
+function initCarousel() {
     $('.owl-carousel-home').owlCarousel({
         pagination: false,
         navigation: true,
@@ -22,4 +26,5 @@ $(document).ready(function () {
             [1600, 5]
         ]
     });
-});
+}
+

@@ -5,7 +5,8 @@ var LiveReloadPlugin = require('webpack-livereload-plugin');
 module.exports = {
     entry: {
         app: './src/index.js',
-        home: './src/pages/home.js'
+        home: './src/pages/home.js',
+        product: './src/pages/product.js'
     },
     plugins: [
         new CleanWebpackPlugin(),

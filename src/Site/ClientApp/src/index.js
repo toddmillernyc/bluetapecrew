@@ -12,7 +12,6 @@ import '../assets/theme/corporate/css/style.css';
 import '../assets/theme/corporate/css/style-responsive.css';
 import '../assets/theme/corporate/css/themes/blue.css';
 import './index.css';
-
 import '../assets/theme/corporate/img/up.png';
 import '../assets/images/logo.png';
 import '../assets/images/paypal.jpg';
@@ -25,7 +24,6 @@ require('bootstrap/dist/js/bootstrap');
 require('fancybox')($);
 require('jquery-slimscroll/jquery.slimscroll.js');
 require('jquery-zoom/jquery.zoom.js');
-require('bootstrap-touchspin');
 require('jquery-uniform');
 require('jquery.rateit');
 require('../assets/theme/corporate/scripts/back-to-top.js');
@@ -36,13 +34,11 @@ window.vm = {
 };
 
 $(document).ready(function () {
-    
     Cart.get();
     const layout = new Layout();
     layout.init();
     layout.initTwitter();
     layout.initImageZoom();
-    layout.initTouchspin();
     layout.initUniform();
 });
 
@@ -54,8 +50,6 @@ function Layout() {
     var isIE9 = false;
     var isIE10 = false;
     var isIE11 = false;
-
-    var responsive = true;
 
     var responsiveHandlers = [];
 
@@ -378,15 +372,6 @@ function Layout() {
             !function (d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); }
             }(document, "script", "twitter-wjs");
-        },
-
-        initTouchspin: function () {
-            $(".product-quantity .form-control").TouchSpin({
-                buttondown_class: "btn quantity-down",
-                buttonup_class: "btn quantity-up"
-            });
-            $(".quantity-down").html("<i class='fa fa-angle-down'></i>");
-            $(".quantity-up").html("<i class='fa fa-angle-up'></i>");
         },
 
         initFixHeaderWithPreHeader: function () {
