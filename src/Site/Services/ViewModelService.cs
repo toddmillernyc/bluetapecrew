@@ -64,6 +64,7 @@ namespace Site.Services
             {
                 Id = item.Id,
                 Name = item.Name,
+                Position = item.Position,
                 Items = item.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                 {
                     LinkName = product.Slug,
@@ -96,6 +97,7 @@ namespace Site.Services
                 {
                     Id = item.Id,
                     Name = item.Name,
+                    Position = item.Position,
                     Items = item.ProductCategories.Select(x => x.Product).OrderBy(x => x.ProductName).Select(product => new MenuItemViewModel
                     {
                         LinkName = product.Slug,

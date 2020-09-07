@@ -1,9 +1,7 @@
-﻿using Site.Areas.Admin.Controllers;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Services.Models;
-using Xunit;
 using Site.Areas.Admin.Controllers;
+using Xunit;
 
 namespace Web.Tests.Controllers
 {

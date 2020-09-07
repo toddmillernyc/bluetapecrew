@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using Site.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +6,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using Services.Interfaces;
 using Services.Models;
-using Site.Areas.Admin.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Site.Areas.Admin.Controllers
 {

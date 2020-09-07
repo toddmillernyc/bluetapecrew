@@ -27,14 +27,16 @@ module.exports = {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'file-loader',
                 options: {
-                    name: 'fonts/[name].[ext]'
+                    name: 'fonts/[name].[ext]',
+                    publicPath: 'shop'
                 }
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
                 loader: 'file-loader',
                 options: {
-                    name: 'img/[name].[ext]'
+                    name: 'img/[name].[ext]',
+                    publicPath: 'shop'
                 }
             }
         ]
@@ -49,7 +51,7 @@ module.exports = {
         })
     ],
     output: {
-        path: path.resolve(__dirname, '../wwwroot/'),
+        path: path.resolve(__dirname, '../wwwroot/shop'),
         filename: 'bundle.js'
     },
     watchOptions: {

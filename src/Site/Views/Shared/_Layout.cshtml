@@ -11,7 +11,7 @@
 <head>
     <base href="~/">
     <meta charset="utf-8">
-    <link rel="shortcut icon" href="~/favicon.ico">
+    <link rel="shortcut icon" href="~/shop/favicon.ico">
     <title>@layoutModel.SiteTitle</title>
     <meta content="width=device-width, initial-scale=1.0,user-scalable=no" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@
     <meta content="@layoutModel.CopyrightLinktext" name="author">
     <meta property="og:site_name" content="@layoutModel.SiteTitle">
     @RenderSection("OpenGraph", false)
-    <script src="~/bundle.js"></script>
+    <script src="~/shop/bundle.js"></script>
     <environment include="Development">
         <script src="http://localhost:35729/livereload.js"></script>
     </environment>
@@ -53,12 +53,12 @@
     </div>
     <div class="header">
         <div class="container">
-            <a class="site-logo" href="~/"><img src="img/logo.png" alt="Metronic Shop UI"></a>
+            <a class="site-logo" href="~/"><img src="shop/img/logo.png" alt="@layoutModel.SiteTitle"></a>
             <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
             @await Html.PartialAsync("_Cart", new CartViewModel(new List<CartView>(),new CartTotals()))
             <div class="header-navigation">
                 <ul>
-                    @foreach (var menu in layoutModel.Menu)
+                    @foreach (var menu in layoutModel.Menu.OrderBy(x=>x.Position))
                     {
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
@@ -149,7 +149,7 @@
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <ul class="list-unstyled list-inline pull-right">
-                        <li><img src="img/paypal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
+                        <li><img src="shop/img/paypal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
                     </ul>
                 </div>
             </div>

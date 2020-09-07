@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Services.Models;
+﻿using Services.Models;
+using System.Collections.Generic;
 
 namespace Site.Areas.Admin.Models
 {

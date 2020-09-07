@@ -1,14 +1,14 @@
-﻿using BlueTapeCrew.EndToEndTests.Models;
-using Dapper;
-using Newtonsoft.Json;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Threading.Tasks;
 using BlueTapeCrew.EndToEndTests.Helpers;
+using BlueTapeCrew.EndToEndTests.Models;
+using Dapper;
+using Newtonsoft.Json;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Remote;
 
 namespace BlueTapeCrew.EndToEndTests
 {

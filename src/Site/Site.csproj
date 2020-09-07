@@ -36,7 +36,6 @@
   <ItemGroup>
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Checkout\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

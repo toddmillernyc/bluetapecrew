@@ -10,7 +10,7 @@ using System;
 using System.Threading.Tasks;
 using OrderMsg = Services.Models.Constants.Orders;
 
-namespace BlueTapeCrew.Controllers
+namespace Site.Controllers
 {
     [RequireHttps]
     public class CheckoutController : Controller
