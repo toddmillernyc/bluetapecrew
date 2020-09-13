@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Repositories.Entities
+namespace Entities
 {
     public class CartImage
     {

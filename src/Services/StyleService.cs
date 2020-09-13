@@ -5,7 +5,6 @@ using AutoMapper;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using Services.Models;
-using Entity = Repositories.Entities;
 
 namespace Services
 {
@@ -37,13 +36,13 @@ namespace Services
 
         public Task CreateStyle(Style style)
         {
-            var entity = _mapper.Map<Entity.Style>(style);
+            var entity = _mapper.Map<Entities.Style>(style);
             return _styleRepository.Create(entity);
         }
 
         public Task CreateColor(Color color)
         {
-            var entity = _mapper.Map<Entity.Color>(color);
+            var entity = _mapper.Map<Entities.Color>(color);
             return _colorRepository.Create(entity);
         }
 
@@ -53,7 +52,7 @@ namespace Services
             var lastSize = sizes.OrderByDescending(x => x.SizeOrder).FirstOrDefault();
             var sizeOrder = lastSize?.SizeOrder ?? 0;
             var size = new Size { SizeText = sizeText, SizeOrder = sizeOrder + 1 };
-            var entity = _mapper.Map<Entity.Size>(size);
+            var entity = _mapper.Map<Entities.Size>(size);
             await _sizeRepository.Create(entity);
         }
 

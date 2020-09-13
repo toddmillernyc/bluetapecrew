@@ -1,5 +1,6 @@
 using System.Reflection;
 using AutoMapper;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Repositories.Entities;
 using Services.Extensions;
 using Site.Identity;
 using Site.Mappings;

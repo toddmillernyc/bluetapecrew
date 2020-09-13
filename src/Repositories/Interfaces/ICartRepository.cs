@@ -1,6 +1,6 @@
-﻿using Repositories.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Entities;
 
 namespace Repositories.Interfaces
 {

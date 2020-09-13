@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Repositories.Entities
+namespace Entities
 {
     [Table("Categories")]
     public class Category

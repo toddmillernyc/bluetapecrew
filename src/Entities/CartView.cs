@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Repositories.Entities
+namespace Entities
 {
     [Table("CartView")]
     public class CartView

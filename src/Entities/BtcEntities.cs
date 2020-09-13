@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Repositories.Entities
+namespace Entities
 {
     public partial class BtcEntities : DbContext
     {

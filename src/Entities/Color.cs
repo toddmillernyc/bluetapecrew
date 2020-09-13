@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Repositories.Entities
+namespace Entities
 {
-    [Table("Sizes")]
-    public class Size
+    [Table("Colors")]
+    public class Color
     {
-        public Size()
+        public Color()
         {
             Styles = new HashSet<Style>();
         }
 
         public int Id { get; set; }
-        public string SizeText { get; set; }
-        public int SizeOrder { get; set; }
+        public string ColorText { get; set; }
 
         public virtual ICollection<Style> Styles { get; set; }
     }

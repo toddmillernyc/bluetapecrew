@@ -1,4 +1,4 @@
-﻿namespace Repositories.Entities
+﻿namespace Entities
 {
     public class ProductImage
     {

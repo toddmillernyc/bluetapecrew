@@ -5,7 +5,6 @@ using AutoMapper;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using Services.Models;
-using Entity = Repositories.Entities;
 
 namespace Services
 {
@@ -53,7 +52,7 @@ namespace Services
             }
             else
             {
-                var entity = _mapper.Map<Entity.Cart>(cart);
+                var entity = _mapper.Map<Entities.Cart>(cart);
                 entity.DateCreated = DateTime.Now;
                 entity.Count = cart.Quantity;
                 await _cartRepository.Add(entity);

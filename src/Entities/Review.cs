@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Repositories.Entities
+namespace Entities
 {
     [Table("Reviews")]
     public class Review
