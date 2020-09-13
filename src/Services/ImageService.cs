@@ -7,7 +7,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
-using Entity = Repositories.Entities;
 using Image = System.Drawing.Image;
 
 namespace Services
@@ -41,7 +40,7 @@ namespace Services
                 fileName = tokens[0] + "(" + c + ")." + tokens[^1];
             }
 
-            var imageEntity = new Entity.Image
+            var imageEntity = new Entities.Image
             {
                 Name = fileName,
                 ImageData = data,

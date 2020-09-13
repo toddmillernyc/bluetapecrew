@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.Entities;
 using Site.Models;
 
 namespace Site.ApiControllers

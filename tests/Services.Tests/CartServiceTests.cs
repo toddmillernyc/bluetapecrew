@@ -11,8 +11,8 @@ namespace Services.Tests
         public async Task GivenItemNotInCart_AddOrUpdate_SetsCountToOne()
         {
             //arrange
-            var actual = new Repositories.Entities.Cart { Count = 0 };
-            Mapper.Setup(mapper => mapper.Map<Repositories.Entities.Cart>(It.IsAny<Cart>())).Returns(actual);
+            var actual = new Entities.Cart { Count = 0 };
+            Mapper.Setup(mapper => mapper.Map<Entities.Cart>(It.IsAny<Cart>())).Returns(actual);
             var sut = new CartService(CartCalculatorService.Object, CartRepository.Object, Mapper.Object);
 
             //act

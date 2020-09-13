@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Entity = Repositories.Entities;
 using Model = Services.Models;
 
 namespace Services.Mappings
@@ -9,39 +8,39 @@ namespace Services.Mappings
         public ServiceMappings()
         {
             // Entity -> Model
-            CreateMap<Entity.CartImage, Model.CartImage>();
-            CreateMap<Entity.Cart, Model.Cart>();
-            CreateMap<Entity.CartView, Model.CartView>();
-            CreateMap<Entity.Category, Model.Category>();
-            CreateMap<Entity.Color, Model.Color>();
-            CreateMap<Entity.GuestUser, Model.GuestUser>();
-            CreateMap<Entity.Image, Model.Image>();
-            CreateMap<Entity.Order, Model.Order>();
-            CreateMap<Entity.OrderItem, Model.OrderItem>();
-            CreateMap<Entity.Product, Model.Product>();
-            CreateMap<Entity.ProductCategory, Model.ProductCategory>();
-            CreateMap<Entity.ProductImage, Model.ProductImage>();
-            CreateMap<Entity.Review, Model.Review>();
-            CreateMap<Entity.SiteSetting, Model.SiteSetting>();
-            CreateMap<Entity.Size, Model.Size>();
-            CreateMap<Entity.Style, Model.Style>();
-            CreateMap<Entity.StyleView, Model.StyleView>();
+            CreateMap<Entities.CartImage, Model.CartImage>();
+            CreateMap<Entities.Cart, Model.Cart>();
+            CreateMap<Entities.CartView, Model.CartView>();
+            CreateMap<Entities.Category, Model.Category>();
+            CreateMap<Entities.Color, Model.Color>();
+            CreateMap<Entities.GuestUser, Model.GuestUser>();
+            CreateMap<Entities.Image, Model.Image>();
+            CreateMap<Entities.Order, Model.Order>();
+            CreateMap<Entities.OrderItem, Model.OrderItem>();
+            CreateMap<Entities.Product, Model.Product>();
+            CreateMap<Entities.ProductCategory, Model.ProductCategory>();
+            CreateMap<Entities.ProductImage, Model.ProductImage>();
+            CreateMap<Entities.Review, Model.Review>();
+            CreateMap<Entities.SiteSetting, Model.SiteSetting>();
+            CreateMap<Entities.Size, Model.Size>();
+            CreateMap<Entities.Style, Model.Style>();
+            CreateMap<Entities.StyleView, Model.StyleView>();
 
             // Model -> Entity
-            CreateMap<Entity.CartImage, Model.CartImage>();
-            CreateMap<Model.Cart, Entity.Cart>();
-            CreateMap<Model.Category, Entity.Category>();
-            CreateMap<Model.Color, Entity.Color>();
-            CreateMap<Model.GuestUser, Entity.GuestUser>();
-            CreateMap<Model.Order, Entity.Order>();
-            CreateMap<Model.OrderItem, Entity.OrderItem>();
-            CreateMap<Model.Product, Entity.Product>();
-            CreateMap<Model.ProductCategory, Entity.ProductCategory>();
-            CreateMap<Model.ProductImage, Entity.ProductImage>();
-            CreateMap<Model.Review, Entity.Review>();
-            CreateMap<Model.SiteSetting, Entity.SiteSetting>();
-            CreateMap<Model.Size, Entity.Size>();
-            CreateMap<Model.Style, Entity.Style>();
+            CreateMap<Entities.CartImage, Model.CartImage>();
+            CreateMap<Model.Cart, Entities.Cart>();
+            CreateMap<Model.Category, Entities.Category>();
+            CreateMap<Model.Color, Entities.Color>();
+            CreateMap<Model.GuestUser, Entities.GuestUser>();
+            CreateMap<Model.Order, Entities.Order>();
+            CreateMap<Model.OrderItem, Entities.OrderItem>();
+            CreateMap<Model.Product, Entities.Product>();
+            CreateMap<Model.ProductCategory, Entities.ProductCategory>();
+            CreateMap<Model.ProductImage, Entities.ProductImage>();
+            CreateMap<Model.Review, Entities.Review>();
+            CreateMap<Model.SiteSetting, Entities.SiteSetting>();
+            CreateMap<Model.Size, Entities.Size>();
+            CreateMap<Model.Style, Entities.Style>();
 
             //Viewmodels & DTO's
             CreateMap<Model.CheckoutRequest, Model.GuestUser>();

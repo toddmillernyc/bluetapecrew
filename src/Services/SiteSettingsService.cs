@@ -3,7 +3,6 @@ using Repositories.Interfaces;
 using Services.Interfaces;
 using Services.Models;
 using System.Threading.Tasks;
-using Entity = Repositories.Entities;
 
 namespace Services
 {
@@ -30,7 +29,7 @@ namespace Services
         public async Task<SiteSetting> Set(SiteSetting siteSetting)
         {
             await _repository.DeleteAll();
-            var entity = _mapper.Map<Entity.SiteSetting>(siteSetting);
+            var entity = _mapper.Map<Entities.SiteSetting>(siteSetting);
             await _repository.Create(entity);
             var model = _mapper.Map<SiteSetting>(entity);
             return model;

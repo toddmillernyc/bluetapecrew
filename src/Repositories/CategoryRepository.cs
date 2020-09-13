@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 using Microsoft.EntityFrameworkCore;
-using Repositories.Entities;
 using Repositories.Interfaces;
 
 namespace Repositories

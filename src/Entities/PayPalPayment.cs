@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Repositories.Entities
+namespace Entities
 {
     //todo: remove if not used & remove table from db
     [Table("PayPalPayments")]
