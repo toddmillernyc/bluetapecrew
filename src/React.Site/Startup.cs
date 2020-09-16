@@ -1,9 +1,14 @@
 using Entities;
+using HotChocolate;
+using HotChocolate.AspNetCore;
+using HotChocolate.Execution.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using React.Site.GraphQL;
 
 namespace React.Site
 {
@@ -15,6 +20,11 @@ namespace React.Site
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BtcEntities>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddGraphQL(
+                SchemaBuilder.New()
+                    .AddQueryType<Query>()
+                    .Create(),
+                new QueryExecutionOptions { ForceSerialExecution = true });
             services.AddControllers();
         }
 
@@ -23,6 +33,11 @@ namespace React.Site
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseGraphQL();
+            if (env.IsDevelopment())
+            {
+                app.UsePlayground();
+            }
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

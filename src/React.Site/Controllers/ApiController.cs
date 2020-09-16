@@ -1,6 +1,9 @@
 ﻿using Entities;
+using HotChocolate;
+using HotChocolate.Execution;
 using Microsoft.AspNetCore.Mvc;
- 
+using React.Site.GraphQL;
+
 namespace React.Site.Controllers
 {
     [Route("api")]
@@ -16,7 +19,13 @@ namespace React.Site.Controllers
 
         public IActionResult Get()
         {
-            return Ok(_db.Categories);
+            var schema = SchemaBuilder.New()
+                .AddQueryType<Query>()
+                .Create();
+
+            var executor = schema.MakeExecutable();
+            var json = executor.Execute("{ hello }").ToJson();
+            return Ok(json);
         }
     }
 }
