@@ -1,30 +1,55 @@
 import React from 'react';
 import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+import { Query } from '@apollo/client/react/components';
+import gql from "graphql-tag";
+
+const GET_CATEGORIES = gql`
+  {
+    categories(where: { published: true }, order_by: { position: ASC }) {
+      name
+      productCategories{
+        product {
+          id
+          productName
+        }
+      }
+    }
+  }
+`;
 
 function Header() {
-    return(
-<Navbar bg="light" expand="lg">
-  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-  <Navbar.Collapse id="basic-navbar-nav">
-    <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#link">Link</Nav.Link>
-      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-      </NavDropdown>
-    </Nav>
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-success">Search</Button>
-    </Form>
-  </Navbar.Collapse>
-</Navbar>
-    )
+  return (
+    <>
+    <Navbar bg="light" expand="lg">
+      adfv
+    </Navbar>
+    <Navbar bg="light" expand="lg">
+      <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Query query={GET_CATEGORIES}>
+            {({ loading, error, data }) => {
+              if (loading) return <p>Loading...</p>;
+              if (error) return <p>Error :(</p>;
+
+              return data.categories.map(category => (
+                <NavDropdown key={category.name} title={category.name} id="basic-nav-dropdown">
+                  {
+                    category.productCategories.map(productCategory => {
+                      const product = productCategory.product
+                    return <NavDropdown.Item key={product.productName}>{product.productName}</NavDropdown.Item>
+                    })
+                  }
+                </NavDropdown>
+              ));
+            }}
+          </Query>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+    </>
+  )
 }
 
 export default Header

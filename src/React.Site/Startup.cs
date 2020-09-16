@@ -19,6 +19,15 @@ namespace React.Site
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
+
             services.AddDbContext<BtcEntities>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddGraphQL(
                 SchemaBuilder.New()
@@ -33,6 +42,10 @@ namespace React.Site
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseRouting();
+            if (env.IsDevelopment())
+            {
+                app.UseCors();
+            }
             app.UseGraphQL();
             if (env.IsDevelopment())
             {

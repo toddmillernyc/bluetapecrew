@@ -4,10 +4,18 @@ import './index.css'
 import App from './components/app/App'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'https://localhost:5001',
+  cache: new InMemoryCache()
+});
 
 const rootElement = document.getElementById('root')
 ReactDOM.render(
-    <App />,
+    <ApolloProvider client={client}>
+        <App />
+    </ApolloProvider>,
     rootElement
 )
 
