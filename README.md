@@ -1,3 +1,5 @@
+[![Build status](https://devops.toddmiller.nyc/DefaultCollection/BlueTapeCrew/_apis/build/status/BlueTapeCrew)](https://devops.toddmiller.nyc/DefaultCollection/BlueTapeCrew/_build/latest?definitionId=9)
+
 # BlueTapeCrew
 
 [![N|Solid](https://bluetapecrew.com/content/logo.png)](https://bluetapecrew.com)
