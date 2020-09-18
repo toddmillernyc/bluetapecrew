@@ -1,7 +1,8 @@
 import React from 'react';
-import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { Query } from '@apollo/client/react/components';
 import gql from "graphql-tag";
+import logo from '../../img/logo.png';
 
 const GET_CATEGORIES = gql`
   {
@@ -21,10 +22,17 @@ function Header() {
   return (
     <>
     <Navbar bg="light" expand="lg">
-      adfv
+              {/* todo: pre-header  */}
     </Navbar>
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+              <Navbar.Brand href="#home">
+                  <img
+                      src="img/logo.png"
+                      width="128"
+                      className="d-inline-block align-top"
+                      alt="React Bootstrap logo"
+                  />
+              </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

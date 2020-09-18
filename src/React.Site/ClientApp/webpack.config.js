@@ -29,6 +29,14 @@ module.exports = {
                         loader: "html-loader"
                     }
                 ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                loader: 'file-loader',
+                options: {
+                    name: 'img/[name].[ext]',
+                    publicPath: 'img'
+                }
             }
         ]
     },
