@@ -2,7 +2,6 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { Query } from '@apollo/client/react/components';
 import gql from "graphql-tag";
-import logo from '../../img/logo.png';
 
 const GET_CATEGORIES = gql`
   {
