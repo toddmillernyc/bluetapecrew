@@ -20,6 +20,7 @@ namespace Entities
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<PublicSiteProfile> PublicSiteProfiles { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<SiteSetting> SiteSettings { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
