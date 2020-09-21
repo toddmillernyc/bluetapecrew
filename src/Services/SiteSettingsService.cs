@@ -29,13 +29,11 @@ namespace Services
             return model;
         }
 
-        public async Task<SiteSetting> Set(SiteSetting siteSetting)
+        public async Task Set(SiteSetting siteSetting)
         {
-            await _repository.DeleteAll();
             var entity = _mapper.Map<Entities.SiteSetting>(siteSetting);
+            entity.Id = 0;
             await _repository.Create(entity);
-            var model = _mapper.Map<SiteSetting>(entity);
-            return model;
         }
 
         public async Task<SiteProfile> GetSiteProfile()
@@ -43,6 +41,13 @@ namespace Services
             var entity = await _profileRepository.Get();
             var model = _mapper.Map<SiteProfile>(entity);
             return model;
+        }
+
+        public async Task SetSiteProfile(SiteProfile siteProfile)
+        {
+            var entity = _mapper.Map<Entities.PublicSiteProfile>(siteProfile);
+            entity.Id = 0;
+            await _profileRepository.Set(entity);
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using OpenQA.Selenium;
+﻿using System.Collections.Generic;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
-using System.Collections.Generic;
 
-namespace BlueTapeCrew.EndToEndTests.Extensions
+namespace EndToEnd.Extensions
 {
     public static class WebDriverExtensions
     {

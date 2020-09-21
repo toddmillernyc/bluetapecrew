@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BlueTapeCrew.EndToEndTests.Stubs
+namespace EndToEnd.Stubs
 {
     public static class StringStubs
     {

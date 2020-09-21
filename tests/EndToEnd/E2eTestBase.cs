@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Threading.Tasks;
-using BlueTapeCrew.EndToEndTests.Helpers;
-using BlueTapeCrew.EndToEndTests.Models;
 using Dapper;
+using EndToEnd.Helpers;
+using EndToEnd.Models;
 using Newtonsoft.Json;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
-namespace BlueTapeCrew.EndToEndTests
+namespace EndToEnd
 {
     public class E2ETestBase : IDisposable
     {

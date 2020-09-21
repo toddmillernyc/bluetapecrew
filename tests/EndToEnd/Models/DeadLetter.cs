@@ -1,4 +1,4 @@
-﻿namespace BlueTapeCrew.EndToEndTests.Models
+﻿namespace EndToEnd.Models
 {
     public class DeadLetter
     {

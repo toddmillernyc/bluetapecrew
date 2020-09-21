@@ -1,9 +1,3 @@
-using BlueTapeCrew.EndToEndTests.Extensions;
-using BlueTapeCrew.EndToEndTests.Models;
-using BlueTapeCrew.EndToEndTests.Stubs;
-using Newtonsoft.Json;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,9 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EndToEnd.Extensions;
+using EndToEnd.Models;
+using EndToEnd.Stubs;
+using Newtonsoft.Json;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using Xunit;
 
-namespace BlueTapeCrew.EndToEndTests
+namespace EndToEnd
 {
     public class FullSiteTest : E2ETestBase
     {

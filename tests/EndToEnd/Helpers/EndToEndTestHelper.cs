@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace BlueTapeCrew.EndToEndTests.Helpers
+namespace EndToEnd.Helpers
 {
     public class EndToEndTestHelper
     {

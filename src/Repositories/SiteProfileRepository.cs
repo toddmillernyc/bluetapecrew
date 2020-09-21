@@ -20,5 +20,11 @@ namespace Repositories
             var entity = await _db.PublicSiteProfiles.OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             return entity;
         }
+
+        public async Task Set(PublicSiteProfile entity)
+        {
+            _db.PublicSiteProfiles.Add(entity);
+            await _db.SaveChangesAsync();
+        }
     }
 }
