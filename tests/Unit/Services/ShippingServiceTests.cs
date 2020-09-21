@@ -5,7 +5,7 @@ using Services.Interfaces;
 using Services.Models;
 using Xunit;
 
-namespace Unit
+namespace Unit.Services
 {
 
     public class ShippingServiceTests

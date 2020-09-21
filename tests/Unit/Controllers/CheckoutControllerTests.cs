@@ -3,11 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Services.Models;
-using Site.Controllers;
-using Site.Identity;
 using Xunit;
 
-namespace Unit
+namespace Unit.Controllers
 {
     [Collection("UnitTest")]
     public class CheckoutControllerTests
@@ -19,32 +17,17 @@ namespace Unit
             _fixture = fixture;
         }
 
-        private CheckoutController GetSut()
-        {
-            var users = new List<ApplicationUser>
-            {
-                new ApplicationUser { Id = "a" },
-                new ApplicationUser { Id = "b" }
-            };
-            var userManager = _fixture.GetMockUserManager(users);
-            return new CheckoutController(
-                    _fixture.CartService.Object,
-                    _fixture.CheckoutService.Object,
-                    _fixture.OrderService.Object,
-                    _fixture.UserService.Object,
-                    _fixture.SessionService.Object,
-                    _fixture.Mapper.Object
-            );
-        }
-
         [Fact]
         public async Task GetIndex_ReturnsEmptyCartView_IfCartIsEmpty()
         {
-            //arrange
-            _fixture.CartService
-                    .Setup(x => x.GetCartViewModel(null))
-                    .ReturnsAsync(new CartViewModel(new List<CartView>(), new CartTotals()));
-            var sut = GetSut();
+            _fixture
+                .CheckoutService
+                .Setup(x => x.CreateCheckoutRequest(It.IsAny<User>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(new CheckoutRequest
+                {
+                    Cart = new CartViewModel(new List<CartView>(), new CartTotals() )
+                });
+            var sut = _fixture.GetCheckoutController();
 
             //act
             var response = await sut.Index();

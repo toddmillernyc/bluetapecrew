@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Services.Models;
+using Site.Controllers;
 using Xunit;
 
 namespace Unit
@@ -45,6 +47,20 @@ namespace Unit
             mgr.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<TUser, string>((x, y) => ls.Add(x));
             mgr.Setup(x => x.UpdateAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
             return mgr;
+        }
+
+        public CheckoutController GetCheckoutController()
+        {
+            var controller = new CheckoutController(
+                CartService.Object,
+                CheckoutService.Object,
+                OrderService.Object,
+                UserService.Object,
+                SessionService.Object,
+                Mapper.Object
+            ) {ControllerContext = new ControllerContext {HttpContext = new DefaultHttpContext()}};
+            controller.ControllerContext.HttpContext.Request.Path = "/unt-tests/checkout/";
+            return controller;
         }
     }
 }

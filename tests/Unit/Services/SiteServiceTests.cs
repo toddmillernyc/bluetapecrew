@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using AutoMapper;
 using Moq;
 using Repositories.Interfaces;
-using System.Threading.Tasks;
+using Services;
 using Xunit;
 
-namespace Services.Tests
+namespace Unit.Services
 {
     public class SiteServiceTests
     {

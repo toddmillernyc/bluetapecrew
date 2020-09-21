@@ -2,7 +2,7 @@
 using PayPal.Api;
 using Xunit;
 
-namespace Unit
+namespace Unit.Services
 {
     public class PaypalExtensionTests
     {

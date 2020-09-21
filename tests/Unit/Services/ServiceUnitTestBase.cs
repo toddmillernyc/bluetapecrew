@@ -3,7 +3,7 @@ using Moq;
 using Repositories.Interfaces;
 using Services.Interfaces;
 
-namespace Services.Tests
+namespace Unit.Services
 {
     public class ServiceUnitTestBase
     {

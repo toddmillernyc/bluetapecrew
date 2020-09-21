@@ -4,7 +4,7 @@ using Services.Interfaces;
 using Site.ApiControllers;
 using Xunit;
 
-namespace Unit
+namespace Unit.Controllers
 {
     public class ApiControllerTests
     {

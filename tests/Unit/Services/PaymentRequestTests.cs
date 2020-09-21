@@ -3,7 +3,7 @@ using Services.Models;
 using Stubs;
 using Xunit;
 
-namespace Unit
+namespace Unit.Services
 {
     public class PaymentRequestTests
     {

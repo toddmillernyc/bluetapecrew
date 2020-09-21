@@ -1,9 +1,10 @@
-﻿using Moq;
+﻿using System.Threading.Tasks;
+using Moq;
+using Services;
 using Services.Models;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Services.Tests
+namespace Unit.Services
 {
     public class CartServiceTests : ServiceUnitTestBase
     {

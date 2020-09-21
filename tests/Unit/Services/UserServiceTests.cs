@@ -4,7 +4,7 @@ using Site.Identity;
 using Site.Services;
 using Xunit;
 
-namespace Unit
+namespace Unit.Services
 {
     [Collection("UnitTest")]
     public class UserServiceTests

@@ -2,10 +2,11 @@
 using AutoMapper;
 using Moq;
 using Repositories.Interfaces;
+using Services;
 using Services.Models;
 using Xunit;
 
-namespace Services.Tests
+namespace Unit.Services
 {
     public class ProductServiceTests
     {
