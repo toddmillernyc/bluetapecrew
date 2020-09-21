@@ -1,5 +1,4 @@
 ﻿using PayPal.Api;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,20 +10,20 @@ namespace Services.Models
         private const string SandboxMode = "sandbox";
         private const string LiveMode = "live";
 
-        public PaymentRequest(Uri requestUri, SiteSetting settings, IList<CartView> cart, long invoiceNumber, bool isSandbox = true)
+        public PaymentRequest(IList<CartView> cart, PaymentRequestOptions options)
         {
-            InitApiCredentialsForMode(settings, isSandbox);
-            Init(settings, cart);
+            InitApiCredentialsForMode(options);
+            Init(options, cart);
             ItemList = GetItemListFrom(cart);
-            InvoiceNumber = invoiceNumber.ToString();
-            ReturnUrl = ($"{requestUri}review").ToLower();
+            InvoiceNumber = options.InvoiceNumber.ToString();
+            ReturnUrl = ($"{options.RequestUri}review").ToLower();
         }
 
-        private void Init(SiteSetting settings, IEnumerable<CartView> cart)
+        private void Init(PaymentRequestOptions options, IEnumerable<CartView> cart)
         {
             const decimal tax = 0.00m;
             var subTotal = CalculateSubTotal(cart);
-            var shipping = CalculateShipping(settings, subTotal);
+            var shipping = CalculateShipping(options, subTotal);
             var total = subTotal + tax + shipping;
 
             Subtotal = subTotal.ToString(MoneyFormat);
@@ -50,27 +49,27 @@ namespace Services.Models
         public string Total { get; set; }
         public string ReturnUrl { get; set; }
 
-        private void InitApiCredentialsForMode(SiteSetting settings, bool isSandbox)
+        private void InitApiCredentialsForMode(PaymentRequestOptions options)
         {
-            if (isSandbox)
+            if (options.IsSandbox)
             {
                 Mode = SandboxMode;
-                ClientId = settings.PaypalSandBoxClientId;
-                ClientSecret = settings.PaypalSandBoxSecret;
+                ClientId = options.PaypalSandBoxClientId;
+                ClientSecret = options.PaypalSandBoxSecret;
                 
             }
             else
             {
                 Mode = LiveMode;
-                ClientId = settings.PaypalClientId;
-                ClientSecret = settings.PaypalClientSecret;
+                ClientId = options.PaypalClientId;
+                ClientSecret = options.PaypalClientSecret;
             }
         }
 
-        private static decimal CalculateShipping(SiteSetting settings, decimal subtotal)
+        private static decimal CalculateShipping(PaymentRequestOptions options, decimal subtotal)
         {
-            var freeShippingThreshold = settings.FreeShippingThreshold ?? 0.0m;
-            var flatShippingRate = settings.FlatShippingRate ?? 0.0m;
+            var freeShippingThreshold = options.FreeShippingThreshold ?? 0.0m;
+            var flatShippingRate = options.FlatShippingRate ?? 0.0m;
             return subtotal > freeShippingThreshold ? 0.0m : flatShippingRate;
         }
 

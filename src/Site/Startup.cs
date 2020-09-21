@@ -33,7 +33,8 @@ namespace Site
             services.AddDbContext<BtcEntities>(options => options.UseSqlServer(defaultConnectionString));
             services.AddDbContext<IdentityEntities>(options => options.UseSqlServer(defaultConnectionString));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services
+                .AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<IdentityEntities>();
 

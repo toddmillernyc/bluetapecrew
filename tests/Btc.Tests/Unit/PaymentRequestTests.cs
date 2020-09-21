@@ -12,9 +12,11 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var siteSettings = new SiteSetting();
+            var siteProfile = new SiteProfile();
 
             //act
-            var sut = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri,  siteSettings, CartViewStubs.Get(), 0);
+            var options = new PaymentRequestOptions(siteProfile, siteSettings, ConfigurationStubs.ProductionCheckoutUri);
+            var sut = new PaymentRequest(CartViewStubs.Get(), options);
             var actual = sut.Subtotal.Split('.')[1];
 
             //assert
@@ -26,9 +28,11 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var siteSettings = new SiteSetting();
+            var siteProfile = new SiteProfile();
 
             //act
-            var sut = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, siteSettings, CartViewStubs.Get(), 0);
+            var options = new PaymentRequestOptions(siteProfile, siteSettings, ConfigurationStubs.ProductionCheckoutUri);
+            var sut = new PaymentRequest(CartViewStubs.Get(), options);
             var actual = sut.Total.Split('.')[1];
 
             //assert
@@ -40,9 +44,11 @@ namespace Btc.Tests.Unit
         {  
             //arrange
             var siteSettings = new SiteSetting();
+            var siteProfile = new SiteProfile();
 
             //act
-            var sut = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, siteSettings, CartViewStubs.Get(), 0);
+            var options = new PaymentRequestOptions(siteProfile, siteSettings, ConfigurationStubs.ProductionCheckoutUri);
+            var sut = new PaymentRequest(CartViewStubs.Get(), options);
             var actual = sut.Shipping.Split('.')[1];
 
             //assert
@@ -54,9 +60,11 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var siteSettings = new SiteSetting();
+            var siteProfile = new SiteProfile();
 
             //act
-            var sut = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, siteSettings, CartViewStubs.Get(), 0);
+            var options = new PaymentRequestOptions(siteProfile, siteSettings, ConfigurationStubs.ProductionCheckoutUri);
+            var sut = new PaymentRequest(CartViewStubs.Get(), options);
             var actual = sut.Tax.Split('.')[1];
 
             //assert
@@ -68,9 +76,11 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var siteSettings = new SiteSetting();
+            var siteProfile = new SiteProfile();
 
             //act
-            var sut = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, siteSettings, CartViewStubs.Get(), 0);
+            var options = new PaymentRequestOptions(siteProfile, siteSettings, ConfigurationStubs.ProductionCheckoutUri);
+            var sut = new PaymentRequest(CartViewStubs.Get(), options);
             var actual = sut.ItemList.items.FirstOrDefault()?.tax.Split('.')[1];
 
             //assert
@@ -82,9 +92,11 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var siteSettings = new SiteSetting();
+            var siteProfile = new SiteProfile();
 
             //act
-            var sut = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, siteSettings, CartViewStubs.Get(), 0);
+            var options = new PaymentRequestOptions(siteProfile, siteSettings, ConfigurationStubs.ProductionCheckoutUri);
+            var sut = new PaymentRequest(CartViewStubs.Get(), options);
             var actual = sut.ItemList.items.FirstOrDefault()?.tax.Split('.')[1];
 
             //assert
@@ -96,9 +108,11 @@ namespace Btc.Tests.Unit
         {
             //arrange
             var siteSettings = new SiteSetting();
+            var siteProfile = new SiteProfile();
 
             //act
-            var sut = new PaymentRequest(ConfigurationStubs.ProductionCheckoutUri, siteSettings, CartViewStubs.Get(), 0);
+            var options = new PaymentRequestOptions(siteProfile, siteSettings, ConfigurationStubs.ProductionCheckoutUri);
+            var sut = new PaymentRequest(CartViewStubs.Get(), options);
             var actual = sut.ReturnUrl;
 
             //asserts

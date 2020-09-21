@@ -23,6 +23,7 @@ namespace Repositories.Extensions
             services.AddTransient<IProductImageRepository, ProductImageRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
+            services.AddTransient<ISiteProfileRepository, SiteProfileRepository>();
             services.AddTransient<ISiteSettingsRepository, SiteSettingsRepository>();
             services.AddTransient<ISizeRepository, SizeRepository>();
             services.AddTransient<IStyleRepository, StyleRepository>();

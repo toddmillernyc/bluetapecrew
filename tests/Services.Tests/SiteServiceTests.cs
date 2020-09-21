@@ -15,8 +15,9 @@ namespace Services.Tests
             {
                 //arrange
                 var siteSettingsRepository = new Mock<ISiteSettingsRepository>();
+                var siteProfileRepository = new Mock<ISiteProfileRepository>();
                 var mapper = new Mock<IMapper>();
-                var sut = new SiteSettingsService(siteSettingsRepository.Object, mapper.Object);
+                var sut = new SiteSettingsService(siteSettingsRepository.Object, mapper.Object, siteProfileRepository.Object);
                 
                 //act
                 await sut.Get();

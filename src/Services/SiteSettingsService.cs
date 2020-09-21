@@ -10,13 +10,16 @@ namespace Services
     {
         private readonly ISiteSettingsRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ISiteProfileRepository _profileRepository;
 
         public SiteSettingsService(
             ISiteSettingsRepository repository,
-            IMapper mapper)
+            IMapper mapper,
+            ISiteProfileRepository profileRepository)
         {
             _repository = repository;
             _mapper = mapper;
+            _profileRepository = profileRepository;
         }
 
         public async Task<SiteSetting> Get()
@@ -32,6 +35,13 @@ namespace Services
             var entity = _mapper.Map<Entities.SiteSetting>(siteSetting);
             await _repository.Create(entity);
             var model = _mapper.Map<SiteSetting>(entity);
+            return model;
+        }
+
+        public async Task<SiteProfile> GetSiteProfile()
+        {
+            var entity = await _profileRepository.Get();
+            var model = _mapper.Map<SiteProfile>(entity);
             return model;
         }
     }

@@ -24,9 +24,11 @@ namespace Btc.Tests.Integration
         {
             //arrange
             var settings = await _settings.Get();
+            var profile = await _settings.GetSiteProfile();
             var sut = _fixture.Resolve<IPaypalService>();
-            var paymentRequest = new PaymentRequest(_fixture.ProductionCheckoutUri, settings, CartViewStubs.Get(), 123);
-            
+            var options = new PaymentRequestOptions(profile, settings, _fixture.ProductionCheckoutUri);
+
+            var paymentRequest = new PaymentRequest(CartViewStubs.Get(), options);
             //act
             var apiContext = sut.GetApiContext(paymentRequest);
 
@@ -39,8 +41,10 @@ namespace Btc.Tests.Integration
         {
             //arrange
             var settings = await _settings.Get();
+            var profile = await _settings.GetSiteProfile();
             var sut = _fixture.Resolve<IPaypalService>();
-            var paymentRequest = new PaymentRequest(_fixture.ProductionCheckoutUri, settings, CartViewStubs.Get(), 123);
+            var options = new PaymentRequestOptions(profile, settings, _fixture.ProductionCheckoutUri);
+            var paymentRequest = new PaymentRequest(CartViewStubs.Get(), options);
 
             //act
             var apiContext = sut.GetApiContext(paymentRequest);

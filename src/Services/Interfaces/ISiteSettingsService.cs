@@ -7,5 +7,6 @@ namespace Services.Interfaces
     {
         Task<SiteSetting> Get();
         Task<SiteSetting> Set(SiteSetting siteSetting);
+        Task<SiteProfile> GetSiteProfile();
     }
 }

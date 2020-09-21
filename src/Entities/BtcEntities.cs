@@ -274,6 +274,44 @@ namespace Entities
                     .HasConstraintName("FK_Products_ImageId");
             });
 
+
+            modelBuilder.Entity<PublicSiteProfile>(entity =>
+            {
+                entity.Property(e => e.Author).HasMaxLength(100);
+
+                entity.Property(e => e.ContactEmailAddress).HasMaxLength(255);
+
+                entity.Property(e => e.ContactPhoneNumber).HasMaxLength(255);
+
+                entity.Property(e => e.CopyrightLinktext).HasMaxLength(255);
+
+                entity.Property(e => e.CopyrightText).HasMaxLength(255);
+
+                entity.Property(e => e.CopyrightUrl).HasMaxLength(255);
+
+                entity.Property(e => e.Description).IsRequired();
+
+                entity.Property(e => e.FaceBookUrl).HasMaxLength(255);
+
+                entity.Property(e => e.FlatShippingRate).HasColumnType("money");
+
+                entity.Property(e => e.FreeShippingThreshold).HasColumnType("money");
+
+                entity.Property(e => e.Keywords).IsRequired();
+
+                entity.Property(e => e.LinkedInUrl).HasMaxLength(255);
+
+                entity.Property(e => e.SiteLogoUrl).HasMaxLength(255);
+
+                entity.Property(e => e.SiteTitle)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.SiteUrl).HasMaxLength(255);
+
+                entity.Property(e => e.TwitterUrl).HasMaxLength(255);
+            });
+
             modelBuilder.Entity<Review>(entity =>
             {
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
@@ -299,31 +337,11 @@ namespace Entities
 
             modelBuilder.Entity<SiteSetting>(entity =>
             {
-                entity.Property(e => e.Author).HasMaxLength(100);
-
-                entity.Property(e => e.ContactEmailAddress).HasMaxLength(255);
-
-                entity.Property(e => e.ContactPhoneNumber).HasMaxLength(255);
-
-                entity.Property(e => e.CopyrightLinktext).HasMaxLength(255);
-
-                entity.Property(e => e.CopyrightText).HasMaxLength(255);
-
-                entity.Property(e => e.CopyrightUrl).HasMaxLength(255);
-
-                entity.Property(e => e.Description).IsRequired();
-
-                entity.Property(e => e.FaceBookUrl).HasMaxLength(255);
-
                 entity.Property(e => e.FacebookAppId).HasMaxLength(255);
 
                 entity.Property(e => e.FacebookClientId).HasMaxLength(255);
 
                 entity.Property(e => e.FacebookClientSecret).HasMaxLength(255);
-
-                entity.Property(e => e.FlatShippingRate).HasColumnType("money");
-
-                entity.Property(e => e.FreeShippingThreshold).HasColumnType("money");
 
                 entity.Property(e => e.GoogleClientId).HasMaxLength(255);
 
@@ -332,10 +350,6 @@ namespace Entities
                 entity.Property(e => e.InstagramClientId).HasMaxLength(255);
 
                 entity.Property(e => e.InstagramClientSecret).HasMaxLength(255);
-
-                entity.Property(e => e.Keywords).IsRequired();
-
-                entity.Property(e => e.LinkedInUrl).HasMaxLength(255);
 
                 entity.Property(e => e.MailChimpApiKey).HasMaxLength(255);
 
@@ -359,14 +373,6 @@ namespace Entities
 
                 entity.Property(e => e.PaypalSandboxAccount).HasMaxLength(255);
 
-                entity.Property(e => e.SiteLogoUrl).HasMaxLength(255);
-
-                entity.Property(e => e.SiteTitle)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.SiteUrl).HasMaxLength(255);
-
                 entity.Property(e => e.SmtpHost).HasMaxLength(255);
 
                 entity.Property(e => e.SmtpPassword).HasMaxLength(255);
@@ -376,8 +382,6 @@ namespace Entities
                 entity.Property(e => e.TwitterClientId).HasMaxLength(255);
 
                 entity.Property(e => e.TwitterClientSecret).HasMaxLength(255);
-
-                entity.Property(e => e.TwitterUrl).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Size>(entity =>

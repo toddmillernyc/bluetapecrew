@@ -14,7 +14,7 @@ namespace Btc.Tests.Unit
 
         public ShippingServiceTests()
         {
-            _siteSettingsService.Setup(x => x.Get()).Returns(Task.FromResult(new SiteSetting
+            _siteSettingsService.Setup(x => x.GetSiteProfile()).Returns(Task.FromResult(new SiteProfile
             {
                 FreeShippingThreshold = 5.00m,
                 FlatShippingRate = 19.99m

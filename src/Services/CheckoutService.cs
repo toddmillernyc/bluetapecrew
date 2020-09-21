@@ -32,9 +32,10 @@ namespace Services
         public async Task<string> Start(string sessionId, Uri requestUri, bool isSandbox)
         {
             var settings = await _siteSettingsService.Get();
+            var profile = await _siteSettingsService.GetSiteProfile();
             var cart = await _cartService.GetCartViewModel(sessionId);
-            var invoiceId = DateTime.Now.Ticks;
-            var paymentRequest = new PaymentRequest(requestUri, settings, cart.Items, invoiceId, isSandbox);
+            var paymentRequestOptions = new PaymentRequestOptions(profile, settings, requestUri, isSandbox);
+            var paymentRequest = new PaymentRequest(cart.Items, paymentRequestOptions);
             var redirectUrl = _paypalService.PayWithPaypal(paymentRequest);
             return redirectUrl;
         }
