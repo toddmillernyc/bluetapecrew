@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { Query } from '@apollo/client/react/components';
 import gql from "graphql-tag";
+import Logo from '../../img/logo.png';
 
 const GET_CATEGORIES = gql`
   {
@@ -26,7 +27,7 @@ function Header() {
     <Navbar bg="light" expand="lg">
               <Navbar.Brand href="#home">
                   <img
-                      src="img/logo.png"
+                      src={Logo}
                       width="128"
                       className="d-inline-block align-top"
                       alt="React Bootstrap logo"
