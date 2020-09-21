@@ -1,5 +1,4 @@
-﻿using Btc.Tests.Stubs;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
@@ -11,6 +10,7 @@ using Services.Extensions;
 using Site.Mappings;
 using Xunit;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using Stubs;
 
 namespace Btc.Tests
 {

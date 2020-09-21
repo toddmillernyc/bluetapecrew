@@ -1,30 +1,38 @@
-﻿using AutoMapper;
-using Moq;
-using Repositories.Interfaces;
+﻿using Moq;
 using Services.Interfaces;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
 using Site.Services;
+using System.Collections.Generic;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Services.Models;
 using Xunit;
 
-namespace Btc.Tests
+namespace Unit
 {
     [CollectionDefinition("UnitTest")]
     public class UnitTest : ICollectionFixture<UnitTestFixture> { }
-
 
     public class UnitTestFixture
     {
         public Mock<IGuestUserService> GuestUserService = new Mock<IGuestUserService>();
         public Mock<ICartService> CartService = new Mock<ICartService>();
         public Mock<ICheckoutService> CheckoutService = new Mock<ICheckoutService>();
-        public Mock<IEmailService> EmailService = new Mock<IEmailService>();
         public Mock<IOrderService> OrderService = new Mock<IOrderService>();
         public Mock<ISiteSettingsService> SiteSettingsService = new Mock<ISiteSettingsService>();
         public Mock<IUserService> UserService = new Mock<IUserService>();
         public Mock<ISessionService> SessionService = new Mock<ISessionService>();
         public Mock<IMapper> Mapper = new Mock<IMapper>();
-        public Mock<IGuestUserRepository> GuestUserRepository = new Mock<IGuestUserRepository>();
+        public readonly Mock<ICategoryService> CategoryService = new Mock<ICategoryService>();
+        public readonly Mock<IFormFile> FormFile = new Mock<IFormFile>();
+        public readonly Mock<IImageService> ImageService = new Mock<IImageService>();
+        public readonly Mock<IProductService> ProductService = new Mock<IProductService>();
+        public readonly Mock<IStyleService> StyleService = new Mock<IStyleService>();
+
+        public UnitTestFixture()
+        {
+            ImageService.Setup(x => x.SaveImage(It.IsAny<SaveImageRequest>())).ReturnsAsync(new Image { Id = 1 });
+        }
 
         public Mock<UserManager<TUser>> GetMockUserManager<TUser>(List<TUser> ls) where TUser : class
         {

@@ -4,7 +4,7 @@ using Site.Controllers;
 using Site.Services;
 using Xunit;
 
-namespace Web.Tests.Controllers
+namespace Unit
 {
     public class UnitTest1
     {

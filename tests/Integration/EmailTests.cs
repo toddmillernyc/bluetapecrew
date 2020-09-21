@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Btc.Tests.Stubs;
 using Services.Helpers;
 using Services.Interfaces;
 using Services.Models;
+using Stubs;
 using Xunit;
 
 namespace Btc.Tests.Integration

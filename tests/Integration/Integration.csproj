@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\src\Repositories\Repositories.csproj" />
     <ProjectReference Include="..\..\src\Services\Services.csproj" />
     <ProjectReference Include="..\..\src\Site\Site.csproj" />
+    <ProjectReference Include="..\Stubs\Stubs.csproj" />
   </ItemGroup>
 
 </Project>

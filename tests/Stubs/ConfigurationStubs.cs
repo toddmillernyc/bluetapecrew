@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Btc.Tests.Stubs
+namespace Stubs
 {
     public static class ConfigurationStubs
     {

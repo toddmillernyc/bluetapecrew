@@ -2,7 +2,7 @@
 using PayPal.Api;
 using Xunit;
 
-namespace Btc.Tests.Unit
+namespace Unit
 {
     public class PaypalExtensionTests
     {

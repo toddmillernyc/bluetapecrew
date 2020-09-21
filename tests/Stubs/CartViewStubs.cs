@@ -1,7 +1,7 @@
 ﻿using Services.Models;
 using System.Collections.Generic;
 
-namespace Btc.Tests.Stubs
+namespace Stubs
 {
     public static class CartViewStubs
     {

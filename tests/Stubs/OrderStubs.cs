@@ -1,7 +1,7 @@
-﻿using Services.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Services.Models;
 
-namespace Btc.Tests.Stubs
+namespace Stubs
 {
     public static class OrderStubs
     {

@@ -1,9 +1,9 @@
-﻿using Btc.Tests.Stubs;
-using System.Linq;
+﻿using System.Linq;
 using Services.Models;
+using Stubs;
 using Xunit;
 
-namespace Btc.Tests.Unit
+namespace Unit
 {
     public class PaymentRequestTests
     {

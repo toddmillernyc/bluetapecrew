@@ -1,7 +1,7 @@
-﻿using Btc.Tests.Stubs;
-using Services.Interfaces;
+﻿using Services.Interfaces;
 using Services.Models;
 using System.Threading.Tasks;
+using Stubs;
 using Xunit;
 
 namespace Btc.Tests.Integration

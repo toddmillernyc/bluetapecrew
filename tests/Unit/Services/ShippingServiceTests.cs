@@ -1,11 +1,11 @@
-﻿using Moq;
+﻿using System.Threading.Tasks;
+using Moq;
 using Services;
 using Services.Interfaces;
-using System.Threading.Tasks;
 using Services.Models;
 using Xunit;
 
-namespace Btc.Tests.Unit
+namespace Unit
 {
 
     public class ShippingServiceTests

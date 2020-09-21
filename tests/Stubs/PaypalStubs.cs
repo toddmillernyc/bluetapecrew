@@ -1,4 +1,4 @@
-﻿namespace Btc.Tests.Stubs
+﻿namespace Stubs
 {
     public static class PaypalStubs
     {

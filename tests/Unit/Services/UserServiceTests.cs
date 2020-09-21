@@ -1,10 +1,10 @@
-﻿using Site.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Site.Identity;
+using Site.Services;
 using Xunit;
 
-namespace Btc.Tests.Unit
+namespace Unit
 {
     [Collection("UnitTest")]
     public class UserServiceTests

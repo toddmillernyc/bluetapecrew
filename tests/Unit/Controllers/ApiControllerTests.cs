@@ -1,10 +1,10 @@
-﻿using Moq;
+﻿using System.Threading.Tasks;
+using Moq;
 using Services.Interfaces;
-using System.Threading.Tasks;
 using Site.ApiControllers;
 using Xunit;
 
-namespace Web.Tests.ApiControllers
+namespace Unit
 {
     public class ApiControllerTests
     {

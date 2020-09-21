@@ -1,13 +1,13 @@
-﻿using Moq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Services.Models;
 using Site.Controllers;
 using Site.Identity;
 using Xunit;
 
-namespace Btc.Tests.Unit
+namespace Unit
 {
     [Collection("UnitTest")]
     public class CheckoutControllerTests

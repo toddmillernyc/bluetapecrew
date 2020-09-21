@@ -3,7 +3,7 @@ using Services.Models;
 using Site.Areas.Admin.Controllers;
 using Xunit;
 
-namespace Web.Tests.Controllers
+namespace Unit
 {
     [Collection("UnitTest")]
     public class AdminProductsControllerTests
