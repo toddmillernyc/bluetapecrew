@@ -54,7 +54,7 @@ namespace Services
             {
                 var entity = _mapper.Map<Entities.Cart>(cart);
                 entity.DateCreated = DateTime.Now;
-                entity.Count = cart.Quantity;
+                entity.Count = cart.Quantity == 0 ? 1 : cart.Quantity;
                 await _cartRepository.Add(entity);
             }
         }

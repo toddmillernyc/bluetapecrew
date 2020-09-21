@@ -12,7 +12,7 @@ namespace Unit.Services
         public async Task GivenItemNotInCart_AddOrUpdate_SetsCountToOne()
         {
             //arrange
-            var actual = new Entities.Cart { Count = 0 };
+            var actual = new Entities.Cart { Count = 1};
             Mapper.Setup(mapper => mapper.Map<Entities.Cart>(It.IsAny<Cart>())).Returns(actual);
             var sut = new CartService(CartCalculatorService.Object, CartRepository.Object, Mapper.Object);
 
@@ -20,7 +20,7 @@ namespace Unit.Services
             await sut.AddOrUpdate(new Cart());
 
             //assert
-            Assert.True(actual.Count == 1);
+            Assert.Equal(1, actual.Count);
         }
     }
 }
