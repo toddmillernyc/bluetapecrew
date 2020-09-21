@@ -10,26 +10,76 @@
     <a class="btn btn-xs btn-info" href="Admin/AspNetUsers/Index">Manage Site Users</a>
 </p>
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab_settings" data-toggle="tab">Site Settings</a></li>
+    <li class="active"><a href="#tab_profile" data-toggle="tab">Site Profile</a></li>
+    <li><a href="#tab_settings" data-toggle="tab">Site Settings</a></li>
     @foreach (var item in Model)
     {
-        <li><a href="#tab_@(item.Name.Replace(" ","_").ToLower())" data-toggle="tab">@item.Name</a></li>
+        <li><a href="#tab_@(item.Name.Replace(" ", "_").ToLower())" data-toggle="tab">@item.Name</a></li>
     }
 </ul>
 <div class="tab-content" ng-app="myApp" ng-controller="SettingsController">
-    <div class="tab-pane active" id="tab_settings">
+    <div class="tab-pane active" id="tab_profile">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Public Site Profile</h2>
+                <dl class="dl-horizontal">
+                    <dt>Title</dt>
+                    <dd><input id="title" class="form-control" type="text" ng-model="profile.siteTitle" required /></dd>
+                    <dt>Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.siteUrl" /></dd>
+                    <dt>Logo Url</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.siteLogoUrl" /></dd>
+                    <dt>CopyrightText</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.copyrightText" /></dd>
+                    <dt>CopyrightUrl</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.copyrightUrl" /></dd>
+                    <dt>CopyrightLinktext</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.copyrightLinktext" /></dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <h2>Contact</h2>
+                <dl class="dl-horizontal">
+                    <dt>Email</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.contactEmailAddress" /></dd>
+                    <dt>Phone</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.contactPhoneNumber" /></dd>
+                    <dt>Twitter URL</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.twitterUrl" /></dd>
+                    <dt>FaceBook URL</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.faceBookUrl" /></dd>
+                    <dt>LinkedIn URL</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.linkedInUrl" /></dd>
+                </dl>
+                <h2>Shipping</h2>
+                <dl class="dl-horizontal">
+                    <dt>Free Shipping Threshold</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.freeShippingThreshold" /></dd>
+                    <dt>Flat Shipping Rage</dt>
+                    <dd><input class="form-control" type="text" ng-model="profile.flatShippingRate" /></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Content</h2>
+                <dl class="dl-horizontal">
+                    <dt>About Us</dt>
+                    <dd><textarea class="form-control" ng-model="profile.aboutUs"></textarea></dd>
+                    <dt>Description</dt>
+                    <dd><textarea rows="10" class="form-control" ng-model="profile.description" id="description" required></textarea></dd>
+                    <dt>Keywords</dt>
+                    <dd><textarea class="form-control" ng-model="profile.keywords" id="keywords" required></textarea></dd>
+                </dl>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" ng-click="saveSettings(settings, profile)" id="save-site-profile-button">Save</button>
+    </div>
+    <div class="tab-pane" id="tab_settings">
         <input type="hidden" value="{{settings.Id}}" />
         <div class="row">
             <div class="col-md-6">
-                <h2>Site</h2>
-                <dl class="dl-horizontal">
-                    <dt>Title</dt>
-                    <dd><input id="title" class="form-control" type="text" ng-model="settings.siteTitle" required /></dd>
-                    <dt>Url</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.siteUrl" /></dd>
-                    <dt>Logo Url</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.siteLogoUrl" /></dd>
-                </dl>
+                <h2>Site Settings</h2>
                 <h2>Smtp Email</h2>
                 <dl class="dl-horizontal">
                     <dt>Host</dt>
@@ -59,39 +109,6 @@
 
                     </dd>
                 </dl>
-            </div>
-            <div class="col-md-6">
-                <h2>Contact</h2>
-                <dl class="dl-horizontal">
-                    <dt>Email</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.contactEmailAddress" /></dd>
-                    <dt>Phone</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.contactPhoneNumber" /></dd>
-                </dl>
-                <h2>Shipping</h2>
-                <dl class="dl-horizontal">
-                    <dt>Free Shipping Threshold</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.freeShippingThreshold" /></dd>
-                    <dt>Flat Shipping Rage</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.flatShippingRate" /></dd>
-                </dl>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Content</h2>
-                <dl class="dl-horizontal">
-                    <dt>About Us</dt>
-                    <dd><textarea class="form-control" ng-model="settings.aboutUs"></textarea></dd>
-                    <dt>Description</dt>
-                    <dd><textarea rows="10" class="form-control" ng-model="settings.description" id="description" required></textarea></dd>
-                    <dt>Keywords</dt>
-                    <dd><textarea class="form-control" ng-model="settings.keywords" id="keywords" required></textarea></dd>
-                </dl>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
                 <h2>PayPal Live</h2>
                 <dl class="dl-horizontal">
                     <dt>Api User Name</dt>
@@ -117,8 +134,6 @@
 
                 <h3>FaceBook</h3>
                 <dl class="dl-horizontal">
-                    <dt>Url</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.faceBookUrl" /></dd>
                     <dt>App Id</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.facebookAppId" /></dd>
                     <dt>Client Id</dt>
@@ -143,12 +158,6 @@
                     <dd><input class="form-control" type="text" ng-model="settings.instagramClientSecret" /></dd>
                 </dl>
 
-                <h3>LinkedIn</h3>
-                <dl class="dl-horizontal">
-                    <dt>LinkedInUrl</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.linkedInUrl" /></dd>
-                </dl>
-
                 <h3>Mail Chimp</h3>
                 <dl class="dl-horizontal">
                     <dt>Api Key</dt>
@@ -167,29 +176,18 @@
 
                 <h3>Twitter</h3>
                 <dl class="dl-horizontal">
-                    <dt>TwitterUrl</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.twitterUrl" /></dd>
                     <dt>TwitterClientId</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.twitterClientId" /></dd>
                     <dt>TwitterClientSecret</dt>
                     <dd><input class="form-control" type="text" ng-model="settings.twitterClientSecret" /></dd>
                 </dl>
-
-                <dl class="dl-horizontal">
-                    <dt>CopyrightText</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.copyrightText" /></dd>
-                    <dt>CopyrightUrl</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.copyrightUrl" /></dd>
-                    <dt>CopyrightLinktext</dt>
-                    <dd><input class="form-control" type="text" ng-model="settings.copyrightLinktext" /></dd>
-                </dl>
             </div>
         </div>
-        <button type="button" class="btn btn-success" ng-click="saveSettings(settings)" id="save-site-settings-button">Save</button>
+        <button type="button" class="btn btn-success" ng-click="saveSettings(settings, profile)" id="save-site-settings-button">Save</button>
     </div>
     @foreach (var item in Model)
     {
-        <div class="tab-pane" id="tab_@(item.Name.Replace(" ","_").ToLower())">
+        <div class="tab-pane" id="tab_@(item.Name.Replace(" ", "_").ToLower())">
             <table class="table">
                 <tr>
                     <th>
@@ -234,14 +232,18 @@
 
 
                 settingsApi.get(function (data) {
-                    $scope.settings = data;
+                    $scope.settings = data.siteSettings;
+                    $scope.profile = data.siteProfile;
                 },
                     function (error) {
                         console.log(error);
                     });
 
-                $scope.saveSettings = function (settings) {
-                    settingsApi.save(settings,
+                $scope.saveSettings = function (settings, profile) {
+                    settingsApi.save({
+                        siteSettings: settings,
+                        siteProfile: profile
+                    },
                         function () {
                             alert("settings saved");
                         });

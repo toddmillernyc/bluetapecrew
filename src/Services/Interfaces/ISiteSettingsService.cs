@@ -6,6 +6,8 @@ namespace Services.Interfaces
     public interface ISiteSettingsService
     {
         Task<SiteSetting> Get();
-        Task<SiteSetting> Set(SiteSetting siteSetting);
+        Task Set(SiteSetting siteSetting);
+        Task<SiteProfile> GetSiteProfile();
+        Task SetSiteProfile(SiteProfile siteProfile);
     }
 }

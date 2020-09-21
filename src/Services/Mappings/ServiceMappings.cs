@@ -20,6 +20,7 @@ namespace Services.Mappings
             CreateMap<Entities.Product, Model.Product>();
             CreateMap<Entities.ProductCategory, Model.ProductCategory>();
             CreateMap<Entities.ProductImage, Model.ProductImage>();
+            CreateMap<Entities.PublicSiteProfile, Model.SiteProfile>();
             CreateMap<Entities.Review, Model.Review>();
             CreateMap<Entities.SiteSetting, Model.SiteSetting>();
             CreateMap<Entities.Size, Model.Size>();
@@ -38,6 +39,8 @@ namespace Services.Mappings
             CreateMap<Model.ProductCategory, Entities.ProductCategory>();
             CreateMap<Model.ProductImage, Entities.ProductImage>();
             CreateMap<Model.Review, Entities.Review>();
+            CreateMap<Model.SiteProfile, Entities.PublicSiteProfile>();
+
             CreateMap<Model.SiteSetting, Entities.SiteSetting>();
             CreateMap<Model.Size, Entities.Size>();
             CreateMap<Model.Style, Entities.Style>();

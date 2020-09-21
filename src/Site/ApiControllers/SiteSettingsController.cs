@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Models;
+using Site.Areas.Admin.Models;
 
 namespace Site.ApiControllers
 {
@@ -20,14 +21,20 @@ namespace Site.ApiControllers
         }
 
         [HttpGet]
-        public async Task<SiteSetting> Get() => await _siteSettingsService.Get();
+        public async Task<SiteSettingsViewModel> Get() => new SiteSettingsViewModel
+        {
+            SiteSettings = await _siteSettingsService.Get(),
+            SiteProfile = await _siteSettingsService.GetSiteProfile()
+        };
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] SiteSetting siteSetting)
+        public async Task<IActionResult> Post([FromBody] SiteSettingsViewModel model)
         {
             try
             {
-                return Ok(await _siteSettingsService.Set(siteSetting));
+                await _siteSettingsService.Set(model.SiteSettings);
+                await _siteSettingsService.SetSiteProfile(model.SiteProfile);
+                return Ok();
             }
             catch(Exception ex)
             {

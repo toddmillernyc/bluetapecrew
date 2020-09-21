@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Services.Interfaces;
 using Services.Models;
+using Site.Models;
 using Site.ViewModels;
 
 namespace Site.Services
@@ -13,22 +15,25 @@ namespace Site.Services
         private readonly ISiteSettingsService _settings;
         private readonly IStyleService _styleService;
         private readonly IProductService _productService;
+        private readonly FeatureToggles _featureToggles;
 
         public ViewModelService(
             ICategoryService categoryService,
             ISiteSettingsService settings,
             IStyleService styleService,
-            IProductService productService)
+            IProductService productService,
+            IOptions<FeatureToggles> featureToggles)
         {
             _settings = settings;
             _styleService = styleService;
             _productService = productService;
             _categoryService = categoryService;
+            _featureToggles = featureToggles.Value;
         }
 
         public async Task<HomeViewModel> GetHomeViewModel()
         {
-            var settings = await _settings.Get();
+            var siteProfile = await _settings.GetSiteProfile();
             var catalog = new List<CatalogModel>();
             var categories = await _categoryService.GetAllPublishedWithProductsAndStyles();
 
@@ -52,8 +57,8 @@ namespace Site.Services
             return (new HomeViewModel
             {
                 Catalog = catalog,
-                SiteTitle = settings?.SiteTitle ?? "NEW SITE",
-                Description = settings?.Description ?? "NEW SITE DESCRIPTION"
+                SiteTitle = siteProfile?.SiteTitle ?? "NEW SITE",
+                Description = siteProfile?.Description ?? "NEW SITE DESCRIPTION"
             });
         }
 
@@ -75,24 +80,24 @@ namespace Site.Services
 
         public async Task<LayoutViewModel> GetLayoutViewModel()
         {
-            var settings = await _settings.Get();
-            if (settings == null) return new LayoutViewModel();
+            var profile = await _settings.GetSiteProfile();
+            if (profile == null) return new LayoutViewModel();
             var categories = await _categoryService.GetAllPublishedWithProducts();
 
             return new LayoutViewModel
             {
-                ContactEmail = settings.ContactEmailAddress,
-                ContactPhone = settings.ContactPhoneNumber,
-                Description = settings.Description,
-                Keywords = settings.Keywords,
-                AboutUs = settings.AboutUs,
-                SiteTitle = settings.SiteTitle,
-                TwitterHandle = $"https://twitter.com/{settings.TwitterUrl}?ref_src=twsrc%5Etfw",
-                FaceBookUrl = settings.FaceBookUrl,
-                LinkedInUrl = settings.LinkedInUrl,
-                CopyrightLinktext = settings.CopyrightLinktext,
-                CopyrightText = settings.CopyrightText,
-                CopyrightUrl = settings.CopyrightUrl,
+                ContactEmail = profile.ContactEmailAddress,
+                ContactPhone = profile.ContactPhoneNumber,
+                Description = profile.Description,
+                Keywords = profile.Keywords,
+                AboutUs = profile.AboutUs,
+                SiteTitle = profile.SiteTitle,
+                TwitterHandle = $"https://twitter.com/{profile.TwitterUrl}?ref_src=twsrc%5Etfw",
+                FaceBookUrl = profile.FaceBookUrl,
+                LinkedInUrl = profile.LinkedInUrl,
+                CopyrightLinktext = profile.CopyrightLinktext,
+                CopyrightText = profile.CopyrightText,
+                CopyrightUrl = profile.CopyrightUrl,
                 Menu = categories.Select(item => new MenuViewModel
                 {
                     Id = item.Id,
@@ -104,7 +109,7 @@ namespace Site.Services
                         ItemName = product.ProductName
                     })
                 }).ToList(),
-                ShowSubscibeForm = !string.IsNullOrEmpty(settings.MailChimpListId) && !string.IsNullOrEmpty(settings.MailChimpApiKey)
+                ShowSubscibeForm = _featureToggles.SubscribeForm
             };
         }
 

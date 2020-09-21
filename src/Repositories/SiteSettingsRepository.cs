@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Entities;
 
@@ -15,14 +16,12 @@ namespace Repositories
             _db = db;
         }
 
-        public Task<SiteSetting> Get() => _db.SiteSettings.FirstOrDefaultAsync();
+        public Task<SiteSetting> Get() => _db.SiteSettings.OrderByDescending(x=>x.Id).FirstOrDefaultAsync();
 
-        public async Task<SiteSetting> Set(SiteSetting siteSetting)
+        public async Task Set(SiteSetting siteSetting)
         {
-            var entity = await _db.SiteSettings.FindAsync(siteSetting.Id);
-            _db.Entry(entity).CurrentValues.SetValues(siteSetting);
+            _db.SiteSettings.Add(siteSetting);
             await _db.SaveChangesAsync();
-            return entity;
         }
 
         public async Task DeleteAll()
