@@ -39,6 +39,8 @@ namespace Services.Mappings
             CreateMap<Model.ProductCategory, Entities.ProductCategory>();
             CreateMap<Model.ProductImage, Entities.ProductImage>();
             CreateMap<Model.Review, Entities.Review>();
+            CreateMap<Model.SiteProfile, Entities.PublicSiteProfile>();
+
             CreateMap<Model.SiteSetting, Entities.SiteSetting>();
             CreateMap<Model.Size, Entities.Size>();
             CreateMap<Model.Style, Entities.Style>();
