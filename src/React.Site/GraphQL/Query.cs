@@ -11,5 +11,7 @@ namespace React.Site.GraphQL
         [UseFiltering]
         [UseSorting]
         public IQueryable<Category> GetCategories([Service] BtcEntities db) => db.Categories;
+
+        public IQueryable<PublicSiteProfile> GetSiteProfiles([Service] BtcEntities db) => db.PublicSiteProfiles;
     }
 }
