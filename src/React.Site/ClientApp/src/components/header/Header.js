@@ -1,7 +1,6 @@
 import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { Query } from '@apollo/client/react/components';
-import gql from "graphql-tag";
+import { gql, useQuery } from "@apollo/client";
 import Logo from '../../img/logo.png';
 import PreHeader from './PreHeader'
 
@@ -19,7 +18,13 @@ const GET_CATEGORIES = gql`
   }
 `;
 
-function Header() {
+const Header = () => {
+
+  const { data, loading, error } = useQuery(GET_CATEGORIES);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{JSON.stringify(error)}(</p>;
+  if (!data) return <p>Not Found</p>;
+
   return (
     <>
       <PreHeader></PreHeader>
@@ -35,23 +40,19 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Query query={GET_CATEGORIES}>
-              {({ loading, error, data }) => {
-                if (loading) return <p>Loading...</p>;
-                if (error) return <p>Error :(</p>;
 
-                return data.categories.map(category => (
-                  <NavDropdown key={category.name} title={category.name} id="basic-nav-dropdown">
-                    {
-                      category.productCategories.map(productCategory => {
-                        const product = productCategory.product
-                        return <NavDropdown.Item key={product.productName}>{product.productName}</NavDropdown.Item>
-                      })
-                    }
-                  </NavDropdown>
-                ));
-              }}
-            </Query>
+            {data.categories.map(category => (
+              <NavDropdown key={category.name} title={category.name} id="basic-nav-dropdown">
+                {
+                  category.productCategories.map(productCategory => {
+                    const product = productCategory.product
+                    return <NavDropdown.Item key={product.productName}>{product.productName}</NavDropdown.Item>
+                  })
+                }
+              </NavDropdown>
+            ))
+            }
+
           </Nav>
         </Navbar.Collapse>
       </Navbar>

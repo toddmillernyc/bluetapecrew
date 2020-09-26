@@ -2,7 +2,6 @@
 using Entities;
 using HotChocolate;
 using HotChocolate.Types;
-using Microsoft.EntityFrameworkCore;
 
 namespace React.Site.GraphQL
 {
@@ -12,6 +11,9 @@ namespace React.Site.GraphQL
         [UseFiltering]
         [UseSorting]
         public IQueryable<Category> GetCategories([Service] BtcEntities db) => db.Categories;
+
+        [UseFiltering]
+        public IQueryable<Image> GetImages([Service] BtcEntities db) => db.Images;
 
         public IQueryable<Product> GetProducts([Service] BtcEntities db) => db.Products;
 
