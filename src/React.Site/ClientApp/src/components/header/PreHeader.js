@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Navbar, Nav, NavItem, ListGroup } from 'react-bootstrap'
+import { Row, Col, ListGroup } from 'react-bootstrap'
 import gql from "graphql-tag";
 import { Query } from '@apollo/client/react/components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
