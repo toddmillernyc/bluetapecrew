@@ -41,7 +41,7 @@ namespace React.Site
         {
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            //app.UseRouting();
+            app.UseRouting();
             if (env.IsDevelopment())
             {
                 app.UseCors();
@@ -51,10 +51,10 @@ namespace React.Site
             {
                 app.UsePlayground();
             }
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

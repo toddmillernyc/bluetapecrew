@@ -9,9 +9,7 @@ const GET_PRODUCTS = gql`
   products {
     id
     name: productName
-    image {
-      data: imageData
-    }
+    slug
   }
 }
 `;
@@ -26,6 +24,7 @@ function Home() {
         return (
           <Row>
             {data.products.map(product => {
+              console.log(product)
               return (
                 <Col key={product.id} >
                   <ProductCard {...product} />
