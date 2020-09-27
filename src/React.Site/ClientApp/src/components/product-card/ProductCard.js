@@ -2,14 +2,13 @@ import React from 'react';
 import { Card } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 
-const GET_IMAGE = gql`
+export const GET_IMAGE = gql`
   query ImageData($id: Int!) {
     imageData(id: $id) {
       src
     }
   }
 `;
-
 
 const ProductCard = ({ name, imageId }) => {
 

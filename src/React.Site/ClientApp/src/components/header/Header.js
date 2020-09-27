@@ -3,7 +3,7 @@ import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 import Logo from '../../img/logo.png';
 
-const GET_CATEGORIES = gql`
+export const GET_CATEGORIES = gql`
   {
     categories(where: { published: true }, order_by: { position: ASC }) {
       name
@@ -31,7 +31,7 @@ const Header = ({ siteTitle }) => {
             src={Logo}
             width="128"
             className="d-inline-block align-top"
-            alt={siteTitle}
+            alt="Ecommerce Website logo"
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

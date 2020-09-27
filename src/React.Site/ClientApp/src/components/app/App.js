@@ -6,10 +6,7 @@ import PreHeader from '../header/PreHeader'
 import { Container } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 
-
-import './App.css';
-
-const GET_PROFILE = gql`
+export const GET_PROFILE = gql`
 {
   siteProfile {
     contactPhoneNumber

@@ -3,7 +3,7 @@ import { Row, Col } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 import ProductCard from '../product-card/ProductCard';
 
-const GET_PRODUCTS = gql`
+export const GET_PRODUCTS = gql`
 {
   products {
     id
