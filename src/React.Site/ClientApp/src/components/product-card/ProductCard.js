@@ -13,7 +13,7 @@ const GET_IMAGE = gql`
 const cardImageStyle = { 
   display: "block",
   maxWidth:"286px",
-  maxHeight:"180px",
+  height:"180px",
   width: "auto",
   height: "auto"
  }
