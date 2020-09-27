@@ -10,13 +10,6 @@ const GET_IMAGE = gql`
   }
 `;
 
-const cardImageStyle = { 
-  display: "block",
-  maxWidth:"286px",
-  height:"180px",
-  width: "auto",
-  height: "auto"
- }
 
 const ProductCard = ({ name, imageId }) => {
 
@@ -31,7 +24,7 @@ const { data, loading, error } = useQuery(GET_IMAGE, { variables: { id: imageId 
 
   return(
     <Card style={{ width: '18rem' }}>
-    <Card.Img variant="top" src={src} style={cardImageStyle} />
+    <Card.Img variant="top" src={src} />
     <Card.Body>
       <Card.Title>{name}</Card.Title>
       <Card.Text>

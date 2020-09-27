@@ -17,7 +17,7 @@ const GET_CATEGORIES = gql`
   }
 `;
 
-const Header = () => {
+const Header = ({ siteTitle }) => {
 
   const { data, loading, error } = useQuery(GET_CATEGORIES);
   if (loading) return <p>Loading...</p>;
@@ -25,14 +25,13 @@ const Header = () => {
   if (!data) return <p>Not Found</p>;
 
   return (
-    <>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light">
         <Navbar.Brand href="#home">
           <img
             src={Logo}
             width="128"
             className="d-inline-block align-top"
-            alt="React Bootstrap logo"
+            alt={siteTitle}
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -54,8 +53,6 @@ const Header = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    </>
-
   )
 }
 

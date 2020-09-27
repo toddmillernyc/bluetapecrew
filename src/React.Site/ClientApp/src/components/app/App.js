@@ -3,26 +3,39 @@ import Header from '../header/Header'
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Home from '../home/Home'
 import PreHeader from '../header/PreHeader'
+import { Container } from 'react-bootstrap'
+import { gql, useQuery } from "@apollo/client";
+
 
 import './App.css';
 
-function App() {
+const GET_PROFILE = gql`
+{
+  siteProfile {
+    contactPhoneNumber
+    contactEmailAddress
+    siteTitle
+  }
+}
+`;
+
+const App =() => {
+  const { data } = useQuery(GET_PROFILE);
+  const profile = data?.siteProfile;
+
   return (
     <Router>
-      <>
-        <PreHeader />
-        <Header />
-        <main role="main" className="container">
-        </main>
-      </>
-
-      <Switch>
-      <Route exact path="/">
-        <Redirect to="/home" />
-      </Route>
-      <Route path="/home" component={Home} />
+      <Container fluid>
+        <PreHeader {...profile} />
+        <Header {...profile} />
+        <Switch>
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
+        <Route path="/home" component={Home} />
       </Switch>
+      </Container>
     </Router>
   )
 }
-export default App
+export default App;
