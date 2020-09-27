@@ -1,7 +1,7 @@
 import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
-import Logo from '../../img/logo.png';
+import Logo from '../img/logo.png';
 
 export const GET_CATEGORIES = gql`
   {

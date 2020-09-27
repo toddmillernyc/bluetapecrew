@@ -1,7 +1,6 @@
 ﻿import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import App from './components/app/App'
+import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';

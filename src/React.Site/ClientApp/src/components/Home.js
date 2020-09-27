@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
-import ProductCard from '../product-card/ProductCard';
+import ProductCard from './ProductCard';
 
 export const GET_PRODUCTS = gql`
 {

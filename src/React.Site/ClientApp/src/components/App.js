@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../header/Header'
+import Header from './Header'
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import Home from '../home/Home'
-import PreHeader from '../header/PreHeader'
+import Home from './Home'
+import PreHeader from './PreHeader'
 import { Container } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 
