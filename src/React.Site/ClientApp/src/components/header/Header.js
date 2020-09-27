@@ -2,7 +2,6 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 import Logo from '../../img/logo.png';
-import PreHeader from './PreHeader'
 
 const GET_CATEGORIES = gql`
   {
@@ -27,7 +26,6 @@ const Header = () => {
 
   return (
     <>
-      <PreHeader></PreHeader>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="#home">
           <img

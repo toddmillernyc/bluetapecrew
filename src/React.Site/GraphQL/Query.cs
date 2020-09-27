@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Entities;
 using HotChocolate;
 using HotChocolate.Types;
+using Microsoft.EntityFrameworkCore;
 
 namespace React.Site.GraphQL
 {
@@ -12,8 +15,12 @@ namespace React.Site.GraphQL
         [UseSorting]
         public IQueryable<Category> GetCategories([Service] BtcEntities db) => db.Categories;
 
-        [UseFiltering]
-        public IQueryable<Image> GetImages([Service] BtcEntities db) => db.Images;
+        public async Task<ImageData> GetImageData(int id, [Service] BtcEntities db)
+        {
+            var imageBytes = (await db.Images.FindAsync(id)).ImageData;
+            var base64ImageString = Convert.ToBase64String(imageBytes);
+            return new ImageData {Src = base64ImageString};
+        }
 
         public IQueryable<Product> GetProducts([Service] BtcEntities db) => db.Products;
 

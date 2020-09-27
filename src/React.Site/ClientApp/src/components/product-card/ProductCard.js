@@ -1,10 +1,37 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Card } from 'react-bootstrap'
+import { gql, useQuery } from "@apollo/client";
+
+const GET_IMAGE = gql`
+  query ImageData($id: Int!) {
+    imageData(id: $id) {
+      src
+    }
+  }
+`;
+
+const cardImageStyle = { 
+  display: "block",
+  maxWidth:"286px",
+  maxHeight:"180px",
+  width: "auto",
+  height: "auto"
+ }
 
 const ProductCard = ({ name, imageId }) => {
+
+const { data, loading, error } = useQuery(GET_IMAGE, { variables: { id: imageId } });
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{JSON.stringify(error)}(</p>;
+  if (!data) return <p>Not Found</p>;
+  
+  let base64Image = data.imageData.src;
+  let src = `data:image/png;base64,${base64Image}`
+
   return(
     <Card style={{ width: '18rem' }}>
-    <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+    <Card.Img variant="top" src={src} style={cardImageStyle} />
     <Card.Body>
       <Card.Title>{name}</Card.Title>
       <Card.Text>

@@ -8,23 +8,24 @@ const GET_PRODUCTS = gql`
   products {
     id
     name: productName
+    imageId
   }
 }
 `;
 
 const Home = () => {
-
+  
   const { data, loading, error } = useQuery(GET_PRODUCTS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{JSON.stringify(error)}(</p>;
-  if (!data) return <p>Not Found</p>;
-
+  if(!data) return <p>Not Found</p>;
   return (
     <Row>
-      {data.products.map(product => <Col key={product.id} >
-        <ProductCard {...product} />
-      </Col>)
-      }
+      {data.products.map(product => 
+          <Col key={product.id} >
+            <ProductCard {...product} />
+          </Col>)
+}
     </Row>
   )
 }
