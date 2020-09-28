@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, ListGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { Link } from "react-router-dom";
 
 const iconStyle = { color: "#8AB7D5" }
 
@@ -25,7 +26,7 @@ const PreHeader = ({ contactEmailAddress, contactPhoneNumber }) => {
         <ListGroup horizontal>
           <ListGroup.Item><a href="#">My Account</a></ListGroup.Item>
           <ListGroup.Item><a href="#">Shopping Cart</a></ListGroup.Item>
-          <ListGroup.Item><a href="#">Log In</a></ListGroup.Item>
+          <ListGroup.Item><Link to='/login'>Log In</Link></ListGroup.Item>
         </ListGroup>
       </Col>
     </Row>

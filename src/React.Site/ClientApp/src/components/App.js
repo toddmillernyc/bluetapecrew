@@ -5,6 +5,7 @@ import Home from './Home'
 import PreHeader from './PreHeader'
 import { Container } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
+import Login from './Login';
 
 export const GET_PROFILE = gql`
 {
@@ -30,6 +31,7 @@ const App =() => {
           <Redirect to="/home" />
         </Route>
         <Route path="/home" component={Home} />
+        <Route path="/login" component={Login} />
       </Switch>
       </Container>
     </Router>
