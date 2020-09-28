@@ -1,60 +1,74 @@
 import React, { useState } from 'react';
 import { AUTH_TOKEN } from '../constants'
+import { gql, useMutation } from "@apollo/client";
+import { Row, Col } from 'react-bootstrap'
+
+const SIGNUP_MUTATION = gql`
+  mutation SignupMutation($email: String!, $password: String!, $name: String!) {
+    signup(email: $email, password: $password, name: $name) {
+      token
+    }
+  }
+`
+
+const LOGIN_MUTATION = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+`
 
 const Login = () => {
-  const [login, setLogin] = useState(false);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [login] = useMutation(LOGIN_MUTATION);
 
-  const confirm = async () => {
-    //todo
+  const submitLoginForm = async e => {
+    e.preventDefault();
+    var result = await login({ variables: { email, password } });
+    console.log(result)
   }
 
-  const saveUserData = async token  => {
-    localStorage.setItem(AUTH_TOKEN, token)
-  }
-
-    return (
-      <div>
-        <h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
-        <div className="flex flex-column">
-          {!login && (
-            <input
-              value={name}
-              onChange={e => setName(e.target.value)}
-              type="text"
-              placeholder="Your name"
+  return (
+    <Row>
+      <Col>
+        <form onSubmit={submitLoginForm}>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input 
+              value={email}
+              onChange={e=>setEmail(e.target.value)}
+              type="email"
+              className="form-control"
+              placeholder="Enter email"
             />
-          )}
-          <input
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            type="text"
-            placeholder="Your email address"
-          />
-          <input
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-            placeholder="Choose a safe password"
-          />
-        </div>
-        <div className="flex mt3">
-          <div className="pointer mr2 button" onClick={confirm}>
-            {login ? 'login' : 'create account'}
           </div>
-          <div
-            className="pointer button"
-            onClick={() => setLogin({ login: !login })}
-          >
-            {login
-              ? 'need to create an account?'
-              : 'already have an account?'}
+          <div className="form-group">
+            <label htmlFor="pwd">Password:</label>
+            <input
+              value={password}
+              onChange={e=>setPassword(e.target.value)}
+              type="password"
+              className="form-control"
+              placeholder="Enter password" />
           </div>
-        </div>
-      </div>
-    )
+          <div className="form-group form-check">
+            <label className="form-check-label"></label>
+            <input className="form-check-input" type="checkbox" name="remember" /> Remember me
+          </div>
+          <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
+      </Col>
+      <Col></Col>
+      <Col></Col>
+      <Col></Col>
+      <Col></Col>
+      <Col></Col>
+    </Row>
+
+  )
 }
 
 export default Login;

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Entities;
 using HotChocolate;
 using HotChocolate.Types;
-using Microsoft.EntityFrameworkCore;
+using React.Site.Models;
 
 namespace React.Site.GraphQL
 {

@@ -32,6 +32,7 @@ namespace React.Site
             services.AddGraphQL(
                 SchemaBuilder.New()
                     .AddQueryType<Query>()
+                    .AddMutationType<Mutation>()
                     .Create(),
                 new QueryExecutionOptions { ForceSerialExecution = true });
             services.AddControllers();

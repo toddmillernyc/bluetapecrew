@@ -1,4 +1,4 @@
-﻿namespace React.Site
+﻿namespace React.Site.Models
 {
     public class ImageData
     {
