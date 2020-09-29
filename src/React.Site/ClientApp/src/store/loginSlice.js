@@ -1,35 +1,56 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ApolloClient,InMemoryCache, gql} from "@apollo/client";
 
 export const loginSlice = createSlice({
   name: 'login',
   initialState: {
+    email: '',
     isLoggedIn: false,
+    token: '',
   },
   reducers: {
-    login: state => {
-      console.log(loginCredentials)
-      state.isLoggedIn = true;
+    login: (state, action) => {
+      state.email = action.payload.email;
+      state.isLoggedIn = action.payload.token != null;
+      state.token = action.payload.token
     },
     logout: state => {
+      state.email = '';
       state.isLoggedIn = false;
-    },
+      state.token = ''
+    }
   },
 });
 
 export const { login, logout} = loginSlice.actions;
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
+const client = new ApolloClient({
+  uri: 'https://localhost:5001',
+  cache: new InMemoryCache()
+});
+
 export const loginAsync = loginCredentials => dispatch => {
-  console.log(loginCredentials);
-  dispatch(login(loginCredentials));
+
+  const LOGIN_MUTATION = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+`;
+
+client.mutate({
+  variables: loginCredentials,
+  mutation: LOGIN_MUTATION
+})
+.then(result => {
+  const token = result.data?.login?.token;
+  if(!token) return;
+  dispatch(login({ token, email: loginCredentials.email}));
+ })
+.catch(error => { console.log(error) });
 };
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectIsLoggedIn = state => state.isLoggedIn;
+export const selectIsLoggedIn = state => state.login.isLoggedIn;
 
 export default loginSlice.reducer;

@@ -1,52 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { AUTH_TOKEN } from '../constants'
-import { gql, useMutation } from "@apollo/client";
 import { Row, Col } from 'react-bootstrap';
-import { loginAsync, logout, selectIsLoggedIn } from '../store/loginSlice';
-
-const SIGNUP_MUTATION = gql`
-  mutation SignupMutation($email: String!, $password: String!, $name: String!) {
-    signup(email: $email, password: $password, name: $name) {
-      token
-    }
-  }
-`
-
-const LOGIN_MUTATION = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-    }
-  }
-`;
+import { loginAsync, selectIsLoggedIn } from '../store/loginSlice';
 
 const Login = () => {
-  const isLoggedin  = useSelector(selectIsLoggedIn);
+  const isLoggedIn  = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  //const [login] = useMutation(LOGIN_MUTATION);
-
-  useEffect(() => {
-    if(localStorage.getItem(AUTH_TOKEN))
-      setIsLoggedIn(true);
-  })
 
   const submitLoginForm = async e => {
     e.preventDefault();
-    const { data } = await login({ variables: { email, password } });
-    if(data)
-      localStorage.setItem(AUTH_TOKEN, data.login.token)
+    dispatch(loginAsync({ email, password }));
+    setEmail('');
+    setPassword('');
   }
 
   return isLoggedIn
     ? <span>You are logged in</span>
     : <Row>
       <Col>
-        <form onSubmit={() => dispatch(loginAsync({email, password})) }>
+        <form onSubmit={ submitLoginForm }>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input 

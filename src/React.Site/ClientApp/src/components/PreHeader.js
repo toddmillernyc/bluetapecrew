@@ -6,7 +6,7 @@ import LoginLink from './LoginLink';
 
 const iconStyle = { color: "#8AB7D5" }
 
-const PreHeader = ({ isLoggedIn, logoutCallback, contactEmailAddress, contactPhoneNumber }) => {
+const PreHeader = ({ contactEmailAddress, contactPhoneNumber }) => {
 
   return (
     <Row>
@@ -26,12 +26,7 @@ const PreHeader = ({ isLoggedIn, logoutCallback, contactEmailAddress, contactPho
         <ListGroup horizontal>
           <ListGroup.Item><a href="#">My Account</a></ListGroup.Item>
           <ListGroup.Item><a href="#">Shopping Cart</a></ListGroup.Item>
-          <ListGroup.Item>
-            <LoginLink
-              isLoggedIn={isLoggedIn}
-              logoutCallback={logoutCallback}
-            />
-          </ListGroup.Item>
+          <ListGroup.Item><LoginLink /></ListGroup.Item>
         </ListGroup>
       </Col>
     </Row>
