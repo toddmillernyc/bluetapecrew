@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { AUTH_TOKEN } from '../constants'
 import { gql, useMutation } from "@apollo/client";
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap';
+import { loginAsync, logout, selectIsLoggedIn } from '../store/loginSlice';
 
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!, $name: String!) {
@@ -20,10 +22,13 @@ const LOGIN_MUTATION = gql`
 `;
 
 const Login = () => {
+  const isLoggedin  = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [login] = useMutation(LOGIN_MUTATION);
+  //const [login] = useMutation(LOGIN_MUTATION);
 
   useEffect(() => {
     if(localStorage.getItem(AUTH_TOKEN))
@@ -41,7 +46,7 @@ const Login = () => {
     ? <span>You are logged in</span>
     : <Row>
       <Col>
-        <form onSubmit={submitLoginForm}>
+        <form onSubmit={() => dispatch(loginAsync({email, password})) }>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input 
