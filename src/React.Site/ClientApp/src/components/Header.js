@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 import Logo from '../img/logo.png';
+import { Link } from "react-router-dom";
 
 export const GET_CATEGORIES = gql`
   {
@@ -26,13 +27,15 @@ const Header = ({ siteTitle }) => {
 
   return (
       <Navbar bg="light">
-        <Navbar.Brand href="#home">
-          <img
+        <Navbar.Brand>
+        <Link to='/home'>
+        <img
             src={Logo}
             width="128"
             className="d-inline-block align-top"
             alt="Ecommerce Website logo"
           />
+        </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
