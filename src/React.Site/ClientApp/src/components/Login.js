@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AUTH_TOKEN } from '../constants'
 import { gql, useMutation } from "@apollo/client";
 import { Row, Col } from 'react-bootstrap'
@@ -15,25 +15,31 @@ const LOGIN_MUTATION = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
-      message
     }
   }
-`
+`;
 
 const Login = () => {
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login] = useMutation(LOGIN_MUTATION);
 
+  useEffect(() => {
+    if(localStorage.getItem(AUTH_TOKEN))
+      setIsLoggedIn(true);
+  })
+
   const submitLoginForm = async e => {
     e.preventDefault();
-    var result = await login({ variables: { email, password } });
-    console.log(result)
+    const { data } = await login({ variables: { email, password } });
+    if(data)
+      localStorage.setItem(AUTH_TOKEN, data.login.token)
   }
 
-  return (
-    <Row>
+  return isLoggedIn
+    ? <span>You are logged in</span>
+    : <Row>
       <Col>
         <form onSubmit={submitLoginForm}>
           <div className="form-group">
@@ -69,7 +75,7 @@ const Login = () => {
       <Col></Col>
     </Row>
 
-  )
+  
 }
 
 export default Login;

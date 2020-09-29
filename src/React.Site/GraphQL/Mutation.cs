@@ -20,11 +20,7 @@ namespace React.Site.GraphQL
             var identityUser = await ValidateUser(userManager, email, password);
             if (identityUser == null) return null;
             var token = GenerateToken(identityUser, options);
-            return new TokenResponse
-            {
-                Token = token,
-                Message = "success"
-            };
+            return new TokenResponse { Token = token } ;
         }
 
         private async Task<ApplicationUser> ValidateUser(UserManager<ApplicationUser> userManager, string email, string password)

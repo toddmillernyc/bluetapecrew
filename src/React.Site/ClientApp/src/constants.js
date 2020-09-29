@@ -1,1 +1,1 @@
-export const AUTH_TOKEN = 'ThisIsSomeSampleSymmetricEncryptionKey';
+export const AUTH_TOKEN = 'auth-token';
