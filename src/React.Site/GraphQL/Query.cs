@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Entities;
 using HotChocolate;
 using HotChocolate.Types;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using React.Site.Identity;
 using React.Site.Models;
 
 namespace React.Site.GraphQL
@@ -24,6 +28,9 @@ namespace React.Site.GraphQL
 
         public IQueryable<Product> GetProducts([Service] BtcEntities db) => db.Products;
 
-        public PublicSiteProfile GetSiteProfile([Service] BtcEntities db) => db.PublicSiteProfiles.OrderByDescending(x=>x.Id).FirstOrDefault();
+        public async Task<PublicSiteProfile> GetSiteProfile([Service] BtcEntities db) => await db.PublicSiteProfiles.OrderByDescending(x=>x.Id).FirstOrDefaultAsync();
+
+        public async Task<ApplicationUser> GetUserProfile([Service] UserManager<ApplicationUser> userManager, string emailAddress) 
+            => await userManager.FindByEmailAsync(emailAddress);
     }
 }

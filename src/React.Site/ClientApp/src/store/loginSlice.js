@@ -10,9 +10,10 @@ export const loginSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
-      state.email = action.payload.email;
-      state.isLoggedIn = action.payload.token != null;
-      state.token = action.payload.token
+      const payload = action.payload;
+      state.email = payload.email;
+      state.isLoggedIn = payload.token != null;
+      state.token = payload.token
     },
     logout: state => {
       state.email = '';

@@ -7,6 +7,7 @@ import { Container } from 'react-bootstrap'
 import { gql, useQuery } from "@apollo/client";
 import Login from './Login';
 import { AUTH_TOKEN } from '../constants'
+import Account from './Account';
 
 export const GET_PROFILE = gql`
 {
@@ -46,6 +47,7 @@ const App =() => {
         </Route>
         <Route path="/home" component={Home} />
         <Route path="/login" component={Login} />
+        <Route path="/account" component={Account} />
       </Switch>
       </Container>
     </Router>

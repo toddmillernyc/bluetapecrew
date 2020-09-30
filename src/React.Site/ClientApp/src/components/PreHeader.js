@@ -3,6 +3,7 @@ import { Row, Col, ListGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from './LoginLink';
+import { Link } from 'react-router-dom';
 
 const iconStyle = { color: "#8AB7D5" }
 
@@ -13,18 +14,18 @@ const PreHeader = ({ contactEmailAddress, contactPhoneNumber }) => {
       <Col md={4} sm={6} xs={3}>
         <ListGroup horizontal>
           <ListGroup.Item>
-            <FontAwesomeIcon icon={faPhone} style={iconStyle} />
+            <FontAwesomeIcon icon={faPhone} style={iconStyle} />&nbsp;
             {contactPhoneNumber}
           </ListGroup.Item>
           <ListGroup.Item>
-            <FontAwesomeIcon icon={faEnvelope} style={iconStyle} />
+            <FontAwesomeIcon icon={faEnvelope} style={iconStyle} />&nbsp;
             <a href="mailto:bluetapecrew@gmail.com">{contactEmailAddress}</a>
           </ListGroup.Item>
         </ListGroup>
       </Col>
       <Col md={{ span: 4, offset: 4 }} sm={6} xs={3}>
         <ListGroup horizontal>
-          <ListGroup.Item><a href="#">My Account</a></ListGroup.Item>
+          <ListGroup.Item> <Link to='/account'>My Account</Link></ListGroup.Item>
           <ListGroup.Item><a href="#">Shopping Cart</a></ListGroup.Item>
           <ListGroup.Item><LoginLink /></ListGroup.Item>
         </ListGroup>

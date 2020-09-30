@@ -33,7 +33,7 @@ const Header = ({ siteTitle }) => {
             src={Logo}
             width="128"
             className="d-inline-block align-top"
-            alt="Ecommerce Website logo"
+            alt={`${siteTitle}`}
           />
         </Link>
         </Navbar.Brand>
