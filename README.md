@@ -1,11 +1,9 @@
 # BlueTapeCrew
 
 [![N|Solid](https://bluetapecrew.com/content/logo.png)](https://bluetapecrew.com)
-[![N|Solid](https://bluetapecrew.com/content/logo.png)](https://bluetapecrew.com)
 
-- 12-21-2019 - ASP.NET 4.5 to .NET Core 3.1 Migration Complete
+- 12-21-2019 - ASP.NET 4.5 to .NET Core 3.1 Migration Complete [React Code](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
 - 10-17-2020 - Merged React Front-End Work into develop branch
-
 
 BlueTapeCrew is a client website from my freelancing days
 
