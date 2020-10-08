@@ -7,9 +7,6 @@
 
 BlueTapeCrew is a client website from my freelancing days
 
-I was far less experienced when I initially pushed this to production and have been improving the source gradually over time.
-
-
 ## Features
   - Front end based on [KeenThemes] Metronic Store Template
   - Paypal integration
@@ -21,14 +18,12 @@ I was far less experienced when I initially pushed this to production and have b
  
 ## Tech
 BlueTapeCrew uses a typical .NET stack:
-- Anemic Domain Model W/Service Layer
-- Dependency Injection
-- I did not use an existing schema or site design.
+- Developing new React UI with GraphQL Backend [React Client](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
+- N-Layer Organization
 - ASP.NET Core MVC
-- SQL Server
+- SQL Server / Entity Framework Migrations
 - Razor
-- AngularJS
-- JQuery
+- AngularJS / JQuery
 - HTML5
 - CSS
 
@@ -39,16 +34,9 @@ BlueTapeCrew uses a typical .NET stack:
 *I am open to contributions, and you are welcome to use the site code with one caveat; the Admin contains elements from a purchased templates, you must purchase a license from [KeenThemes] (Metronic Admin Template)
 
 ## Roadmap
-- Impliment Admin & Client Side SPA w/modern Javascript Framework
-- Social Logins: (as of 12/21 broken from .NET Core config)
-- Write Unit tests
-- Configure Scope of DI Container
-- Add support for multi-tenancy
-- Strip template elements from Admin
-- Complete Admin functionality so site is fully configurable from UI
-- Complete de-branding of the source
-- Replace stored procedures and views with ORM queries
-
+- New React front-end [React Code](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
+- Contining Development in REACT site with GraphQL interface
+-
 ## Installation
 
 ### Environment
@@ -59,6 +47,7 @@ BlueTapeCrew uses a typical .NET stack:
  - DefaultConnection
 
 ### Databae Migrations
+Now lives in the Entities Project
 Add Code-First Migration from Package Manager Console
 (You will have to do this once for each connection string.  Follow the prompts in package manager console)
 ```sh
