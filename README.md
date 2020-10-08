@@ -7,6 +7,7 @@ BlueTapeCrew is a client website from my freelancing days
 I was far less experienced when I initially pushed this to production and have been improving the source gradually over time.
 
 12-21-2019 - ASP.NET 4.5 to .NET Core 3.1 Migration Complete
+10-17-2020 - Merged React Front-End Work into develop branch
 
 ## Features
   - Front end based on [KeenThemes] Metronic Store Template
