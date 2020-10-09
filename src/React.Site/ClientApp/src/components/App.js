@@ -4,22 +4,11 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import Home from './Home'
 import PreHeader from './PreHeader'
 import { Container } from 'react-bootstrap'
-import { gql, useQuery } from "@apollo/client";
 import Login from './Login';
 import { AUTH_TOKEN } from '../constants'
 import Account from './Account';
 import { selectSiteProfile, fetchSiteProfileAsync } from '../store/siteProfileSlice';
 import { useSelector, useDispatch } from 'react-redux';
-
-export const GET_PROFILE = gql`
-{
-  siteProfile {
-    contactPhoneNumber
-    contactEmailAddress
-    siteTitle
-  }
-}
-`;
 
 const App =() => {
   const dispatch = useDispatch();
@@ -27,8 +16,6 @@ const App =() => {
   const siteProfile = useSelector(selectSiteProfile);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { data } = useQuery(GET_PROFILE);
-  const profile = data?.siteProfile;
 
   //todo: use state management or session
   const logOutCallback = () => {
@@ -37,7 +24,6 @@ const App =() => {
   }
 
   useEffect(() => {
-    //console.log(siteProfile)
     if(localStorage.getItem(AUTH_TOKEN))
       setIsLoggedIn(true);
   })
@@ -45,8 +31,8 @@ const App =() => {
   return (
     <Router>
       <Container fluid>
-        <PreHeader logOutCallback={logOutCallback} isLoggedin={isLoggedIn} {...profile} />
-        <Header {...profile} />
+        <PreHeader logOutCallback={logOutCallback} isLoggedin={isLoggedIn} {...siteProfile} />
+        <Header {...siteProfile} />
         <Switch>
         <Route exact path="/">
           <Redirect to="/home" />
