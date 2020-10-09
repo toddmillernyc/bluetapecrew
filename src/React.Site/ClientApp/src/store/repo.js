@@ -18,5 +18,13 @@ const GET_CATEGORIES = gql`
   }
 }
 `;
-
 export const getCategories = () => client.query({query:GET_CATEGORIES});
+
+const LOGIN_MUTATION = gql`
+mutation login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+  }
+}
+`;
+export const login = credentials => client.mutate({ variables: credentials, mutation: LOGIN_MUTATION });
