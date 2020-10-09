@@ -1,29 +1,15 @@
 import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { gql, useQuery } from "@apollo/client";
 import Logo from '../img/logo.png';
 import { Link } from "react-router-dom";
-
-export const GET_CATEGORIES = gql`
-  {
-    categories(where: { published: true }, order_by: { position: ASC }) {
-      name
-      productCategories{
-        product {
-          id
-          productName
-        }
-      }
-    }
-  }
-`;
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCategories, getCategoriesAsync } from '../store/categoriesSlice';
 
 const Header = ({ siteTitle }) => {
-
-  const { data, loading, error } = useQuery(GET_CATEGORIES);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{JSON.stringify(error)}(</p>;
-  if (!data) return <p>Not Found</p>;
+  
+   const dispatch = useDispatch();
+   dispatch(getCategoriesAsync());
+   const categories = useSelector(selectCategories);
 
   return (
       <Navbar bg="light">
@@ -40,19 +26,18 @@ const Header = ({ siteTitle }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-
-            {data.categories.map(category => (
-              <NavDropdown key={category.name} title={category.name} id="basic-nav-dropdown">
-                {
-                  category.productCategories.map(productCategory => {
-                    const product = productCategory.product
-                    return <NavDropdown.Item key={product.productName}>{product.productName}</NavDropdown.Item>
-                  })
-                }
-              </NavDropdown>
-            ))
-            }
-
+          {categories.map(category => (
+            <NavDropdown key={category.name} title={category.name} id="basic-nav-dropdown">
+              {
+                category.productCategories.map(productCategory => {
+                  const product = productCategory.product
+                  return <NavDropdown.Item key={product.productName}>{product.productName}</NavDropdown.Item>
+                })
+              }
+            </NavDropdown>
+          ))
+          }
+   
           </Nav>
         </Navbar.Collapse>
       </Navbar>

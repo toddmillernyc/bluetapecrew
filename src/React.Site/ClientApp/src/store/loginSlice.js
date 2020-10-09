@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ApolloClient,InMemoryCache, gql} from "@apollo/client";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
 export const loginSlice = createSlice({
   name: 'login',
@@ -23,7 +23,7 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { login, logout} = loginSlice.actions;
+export const { login, logout } = loginSlice.actions;
 
 const client = new ApolloClient({
   uri: 'https://localhost:5001',
@@ -38,18 +38,18 @@ export const loginAsync = loginCredentials => dispatch => {
       token
     }
   }
-`;
+  `;
 
-client.mutate({
-  variables: loginCredentials,
-  mutation: LOGIN_MUTATION
-})
-.then(result => {
-  const token = result.data?.login?.token;
-  if(!token) return;
-  dispatch(login({ token, email: loginCredentials.email}));
- })
-.catch(error => { console.log(error) });
+  client.mutate({
+    variables: loginCredentials,
+    mutation: LOGIN_MUTATION
+  })
+    .then(result => {
+      const token = result.data?.login?.token;
+      if (!token) return;
+      dispatch(login({ token, email: loginCredentials.email }));
+    })
+    .catch(error => { console.log(error) });
 };
 
 export const selectIsLoggedIn = state => state.login.isLoggedIn;
