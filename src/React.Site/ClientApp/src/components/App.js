@@ -8,6 +8,8 @@ import { gql, useQuery } from "@apollo/client";
 import Login from './Login';
 import { AUTH_TOKEN } from '../constants'
 import Account from './Account';
+import { selectSiteProfile, fetchSiteProfileAsync } from '../store/siteProfileSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const GET_PROFILE = gql`
 {
@@ -20,8 +22,11 @@ export const GET_PROFILE = gql`
 `;
 
 const App =() => {
+  const dispatch = useDispatch();
+  dispatch(fetchSiteProfileAsync());
+  const siteProfile = useSelector(selectSiteProfile);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
   const { data } = useQuery(GET_PROFILE);
   const profile = data?.siteProfile;
 
@@ -32,6 +37,7 @@ const App =() => {
   }
 
   useEffect(() => {
+    //console.log(siteProfile)
     if(localStorage.getItem(AUTH_TOKEN))
       setIsLoggedIn(true);
   })

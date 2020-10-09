@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ApolloClient,InMemoryCache} from "@apollo/client";
 
 export const userProfileSlice = createSlice({
   name: 'userProfile',
@@ -25,9 +24,3 @@ export const userProfileSlice = createSlice({
 });
 
 export const { getProfile } = userProfileSlice.actions;
-
-const client = new ApolloClient({
-  uri: 'https://localhost:5001',
-  cache: new InMemoryCache()
-});
-

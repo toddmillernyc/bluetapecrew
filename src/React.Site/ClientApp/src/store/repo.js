@@ -32,3 +32,14 @@ export const login = credentials => client.mutate({
   `
 });
 
+export const getSiteProfile = () => client.query({
+  query: gql`
+  {
+    siteProfile {
+      contactPhoneNumber
+      contactEmailAddress
+      siteTitle
+    }
+  }
+  `
+});
