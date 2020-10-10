@@ -19,5 +19,5 @@ export const fetchImageAsync = imageId => dispatch => {
 };
 
 export const selectImage = state => state.images;
-
+   
 export default imagesSlice.reducer;
