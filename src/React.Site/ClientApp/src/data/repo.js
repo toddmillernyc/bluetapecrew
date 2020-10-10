@@ -26,6 +26,7 @@ export const login = credentials => client.mutate({
   mutation: gql`
     mutation login($email: String!, $password: String!) {
       login(email: $email, password: $password) {
+        email
         token
       }
     }
@@ -63,6 +64,22 @@ export const getProducts = () => client.query({
       id
       name: productName
       imageId
+    }
+  }
+  `
+});
+
+export const getUserProfile = email => client.query({
+  variables: { emailAddress: email },
+  query: gql`
+  {
+    userProfile {
+      firstName
+      lastName
+      address
+      city
+      state
+      postalCode
     }
   }
   `

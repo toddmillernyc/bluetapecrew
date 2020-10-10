@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getUserProfile } from '../data/repo';
 
-export const userProfileSlice = createSlice({
+const userProfileSlice = createSlice({
   name: 'userProfile',
   initialState: {
     firstName: '',
@@ -13,14 +14,23 @@ export const userProfileSlice = createSlice({
   reducers: {
     getProfile: (state, action) => {
       const payload = action.payload;
-      state.firstName = payload.firstName;
-      state.lastName = payload.lastName;
-      state.address = payload.address;
-      state.city = payload.city;
-      state.state = payload.state;
-      state.postalCode = payload.postalCod;
+      console.log(payload)
+      // state.firstName = payload.firstName;
+      // state.lastName = payload.lastName;
+      // state.address = payload.address;
+      // state.city = payload.city;
+      // state.state = payload.state;
+      // state.postalCode = payload.postalCod;
     }
   }
 });
 
-export const { getProfile } = userProfileSlice.actions;
+
+export const fetchUserProfileAsync = email => dispatch => {
+  const { getProfile } = userProfileSlice.actions;
+  getUserProfile(email).then(result => dispatch(getProfile(result)));
+}
+
+export const userProfileSelect = state => state.userProfile;
+
+export default userProfileSlice.reducer;

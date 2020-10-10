@@ -7,7 +7,7 @@ import { Container } from 'react-bootstrap'
 import Login from './Login';
 import Account from './Account';
 import { refreshSessionAsync } from '../store/loginSlice';
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchSiteProfileAsync } from '../store/siteProfileSlice';
 
 const App =() => {

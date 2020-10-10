@@ -15,7 +15,6 @@ const loginSlice = createSlice({
       if(!loginData) return;
       const token = loginData.token;
       if(!token) return;
-
       state.email = loginData.email;
       state.isLoggedIn = true;
       state.token = token
@@ -49,5 +48,6 @@ export const loginAsync = loginCredentials => dispatch => {
 export const refreshSessionAsync = () => dispatch => dispatch(refreshSession());
 
 export const selectIsLoggedIn = state => state.login.isLoggedIn;
+export const selectEmail = state => state.login.email;
 
 export default loginSlice.reducer;
