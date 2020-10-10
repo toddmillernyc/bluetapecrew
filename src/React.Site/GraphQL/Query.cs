@@ -23,7 +23,7 @@ namespace React.Site.GraphQL
         {
             var imageBytes = (await db.Images.FindAsync(id)).ImageData;
             var base64ImageString = Convert.ToBase64String(imageBytes);
-            return new ImageData {Src = base64ImageString};
+            return new ImageData {Id = id, Src = base64ImageString};
         }
 
         public IQueryable<Product> GetProducts([Service] BtcEntities db) => db.Products;

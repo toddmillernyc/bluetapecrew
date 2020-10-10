@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login } from './repo';
+import { login } from '../data/repo';
+import { AUTH_TOKEN } from '../constants'
 
-export const loginSlice = createSlice({
+const loginSlice = createSlice({
   name: 'login',
   initialState: {
     email: '',
@@ -10,33 +11,42 @@ export const loginSlice = createSlice({
   },
   reducers: {
     updateLogin: (state, action) => {
-      const payload = action.payload;
-      state.email = payload.email;
-      state.isLoggedIn = payload.token != null;
-      state.token = payload.token
+      const loginData = action.payload.data.login;
+      if(!loginData) return;
+      const token = loginData.token;
+      if(!token) return;
+
+      state.email = loginData.email;
+      state.isLoggedIn = true;
+      state.token = token
+      localStorage.clear();
+      localStorage.setItem(AUTH_TOKEN, token);
     },
     logout: state => {
       state.email = '';
       state.isLoggedIn = false;
       state.token = ''
+      localStorage.clear();
+    },
+    refreshSession: state => {
+      const token = localStorage.getItem(AUTH_TOKEN);
+      if(!token) return;
+      //todo: validate token if exists
+      state.token = token;
+      state.isLoggedIn = true;
     }
   },
 });
 
-export const { updateLogin, logout } = loginSlice.actions;
+export const { logout } = loginSlice.actions;
+const { refreshSession } = loginSlice.actions;
 
 export const loginAsync = loginCredentials => dispatch => {
-
-  login(loginCredentials).then(result => {
-      const token = result.data?.login?.token;
-      if (!token) return;
-      dispatch(updateLogin({ token, email: loginCredentials.email }));
-    })
-    .catch(error => { 
-      console.log(error)
-    });
-    
+  const { updateLogin } = loginSlice.actions;
+  login(loginCredentials).then(result => {dispatch(updateLogin(result)); })
 };
+
+export const refreshSessionAsync = () => dispatch => dispatch(refreshSession());
 
 export const selectIsLoggedIn = state => state.login.isLoggedIn;
 

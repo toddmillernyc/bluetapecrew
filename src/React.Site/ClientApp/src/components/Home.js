@@ -1,27 +1,18 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap'
-import { gql, useQuery } from "@apollo/client";
 import ProductCard from './ProductCard';
-
-export const GET_PRODUCTS = gql`
-{
-  products {
-    id
-    name: productName
-    imageId
-  }
-}
-`;
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsAsync, selectProducts } from '../store/productsSlice';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  dispatch(fetchProductsAsync());
   
-  const { data, loading, error } = useQuery(GET_PRODUCTS);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{JSON.stringify(error)}(</p>;
-  if(!data) return <p>Not Found</p>;
+  const products = useSelector(selectProducts)
+
   return (
     <Row>
-      {data.products.map(product => 
+      {products.map(product => 
           <Col key={product.id} >
             <ProductCard {...product} />
           </Col>)

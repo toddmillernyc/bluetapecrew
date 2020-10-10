@@ -1,22 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCategories } from './repo';
+import { getCategories } from '../data/repo';
 
-export const categoriesSlice = createSlice({
+const categoriesSlice = createSlice({
   name: 'categories',
   initialState: { data: [] },
   reducers: {
     updateCategories: (state, action) => {
-      state.data = action.payload;
+      state.data = action.payload.data.categories;
     }
   }
 });
 
-export const { updateCategories } = categoriesSlice.actions;
-
 export const getCategoriesAsync = () => dispatch => {
-  getCategories().then(result => {
-    dispatch(updateCategories(result.data.categories));
-  }) 
+  getCategories()
+    .then(result => dispatch(categoriesSlice.actions.updateCategories(result))) 
 };
 
 export const selectCategories = state => state.categories.data;

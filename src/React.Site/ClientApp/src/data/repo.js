@@ -43,3 +43,27 @@ export const getSiteProfile = () => client.query({
   }
   `
 });
+
+export const getImage = imageId => client.query({
+  variables: { id: imageId },
+  query: gql`
+  query ImageData($id: Int!) {
+    imageData(id: $id) {
+      id
+      src
+    }
+  }
+`
+});
+
+export const getProducts = () => client.query({
+  query: gql`
+  {
+    products {
+      id
+      name: productName
+      imageId
+    }
+  }
+  `
+});

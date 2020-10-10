@@ -30,6 +30,7 @@ const Login = () => {
               type="email"
               className="form-control"
               placeholder="Enter email"
+              autoComplete="username"
             />
           </div>
           <div className="form-group">
@@ -39,7 +40,8 @@ const Login = () => {
               onChange={e=>setPassword(e.target.value)}
               type="password"
               className="form-control"
-              placeholder="Enter password" />
+              placeholder="Enter password"
+              autoComplete="current-password" />
           </div>
           <div className="form-group form-check">
             <label className="form-check-label"></label>
@@ -54,8 +56,6 @@ const Login = () => {
       <Col></Col>
       <Col></Col>
     </Row>
-
-  
 }
 
 export default Login;

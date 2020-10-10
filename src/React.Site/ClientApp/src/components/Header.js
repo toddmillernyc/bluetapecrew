@@ -4,12 +4,14 @@ import Logo from '../img/logo.png';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCategories, getCategoriesAsync } from '../store/categoriesSlice';
+import { selectSiteProfile } from '../store/siteProfileSlice';
 
-const Header = ({ siteTitle }) => {
+const Header = () => {
   
    const dispatch = useDispatch();
    dispatch(getCategoriesAsync());
    const categories = useSelector(selectCategories);
+   const siteProfile = useSelector(selectSiteProfile);
 
   return (
       <Navbar bg="light">
@@ -19,7 +21,7 @@ const Header = ({ siteTitle }) => {
             src={Logo}
             width="128"
             className="d-inline-block align-top"
-            alt={`${siteTitle}`}
+            alt={`${siteProfile.siteTitle}`}
           />
         </Link>
         </Navbar.Brand>

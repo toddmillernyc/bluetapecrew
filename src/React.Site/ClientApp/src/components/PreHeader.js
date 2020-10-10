@@ -4,10 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from './LoginLink';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectSiteProfile } from '../store/siteProfileSlice';
 
 const iconStyle = { color: "#8AB7D5" }
 
-const PreHeader = ({ contactEmailAddress, contactPhoneNumber }) => {
+const PreHeader = () => {
+  
+  const vm = useSelector(selectSiteProfile);
 
   return (
     <Row>
@@ -15,11 +19,11 @@ const PreHeader = ({ contactEmailAddress, contactPhoneNumber }) => {
         <ListGroup horizontal>
           <ListGroup.Item>
             <FontAwesomeIcon icon={faPhone} style={iconStyle} />&nbsp;
-            {contactPhoneNumber}
+            {vm.contactPhoneNumber}
           </ListGroup.Item>
           <ListGroup.Item>
             <FontAwesomeIcon icon={faEnvelope} style={iconStyle} />&nbsp;
-            <a href="mailto:bluetapecrew@gmail.com">{contactEmailAddress}</a>
+            <a href={`mailto:${vm.contactEmailAddress}`} >{vm.contactEmailAddress}</a>
           </ListGroup.Item>
         </ListGroup>
       </Col>

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getSiteProfile } from './repo';
+import { getSiteProfile } from '../data/repo';
 
 export const siteProfileSlice = createSlice({
   name: 'siteProfile',
@@ -18,13 +18,12 @@ export const siteProfileSlice = createSlice({
   }
 });
 
-export const { updateSiteProfile } = siteProfileSlice.actions;
+const { updateSiteProfile } = siteProfileSlice.actions;
 
 export const fetchSiteProfileAsync = () => dispatch => {
   getSiteProfile().then(result => {
     dispatch(updateSiteProfile(result.data.siteProfile))
   }) 
-
 };
 
 export const selectSiteProfile = state => state.siteProfile;
