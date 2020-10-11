@@ -23,7 +23,12 @@ namespace React.Site.GraphQL
             return new TokenResponse { Email = email, Token = token } ;
         }
 
-        private async Task<ApplicationUser> ValidateUser(UserManager<ApplicationUser> userManager, string email, string password)
+        public async Task UpdateUser([Service] UserManager<ApplicationUser> userManager, ApplicationUser user)
+        {
+            
+        }
+        
+        private async Task<ApplicationUser> ValidateUser([Service] UserManager<ApplicationUser> userManager, string email, string password)
         {
             var identityUser = await userManager.FindByEmailAsync(email);
             if (identityUser == null) return null;

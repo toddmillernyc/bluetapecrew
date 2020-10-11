@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getUserProfile } from '../data/repo';
+import { getUserProfile, updateUser } from '../data/repo';
 
 const userProfileSlice = createSlice({
   name: 'userProfile',
@@ -13,22 +13,28 @@ const userProfileSlice = createSlice({
   },
   reducers: {
     getProfile: (state, action) => {
-      const payload = action.payload;
-      console.log(payload)
-      // state.firstName = payload.firstName;
-      // state.lastName = payload.lastName;
-      // state.address = payload.address;
-      // state.city = payload.city;
-      // state.state = payload.state;
-      // state.postalCode = payload.postalCod;
+      const { userProfile } = action.payload.data;
+      state.firstName = userProfile.firstName;
+      state.lastName = userProfile.lastName;
+      state.address = userProfile.address;
+      state.city = userProfile.city;
+      state.state = userProfile.state;
+      state.postalCode = userProfile.postalCode;
+    },
+    setProfile: (state, action) => {
+      console.log(action);
     }
   }
 });
 
+const { getProfile, setProfile } = userProfileSlice.actions;
 
 export const fetchUserProfileAsync = email => dispatch => {
-  const { getProfile } = userProfileSlice.actions;
   getUserProfile(email).then(result => dispatch(getProfile(result)));
+}
+
+export const setUserProfileAsync = userProfile => dispatch => {
+  updateUser(userProfile).then(result => dispatch(setProfile(result)));
 }
 
 export const userProfileSelect = state => state.userProfile;

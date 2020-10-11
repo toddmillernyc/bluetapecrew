@@ -2,16 +2,16 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../store/loginSlice';
+import { selectIsLoggedIn, selectEmail } from '../store/loginSlice';
 import UserProfileForm from './UserProfileForm';
 
 const Account = () => {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
+  
   return (
     isLoggedIn
-      ? <UserProfileForm />
+      ? <UserProfileForm  />
       : <Row>
           <Col>
             <p>Please log in to view your account.

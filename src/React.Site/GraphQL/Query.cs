@@ -30,7 +30,10 @@ namespace React.Site.GraphQL
 
         public async Task<PublicSiteProfile> GetSiteProfile([Service] BtcEntities db) => await db.PublicSiteProfiles.OrderByDescending(x=>x.Id).FirstOrDefaultAsync();
 
-        public async Task<ApplicationUser> GetUserProfile([Service] UserManager<ApplicationUser> userManager, string emailAddress) 
-            => await userManager.FindByEmailAsync(emailAddress);
+        public async Task<ApplicationUser> GetUserProfile([Service] UserManager<ApplicationUser> userManager,string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            return user;
+        }
     }
 }
