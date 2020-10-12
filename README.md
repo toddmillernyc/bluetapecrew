@@ -57,7 +57,7 @@ Update Database
 $ Update-Database
 ```
 
-### SQL Server Stored Procedures and Views
+### SQL Views
 You will need to create these stored procedures and Views on your SQL Database:
 #### CartView View
 ```sh
