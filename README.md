@@ -27,7 +27,7 @@ BlueTapeCrew uses a typical .NET stack:
 - HTML5
 - CSS
 
-* **Live Site: Azure Web App/SQL Server Instance** https://bluetapecrew.com
+* **Live Site: https://bluetapecrew.com
 
 ## Development
 
