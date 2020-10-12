@@ -35,7 +35,7 @@ BlueTapeCrew is a client website from my freelancing days
 ## Roadmap
 - New React front-end [React Code](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
 - Contining Development in REACT site with GraphQL interface
--
+
 ## Installation
 
 ### Environment
