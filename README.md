@@ -17,7 +17,6 @@ BlueTapeCrew is a client website from my freelancing days
   - GMail SMTP
  
 ## Tech
-BlueTapeCrew uses a typical .NET stack:
 - Developing new React UI with GraphQL Backend [React Client](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
 - N-Layer Organization
 - ASP.NET Core MVC
