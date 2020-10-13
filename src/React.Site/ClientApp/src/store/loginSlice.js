@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login } from '../data/repo';
 import { AUTH_TOKEN } from '../constants'
+import jwt_decode from "jwt-decode";
 
 const loginSlice = createSlice({
   name: 'login',
@@ -30,7 +31,7 @@ const loginSlice = createSlice({
     refreshSession: state => {
       const token = localStorage.getItem(AUTH_TOKEN);
       if(!token) return;
-      //todo: validate token if exists
+      state.email = jwt_decode(token).email;
       state.token = token;
       state.isLoggedIn = true;
     }

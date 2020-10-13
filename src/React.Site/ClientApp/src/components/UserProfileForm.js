@@ -20,14 +20,14 @@ const UserProfileForm = () => {
   useEffect(() => {
     if(email) {
       dispatch(fetchUserProfileAsync(email));
-      if(profile) {
-        setFirstName(profile.firstName);
-        setLastName(profile.lastName);
-        setAddress(profile.address);
-        setCity(profile.city);
-        setState(profile.state);
-        setPostalCode(profile.postalCode);
-      }
+    }
+    if(profile) {
+      setFirstName(profile.firstName);
+      setLastName(profile.lastName);
+      setAddress(profile.address);
+      setCity(profile.city);
+      setState(profile.state);
+      setPostalCode(profile.postalCode);
     }
   });
 
