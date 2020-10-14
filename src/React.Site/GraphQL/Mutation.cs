@@ -23,9 +23,18 @@ namespace React.Site.GraphQL
             return new TokenResponse { Email = email, Token = token } ;
         }
 
-        public async Task UpdateUser([Service] UserManager<ApplicationUser> userManager, ApplicationUser user)
+        public async Task<UserProfile> UpdateUser([Service] UserManager<ApplicationUser> userManager, UserProfile user)
         {
-            
+            var entityUser = await userManager.FindByIdAsync(user.Id);
+            entityUser.Address = user.Address;
+            entityUser.City = user.City;
+            entityUser.Id = user.Id;
+            entityUser.State = user.State;
+            entityUser.FirstName = user.FirstName;
+            entityUser.LastName = user.LastName;
+            entityUser.PostalCode = user.PostalCode;
+            await userManager.UpdateAsync(entityUser);
+            return user;
         }
         
         private async Task<ApplicationUser> ValidateUser([Service] UserManager<ApplicationUser> userManager, string email, string password)

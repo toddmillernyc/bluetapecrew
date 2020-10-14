@@ -74,6 +74,7 @@ export const getUserProfile = email => client.query({
   query: gql`
     query UserProfile($email: String!) {
       userProfile(email: $email) {
+        id
         firstName
         lastName
         address
@@ -85,11 +86,18 @@ export const getUserProfile = email => client.query({
   `
 });
 
-export const updateUser = applicationUser => client.mutate({ 
-  variables: applicationUser,
+export const updateUser = user => client.mutate({ 
+  variables: { userProfile: user },
   mutation: gql`
-    mutation updateUser($user: Any!) {
-      updateUser(user: $user) {
+    mutation UpdateUser($userProfile: UserProfileInput) {
+      updateUser(user: $userProfile) {
+        id
+        firstName
+        lastName
+        address
+        city
+        state
+        postalCode
       }
     }
   `

@@ -74,6 +74,7 @@ namespace React.Site
 
             services.AddGraphQL(
                 SchemaBuilder.New()
+
                     .AddQueryType<Query>()
                     .AddMutationType<Mutation>()
                     .Create(),

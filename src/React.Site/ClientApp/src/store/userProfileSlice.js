@@ -4,6 +4,7 @@ import { getUserProfile, updateUser } from '../data/repo';
 const userProfileSlice = createSlice({
   name: 'userProfile',
   initialState: {
+    id: '',
     firstName: '',
     lastName: '',
     address: '',
@@ -11,9 +12,11 @@ const userProfileSlice = createSlice({
     state: '',
     postalCode: ''
   },
+  //todo: make these reducers DRY -- having issue sending state to mapping funciton
   reducers: {
     getProfile: (state, action) => {
       const { userProfile } = action.payload.data;
+      state.id = userProfile.id;
       state.firstName = userProfile.firstName;
       state.lastName = userProfile.lastName;
       state.address = userProfile.address;
@@ -22,7 +25,14 @@ const userProfileSlice = createSlice({
       state.postalCode = userProfile.postalCode;
     },
     setProfile: (state, action) => {
-      console.log(action);
+      const { updateUser } = action.payload.data;
+      state.id = updateUser.id;
+      state.firstName = updateUser.firstName;
+      state.lastName = updateUser.lastName;
+      state.address = updateUser.address;
+      state.city = updateUser.city;
+      state.state = updateUser.state;
+      state.postalCode = updateUser.postalCode;
     }
   }
 });

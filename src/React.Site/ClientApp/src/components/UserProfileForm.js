@@ -1,87 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Col, Form, } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { fetchUserProfileAsync, setUserProfileAsync } from '../store/userProfileSlice';
 import { selectEmail } from '../store/loginSlice';
 import { userProfileSelect } from '../store/userProfileSlice';
+import { FormGroup, FormGroupCol } from './FormGroup';
 
 const UserProfileForm = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [postalCode, setPostalCode] = useState('');
+  const [vm, setVm] = useState({});
 
   const dispatch = useDispatch();
   const email = useSelector(selectEmail);
   const profile = useSelector(userProfileSelect);
 
   useEffect(() => {
-    if(email) {
-      dispatch(fetchUserProfileAsync(email));
-    }
-    if(profile) {
-      setFirstName(profile.firstName);
-      setLastName(profile.lastName);
-      setAddress(profile.address);
-      setCity(profile.city);
-      setState(profile.state);
-      setPostalCode(profile.postalCode);
-    }
+    if (!profile.id) dispatch(fetchUserProfileAsync(email));
+    else if(!vm.id) setVm(profile);
   });
 
   const onSubmit = event => {
     event.preventDefault();
-    dispatch(setUserProfileAsync({
-      firstName,
-      lastName,
-      address,
-      city,
-      state,
-      postalCode
-    }));
+    dispatch(setUserProfileAsync(vm));
   }
 
-  return(email && profile &&
-    <Form onSubmit={onSubmit}>
+  const handleChange = e => {
+    const { id, value } = e.target;
+    const updateVm = { ...vm, [id]: value };
+    setVm(updateVm)
+  }
 
-      <Form.Group controlId="userProfileFirstName">
-        <Form.Label>First Name</Form.Label>
-        <Form.Control value={firstName} onChange={e => setFirstName(e.target.value)} />
-      </Form.Group>
-
-      <Form.Group controlId="userProfileLastName">
-        <Form.Label>Last Name</Form.Label>
-        <Form.Control value={lastName} onChange={e => setLastName(e.target.value)} />
-      </Form.Group>
-
-      <Form.Group controlId="userProfileAddress">
-        <Form.Label>Address</Form.Label>
-        <Form.Control value={address} onChange={e => setAddress(e.target.value)} />
-      </Form.Group>
-
-      <Form.Row>
-        <Form.Group as={Col} controlId="userProfileCity">
-          <Form.Label>City</Form.Label>
-          <Form.Control value={city} onChange={e => setCity(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="userProfileState">
-          <Form.Label>State</Form.Label>
-          <Form.Control value={state} onChange={e => setState(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="userPostalCode">
-          <Form.Label>Postal Code</Form.Label>
-          <Form.Control value={postalCode} onChange={e => setPostalCode(e.target.value)} />
-        </Form.Group>
-      </Form.Row>
-
-      <Button variant="primary" type="submit">
-        Submit
-  </Button>
-    </Form>
+  const titleStyle = { marginBottom: '5%', marginTop: '8%' };
+  
+  return (email && profile.id &&
+    <Row>
+      <Col />
+      <Col>
+        <Form onSubmit={onSubmit}>
+          <h1 className="h3" style={titleStyle}>Your Profile</h1>
+          <FormGroup id="firstName" label="First Name" defaultValue={vm.firstName} onChange={handleChange} />
+          <FormGroup id="lastName" label="Last Name" defaultValue={vm.lastName} onChange={handleChange} />
+          <FormGroup id="address" label="Address" defaultValue={vm.address} onChange={handleChange} />
+          <Form.Row>
+            <FormGroupCol id="city" label="City" defaultValue={vm.city} onChange={handleChange} />
+            <FormGroupCol id="state" label="State" defaultValue={vm.state} onChange={handleChange} />
+            <FormGroupCol id="postalCode" label="Zip" defaultValue={vm.postalCode} onChange={handleChange} />
+          </Form.Row>
+          <Button variant="primary" type="submit">Save</Button>
+        </Form>
+      </Col>
+      <Col />
+    </Row>
   )
 }
 
