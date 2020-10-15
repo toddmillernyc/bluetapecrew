@@ -15,7 +15,7 @@ const PreHeader = () => {
 
   return (
     <Row>
-      <Col md={4} sm={6} xs={3}>
+      <Col md={4} xs={12}>
         <ListGroup horizontal>
           <ListGroup.Item>
             <FontAwesomeIcon icon={faPhone} style={iconStyle} />&nbsp;
@@ -27,7 +27,7 @@ const PreHeader = () => {
           </ListGroup.Item>
         </ListGroup>
       </Col>
-      <Col md={{ span: 4, offset: 4 }} sm={6} xs={3}>
+      <Col md={{ span: 4, offset: 4 }} sm={6} xs={12}>
         <ListGroup horizontal>
           <ListGroup.Item> <Link to='/account'>My Account</Link></ListGroup.Item>
           <ListGroup.Item><a href="#">Shopping Cart</a></ListGroup.Item>

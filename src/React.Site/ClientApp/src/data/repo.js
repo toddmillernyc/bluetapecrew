@@ -40,6 +40,7 @@ export const getSiteProfile = () => client.query({
       contactPhoneNumber
       contactEmailAddress
       siteTitle
+      aboutUs
     }
   }
   `

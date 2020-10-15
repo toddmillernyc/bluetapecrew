@@ -14,7 +14,7 @@ const Header = () => {
    const siteProfile = useSelector(selectSiteProfile);
 
   return (
-      <Navbar bg="light">
+      <Navbar bg="light" expand="lg">
         <Navbar.Brand>
         <Link to='/home'>
         <img

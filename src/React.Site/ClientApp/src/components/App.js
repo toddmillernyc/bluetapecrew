@@ -9,8 +9,10 @@ import Account from './Account';
 import { refreshSessionAsync } from '../store/loginSlice';
 import { useDispatch } from 'react-redux';
 import { fetchSiteProfileAsync } from '../store/siteProfileSlice';
+import Footer from './Footer';
 
-const App =() => {
+const App = () => {
+  
   const dispatch = useDispatch();
   dispatch(refreshSessionAsync());
   dispatch(fetchSiteProfileAsync());
@@ -21,13 +23,15 @@ const App =() => {
         <PreHeader />
         <Header />
         <Switch>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/home" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/account" component={Account} />
-      </Switch>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route path="/home" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/account" component={Account} />
+        </Switch>
+        <hr />
+        <Footer />
       </Container>
     </Router>
   )

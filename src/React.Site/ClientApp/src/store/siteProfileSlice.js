@@ -6,7 +6,8 @@ export const siteProfileSlice = createSlice({
   initialState: {     
     contactEmailAddress: '',
     contactPhoneNumber: '', 
-    siteTitle: ''
+    siteTitle: '',
+    aboutUs: ''
   },
   reducers: {
     updateSiteProfile: (state, action) => {
@@ -14,6 +15,7 @@ export const siteProfileSlice = createSlice({
       state.contactEmailAddress = siteProfile.contactEmailAddress;
       state.contactPhoneNumber = siteProfile.contactPhoneNumber;
       state.siteTitle = siteProfile.siteTitle;
+      state.aboutUs = siteProfile.aboutUs;
     }
   }
 });
