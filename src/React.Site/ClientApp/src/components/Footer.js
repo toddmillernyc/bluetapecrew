@@ -24,6 +24,9 @@ const Footer = () => {
                 <p>{vm.aboutUs}</p>
             </Col>
             <Col xs={12} sm={6} md={4} lg={4} xl={4}>
+                <h5>Privacy Policy</h5>
+            </Col>
+            <Col xs={12} sm={6} md={4} lg={4} xl={4}>
                 <h5>Contact</h5>
                 <ListGroup>
                     <ListGroup.Item style={listGroupStyle}>
@@ -35,9 +38,6 @@ const Footer = () => {
                         <a href={`mailto:${vm.contactEmailAddress}`} >{vm.contactEmailAddress}</a>
                     </ListGroup.Item>
                 </ListGroup>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={4} xl={4}>
-                <h5>Privacy Policy</h5>
             </Col>
         </Row>
     )

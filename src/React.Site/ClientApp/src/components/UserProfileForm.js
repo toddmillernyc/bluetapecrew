@@ -33,7 +33,7 @@ const UserProfileForm = () => {
   
   return (email && profile.id &&
     <Row>
-      <Col />
+      <Col className="d-none d-lg-block" />
       <Col>
         <Form onSubmit={onSubmit}>
           <h1 className="h3" style={titleStyle}>Your Profile</h1>
@@ -48,7 +48,7 @@ const UserProfileForm = () => {
           <Button variant="primary" type="submit">Save</Button>
         </Form>
       </Col>
-      <Col />
+      <Col className="d-none d-lg-block" />
     </Row>
   )
 }
