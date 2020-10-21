@@ -65,6 +65,17 @@ export const getProducts = () => client.query({
       id
       name: productName
       imageId
+      styles {
+        id
+        price
+        size {
+          order: sizeOrder
+          text: sizeText
+        }
+        color {
+          text: colorText
+        }
+      }
     }
   }
   `

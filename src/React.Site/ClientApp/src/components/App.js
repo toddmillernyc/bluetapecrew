@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header'
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Home from './Home'
-import PreHeader from './PreHeader'
 import { Container } from 'react-bootstrap'
 import Login from './Login';
 import Account from './Account';
@@ -20,7 +19,6 @@ const App = () => {
   return (
     <Router>
       <Container fluid>
-        <PreHeader />
         <Header />
         <Switch>
           <Route exact path="/">

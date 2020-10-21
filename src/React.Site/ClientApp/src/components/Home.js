@@ -11,7 +11,7 @@ const Home = () => {
   const products = useSelector(selectProducts)
 
   return (
-    <Row>
+    <Row style={{marginTop: '2%'}}>
       {products.map(product => 
           <Col key={product.id} >
             <ProductCard {...product} />

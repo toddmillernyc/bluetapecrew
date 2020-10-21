@@ -19,9 +19,6 @@ const Header = () => {
     padding: 0
   }
 
-  const navStyle = {
-
-    }
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>

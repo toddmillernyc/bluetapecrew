@@ -6,7 +6,17 @@ const productsSlice = createSlice({
   initialState: { data: [] },
   reducers: {
     updateProducts: (state, action) => {
-      state.data = action.payload.data.products;
+      const products = action.payload.data.products.map(product => {
+
+        const styles = product.styles.map(style => {
+          return {
+            styleId: style.id,
+            text: `${style.size.text} / ${style.color.text}`
+          };
+        });
+        return {...product, styles};
+      })
+      state.data = products;
     }
   }
 });

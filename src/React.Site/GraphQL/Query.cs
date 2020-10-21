@@ -26,7 +26,13 @@ namespace React.Site.GraphQL
             return new ImageData {Id = id, Src = base64ImageString};
         }
 
-        public IQueryable<Product> GetProducts([Service] BtcEntities db) => db.Products;
+        public IQueryable<Product> GetProducts([Service] BtcEntities db)
+            => db
+                .Products
+                .Include(s => s.Styles)
+                .ThenInclude(c => c.Color)
+                .Include(s => s.Styles)
+                .ThenInclude(sz => sz.Size);
 
         public async Task<PublicSiteProfile> GetSiteProfile([Service] BtcEntities db) => await db.PublicSiteProfiles.OrderByDescending(x=>x.Id).FirstOrDefaultAsync();
 
