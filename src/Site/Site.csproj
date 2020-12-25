@@ -10,6 +10,9 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'BlueTapeCrew' " />
   <ItemGroup>
+    <Content Remove="appsettings.Development.json" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="ClientApp\assets\images\favicon.ico" />
   </ItemGroup>
 
