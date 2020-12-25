@@ -17,7 +17,7 @@ namespace Btc.Tests
     [CollectionDefinition("IntegrationTest")]
     public class IntegrationTest : ICollectionFixture<IntegrationTextFixture> { }
 
-    public class IntegrationTextFixture : IDisposable
+    public class IntegrationTextFixture
     {
         //teardown objects
         private readonly ConcurrentBag<object> _objectsToDelete = new ConcurrentBag<object>();
@@ -51,19 +51,9 @@ namespace Btc.Tests
             Services = serviceCollection.BuildServiceProvider();
         }
 
-
-
         public void Teardown(object entity)
         {
             _objectsToDelete.Add(entity);
         }
-
-        public async void Dispose()
-        {
-
-        }
-
-
-
     }
 }
