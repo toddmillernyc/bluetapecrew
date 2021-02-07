@@ -1,8 +1,8 @@
 # BlueTapeCrew
 
 [![N|Solid](https://bluetapecrew.com/content/logo.png)](https://bluetapecrew.com)
-
-- 12-21-2019 - ASP.NET 4.5 to .NET Core 3.1 Migration Complete [React Code](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
+- 12-25-2020 - Upgrade .NET Core 3.1 to .NET Core 5 [React Code](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
+- 12-21-2019 - ASP.NET 4.5 to .NET Core 3.1 Migration Complete 
 - 10-17-2020 - Merged React Front-End Work into develop branch
 
 BlueTapeCrew is a client website from my freelancing days
@@ -34,7 +34,7 @@ BlueTapeCrew is a client website from my freelancing days
 
 ## Roadmap
 - New React front-end [React Code](https://github.com/toddmillernyc/bluetapecrew/tree/develop/src/React.Site/ClientApp/src)
-- Contining Development in REACT site with GraphQL interface
+- Continuing Development in REACT site with GraphQL interface
 
 ## Installation
 
