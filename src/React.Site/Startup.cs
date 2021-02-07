@@ -72,13 +72,13 @@ namespace React.Site
                     };
                 });
 
-            services.AddGraphQL(
-                SchemaBuilder.New()
+            //services.AddGraphQL(
+            //    SchemaBuilder.New()
 
-                    .AddQueryType<Query>()
-                    .AddMutationType<Mutation>()
-                    .Create(),
-                new QueryExecutionOptions { ForceSerialExecution = true });
+            //        .AddQueryType<Query>()
+            //        .AddMutationType<Mutation>()
+            //        .Create(),
+            //    new QueryExecutionOptions { ForceSerialExecution = true });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
