@@ -1,17 +1,11 @@
-using System.Reflection;
-using AutoMapper;
 using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Services.Extensions;
-using Site.Identity;
-using Site.Mappings;
-using Site.Services;
+using Site.Extensions;
 
 namespace Site
 {
@@ -19,47 +13,23 @@ namespace Site
     {
         public Startup(IConfiguration configuration) { Configuration = configuration; }
         public IConfiguration Configuration { get; }
-        
+
+        private string ConnectionString => Configuration.GetConnectionString("DefaultConnection");
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDistributedMemoryCache();
-            services.AddSession(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-            var defaultConnectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            services.AddDbContext<BtcEntities>(options => options.UseSqlServer(defaultConnectionString));
-            services.AddDbContext<IdentityEntities>(options => options.UseSqlServer(defaultConnectionString));
-
             services
-                .AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<IdentityEntities>();
-
-            services.AddControllersWithViews()
-                    .AddRazorRuntimeCompilation();
-            services.ConfigureApplicationCookie(options =>{  options.LoginPath = "/Account/Login"; });
-
-            //configure service layer middleware returns AutoMapper mappings
-            //haven't found a great way to add mappings from multiple assemblies yet
-            //todo: find a more elegant way to do this
-            var serviceMappings = services.AddServiceLayer();
-            var webMappings = Assembly.GetAssembly(typeof(WebMappings));
-            services.AddAutoMapper(webMappings, serviceMappings);
-
-            RegisterWebServices(services);
-
-        }
-
-        public static void RegisterWebServices(IServiceCollection services)
-        {
-            services.AddTransient<ICookieService, CookieService>();
-            services.AddTransient<ISessionService, SessionService>();
-            services.AddTransient<IUserRegistrationService, UserRegistrationService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IViewModelService, ViewModelService>();
+                .AddCors()
+                .AddDistributedMemoryCache()
+                .AddAndConfigureSession()
+                .AddDbContext<BtcEntities>(options => options.UseSqlServer(ConnectionString))
+                .AddIdentity(ConnectionString)
+                .AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
+            services
+                .ConfigureApplicationCookie(options =>{  options.LoginPath = "/Account/Login"; })
+                .RegisterAutoMapper()
+                .RegisterWebServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,13 +46,15 @@ namespace Site
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-
-
                 endpoints.MapControllers();
                 endpoints.MapAreaControllerRoute(
                     "admin",
