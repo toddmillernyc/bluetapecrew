@@ -11,11 +11,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-    @*<link href="~/Content/admin/components.css" id="style_components" rel="stylesheet" type="text/css"/>
-        <link href="~/Content/admin/plugins.css" rel="stylesheet" type="text/css"/>
-        <link href="~/Content/admin/layout.css" rel="stylesheet" type="text/css"/>
-        <link href="~/Content/admin/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>*@
-
     @RenderSection("Styles", false)
     <link rel="shortcut icon" href="~/favicon.ico" />
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -105,34 +100,6 @@
         </div>
     </div>
 
-    @*<script src="~/Content/Scripts/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.blockUI.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.cookie.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.uniform.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/bootstrap-switch.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/summernote/summernote.min.js" type="text/javascript"></script>
-    <script src="~/js/admin/metronic.js" type="text/javascript"></script>
-    <script src="~/js/admin/layout.js" type="text/javascript"></script>
-    <script src="~/js/admin/quick-sidebar.js" type="text/javascript"></script>
-    <script src="~/js/admin/index.js" type="text/javascript"></script>
-    <script src="~/js/admin/tasks.js" type="text/javascript"></script>*@
-    @*<script>
-        jQuery(document).ready(function() {
-            Metronic.init();
-            Layout.init();
-            QuickSidebar.init();
-            Index.init();
-            Index.initDashboardDaterange();
-            Index.initJQVMAP();
-            Index.initCalendar();
-            Index.initCharts();
-            Index.initChat();
-            Index.initMiniCharts();
-            Tasks.initDashboardWidget();
-            @RenderSection("DocumentReady",false)
-        });
-    </script>*@
 @RenderSection("Scripts", false)
 </body>
 </html>
