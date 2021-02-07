@@ -27,7 +27,6 @@ namespace Site
                 .AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services
-                .ConfigureApplicationCookie(options =>{  options.LoginPath = "/Account/Login"; })
                 .RegisterAutoMapper()
                 .RegisterWebServices();
         }
