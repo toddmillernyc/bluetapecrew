@@ -1,4 +1,5 @@
-﻿using Repositories.Interfaces;
+﻿using System;
+using Repositories.Interfaces;
 using Services.Interfaces;
 using Services.Models;
 using System.Collections.Generic;
@@ -48,7 +49,8 @@ namespace Services
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    ImageData = image.ImageData
+                    ImageData = Convert.ToBase64String(image.ImageData)
+
                 }); 
             }
             return model;
