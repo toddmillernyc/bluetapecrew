@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Services.Extensions;
 using Services.Interfaces;
 using Services.Models;
-using Site.Extensions;
 using Site.Services;
 
-namespace Site.ApiControllers
+namespace Site.Api
 {
     [ApiController]
     [Route("api/cart")]
@@ -46,7 +46,7 @@ namespace Site.ApiControllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.ToInnerExceptionMessage());
+                return BadRequest(ex.ToInner().Message);
             }
         }
     }

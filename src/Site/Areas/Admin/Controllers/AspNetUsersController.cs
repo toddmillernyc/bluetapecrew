@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Site.Identity;
+using Site.Security.Identity;
 using Site.ViewModels;
 
 namespace Site.Areas.Admin.Controllers

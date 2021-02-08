@@ -4,7 +4,7 @@ using Site.Areas.Admin.Models;
 using Microsoft.AspNetCore.Http;
 using Services.Models;
 using Site.Extensions;
-using Site.Identity;
+using Site.Security.Identity;
 
 namespace Site.Mappings
 {

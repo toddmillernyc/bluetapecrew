@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
-using Services.Models;
 using Site.Areas.Admin.Models;
 
-namespace Site.ApiControllers
+namespace Site.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     [ApiController]

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
-namespace Site.ApiControllers
+namespace Site.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     [ApiController]

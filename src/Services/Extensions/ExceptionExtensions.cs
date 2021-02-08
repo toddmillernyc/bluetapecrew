@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Site.Extensions
+namespace Services.Extensions
 {
     public static class ExceptionExtensions
     {
-        public static string ToInnerExceptionMessage(this Exception ex)
+        public static Exception ToInner(this Exception ex)
         {
             while (ex.InnerException != null) ex = ex.InnerException;
-            return ex.Message;
+            return ex;
         }
     }
 }

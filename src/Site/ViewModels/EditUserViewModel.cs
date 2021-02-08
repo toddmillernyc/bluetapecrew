@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Site.Identity;
+using Site.Security.Identity;
 
 namespace Site.ViewModels
 {

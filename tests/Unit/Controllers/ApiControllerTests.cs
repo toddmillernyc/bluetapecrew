@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Moq;
 using Services.Interfaces;
-using Site.ApiControllers;
+using Site.Controllers.Admin;
 using Xunit;
 
 namespace Unit.Controllers

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.Extensions.Logging;
 using PayPal;
 using PayPal.Api;
+using Services.Extensions;
 using Services.Interfaces;
 using Services.Models;
 
@@ -10,6 +12,13 @@ namespace Services
 {
     public class PaypalService : IPaypalService
     {
+        private readonly ILogger<PaypalService> _logger;
+
+        public PaypalService(ILogger<PaypalService> logger)
+        {
+            _logger = logger;
+        }
+
         private static Dictionary<string, string> GetConfig(string mode)
         {
             return new Dictionary<string, string> { { "mode", mode } };
@@ -17,7 +26,18 @@ namespace Services
 
         public string GetAccessToken(string clientId, string clientSecret, string mode)
         {
-            var accessToken = new OAuthTokenCredential(clientId, clientSecret, GetConfig(mode)).GetAccessToken();
+            var config = GetConfig(mode);
+            var credential = new OAuthTokenCredential(clientId, clientSecret, config);
+            var accessToken = "";
+            try
+            { 
+                accessToken = credential.GetAccessToken();
+            }
+            catch (Exception ex)
+            {
+                ex = ex.ToInner();
+                _logger.LogError(ex, ex.Message);
+            }
             return accessToken;
         }
 

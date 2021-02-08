@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Site.Models;
 
-namespace Site.ApiControllers
+namespace Site.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class CategoryPositionsController : ControllerBase
     {
         private readonly BtcEntities _db;

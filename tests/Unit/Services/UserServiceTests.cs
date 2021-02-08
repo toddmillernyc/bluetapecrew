@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Site.Identity;
+using Site.Security.Identity;
 using Site.Services;
 using Xunit;
 

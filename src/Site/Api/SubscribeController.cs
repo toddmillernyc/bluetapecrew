@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
-namespace Site.ApiControllers
+namespace Site.Api
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -25,7 +25,7 @@ namespace Site.ApiControllers
             {
                 await _emailSubscriptionService.Subscribe(emailAddress);
                 var subscriptionMessage = string.Format(SubscriptionMessage, emailAddress);
-                return Ok();
+                return Ok(subscriptionMessage);
             }
             catch (Exception ex)
             {

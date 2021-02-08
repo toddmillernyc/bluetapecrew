@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Site.Extensions;
+using Site.Security.Identity;
+using Site.Security.Jwt;
 
 namespace Site
 {
@@ -18,6 +20,7 @@ namespace Site
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddJwt(Configuration);
             services
                 .AddCors()
                 .AddDistributedMemoryCache()
@@ -51,7 +54,7 @@ namespace Site
                 .AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

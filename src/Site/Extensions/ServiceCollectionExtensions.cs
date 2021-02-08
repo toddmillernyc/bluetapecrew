@@ -1,9 +1,6 @@
 ﻿using System.Reflection;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Services.Extensions;
-using Site.Identity;
 using Site.Mappings;
 using Site.Services;
 
@@ -18,17 +15,6 @@ namespace Site.Extensions
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            return services;
-        }
-
-        public static IServiceCollection AddIdentity(this IServiceCollection services, string connectionString)
-        {
-            services
-                .AddDbContext<IdentityEntities>(options => options.UseSqlServer(connectionString))
-                .AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<IdentityEntities>();
-            services.ConfigureApplicationCookie(options => { options.LoginPath = "/Account/Login"; });
             return services;
         }
 

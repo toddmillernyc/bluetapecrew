@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Site.Identity
+namespace Site.Security.Identity
 {
     public class IdentityEntities : IdentityDbContext<ApplicationUser>
     {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Services.Interfaces;
 using Services.Models;
-using Site.Identity;
+using Site.Security.Identity;
 
 namespace Site.Services
 {

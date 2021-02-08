@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Models;
-using Site.Identity;
+using Site.Security.Identity;
 using Site.Services;
 using Site.ViewModels;
 
@@ -34,9 +34,9 @@ namespace Site.Controllers
         [Route("account")]
         public async Task<IActionResult> Index()
         {
-            var orders = await _orderService.GetBy(User.Identity.Name);
-            var user = await _userService.Find(User.Identity.Name);
-            var model = new ManageViewModel {Orders = orders, User = user};
+            var user = await _userService.Find(User.Identity?.Name);
+            var orders = await _orderService.GetBy(User.Identity?.Name);
+            var model = new ManageViewModel(user, orders);
             return View(model);
         }
 

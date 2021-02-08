@@ -6,7 +6,7 @@ using Services.Helpers;
 using Services.Interfaces;
 using Site.Services;
 
-namespace Site.ApiControllers
+namespace Site.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     [ApiController]
