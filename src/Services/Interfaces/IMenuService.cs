@@ -7,5 +7,6 @@ namespace Services.Interfaces
     public interface IMenuService
     {
         Task<IEnumerable<MenuCategory>> Get();
+        Task<IEnumerable<MobileCategory>> GetMobileMenu();
     }
 }

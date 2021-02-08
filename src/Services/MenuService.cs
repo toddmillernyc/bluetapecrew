@@ -10,10 +10,13 @@ namespace Services
     public class MenuService : IMenuService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IImageRepository _imageRepository;
 
-        public MenuService(ICategoryRepository categoryRepository)
+        public MenuService(ICategoryRepository categoryRepository,
+            IImageRepository imageRepository)
         {
             _categoryRepository = categoryRepository;
+            _imageRepository = imageRepository;
         }
 
         public async Task<IEnumerable<MenuCategory>> Get()
@@ -31,6 +34,24 @@ namespace Services
                             .OrderBy(x => x.Slug)
                             .ToDictionary(x => x.Slug, x => x.ProductName)
                     });
+        }
+
+        public async Task<IEnumerable<MobileCategory>> GetMobileMenu()
+        {
+            var model = new List<MobileCategory>();
+            var categories = await _categoryRepository.GetAllPublishedWithProducts();
+            foreach (var category in categories)
+            {
+                var imageId = category.ProductCategories.FirstOrDefault()?.Product.ImageId ?? 0;
+                var image = await _imageRepository.Find(imageId);
+                model.Add(new MobileCategory
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    ImageData = image.ImageData
+                }); 
+            }
+            return model;
         }
     }
 }
