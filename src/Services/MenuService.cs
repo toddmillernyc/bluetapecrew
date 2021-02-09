@@ -1,5 +1,4 @@
-﻿using System;
-using Repositories.Interfaces;
+﻿using Repositories.Interfaces;
 using Services.Interfaces;
 using Services.Models;
 using System.Collections.Generic;
@@ -48,7 +47,7 @@ namespace Services
             {
                 var imageId = category.ProductCategories.FirstOrDefault()?.Product.ImageId ?? 0;
                 var image = await _imageRepository.Find(imageId);
-                var resizedImage = await _imageService.ResizeImage(image.ImageData, 75, 100, ImageFormat.Jpeg);
+                var resizedImage = await _imageService.ResizeImage(image.ImageData, 96, 128, ImageFormat.Jpeg);
                 model.Add(new MobileCategory
                 {
                     Id = category.Id,

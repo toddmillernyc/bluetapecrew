@@ -17,10 +17,6 @@ namespace Site.Api
             _menuService = menuService;
         }
 
-        public async Task<IEnumerable<MobileCategory>> Get()
-        {
-            var model = await _menuService.GetMobileMenu();
-            return model;
-        }
+        public async Task<IEnumerable<MobileCategory>> Get() => await _menuService.GetMobileMenu();
     }
 }
