@@ -49,8 +49,8 @@ namespace Services
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    ImageData = Convert.ToBase64String(image.ImageData)
-
+                    ImageData = Convert.ToBase64String(image.ImageData),
+                    Slug = category.Name.ToLower().Trim().Replace(" ", "-")
                 }); 
             }
             return model;
