@@ -5,6 +5,7 @@ using Services.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing.Imaging;
 
 namespace Services
 {
@@ -12,12 +13,14 @@ namespace Services
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IImageRepository _imageRepository;
+        private readonly IImageService _imageService;
 
         public MenuService(ICategoryRepository categoryRepository,
-            IImageRepository imageRepository)
+            IImageRepository imageRepository, IImageService imageService)
         {
             _categoryRepository = categoryRepository;
             _imageRepository = imageRepository;
+            _imageService = imageService;
         }
 
         public async Task<IEnumerable<MenuCategory>> Get()
@@ -45,12 +48,12 @@ namespace Services
             {
                 var imageId = category.ProductCategories.FirstOrDefault()?.Product.ImageId ?? 0;
                 var image = await _imageRepository.Find(imageId);
+                var resizedImage = await _imageService.ResizeImage(image.ImageData, 75, 100, ImageFormat.Jpeg);
                 model.Add(new MobileCategory
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    ImageData = Convert.ToBase64String(image.ImageData),
-                    Slug = category.Name.ToLower().Trim().Replace(" ", "-")
+                    ImageData = resizedImage,
                 }); 
             }
             return model;
