@@ -17,5 +17,6 @@ namespace Repositories.Interfaces
         Task<IEnumerable<Product>> GetAllIncludeAll();
         Task Update(Product product);
         Task<Product> FindIncludeAll(int id);
+        Task<IEnumerable<Product>> GetByCategoryId(int categoryId);
     }
 }

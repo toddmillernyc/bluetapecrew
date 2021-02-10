@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Models;
-using Site.Services;
 using Site.Services.Interfaces;
 
 namespace Site.Controllers
@@ -28,7 +27,7 @@ namespace Site.Controllers
 
         [Route("products/{name}")]
         [HttpGet]
-        public async Task<ActionResult> Details(string name)
+        public async Task<IActionResult> Details(string name)
         {
             if (name.ToLower().Equals("details")) return RedirectToAction("Index", "Home");
             if (string.IsNullOrEmpty(name)) return RedirectToAction("Index", "Home");
@@ -43,7 +42,7 @@ namespace Site.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Route("addreview")]
-        public async Task<ActionResult> AddReview(Review review) => RedirectToAction("Details", new { name = await _productService.AddReview(review) });
+        public async Task<IActionResult> AddReview(Review review) => RedirectToAction("Details", new { name = await _productService.AddReview(review) });
 
         public async Task<string> GetStylePrice(int id) => await _productService.GetStylePrice(id);
     }

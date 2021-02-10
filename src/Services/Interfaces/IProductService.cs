@@ -19,5 +19,6 @@ namespace Services.Interfaces
         Task Update(Product product);
         Task<Product> FindIncludeAll(int id);
         Task<IEnumerable<Product>> GetProductsWithStylesAndImage(int take);
+        Task<IEnumerable<Product>> GetByCategoryId(int categoryId);
     }
 }

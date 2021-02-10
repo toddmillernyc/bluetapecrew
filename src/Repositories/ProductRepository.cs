@@ -14,7 +14,7 @@ namespace Repositories
         public ProductRepository(BtcEntities db) { _db = db; }
 
         public async Task<IEnumerable<Product>> GetProductsWithStylesAndImage(int take) => await _db.Products
-                                                                                        .Include(x=>x.Styles)
+                                                                                        .Include(x => x.Styles)
                                                                                         .Include(x => x.Image)
                                                                                         .Take(take)
                                                                                         .AsNoTracking()
@@ -48,7 +48,7 @@ namespace Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Product> FindIncludeAll(int id) => await  _db.Products
+        public async Task<Product> FindIncludeAll(int id) => await _db.Products
                                                                                 .Include(p => p.Styles)
                                                                                 .ThenInclude(s => s.Color)
                                                                                 .Include(p => p.Styles)
@@ -60,10 +60,21 @@ namespace Repositories
                                                                                 .ThenInclude(pi => pi.Image)
                                                                                 .Include(p => p.Reviews)
                                                                                 .AsNoTracking()
-                                                                                .FirstOrDefaultAsync(x=>x.Id == id);
+                                                                                .FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<IEnumerable<Product>> GetByCategoryId(int categoryId)
+        {
+            var model = await _db.Products
+                .Include(p => p.Styles)
+                .Include(p => p.Image)
+                .AsNoTracking()
+                .Where(x => x.ProductCategories.Any(c => c.CategoryId == categoryId))
+                .ToListAsync();
+            return model;
+        }
 
 
-        public async Task<IEnumerable<Product>> GetAll() => await _db.Products.OrderBy(x=>x.ProductName).AsNoTracking().ToListAsync();
+        public async Task<IEnumerable<Product>> GetAll() => await _db.Products.OrderBy(x => x.ProductName).AsNoTracking().ToListAsync();
 
         public Task<Product> FindBySlugIncludeAll(string slug) => _db.Products
                                                             .Include(p => p.Styles)
@@ -100,7 +111,7 @@ namespace Repositories
                     .ThenInclude(pi => pi.Image)
                     .Include(p => p.Reviews)
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(x=>x.Id== id);
+                    .FirstOrDefaultAsync(x => x.Id == id);
 
             var styles = await _db.Styles.Include(x => x.Carts).Where(style => style.ProductId == id).ToListAsync();
 
@@ -133,7 +144,7 @@ namespace Repositories
             if (product.ProductCategories.Any()) _db.ProductCategories.RemoveRange(product.ProductCategories);
             if (product.CartImages.Any()) _db.CartImages.RemoveRange(product.CartImages);
 
-            if(product.Reviews.Any()) _db.Reviews.RemoveRange(product.Reviews);
+            if (product.Reviews.Any()) _db.Reviews.RemoveRange(product.Reviews);
 
 
             _db.Products.Remove(product);

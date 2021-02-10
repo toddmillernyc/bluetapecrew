@@ -107,5 +107,12 @@ namespace Services
             var products = await _productRepository.GetAll();
             return products.ToDictionary(x => x.Id, x => x.ProductName);
         }
+
+        public async Task<IEnumerable<Product>> GetByCategoryId(int categoryId)
+        {
+            var products = await _productRepository.GetByCategoryId(categoryId);
+            var model = _mapper.Map<IEnumerable<Product>>(products);
+            return model;
+        }
     }
 }
