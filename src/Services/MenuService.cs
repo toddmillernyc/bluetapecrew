@@ -43,7 +43,7 @@ namespace Services
         {
             var model = new List<MobileCategory>();
             var categories = await _categoryRepository.GetAllPublishedWithProducts();
-            foreach (var category in categories)
+            foreach (var category in categories.OrderBy(x=>x.Position))
             {
                 var imageId = category.ProductCategories.FirstOrDefault()?.Product.ImageId ?? 0;
                 var image = await _imageRepository.Find(imageId);
