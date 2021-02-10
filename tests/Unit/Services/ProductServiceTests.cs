@@ -23,7 +23,6 @@ namespace Unit.Services
             var sut = new ProductService(
                 new Mock<IProductRepository>().Object,
                 new Mock<IStyleRepository>().Object,
-                new Mock<ICategoryRepository>().Object,
                 new Mock<IReviewRepository>().Object,
                 new Mock<IProductImageRepository>().Object,
                 mockMapper.Object

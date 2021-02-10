@@ -12,7 +12,6 @@ namespace Services
     {
         private readonly IProductRepository _productRepository;
         private readonly IStyleRepository _styleRepository;
-        private readonly ICategoryRepository _categoryRepository;
         private readonly IReviewRepository _reviewRepository;
         private readonly IProductImageRepository _productImageRepository;
         private readonly IMapper _mapper;
@@ -20,14 +19,12 @@ namespace Services
         public ProductService(
             IProductRepository productRepository,
             IStyleRepository styleRepository,
-            ICategoryRepository categoryRepository,
             IReviewRepository reviewRepository,
             IProductImageRepository productImageRepository,
             IMapper mapper)
         {
             _productRepository = productRepository;
             _styleRepository = styleRepository;
-            _categoryRepository = categoryRepository;
             _reviewRepository = reviewRepository;
             _productImageRepository = productImageRepository;
             _mapper = mapper;
