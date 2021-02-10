@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Services.Models;
 
-namespace Site.Services
+namespace Site.Services.Interfaces
 {
     public interface IUserRegistrationService
     {

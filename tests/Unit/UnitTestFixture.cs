@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Models;
 using Site.Controllers;
+using Site.Services.Interfaces;
 using Xunit;
 
 namespace Unit

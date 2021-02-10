@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Site.Services
+namespace Site.Services.Interfaces
 {
     public interface ICookieService
     {

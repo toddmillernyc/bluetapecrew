@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Services.Models;
 
-namespace Site.Services
+namespace Site.Services.Interfaces
 {
     public interface IUserService
     {

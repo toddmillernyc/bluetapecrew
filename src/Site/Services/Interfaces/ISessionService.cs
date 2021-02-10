@@ -1,4 +1,4 @@
-﻿namespace Site.Services
+﻿namespace Site.Services.Interfaces
 {
     public interface ISessionService
     {

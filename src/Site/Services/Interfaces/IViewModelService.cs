@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Services.Models;
 using Site.ViewModels;
 
-namespace Site.Services
+namespace Site.Services.Interfaces
 {
     public interface IViewModelService
     {

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Services.Extensions;
 using Site.Mappings;
 using Site.Services;
+using Site.Services.Interfaces;
 
 namespace Site.Extensions
 {

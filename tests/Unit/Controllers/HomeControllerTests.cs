@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Moq;
 using Site.Controllers;
 using Site.Services;
+using Site.Services.Interfaces;
 using Xunit;
 
 namespace Unit.Controllers
