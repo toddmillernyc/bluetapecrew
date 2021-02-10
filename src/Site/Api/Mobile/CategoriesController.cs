@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Services.Interfaces; 
+using Services.Interfaces;
 using Services.Models;
 
-namespace Site.Api
+namespace Site.Api.Mobile
 {
-    [Route("api/mobile/menu")]
+    [Route("api/mobile/categories")]
     [ApiController]
-    public class MobileMenuController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly IMenuService _menuService;
 
-        public MobileMenuController(IMenuService menuService)
+        public CategoriesController(IMenuService menuService)
         {
             _menuService = menuService;
         }
