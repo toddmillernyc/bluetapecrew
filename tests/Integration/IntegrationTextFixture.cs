@@ -1,18 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Reflection;
-using AutoMapper;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Services.Extensions;
 using Site.Mappings;
+using Stubs;
 using Xunit;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using Stubs;
 
-namespace Btc.Tests
+namespace Integration
 {
     [CollectionDefinition("IntegrationTest")]
     public class IntegrationTest : ICollectionFixture<IntegrationTextFixture> { }

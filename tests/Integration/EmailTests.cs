@@ -7,7 +7,7 @@ using Services.Models;
 using Stubs;
 using Xunit;
 
-namespace Btc.Tests.Integration
+namespace Integration
 {
     [Collection("IntegrationTest")]
     public class EmailTests
