@@ -114,9 +114,9 @@ namespace Site.Services
             };
         }
 
-        public async Task<ProductViewModel> GetProductViewModel(string name)
+        public async Task<ProductViewModel> GetProductViewModel(string slug)
         {
-            var product = await _productService.FindBySlugIncludeAll(name);
+            var product = await _productService.FindBySlugIncludeAll(slug);
             var styleViews = await _styleService.GetByProductId(product.Id);
             var bestSellers = await _productService.GetProductsWithStylesAndImage(3);
             var categories = await _categoryService.GetAllPublishedWithProducts();

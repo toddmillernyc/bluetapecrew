@@ -10,6 +10,6 @@ namespace Site.Services.Interfaces
         Task<HomeViewModel> GetHomeViewModel();
         Task<IEnumerable<MenuViewModel>> GetSidebarViewModel();
         Task<LayoutViewModel> GetLayoutViewModel();
-        Task<ProductViewModel> GetProductViewModel(string name);
+        Task<ProductViewModel> GetProductViewModel(string slug);
     }
 }
