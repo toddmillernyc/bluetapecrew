@@ -10,7 +10,7 @@
     <PackageReference Include="MailChimp.Net.V3" Version="5.1.0" />
     <PackageReference Include="MailKit" Version="2.10.1" />
     <PackageReference Include="PayPal.SDK.NETCore" Version="1.9.1.2" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
