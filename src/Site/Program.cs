@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Site
 {
@@ -16,7 +18,16 @@ namespace Site
                 {
                     webBuilder
                         .UseIISIntegration()
-                        .UseStartup<Startup>();
+                        .UseStartup<Startup>()
+                        .CaptureStartupErrors(true)
+                        .UseSerilog((hostingContext, loggerConfiguration) =>
+                        {
+                            loggerConfiguration
+                                .ReadFrom.Configuration(hostingContext.Configuration)
+                                .Enrich.FromLogContext()
+                                .Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
+                                .Enrich.WithProperty("Environment", hostingContext.HostingEnvironment);
+                        });
                 });
     }
 }

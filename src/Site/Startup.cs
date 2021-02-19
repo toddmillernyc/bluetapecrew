@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Site.Extensions;
 using Site.Security.Identity;
 using Site.Security.Jwt;
@@ -44,6 +45,7 @@ namespace Site
 
             if (!env.IsDevelopment()) app.UseHsts();
 
+            app.UseSerilogRequestLogging();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
