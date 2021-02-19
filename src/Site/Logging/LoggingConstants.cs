@@ -11,6 +11,7 @@
             "Microsoft.AspNetCore.Hosting.Diagnostics",
             "Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker",
             "Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor",
+            "Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware",
             "Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor",
             "Microsoft.AspNetCore.Routing.EndpointMiddleware",
             "Microsoft.AspNetCore.Session.DistributedSession",
