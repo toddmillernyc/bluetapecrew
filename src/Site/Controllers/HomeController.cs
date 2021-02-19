@@ -20,7 +20,6 @@ namespace Site.Controllers
 
         public async Task<IActionResult> Index()
         {
-            _logger.LogInformation("**********Visit Homepage**********");
             var model = await _viewModelService.GetHomeViewModel();
             return View(model);
         }

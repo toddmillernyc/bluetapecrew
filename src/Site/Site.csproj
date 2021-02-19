@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'BlueTapeCrew' " />
-
-  <ItemGroup>
-    <Compile Remove="Logging\**" />
-    <Content Remove="Logging\**" />
-    <EmbeddedResource Remove="Logging\**" />
-    <None Remove="Logging\**" />
-  </ItemGroup>
   <ItemGroup>
     <Content Remove="appsettings.Development.json" />
   </ItemGroup>

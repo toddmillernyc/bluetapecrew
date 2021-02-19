@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Site.Extensions;
+using Site.Logging;
 using Site.Security.Identity;
 using Site.Security.Jwt;
 
@@ -44,8 +45,7 @@ namespace Site
             if (Configuration.GetValue<bool>("UseDatabaseErrorPage")) app.UseDeveloperExceptionPage();
 
             if (!env.IsDevelopment()) app.UseHsts();
-
-            app.UseSerilogRequestLogging();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
@@ -56,6 +56,7 @@ namespace Site
                 .AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseLogging();
             app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>
             {
