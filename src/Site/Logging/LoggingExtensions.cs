@@ -29,6 +29,7 @@ namespace Site.Logging
             app.UseMiddleware<UserLogContextMiddleware>();
             app.UseMiddleware<IpAddressLogContextMiddleware>();
             app.UseMiddleware<SessionIdLogContextMiddleware>();
+            app.UseMiddleware<UrlLogContextMiddleware>();
             return app;
         }
 
