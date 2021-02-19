@@ -7,21 +7,6 @@ namespace Site.Logging
 {
     public static class LoggingExtensions
     {
-        private static readonly string[] WarningContexts = {
-            "Microsoft.AspNetCore.Hosting.Diagnostics",
-            "Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker",
-            "Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor",
-            "Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor",
-            "Microsoft.AspNetCore.Routing.EndpointMiddleware",
-            "Microsoft.AspNetCore.Session.DistributedSession",
-            "Microsoft.EntityFrameworkCore.Database.Command",
-            "Microsoft.EntityFrameworkCore.Infrastructure"
-        };
-
-        private static readonly string[] ErrorContexts =
-        {
-            "Microsoft.EntityFrameworkCore.Query"
-        };
 
         public static IWebHostBuilder UseLogging(this IWebHostBuilder webBuilder)
         {
@@ -49,12 +34,10 @@ namespace Site.Logging
 
         private static LoggerConfiguration ApplyOverrides(this LoggerConfiguration loggerConfiguration)
         {
-            foreach (var context in WarningContexts)
+            foreach (var context in LoggingConstants.WarningContexts)
                 loggerConfiguration.MinimumLevel.Override(context, Serilog.Events.LogEventLevel.Warning);
-
-            foreach (var context in ErrorContexts)
+            foreach (var context in LoggingConstants.ErrorContexts)
                 loggerConfiguration.MinimumLevel.Override(context, Serilog.Events.LogEventLevel.Error);
-
             return loggerConfiguration;
         }
     }
