@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Site.Controllers;
-using Site.Services;
 using Site.Services.Interfaces;
 using Xunit;
 
@@ -14,8 +14,8 @@ namespace Unit.Controllers
         {
             //arrange
             var viewModelService = new Mock<IViewModelService>();
-            var sut = new HomeController(viewModelService.Object);
-
+            var logger = new Mock<ILogger<HomeController>>();
+            var sut = new HomeController(viewModelService.Object, logger.Object);
 
             try
             {
