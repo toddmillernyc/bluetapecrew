@@ -28,10 +28,13 @@ namespace Services
         {
             var config = GetConfig(mode);
             var credential = new OAuthTokenCredential(clientId, clientSecret, config);
-            var accessToken = "";
+            var accessToken = string.Empty;
             try
             { 
                 accessToken = credential.GetAccessToken();
+                if (string.IsNullOrEmpty(accessToken)) 
+                    throw new PayPalException("Paypal returned empty access token");
+                _logger.LogInformation("Access token retrieved from Paypal");
             }
             catch (Exception ex)
             {
@@ -94,33 +97,44 @@ namespace Services
 
         public string PayWithPaypal(PaymentRequest paymentRequest)
         {
-            var apiContext = GetApiContext(paymentRequest);
-            var payment = GetPayment(paymentRequest);
-            var createdPayment = payment.Create(apiContext);
-            var redirectUrl = createdPayment.GetApprovalUrl();
-            return redirectUrl;
+            _logger.LogInformation("Pay with PayPal");
+            try
+            {
+                _logger.LogInformation("Retrieving PayPal ApiContext");
+                var apiContext = GetApiContext(paymentRequest);
+
+                _logger.LogInformation("Getting Paypal Payment");
+                var payment = GetPayment(paymentRequest);
+
+                _logger.LogInformation("Creating Paypal Payment");
+                var createdPayment = payment.Create(apiContext);
+
+                _logger.LogInformation("Approving Paypal; payment.");
+                var redirectUrl = createdPayment.GetApprovalUrl();
+
+                _logger.LogInformation("Returning Paypal redirect Url", redirectUrl);
+                return redirectUrl;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during PayPal checkout");
+                throw;
+            }
         }
 
         public Payment CompletePayment(CompletePaymentRequest paymentRequest)
         {
-            try
+            var apiContext = new APIContext(paymentRequest.Token);
+            var paymentExecution = new PaymentExecution
             {
-                var apiContext = new APIContext(paymentRequest.Token);
-                var paymentExecution = new PaymentExecution
-                {
-                    payer_id = paymentRequest.PayerId
-                };
-                var payment = new Payment
-                {
-                    id = paymentRequest.PaymentId,
-                };
-                var executedPayment = payment.Execute(apiContext, paymentExecution);
-                return executedPayment;
-            }
-            catch (PaymentsException ex)
+                payer_id = paymentRequest.PayerId
+            };
+            var payment = new Payment
             {
-                throw new Exception(ex.Response);
-            }
+                id = paymentRequest.PaymentId,
+            };
+            var executedPayment = payment.Execute(apiContext, paymentExecution);
+            return executedPayment;
         }
     }
 }
