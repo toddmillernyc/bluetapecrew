@@ -31,7 +31,7 @@ namespace Site.Security.Jwt
         {
             try
             {
-                var token = context.ToAuthToken();
+                var token = context.GetAuthToken();
                 if (token != null)
                     AttachUserToContext(context, userService, token);
             }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
-using Site.Logging.Middleware;
 
 namespace Site.Logging
 {
@@ -26,10 +25,7 @@ namespace Site.Logging
         public static IApplicationBuilder UseLogging(this IApplicationBuilder app)
         {
             app.UseSerilogRequestLogging();
-            app.UseMiddleware<UserLogContextMiddleware>();
-            app.UseMiddleware<IpAddressLogContextMiddleware>();
-            app.UseMiddleware<SessionIdLogContextMiddleware>();
-            app.UseMiddleware<UrlLogContextMiddleware>();
+            app.UseMiddleware<LogContextMiddleware>();
             return app;
         }
 
