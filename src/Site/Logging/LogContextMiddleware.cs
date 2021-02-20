@@ -16,8 +16,9 @@ namespace Site.Logging
 
         public Task Invoke(HttpContext context)
         {
-            EnrichContext("GetSessionId", context.GetSessionId());
+            EnrichHeaders(context);
             EnrichContext("IpAddress", context.GetRemoteIpAddress());
+            EnrichContext("SessionId", context.GetSessionId());
             EnrichContext("Url", context.GetRequestUrl());
             EnrichContext("UserAgent", context.GetUserAgent());
             EnrichContext("UserName", context.GetUserName());
@@ -28,6 +29,12 @@ namespace Site.Logging
         {
             if (string.IsNullOrEmpty(value)) return;
             LogContext.PushProperty(key, value);
+        }
+
+        private static void EnrichHeaders(HttpContext context)
+        {
+            foreach (var (key, value) in context.GetHeaders())
+                EnrichContext(key, value);
         }
     }
 }
