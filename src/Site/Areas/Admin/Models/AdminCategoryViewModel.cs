@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Site.Areas.Admin.Models;
 
 namespace Site.Areas.Admin.Models
 {

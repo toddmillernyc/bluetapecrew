@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Site.Extensions;
-using Site.Services;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using PayPal;
