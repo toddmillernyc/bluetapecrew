@@ -39,11 +39,7 @@ namespace Site
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (Configuration.GetValue<bool>("UseDeveloperExceptionPage")) app.UseDeveloperExceptionPage();
-            else app.UseExceptionHandler("/Home/Error");
-
-            if (Configuration.GetValue<bool>("UseDatabaseErrorPage")) app.UseDeveloperExceptionPage();
-
+            app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
             if (!env.IsDevelopment()) app.UseHsts();
             
             app.UseHttpsRedirection();

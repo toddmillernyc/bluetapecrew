@@ -1,27 +1,37 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Site.Services.Interfaces;
+    using Site.Services.Interfaces;
 
 namespace Site.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IViewModelService _viewModelService;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(
-            IViewModelService viewModelService,
-            ILogger<HomeController> logger)
+        public HomeController(IViewModelService viewModelService)
         {
             _viewModelService = viewModelService;
-            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
             var model = await _viewModelService.GetHomeViewModel();
             return View(model);
+        }
+
+        [Route("Home/Error/{statusCode:int}")]
+        public IActionResult Error(int statusCode)
+        {
+            var errorMessage = "Error page redirect";
+            switch (statusCode)
+            {
+                case 404:
+                    errorMessage = $"{statusCode} Page not found.";
+                    break;
+            }
+            ViewBag.errorMessage = errorMessage;
+            Response.StatusCode = statusCode;
+            return View("Error");
         }
 
         public async Task<PartialViewResult> _Sidebar()

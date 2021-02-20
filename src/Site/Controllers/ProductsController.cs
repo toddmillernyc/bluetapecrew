@@ -29,10 +29,8 @@ namespace Site.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string name)
         {
-            if (name.ToLower().Equals("details")) return RedirectToAction("Index", "Home");
-            if (string.IsNullOrEmpty(name)) return RedirectToAction("Index", "Home");
             var productViewModel = await _viewModelService.GetProductViewModel(name);
-            if (productViewModel == null) return RedirectToAction("Index", "Home");
+            if (productViewModel == null) return RedirectToAction("Error", "Home", new { statusCode = 404 });
             _cookieService.SetCurrentProduct(_httpContextAccessor.HttpContext, productViewModel.Id);
             _cookieService.SetCurrentCategory(_httpContextAccessor.HttpContext, productViewModel.Category);
             ViewBag.ReturnUrl = HttpContext.Request.Path.ToString();
