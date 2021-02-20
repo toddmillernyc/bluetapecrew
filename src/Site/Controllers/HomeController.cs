@@ -22,7 +22,7 @@ namespace Site.Controllers
         [Route("Home/Error/{statusCode:int}")]
         public IActionResult Error(int statusCode)
         {
-            var errorMessage = "Error page redirect";
+            var errorMessage = $"Error ({statusCode}) page redirect";
             switch (statusCode)
             {
                 case 404:
