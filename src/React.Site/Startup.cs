@@ -13,6 +13,8 @@ using React.Site.Identity;
 using React.Site.Models;
 using System;
 using System.Text;
+using HotChocolate;
+using React.Site.GraphQL;
 
 namespace React.Site
 {
@@ -69,13 +71,10 @@ namespace React.Site
                     };
                 });
 
-            //services.AddGraphQL(
-            //    SchemaBuilder.New()
-
-            //        .AddQueryType<Query>()
-            //        .AddMutationType<Mutation>()
-            //        .Create(),
-            //    new QueryExecutionOptions { ForceSerialExecution = true });
+            services
+                .AddGraphQLServer()
+                .AddQueryType<Query>()
+                .AddMutationType<Mutation>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -86,11 +85,15 @@ namespace React.Site
             {
                 app.UseCors();
             }
-            app.UseGraphQL();
             if (env.IsDevelopment())
             {
                 app.UsePlayground();
             }
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQL();
+            });
         }
     }
 }
